@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  deploy_to_stg:
+  deploy_to_prod:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,6 +30,6 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPS_APP }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPS_APP_E8C2E }}'
           projectId: sps-app
           channelId: live
