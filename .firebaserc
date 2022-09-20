@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "sps-app-stg",
+    "prod": "sps-app-e8c2e"
+  },
+  "targets": {},
+  "etags": {}
+}
