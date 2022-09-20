@@ -26,5 +26,3 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Run unit tests
         run: yarn run test --karma-config ./karma.conf.js --no-watch
-      - name: Check if prod bundle is buildable
-        run: yarn run build
