@@ -1,0 +1,14 @@
+.auth {
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+
+  gap: 2rem;
+  flex-direction: column;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.auth__logo {
+  align-self: center;
+}

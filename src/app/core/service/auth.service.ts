@@ -1,41 +1,62 @@
 import { Injectable } from '@angular/core';
-import * as firebaseui from 'firebaseui';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
-import { Router } from '@angular/router';
-import firebase from '@firebase/app-compat';
+import firebase from 'firebase/compat/app';
+import { AuthCredentials, User } from '../model/auth.model';
+import { environment } from '../../../environments/environment';
+import { AuthPaths, TopLevelPaths } from '../../app-routing.module';
+import { concatMap, from, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private readonly angularFireAuth: AngularFireAuth,
-    private readonly router: Router,
-  ) {}
-
-  private authUI: firebaseui.auth.AuthUI;
-
-  renderAuthUi(containerId: string) {
-    this.angularFireAuth.app.then(app => {
-      const uiConfig = {
-        signInOptions: [
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        ],
-        callbacks: {
-          signInSuccessWithAuthResult: this.onLoginSuccess.bind(this),
-        },
-      };
-      this.authUI = new firebaseui.auth.AuthUI(app.auth());
-      this.authUI.start(`#${containerId}`, uiConfig);
-      this.authUI.disableAutoSignIn();
-    });
+  constructor(private readonly afAuth: AngularFireAuth) {
+    this.user$ = this.afAuth.user.pipe(
+      map(
+        user =>
+          user && {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          },
+      ),
+    );
+    this.authenticated$ = this.afAuth.user.pipe(
+      map(user => !!user && user.emailVerified),
+    );
   }
 
-  private onLoginSuccess(result: any) {
-    console.log(result);
-    this.router.navigate(['/']);
-    return true;
+  readonly authenticated$: Observable<boolean>;
+
+  readonly user$: Observable<User | null>;
+
+  signIn(email: string, password: string) {
+    return from(this.afAuth.signInWithEmailAndPassword(email, password));
+  }
+
+  signInWithGoogle() {
+    return from(
+      this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
+    );
+  }
+
+  signUp({ email, password }: AuthCredentials) {
+    const redirectUrl = `https://${environment.firebase.authDomain}/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}`;
+    return from(
+      this.afAuth.createUserWithEmailAndPassword(email, password),
+    ).pipe(
+      concatMap(result => {
+        return from(
+          result.user!.sendEmailVerification({
+            url: redirectUrl,
+          }),
+        );
+      }),
+      concatMap(() => this.afAuth.signOut()),
+    );
+  }
+
+  signOut() {
+    return this.afAuth.signOut();
   }
 }

@@ -1,0 +1,18 @@
+<div class="sign-in">
+  <h1 class="heading">Sign in</h1>
+  <div class="form">
+    <ng-container *ngIf="showEmailSignUp; else signInType">
+      <sps-email-sign-in-form (submit)="onEmailSignIn($event)"></sps-email-sign-in-form>
+    </ng-container>
+  </div>
+
+</div>
+<ng-template #signInType>
+  <button mat-raised-button color="primary"
+          (click)="navigationService.toSameRoute( { fragment: 'email',queryParamsHandling: 'preserve' })">
+    Sign in with email
+  </button>
+  <button mat-raised-button color="accent" (click)="authService.signInWithGoogle()">Sign in with Google</button>
+</ng-template>
+
+

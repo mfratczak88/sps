@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
-  selector: 'app-root',
+  selector: 'sps-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
