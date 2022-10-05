@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Injectable, NgZone } from '@angular/core';
 import { ToastService } from '../../core/service/toast.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class MaterialToastService implements ToastService {
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(
+    private readonly snackBarRef: MatSnackBar,
+    private readonly ngZone: NgZone,
+  ) {}
 
   show(text: string): void {
-    this._snackBar.open(text, 'Dismiss');
+    this.ngZone.run(() => this.snackBarRef.open(text, 'Dismiss'));
   }
 }

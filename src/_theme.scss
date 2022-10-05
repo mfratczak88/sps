@@ -1,4 +1,48 @@
-@use '~@angular/material' as mat;
+@use 'node_modules/@angular/material' as mat;
+@use "sass:map";
+
 @include mat.core();
+$primary-palette: mat.define-palette(map_merge(mat.$blue-palette, (
+  50: #F2F7FF,
+  100: #E6EEFF,
+  200: #ADC6FF,
+  300: #85A5FF,
+  400: #597EF7,
+  500: #1890FF,
+  600: #1D39C4,
+  700: #10239E,
+  800: #061178,
+  900: #001529
+)));
+$secondary-palette: mat.define-palette(map_merge(mat.$deep-orange-palette, (
+  50: #FFF2E8,
+  100: #FFD8BF,
+  200: #FFBB96,
+  300: #FF9C6E,
+  400: #FF7A45,
+  500: #FA541C,
+  600: #D4380D,
+  700: #AD2102,
+  800: #871400,
+  900: #610B00
+)));
+
+$warn-palette: mat.define-palette(map_merge(mat.$red-palette, (
+  50: #FFF1F0,
+  100: #FFCCC7,
+  200: #FFA39E,
+  300: #FF7875,
+  400:#FF4D4F,
+  500:#F5222D,
+  600: #CF1322,
+  700: #A8071A,
+  800: #820014,
+  900: #5C0011,
+)));
+$sps-theme: mat.define-light-theme($primary-palette, $secondary-palette, $warn-palette);
+@include mat.all-component-themes($sps-theme);
+$color-primary: mat.get-color-from-palette($primary-palette);
+$color-secondary: mat.get-color-from-palette($secondary-palette);
+$color-warn: mat.get-color-from-palette($warn-palette);
 
 

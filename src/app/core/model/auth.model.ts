@@ -7,3 +7,8 @@ export interface User {
   email: string | null;
   photoURL: string | null;
 }
+export type AuthActionMode = 'verifyEmail' | 'resetPassword';
+export interface AuthActionCodeQueryParams {
+  mode: AuthActionMode | null;
+  oobCode: string | null;
+}

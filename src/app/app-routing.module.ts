@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './core/guards/auth.guard';
 
 export enum TopLevelPaths {
   AUTH = 'auth',
   ADMIN_DASHBOARD = 'admin-dashboard',
+  ERROR = 'error',
 }
 export enum AuthPaths {
   SIGN_IN = 'sign-in',
   SIGN_UP = 'sign-up',
+  FORGOT_PASSWORD = 'forgot-password',
+  INVALID_EMAIL_VERIFY_LINK = 'invalid-email-verify-link',
+  ACTION_CODE = 'action-code',
+}
+export enum ErrorPaths {
+  NOT_FOUND = 'not-found',
+  INTERNAL_SERVER_ERROR = 'internal-server-error',
 }
 const routes: Routes = [
   {
@@ -26,6 +33,15 @@ const routes: Routes = [
       import('./admin-dashboard/admin-dashboard.module').then(
         m => m.AdminDashboardModule,
       ),
+  },
+  {
+    path: TopLevelPaths.ERROR,
+    loadChildren: () => import('./error/error.module').then(m => m.ErrorModule),
+  },
+  {
+    path: '**',
+    redirectTo: TopLevelPaths.ERROR,
+    pathMatch: 'full',
   },
 ];
 @NgModule({

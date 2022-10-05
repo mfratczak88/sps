@@ -1,18 +1,24 @@
 <div class="form" [formGroup]="form">
-  <mat-form-field appearance="outline">
-    <mat-label>Enter your email</mat-label>
-    <mat-icon matSuffix>email</mat-icon>
-    <input matInput required formControlName="email">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Enter your password</mat-label>
-    <mat-icon matSuffix>password</mat-icon>
-    <input matInput type="password" required formControlName="password">
-  </mat-form-field>
-  <div class="form__buttons">
-    <button [disabled]="!form.valid" (click)="onSubmit()" class="form__buttons--button" mat-raised-button
-            color="primary">Sign in
-    </button>
-    <button class="form__buttons--button" mat-button>Back</button>
+  <div class="form__fields">
+    <mat-form-field appearance="outline">
+      <mat-label>Enter your email</mat-label>
+      <mat-icon matSuffix>email</mat-icon>
+      <input matInput required formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter your password</mat-label>
+      <mat-icon matSuffix>password</mat-icon>
+      <input matInput type="password" required formControlName="password">
+    </mat-form-field>
+  </div>
+  <button [disabled]="!form.valid" (click)="onSubmit()" class="form__button" mat-raised-button
+          color="primary">Sign in
+  </button>
+  <div class="form__footer">
+    <sps-link (click)="noAccount.emit()">Don't have an account?</sps-link>
+    <sps-link (click)="forgotPassword.emit()">Forgot your password?</sps-link>
+  </div>
+  <div class="form__disclaimers">
+    <span></span>
   </div>
 </div>

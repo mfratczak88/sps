@@ -10,6 +10,7 @@ import {
   AngularFireAuthModule,
   USE_EMULATOR as USE_AUTH_EMULATOR,
 } from '@angular/fire/compat/auth';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
@@ -18,6 +19,7 @@ import {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence({ synchronizeTabs: true }),
     AngularFireAuthModule,
+    MatSnackBarModule,
   ],
   providers: [
     {

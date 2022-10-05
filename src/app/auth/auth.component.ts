@@ -5,8 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
-export class AuthComponent {
-  signInSuccess(event: any) {
-    console.log(event);
-  }
-}
+export class AuthComponent {}

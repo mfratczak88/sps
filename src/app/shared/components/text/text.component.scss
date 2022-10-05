@@ -1,0 +1,16 @@
+@use "../../../../variables" as vars;
+.size-xs {
+  @include vars.typography-body-xs;
+}
+.size-s {
+  @include vars.typography-body-s;
+}
+.size-m {
+  @include vars.typography-body-m;
+}
+.size-l {
+  @include vars.typography-body-l;
+}
+.centered {
+  text-align: center;
+}

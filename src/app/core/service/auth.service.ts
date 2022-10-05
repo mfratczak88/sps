@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { AuthCredentials, User } from '../model/auth.model';
-import { environment } from '../../../environments/environment';
-import { AuthPaths, TopLevelPaths } from '../../app-routing.module';
 import { concatMap, from, map, Observable } from 'rxjs';
 
 @Injectable({
@@ -41,16 +39,11 @@ export class AuthService {
   }
 
   signUp({ email, password }: AuthCredentials) {
-    const redirectUrl = `https://${environment.firebase.authDomain}/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}`;
     return from(
       this.afAuth.createUserWithEmailAndPassword(email, password),
     ).pipe(
       concatMap(result => {
-        return from(
-          result.user!.sendEmailVerification({
-            url: redirectUrl,
-          }),
-        );
+        return from(result.user!.sendEmailVerification());
       }),
       concatMap(() => this.afAuth.signOut()),
     );
@@ -58,5 +51,13 @@ export class AuthService {
 
   signOut() {
     return this.afAuth.signOut();
+  }
+
+  sendResetPasswordEmail(email: string) {
+    return from(this.afAuth.sendPasswordResetEmail(email));
+  }
+
+  verifyEmail(oobCode: string) {
+    return from(this.afAuth.applyActionCode(oobCode));
   }
 }

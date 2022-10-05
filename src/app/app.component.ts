@@ -5,8 +5,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'sps-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: '<router-outlet></router-outlet>',
 })
 export class AppComponent {
   parking$: Observable<Parking[]>;

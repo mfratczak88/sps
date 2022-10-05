@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AuthPaths, TopLevelPaths } from '../../app-routing.module';
+import { AuthPaths, ErrorPaths, TopLevelPaths } from '../../app-routing.module';
+import { AuthActionCodeQueryParams, AuthActionMode } from '../model/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,36 @@ export class NavigationService {
     return this.router.navigate(['/']);
   }
 
+  toSignUp() {
+    return this.router.navigate([
+      `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_UP}`,
+    ]);
+  }
+
+  toInvalidEmailVerifyLink() {
+    return this.router.navigate([
+      `/${TopLevelPaths.AUTH}/${AuthPaths.INVALID_EMAIL_VERIFY_LINK}`,
+    ]);
+  }
+
+  toSignIn() {
+    return this.router.navigate([
+      `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}`,
+    ]);
+  }
+
+  toPasswordReset() {
+    return this.router.navigate([
+      `/${TopLevelPaths.AUTH}/${AuthPaths.FORGOT_PASSWORD}`,
+    ]);
+  }
+
+  toInternalServerErrorPage() {
+    return this.router.navigate([
+      `/${TopLevelPaths.ERROR}/${ErrorPaths.INTERNAL_SERVER_ERROR}`,
+    ]);
+  }
+
   navigateAfterLogin(activatedRoute: ActivatedRoute) {
     if (!activatedRoute.snapshot.queryParams['returnUrl']) {
       return this.router.navigate(['/']);
@@ -35,5 +66,21 @@ export class NavigationService {
         url += `&${queryParamKey}=${queryParamValue}`;
       });
     return this.router.navigateByUrl(url, { replaceUrl: true });
+  }
+
+  actionCodeParamsFromActivatedRoute(
+    activatedRoute: ActivatedRoute,
+  ): AuthActionCodeQueryParams {
+    const queryParamMap = activatedRoute.snapshot.queryParamMap;
+    return {
+      mode: queryParamMap.get('mode') as AuthActionMode,
+      oobCode: queryParamMap.get('oobCode'),
+    };
+  }
+
+  to404() {
+    return this.router.navigate([
+      `${TopLevelPaths.ERROR}/${ErrorPaths.NOT_FOUND}`,
+    ]);
   }
 }

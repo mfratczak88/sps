@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthPaths } from '../app-routing.module';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { InvalidEmailVerifyLinkComponent } from './invalid-email-verify-link/invalid-email-verify-link.component';
+import { ActionCodeComponent } from './action-code/action-code.component';
 
 const routes: Routes = [
   {
@@ -22,6 +25,18 @@ const routes: Routes = [
       {
         path: AuthPaths.SIGN_UP,
         component: SignUpComponent,
+      },
+      {
+        path: AuthPaths.FORGOT_PASSWORD,
+        component: PasswordResetComponent,
+      },
+      {
+        path: AuthPaths.INVALID_EMAIL_VERIFY_LINK,
+        component: InvalidEmailVerifyLinkComponent,
+      },
+      {
+        path: AuthPaths.ACTION_CODE,
+        component: ActionCodeComponent,
       },
     ],
   },

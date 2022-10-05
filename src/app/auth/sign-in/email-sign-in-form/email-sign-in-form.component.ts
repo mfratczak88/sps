@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SignInFormData } from '../sign-in.component';
+import { AuthCredentials } from '../../../core/model/auth.model';
 
 @Component({
   selector: 'sps-email-sign-in-form',
@@ -11,7 +11,16 @@ export class EmailSignInFormComponent {
   form: FormGroup;
 
   @Output()
-  readonly submit = new EventEmitter<SignInFormData>();
+  readonly submit = new EventEmitter<AuthCredentials>();
+
+  @Output()
+  readonly back = new EventEmitter<void>();
+
+  @Output()
+  readonly noAccount = new EventEmitter<void>();
+
+  @Output()
+  readonly forgotPassword = new EventEmitter<void>();
 
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({

@@ -8,6 +8,9 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { EmailSignInFormComponent } from './sign-in/email-sign-in-form/email-sign-in-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { InvalidEmailVerifyLinkComponent } from './invalid-email-verify-link/invalid-email-verify-link.component';
+import { ActionCodeComponent } from './action-code/action-code.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,9 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     SignInComponent,
     SignUpComponent,
     EmailSignInFormComponent,
+    PasswordResetComponent,
+    InvalidEmailVerifyLinkComponent,
+    ActionCodeComponent,
   ],
   imports: [
     CommonModule,

@@ -1,18 +1,26 @@
 <div class="sign-in">
-  <h1 class="heading">Sign in</h1>
-  <div class="form">
+  <sps-heading size="l" [centered]="true">Sign In</sps-heading>
+  <div class="sign-in__form">
     <ng-container *ngIf="showEmailSignUp; else signInType">
-      <sps-email-sign-in-form (submit)="onEmailSignIn($event)"></sps-email-sign-in-form>
+      <sps-email-sign-in-form (submit)="onEmailSignIn($event)"
+                              (back)="navigationService.toSameRoute()"
+                              (noAccount)="navigationService.toSignUp()"
+                              (forgotPassword)="navigationService.toPasswordReset()">
+      </sps-email-sign-in-form>
     </ng-container>
   </div>
-
 </div>
 <ng-template #signInType>
-  <button mat-raised-button color="primary"
+  <button mat-raised-button
+          color="primary"
           (click)="navigationService.toSameRoute( { fragment: 'email',queryParamsHandling: 'preserve' })">
     Sign in with email
   </button>
-  <button mat-raised-button color="accent" (click)="authService.signInWithGoogle()">Sign in with Google</button>
+  <button mat-button
+          color="primary"
+          (click)="authService.signInWithGoogle()">
+    Sign in with Google
+  </button>
 </ng-template>
 
 

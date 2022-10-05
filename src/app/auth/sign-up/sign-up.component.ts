@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../core/service/auth.service';
 import { ToastService } from '../../core/service/toast.service';
+import { NavigationService } from '../../core/service/navigation.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'sps-sign-up',
@@ -15,6 +17,7 @@ export class SignUpComponent {
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly toastService: ToastService,
+    readonly navigationService: NavigationService,
   ) {
     this.form = formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
@@ -30,6 +33,13 @@ export class SignUpComponent {
   }
 
   onSubmit() {
-    this.authService.signUp(this.form.value);
+    this.authService
+      .signUp(this.form.value)
+      .pipe(first())
+      .subscribe(() =>
+        this.navigationService
+          .toSignIn()
+          .then(() => this.toastService.show('Please check your email')),
+      );
   }
 }

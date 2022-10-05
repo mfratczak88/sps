@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/service/auth.service';
 import { ToastService } from '../../core/service/toast.service';
 import { first } from 'rxjs';
 import { NavigationService } from '../../core/service/navigation.service';
+import { AuthCredentials } from '../../core/model/auth.model';
 
 @Component({
   selector: 'sps-sign-in',
@@ -24,7 +25,7 @@ export class SignInComponent {
     });
   }
 
-  onEmailSignIn({ email, password }: SignInFormData) {
+  onEmailSignIn({ email, password }: AuthCredentials) {
     this.authService
       .signIn(email, password)
       .pipe(first())
@@ -34,8 +35,4 @@ export class SignInComponent {
           .then(() => this.toastService.show('Login success !'));
       });
   }
-}
-export interface SignInFormData {
-  email: string;
-  password: string;
 }
