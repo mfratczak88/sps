@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AuthPaths, ErrorPaths, TopLevelPaths } from '../../app-routing.module';
-import { AuthActionCodeQueryParams, AuthActionMode } from '../model/auth.model';
+import {
+  AuthActionCodeQueryParams,
+  AuthActionMode,
+} from '../state/auth/auth.model';
 
 @Injectable({
   providedIn: 'root',

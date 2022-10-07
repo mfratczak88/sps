@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthCredentials } from '../../../core/model/auth.model';
+import { AuthCredentials } from '../../../core/state/auth/auth.model';
 
 @Component({
   selector: 'sps-email-sign-in-form',

@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/service/auth.service';
-import { User } from '../../../core/model/auth.model';
-import { Observable, share } from 'rxjs';
+import { Component } from '@angular/core';
+import { AuthService } from '../../../core/state/auth/auth.service';
+import { User } from '../../../core/state/auth/auth.model';
+import { Observable } from 'rxjs';
 import { NavigationService } from '../../../core/service/navigation.service';
+import { AuthQuery } from '../../../core/state/auth/auth.query';
 
 @Component({
   selector: 'sps-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   user$: Observable<User | null>;
 
   constructor(
+    readonly authQuery: AuthQuery,
     readonly authService: AuthService,
     readonly navigationService: NavigationService,
-  ) {}
-
-  ngOnInit(): void {
-    this.user$ = this.authService.user$.pipe(share());
+  ) {
+    this.user$ = this.authQuery.select();
   }
 
   onSignOut() {

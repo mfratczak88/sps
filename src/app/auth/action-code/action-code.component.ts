@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../core/service/auth.service';
+import { AuthService } from '../../core/state/auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '../../core/service/navigation.service';
 import { catchError, first, throwError } from 'rxjs';

@@ -1,33 +1,28 @@
 import { Injectable } from '@angular/core';
+import { AuthStore } from './auth.store';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { concatMap, from } from 'rxjs';
 import firebase from 'firebase/compat/app';
-import { AuthCredentials, User } from '../state/auth/auth.model';
-import { concatMap, from, map, Observable } from 'rxjs';
+import { AuthCredentials } from './auth.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private readonly afAuth: AngularFireAuth) {
-    this.user$ = this.afAuth.user.pipe(
-      map(
-        user =>
-          user && {
-            displayName: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            photoURL: user.photoURL,
-          },
-      ),
-    );
-    this.authenticated$ = this.afAuth.user.pipe(
-      map(user => !!user && user.emailVerified),
-    );
+  constructor(
+    private readonly authStore: AuthStore,
+    private readonly afAuth: AngularFireAuth,
+  ) {
+    this.afAuth.user.subscribe(user => {
+      if (user) {
+        const { email, emailVerified, displayName, photoURL } = user;
+        this.authStore.update(() => ({
+          email,
+          emailVerified,
+          displayName,
+          photoURL,
+        }));
+      }
+    });
   }
-
-  readonly authenticated$: Observable<boolean>;
-
-  readonly user$: Observable<User | null>;
 
   signIn(email: string, password: string) {
     return from(this.afAuth.signInWithEmailAndPassword(email, password));
@@ -60,5 +55,9 @@ export class AuthService {
 
   verifyEmail(oobCode: string) {
     return from(this.afAuth.applyActionCode(oobCode));
+  }
+
+  currentUser$() {
+    return this.afAuth.user;
   }
 }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../core/service/auth.service';
+import { AuthService } from '../../core/state/auth/auth.service';
 import { ToastService } from '../../core/service/toast.service';
 import { first } from 'rxjs';
 import { NavigationService } from '../../core/service/navigation.service';
-import { AuthCredentials } from '../../core/model/auth.model';
+import { AuthCredentials } from '../../core/state/auth/auth.model';
 
 @Component({
   selector: 'sps-sign-in',
@@ -29,10 +29,18 @@ export class SignInComponent {
     this.authService
       .signIn(email, password)
       .pipe(first())
-      .subscribe(() => {
-        this.navigationService
-          .navigateAfterLogin(this.activatedRoute)
-          .then(() => this.toastService.show('Login success !'));
-      });
+      .subscribe(() => this.onSuccessfulSignIn());
+  }
+
+  onGoogleSignIn() {
+    this.authService
+      .signInWithGoogle()
+      .subscribe(() => this.onSuccessfulSignIn());
+  }
+
+  onSuccessfulSignIn() {
+    this.navigationService
+      .navigateAfterLogin(this.activatedRoute)
+      .then(() => this.toastService.show('Login success !'));
   }
 }
