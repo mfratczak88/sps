@@ -5,8 +5,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthPaths } from '../app-routing.module';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
-import { InvalidEmailVerifyLinkComponent } from './invalid-email-verify-link/invalid-email-verify-link.component';
 import { ActionCodeComponent } from './action-code/action-code.component';
+import { InvalidAuthLinkComponent } from './invalid-auth-link/invalid-auth-link.component';
 
 const routes: Routes = [
   {
@@ -31,8 +31,8 @@ const routes: Routes = [
         component: PasswordResetComponent,
       },
       {
-        path: AuthPaths.INVALID_EMAIL_VERIFY_LINK,
-        component: InvalidEmailVerifyLinkComponent,
+        path: AuthPaths.INVALID_AUTH_LINK,
+        component: InvalidAuthLinkComponent,
       },
       {
         path: AuthPaths.ACTION_CODE,

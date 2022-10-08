@@ -1,24 +1,22 @@
 <div class="form" [formGroup]="form">
   <div class="form__fields">
     <mat-form-field appearance="outline">
-      <mat-label>Enter your email</mat-label>
+      <mat-label>{{'AUTH.ENTER_YOUR_EMAIL' | translate}}</mat-label>
       <mat-icon matSuffix>email</mat-icon>
       <input matInput required formControlName="email">
+      <sps-form-error [control]="form.controls['email']"></sps-form-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Enter your password</mat-label>
+      <mat-label>{{'AUTH.ENTER_YOUR_PASSWORD' | translate }}</mat-label>
       <mat-icon matSuffix>password</mat-icon>
       <input matInput type="password" required formControlName="password">
+      <sps-form-error [control]="form.controls['password']"></sps-form-error>
     </mat-form-field>
   </div>
   <button [disabled]="!form.valid" (click)="onSubmit()" class="form__button" mat-raised-button
-          color="primary">Sign in
-  </button>
+          color="primary">{{'AUTH.SIGN_IN' | translate}}</button>
   <div class="form__footer">
-    <sps-link (click)="noAccount.emit()">Don't have an account?</sps-link>
-    <sps-link (click)="forgotPassword.emit()">Forgot your password?</sps-link>
-  </div>
-  <div class="form__disclaimers">
-    <span></span>
+    <sps-link (click)="noAccount.emit()">{{'AUTH.DONT_HAVE_AN_ACCOUNT?' | translate}}</sps-link>
+    <sps-link (click)="forgotPassword.emit()">{{'AUTH.FORGOT_PASSWORD' | translate}}</sps-link>
   </div>
 </div>

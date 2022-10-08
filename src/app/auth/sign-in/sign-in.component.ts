@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { ToastService } from '../../core/service/toast.service';
 import { first } from 'rxjs';
 import { NavigationService } from '../../core/service/navigation.service';
 import { AuthCredentials } from '../../core/state/auth/auth.model';
@@ -18,7 +17,6 @@ export class SignInComponent {
     private readonly activatedRoute: ActivatedRoute,
     readonly navigationService: NavigationService,
     readonly authService: AuthService,
-    private readonly toastService: ToastService,
   ) {
     this.activatedRoute.fragment.subscribe(f => {
       this.showEmailSignUp = f === 'email';
@@ -39,8 +37,6 @@ export class SignInComponent {
   }
 
   onSuccessfulSignIn() {
-    this.navigationService
-      .navigateAfterLogin(this.activatedRoute)
-      .then(() => this.toastService.show('Login success !'));
+    this.navigationService.navigateAfterLogin(this.activatedRoute);
   }
 }

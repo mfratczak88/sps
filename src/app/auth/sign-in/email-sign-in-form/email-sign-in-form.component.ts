@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthCredentials } from '../../../core/state/auth/auth.model';
+import { LocalizedValidators } from '../../../shared/validator';
 
 @Component({
   selector: 'sps-email-sign-in-form',
@@ -24,13 +25,13 @@ export class EmailSignInFormComponent {
 
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [LocalizedValidators.required, LocalizedValidators.email]],
       password: [
         null,
         [
-          Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(20),
+          LocalizedValidators.required,
+          LocalizedValidators.minLength(7),
+          LocalizedValidators.maxLength(20),
         ],
       ],
     });

@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { ToastService } from '../../core/service/toast.service';
 import { NavigationService } from '../../core/service/navigation.service';
 import { first } from 'rxjs';
+import {
+  PASSWORD_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+} from '../../core/state/auth/auth.model';
+import { LocalizedValidators } from '../../shared/validator';
 
 @Component({
   selector: 'sps-sign-up',
@@ -16,17 +20,16 @@ export class SignUpComponent {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly toastService: ToastService,
     readonly navigationService: NavigationService,
   ) {
     this.form = formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [LocalizedValidators.required, LocalizedValidators.email]],
       password: [
         null,
         [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(50),
+          LocalizedValidators.required,
+          LocalizedValidators.minLength(PASSWORD_MIN_LENGTH),
+          LocalizedValidators.maxLength(PASSWORD_MAX_LENGTH),
         ],
       ],
     });
@@ -36,10 +39,6 @@ export class SignUpComponent {
     this.authService
       .signUp(this.form.value)
       .pipe(first())
-      .subscribe(() =>
-        this.navigationService
-          .toSignIn()
-          .then(() => this.toastService.show('Please check your email')),
-      );
+      .subscribe(() => this.navigationService.toSignIn());
   }
 }

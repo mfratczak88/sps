@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AuthStore } from './auth.store';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { concatMap, from } from 'rxjs';
+import { concatMap, from, tap } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { AuthCredentials } from './auth.model';
+import { ToastService } from '../../service/toast.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(
     private readonly authStore: AuthStore,
     private readonly afAuth: AngularFireAuth,
+    private readonly toastService: ToastService,
+    private readonly translateService: TranslateService,
   ) {
     this.afAuth.user.subscribe(user => {
       if (user) {
@@ -42,6 +46,11 @@ export class AuthService {
         return from(result.user!.sendEmailVerification());
       }),
       concatMap(() => this.afAuth.signOut()),
+      tap(() =>
+        this.toastService.show(
+          this.translateService.instant(ToastMessageKeys.CHECK_EMAIL),
+        ),
+      ),
     );
   }
 
@@ -50,14 +59,31 @@ export class AuthService {
   }
 
   sendResetPasswordEmail(email: string) {
-    return from(this.afAuth.sendPasswordResetEmail(email));
+    return from(this.afAuth.sendPasswordResetEmail(email)).pipe(
+      tap(() =>
+        this.toastService.show(
+          this.translateService.instant(ToastMessageKeys.PASS_RESET_MAIL_SENT),
+        ),
+      ),
+    );
   }
 
   verifyEmail(oobCode: string) {
-    return from(this.afAuth.applyActionCode(oobCode));
+    return from(this.afAuth.applyActionCode(oobCode)).pipe(
+      tap(() =>
+        this.toastService.show(
+          this.translateService.instant(ToastMessageKeys.EMAIL_VERIFIED),
+        ),
+      ),
+    );
   }
 
   currentUser$() {
     return this.afAuth.user;
   }
+}
+enum ToastMessageKeys {
+  CHECK_EMAIL = 'CHECK_EMAIL',
+  EMAIL_VERIFIED = 'EMAIL_VERIFIED',
+  PASS_RESET_MAIL_SENT = 'PASS_RESET_MAIL_SENT',
 }

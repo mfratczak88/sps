@@ -1,0 +1,8 @@
+<sps-heading size="l">{{ 'AUTH.LINK_EXPIRED' | translate }}</sps-heading>
+<ng-container *ngIf="mode === 'verifyEmail';else resendPasswordResetEmail">
+  <button mat-raised-button>{{'AUTH.RESEND_PASSWORD_RESET_EMAIL' | translate}}</button>
+</ng-container>
+<ng-template #resendPasswordResetEmail>
+  <button mat-raised-button
+          (click)="navigationService.toPasswordReset()">{{'AUTH.RESEND_PASSWORD_RESET_EMAIL' | translate}}</button>
+</ng-template>

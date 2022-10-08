@@ -1,24 +1,26 @@
 <div
   class="sign-up-form"
   [formGroup]="form">
-  <sps-heading [centered]="true" size="l">Sign Up</sps-heading>
+  <sps-heading [centered]="true" size="l">{{'AUTH.SIGN_UP_TITLE' | translate}}</sps-heading>
   <div class="sign-up-form__fields">
     <mat-form-field appearance="outline">
-      <mat-label>Enter your email</mat-label>
+      <mat-label>{{'AUTH.ENTER_YOUR_EMAIL'| translate}}</mat-label>
       <mat-icon matSuffix>email</mat-icon>
       <input
         matInput
         required
         formControlName="email">
+      <sps-form-error [control]="form.get('email')!"></sps-form-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Enter your password</mat-label>
+      <mat-label>{{'AUTH.ENTER_YOUR_PASSWORD'| translate}}</mat-label>
       <mat-icon matSuffix>password</mat-icon>
       <input
         matInput
         type="password"
         required
         formControlName="password">
+      <sps-form-error [control]="form.get('password')!"></sps-form-error>
     </mat-form-field>
   </div>
   <button [disabled]="!form.valid"
@@ -26,13 +28,13 @@
           class="sign-up-form__button"
           mat-raised-button
           color="primary">
-    Sign Up
+    {{'AUTH.SIGN_UP'| translate}}
   </button>
   <div class="sign-up-form__footer">
-    <sps-link (click)="navigationService.toSignIn()">Already have an account ?</sps-link>
+    <sps-link (click)="navigationService.toSignIn()">{{'AUTH.ALREADY_HAVE_ACCOUNT'| translate}}</sps-link>
   </div>
   <div class="sign-up-form__disclaimer">
-    <p>By submitting this form, you confirm that you have read and agree to the <span
-      class="sign-up-form__disclaimer--terms">Terms & Conditions</span>.</p>
+    <p>{{'AUTH.SIGN_UP_DISCLAIMER'| translate}}<span
+      class="sign-up-form__disclaimer--terms">{{'AUTH.TERMS_AND_CONDITIONS'| translate}}</span>.</p>
   </div>
 </div>

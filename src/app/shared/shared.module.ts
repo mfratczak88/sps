@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { MatMenuModule } from '@angular/material/menu';
 import { LinkComponent } from './components/link/link.component';
 import { HeadingComponent } from './components/heading/heading.component';
 import { TextComponent } from './components/text/text.component';
 import { ToastService } from '../core/service/toast.service';
 import { MaterialToastService } from './service/material.toast.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormErrorComponent } from './components/form-error/form-error.component';
 
 @NgModule({
   declarations: [
@@ -15,14 +16,17 @@ import { MaterialToastService } from './service/material.toast.service';
     LinkComponent,
     HeadingComponent,
     TextComponent,
+    FormErrorComponent,
   ],
-  imports: [CommonModule, MaterialModule, MatMenuModule],
+  imports: [CommonModule, MaterialModule, TranslateModule.forChild()],
   exports: [
     MaterialModule,
+    TranslateModule,
     NavbarComponent,
     LinkComponent,
     HeadingComponent,
     TextComponent,
+    FormErrorComponent,
   ],
   providers: [
     {

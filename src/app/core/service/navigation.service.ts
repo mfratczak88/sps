@@ -32,9 +32,9 @@ export class NavigationService {
     ]);
   }
 
-  toInvalidEmailVerifyLink() {
+  toInvalidAuthLink(mode: AuthActionMode) {
     return this.router.navigate([
-      `/${TopLevelPaths.AUTH}/${AuthPaths.INVALID_EMAIL_VERIFY_LINK}`,
+      `/${TopLevelPaths.AUTH}/${AuthPaths.INVALID_AUTH_LINK}?mode=${mode}`,
     ]);
   }
 
@@ -56,6 +56,10 @@ export class NavigationService {
     ]);
   }
 
+  private queryParamMapFromCurrentRoute() {
+    return this.router.routerState.snapshot.root.queryParamMap;
+  }
+
   navigateAfterLogin(activatedRoute: ActivatedRoute) {
     if (!activatedRoute.snapshot.queryParams['returnUrl']) {
       return this.router.navigate(['/']);
@@ -71,14 +75,17 @@ export class NavigationService {
     return this.router.navigateByUrl(url, { replaceUrl: true });
   }
 
-  actionCodeParamsFromActivatedRoute(
-    activatedRoute: ActivatedRoute,
-  ): AuthActionCodeQueryParams {
-    const queryParamMap = activatedRoute.snapshot.queryParamMap;
+  actionCodeParamsFromActivatedRoute(): AuthActionCodeQueryParams {
+    const queryParamMap = this.queryParamMapFromCurrentRoute();
     return {
       mode: queryParamMap.get('mode') as AuthActionMode,
       oobCode: queryParamMap.get('oobCode'),
     };
+  }
+
+  authActionModeFromQueryParams() {
+    const queryParamMap = this.queryParamMapFromCurrentRoute();
+    return queryParamMap.get('mode');
   }
 
   to404() {

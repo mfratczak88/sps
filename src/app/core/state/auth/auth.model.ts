@@ -8,8 +8,12 @@ export interface User {
   photoURL: string | null;
   emailVerified: boolean;
 }
-export type AuthActionMode = 'verifyEmail' | 'resetPassword';
-
+export const PASSWORD_MIN_LENGTH = 8;
+export const PASSWORD_MAX_LENGTH = 25;
+export enum AuthActionMode {
+  VERIFY_EMAIL = 'verifyEmail',
+  RESET_PASSWORD = 'resetPassword',
+}
 export interface AuthActionCodeQueryParams {
   mode: AuthActionMode | null;
   oobCode: string | null;
