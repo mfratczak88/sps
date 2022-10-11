@@ -1,8 +1,9 @@
 <div class="sign-in">
-  <sps-heading size="l" [centered]="true">{{'AUTH.SIGN_IN_TITLE' | translate}}</sps-heading>
+  <sps-heading size="l" [centered]="true">{{translations.SIGN_IN_TITLE | translate}}</sps-heading>
   <div class="sign-in__form">
     <ng-container *ngIf="showEmailSignUp; else signInType">
-      <sps-email-sign-in-form (submit)="onEmailSignIn($event)"
+      <sps-email-sign-in-form class="sign-in__form--component"
+                              (submit)="onEmailSignIn($event)"
                               (back)="navigationService.toSameRoute()"
                               (noAccount)="navigationService.toSignUp()"
                               (forgotPassword)="navigationService.toPasswordReset()">
@@ -11,15 +12,16 @@
   </div>
 </div>
 <ng-template #signInType>
-  <button mat-raised-button
+  <button class="sign-in__form--email-button" mat-raised-button
           color="primary"
           (click)="navigationService.toSameRoute( { fragment: 'email',queryParamsHandling: 'preserve' })">
-    {{'AUTH.SIGN_IN_WITH_EMAIL' | translate}}
+    {{translations.SIGN_IN_WITH_EMAIL | translate}}
   </button>
-  <button mat-button
+  <button class="sign-in__form--google-button"
+          mat-button
           color="primary"
           (click)="onGoogleSignIn()">
-    {{'AUTH.SIGN_IN_WITH_GOOGLE' | translate}}
+    {{translations.SIGN_IN_WITH_GOOGLE | translate}}
   </button>
 </ng-template>
 

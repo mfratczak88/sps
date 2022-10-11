@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../core/state/auth/auth.service';
 import { NavigationService } from '../../core/service/navigation.service';
 import { concatMap, first } from 'rxjs';
 import { LocalizedValidators } from '../../shared/validator';
+import { AuthTranslationKeys } from '../../core/translation-keys';
 
 @Component({
   selector: 'sps-password-reset',
@@ -11,7 +12,9 @@ import { LocalizedValidators } from '../../shared/validator';
   styleUrls: ['./password-reset.component.scss'],
 })
 export class PasswordResetComponent {
-  form: FormGroup;
+  readonly form: FormGroup;
+
+  readonly translations = AuthTranslationKeys;
 
   constructor(
     formBuilder: FormBuilder,

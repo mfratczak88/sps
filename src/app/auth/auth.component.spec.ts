@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthComponent } from './auth.component';
+import { By } from '@angular/platform-browser';
 
 describe('AuthComponent', () => {
   let component: AuthComponent;
@@ -18,7 +19,10 @@ describe('AuthComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('Shows logo', () => {
+    const logo = fixture.debugElement.query(By.css('.auth__logo--svg'))
+      .nativeElement;
+
+    expect(logo).toBeDefined();
   });
 });

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { AuthPaths, ErrorPaths, TopLevelPaths } from '../../app-routing.module';
 import {
   AuthActionCodeQueryParams,
   AuthActionMode,
 } from '../state/auth/auth.model';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -56,17 +57,18 @@ export class NavigationService {
     ]);
   }
 
-  private queryParamMapFromCurrentRoute() {
-    return this.router.routerState.snapshot.root.queryParamMap;
+  emailFragment$() {
+    return this.router.routerState.root.fragment.pipe(map(f => f === 'email'));
   }
 
-  navigateAfterLogin(activatedRoute: ActivatedRoute) {
-    if (!activatedRoute.snapshot.queryParams['returnUrl']) {
+  navigateAfterLogin() {
+    const queryParams = this.queryParamMapFromCurrentRoute();
+    if (!queryParams.get('returnUrl')) {
       return this.router.navigate(['/']);
     }
     // return url might contain different query params -> expect the first one, the others will not be contained in the returnUrl var
     // those need to be added manually to the url
-    const { returnUrl, ...others } = activatedRoute.snapshot.queryParams;
+    const { returnUrl, ...others } = this.queryParamsFromCurrentRoute();
     let url: string = returnUrl;
     others &&
       Object.entries(others).forEach(([queryParamKey, queryParamValue]) => {
@@ -92,5 +94,13 @@ export class NavigationService {
     return this.router.navigate([
       `${TopLevelPaths.ERROR}/${ErrorPaths.NOT_FOUND}`,
     ]);
+  }
+
+  private queryParamMapFromCurrentRoute() {
+    return this.router.routerState.snapshot.root.queryParamMap;
+  }
+
+  private queryParamsFromCurrentRoute() {
+    return this.router.routerState.snapshot.root.queryParams;
   }
 }

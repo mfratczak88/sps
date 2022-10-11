@@ -4,6 +4,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { FormErrorKeys } from '../core/translation-keys';
 
 export class LocalizedValidators {
   private static withErrorMessage(
@@ -38,7 +39,7 @@ export class LocalizedValidators {
   static get required() {
     return LocalizedValidators.withErrorMessage(
       Validators.required,
-      LocalizedErrors['required'](),
+      LocalizedErrors.required(),
     );
   }
 
@@ -56,16 +57,16 @@ export interface LocalizedValidationError extends ValidationErrors {
 }
 
 export const LocalizedErrors = {
-  required: () => ({ errorMessage: 'FORM_ERROR.REQUIRED' }),
+  required: () => ({ errorMessage: FormErrorKeys.REQUIRED }),
   minLength: (length: number) => ({
-    errorMessage: 'FORM_ERROR.MIN_LENGTH',
+    errorMessage: FormErrorKeys.MIN_LENGTH,
     props: { length },
   }),
   maxLength: (length: number) => ({
-    errorMessage: 'FORM_ERROR.MIN_LENGTH',
+    errorMessage: FormErrorKeys.MAX_LENGTH,
     props: { length },
   }),
   email: () => ({
-    errorMessage: 'FORM_ERROR.EMAIL',
+    errorMessage: FormErrorKeys.EMAIL,
   }),
 };

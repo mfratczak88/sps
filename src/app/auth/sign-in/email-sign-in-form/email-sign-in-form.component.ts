@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthCredentials } from '../../../core/state/auth/auth.model';
+import {
+  AuthCredentials,
+  PASSWORD_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+} from '../../../core/state/auth/auth.model';
 import { LocalizedValidators } from '../../../shared/validator';
+import { AuthTranslationKeys } from '../../../core/translation-keys';
 
 @Component({
   selector: 'sps-email-sign-in-form',
@@ -9,7 +14,9 @@ import { LocalizedValidators } from '../../../shared/validator';
   styleUrls: ['./email-sign-in-form.component.scss'],
 })
 export class EmailSignInFormComponent {
-  form: FormGroup;
+  readonly form: FormGroup;
+
+  readonly translations = AuthTranslationKeys;
 
   @Output()
   readonly submit = new EventEmitter<AuthCredentials>();
@@ -30,8 +37,8 @@ export class EmailSignInFormComponent {
         null,
         [
           LocalizedValidators.required,
-          LocalizedValidators.minLength(7),
-          LocalizedValidators.maxLength(20),
+          LocalizedValidators.minLength(PASSWORD_MIN_LENGTH),
+          LocalizedValidators.maxLength(PASSWORD_MAX_LENGTH),
         ],
       ],
     });

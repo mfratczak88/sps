@@ -8,9 +8,8 @@ describe('ConfirmPasswordResetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmPasswordResetComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfirmPasswordResetComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmPasswordResetComponent);
     component = fixture.componentInstance;

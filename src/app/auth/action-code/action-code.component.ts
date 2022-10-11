@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../core/state/auth/auth.service';
 import { NavigationService } from '../../core/service/navigation.service';
-import { catchError, concatMap, first, throwError } from 'rxjs';
+import { catchError, concatMap, first } from 'rxjs';
+import { AuthActionMode } from '../../core/state/auth/auth.model';
 
 @Component({
   selector: 'sps-action-code',
@@ -22,14 +23,14 @@ export class ActionCodeComponent {
       this.navigationService.to404();
       return;
     }
-    if (mode === 'verifyEmail') {
+    if (mode === AuthActionMode.VERIFY_EMAIL) {
       this.authService
         .verifyEmail(oobCode)
         .pipe(
           first(),
           catchError(error => {
             this.navigationService.toInvalidAuthLink(mode);
-            return throwError(error);
+            throw error;
           }),
           concatMap(() => this.navigationService.toSignIn()),
         )

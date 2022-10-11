@@ -8,6 +8,7 @@ import {
   PASSWORD_MIN_LENGTH,
 } from '../../core/state/auth/auth.model';
 import { LocalizedValidators } from '../../shared/validator';
+import { AuthTranslationKeys } from '../../core/translation-keys';
 
 @Component({
   selector: 'sps-sign-up',
@@ -15,7 +16,9 @@ import { LocalizedValidators } from '../../shared/validator';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent {
-  form: FormGroup;
+  readonly form: FormGroup;
+
+  readonly translations = AuthTranslationKeys;
 
   constructor(
     private readonly formBuilder: FormBuilder,
