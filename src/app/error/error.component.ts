@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationService } from '../core/service/navigation.service';
+import { ErrorKeys } from '../core/translation-keys';
 
 @Component({
   selector: 'sps-error',
@@ -7,5 +8,7 @@ import { NavigationService } from '../core/service/navigation.service';
   styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent {
+  readonly translations = ErrorKeys;
+
   constructor(readonly navigationService: NavigationService) {}
 }

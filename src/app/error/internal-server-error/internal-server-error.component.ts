@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ErrorKeys } from '../../core/translation-keys';
 
 @Component({
   selector: 'sps-internal-server-error',
   templateUrl: './internal-server-error.component.html',
   styleUrls: ['./internal-server-error.component.scss'],
 })
-export class InternalServerErrorComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class InternalServerErrorComponent {
+  readonly translations = ErrorKeys;
 }
