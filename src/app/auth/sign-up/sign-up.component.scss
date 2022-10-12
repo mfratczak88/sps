@@ -1,0 +1,23 @@
+@use "../../../variables" as *;
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  gap: $form-elements-gap;
+  max-width: $form-max-width;
+  margin: 0 auto;
+}
+
+.sign-up-form__fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-up-form__disclaimer {
+  @include typography-body-xs;
+}
+
+.sign-up-form__disclaimer--terms {
+  font-weight: $font-weight-bold;
+  text-decoration: underline;
+}

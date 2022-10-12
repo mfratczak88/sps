@@ -1,0 +1,16 @@
+@use "../../../../variables" as vrs;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: vrs.$form-elements-gap;
+
+}
+.form__footer {
+  display: flex;
+  justify-content: space-between;
+}
+.form__fields {
+  display: flex;
+  flex-direction: column;
+}
+

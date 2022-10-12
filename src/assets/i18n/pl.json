@@ -1,0 +1,47 @@
+{
+  "AUTH": {
+    "RESEND_EMAIL_VERIFICATION": "Wyślij ponownie",
+    "RESEND_PASSWORD_RESET_EMAIL": "Wyślij ponownie",
+    "LINK_EXPIRED": "Wygląda na to, że link wygasł",
+    "FORGOT_PASSWORD": "Zapomniałeś hasła?",
+    "WE_CAN_RESET_PASSWORD": "Możemy zresetować Twoje hasło, jeżeli go nie pamiętasz, wysyłajac email z linkiem.",
+    "ENTER_EMAIL": "Twój email",
+    "REMEMBER_IT": "Pamiętasz hasło?",
+    "DONT_HAVE_AN_ACCOUNT": "Nie masz konta?",
+    "SIGN_IN_TITLE": "Login",
+    "SIGN_IN": "Zaloguj się",
+    "SIGN_UP_TITLE": "Rejestracja",
+    "SIGN_UP": "Rejestracja",
+    "SIGN_IN_WITH_EMAIL": "Użyj adresu email",
+    "SIGN_IN_WITH_GOOGLE": "Kontynuuj, używając Google",
+    "ENTER_YOUR_EMAIL": "Twój email",
+    "ENTER_YOUR_PASSWORD": "Twoje hasło",
+    "ALREADY_HAVE_ACCOUNT": "Posiadasz już konto?",
+    "SIGN_UP_DISCLAIMER": "Tworząc konto zgadzasz się na ",
+    "TERMS_AND_CONDITIONS": "Regulamin i Warunki",
+    "RESET_BUTTON": "Resetuj"
+  },
+  "FORM_ERROR": {
+    "REQUIRED": "To pole jest wymagane",
+    "MIN_LENGTH": "To pole musi mieć conajmniej {{length}} znaków",
+    "MAX_LENGTH": "To pole musi mieć maksymalnie {{length}} znaków",
+    "EMAIL": "Niepoprawny adres email"
+  },
+  "TOAST": {
+    "CHECK_EMAIL": "Sprawdź swój email",
+    "EMAIL_VERIFIED": "Zweryfikowaliśmy Twój email. Możesz się zalogować",
+    "PASS_RESET_MAIL_SENT": "Wysłaliśmy email z linkiem. Sprawdź pocztę",
+    "DISMISS": "Dismiss"
+  },
+  "ERROR": {
+    "INTERNAL_SERVER_ERROR": "Błąd serwera",
+    "UNKNOWN_ERROR": "Wystąpił nieznany błąd",
+    "PAGE_NOT_FOUND": "Strona nie istnieje",
+    "PAGE_NOT_FOUND_TEXT": "Strona której szukasz nie istnieje",
+    "TO_HOME_PAGE": "Strona główna"
+  },
+  "SHARED": {
+    "HEY_USER": "Hej",
+    "SIGN_OUT": "Wyloguj"
+  }
+}

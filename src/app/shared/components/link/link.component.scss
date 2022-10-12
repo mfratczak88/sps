@@ -1,0 +1,10 @@
+@use "../../../../variables" as vars;
+.link {
+  @include vars.typography-body-xs;
+  color: vars.$color-primary;
+  text-decoration: underline;
+}
+
+.link:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,8 @@
+@use 'node_modules/@angular/material' as mat;
+@use "sass:map";
+@use "variables" as vars;
+$sps-theme: mat.define-light-theme(vars.$primary-palette, vars.$secondary-palette, vars.$warn-palette);
+@include mat.all-component-themes($sps-theme);
+
+
+
