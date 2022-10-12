@@ -1,0 +1,11 @@
+@use "../../../../variables" as *;
+.mat-toolbar.mat-primary {
+  background: $navbar-color;
+}
+.toolbar__title {
+  flex: 1 1 auto;
+}
+.toolbar__logo {
+  max-width: 85%;
+  max-height: 85%;
+}

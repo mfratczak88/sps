@@ -1,0 +1,74 @@
+$navbar-color: #001529;
+
+
+$form-elements-gap: 1rem;
+$centered-elements-max-width:500px;
+$form-max-width: 350px;
+/* Typography */
+
+// Weights
+$font-weight-bold: 600;
+$font-weight-normal: 400;
+
+// Body color
+$body-text-color: #636B75;
+
+// Heading
+@mixin heading-font-weight {
+  font-weight: $font-weight-bold;
+}
+
+@mixin typography-heading-xl {
+  @include heading-font-weight;
+  font-size: 44px;
+  line-height: 52px;
+}
+
+@mixin typography-heading-l {
+  @include heading-font-weight;
+  font-size: 36px;
+  line-height: 44px;
+}
+
+@mixin typography-heading-m {
+  @include heading-font-weight;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+@mixin typography-heading-s {
+  @include heading-font-weight;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+// Body
+@mixin body-font {
+  font-weight: $font-weight-normal;
+  color: $body-text-color;
+}
+
+@mixin typography-body-l {
+  @include body-font;
+  font-size: 18px;
+  line-height: 32px;
+}
+
+@mixin typography-body-m {
+  @include body-font;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+@mixin typography-body-s {
+  @include body-font;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@mixin typography-body-xs {
+  @include body-font;
+  font-size: 12px;
+  line-height: 16px;
+}
+

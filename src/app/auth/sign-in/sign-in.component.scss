@@ -1,0 +1,12 @@
+@use "../../../variables" as *;
+.sign-in {
+  display: flex;
+  flex-direction: column;
+  gap: $form-elements-gap;
+  margin: 0 auto;
+  max-width: $form-max-width;
+}
+.sign-in__form {
+  display: flex;
+  flex-direction: column;
+}
