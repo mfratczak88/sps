@@ -1,16 +1,55 @@
-import { TestBed } from '@angular/core/testing';
-
 import { AuthGuard } from './auth.guard';
+import { AuthService } from '../state/auth/auth.service';
+import { NavigationService } from '../service/navigation.service';
+import { Observable, of } from 'rxjs';
+import firebase from 'firebase/compat';
+import {
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
+import SpyObj = jasmine.SpyObj;
+import User = firebase.User;
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
-
+  let authServiceSpy: SpyObj<AuthService>;
+  let navigationServiceSpy: SpyObj<NavigationService>;
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    guard = TestBed.inject(AuthGuard);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['currentUser$']);
+    navigationServiceSpy = jasmine.createSpyObj('NavigationService', [
+      'urlTreeForLoginWithReturnUrl',
+    ]);
+    guard = new AuthGuard(authServiceSpy, navigationServiceSpy);
   });
-
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
+  it('Returns true if user is verified', () => {
+    authServiceSpy.currentUser$.and.returnValue(
+      of({
+        emailVerified: true,
+      } as User),
+    );
+    const routeSnapshot = {} as ActivatedRouteSnapshot;
+    const state = {} as RouterStateSnapshot;
+    (<Observable<boolean>>(
+      guard.canActivate(routeSnapshot, state)
+    )).subscribe(canActivate => expect(canActivate).toEqual(true));
+  });
+  it('Calls navigation service when user is not verified providing state url', () => {
+    authServiceSpy.currentUser$.and.returnValue(
+      of({
+        emailVerified: false,
+      } as User),
+    );
+    const routeSnapshot = {} as ActivatedRouteSnapshot;
+    const state = {
+      url: '/',
+    } as RouterStateSnapshot;
+    (<Observable<UrlTree>>(
+      guard.canActivate(routeSnapshot, state)
+    )).subscribe(() =>
+      expect(
+        navigationServiceSpy.urlTreeForLoginWithReturnUrl,
+      ).toHaveBeenCalledWith(state.url),
+    );
   });
 });

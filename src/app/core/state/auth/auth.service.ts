@@ -6,6 +6,7 @@ import firebase from 'firebase/compat/app';
 import { AuthCredentials } from './auth.model';
 import { ToastService } from '../../service/toast.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastKeys } from '../../translation-keys';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -42,13 +43,11 @@ export class AuthService {
     return from(
       this.afAuth.createUserWithEmailAndPassword(email, password),
     ).pipe(
-      concatMap(result => {
-        return from(result.user!.sendEmailVerification());
-      }),
+      concatMap(result => from(result.user!.sendEmailVerification())),
       concatMap(() => this.afAuth.signOut()),
       tap(() =>
         this.toastService.show(
-          this.translateService.instant(ToastMessageKeys.CHECK_EMAIL),
+          this.translateService.instant(ToastKeys.CHECK_EMAIL),
         ),
       ),
     );
@@ -62,7 +61,7 @@ export class AuthService {
     return from(this.afAuth.sendPasswordResetEmail(email)).pipe(
       tap(() =>
         this.toastService.show(
-          this.translateService.instant(ToastMessageKeys.PASS_RESET_MAIL_SENT),
+          this.translateService.instant(ToastKeys.PASS_RESET_MAIL_SENT),
         ),
       ),
     );
@@ -72,7 +71,7 @@ export class AuthService {
     return from(this.afAuth.applyActionCode(oobCode)).pipe(
       tap(() =>
         this.toastService.show(
-          this.translateService.instant(ToastMessageKeys.EMAIL_VERIFIED),
+          this.translateService.instant(ToastKeys.EMAIL_VERIFIED),
         ),
       ),
     );
@@ -81,9 +80,4 @@ export class AuthService {
   currentUser$() {
     return this.afAuth.user;
   }
-}
-enum ToastMessageKeys {
-  CHECK_EMAIL = 'CHECK_EMAIL',
-  EMAIL_VERIFIED = 'EMAIL_VERIFIED',
-  PASS_RESET_MAIL_SENT = 'PASS_RESET_MAIL_SENT',
 }

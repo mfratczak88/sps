@@ -13,6 +13,17 @@ import {
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 
+const providers = [
+  {
+    provide: USE_AUTH_EMULATOR,
+    useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined,
+  },
+  {
+    provide: USE_FIRESTORE_EMULATOR,
+    useValue: environment.useEmulators ? ['localhost', '8080'] : undefined,
+  },
+];
+
 @NgModule({
   declarations: [],
   imports: [
@@ -23,17 +34,6 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireAuthModule,
     MatSnackBarModule,
   ],
-  providers: [
-    {
-      provide: USE_AUTH_EMULATOR,
-      useValue: environment.useEmulators
-        ? ['http://localhost:9099']
-        : undefined,
-    },
-    {
-      provide: USE_FIRESTORE_EMULATOR,
-      useValue: environment.useEmulators ? ['localhost', '8080'] : undefined,
-    },
-  ],
+  providers: [...providers],
 })
 export class CoreModule {}

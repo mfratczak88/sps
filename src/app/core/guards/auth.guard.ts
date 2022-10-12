@@ -7,7 +7,6 @@ import {
 } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { NavigationService } from '../service/navigation.service';
-import { AuthQuery } from '../state/auth/auth.query';
 import { AuthService } from '../state/auth/auth.service';
 
 @Injectable({
