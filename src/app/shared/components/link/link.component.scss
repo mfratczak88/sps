@@ -1,8 +1,7 @@
-@use "../../../../theme" as theme;
 @use "../../../../variables" as vars;
 .link {
   @include vars.typography-body-xs;
-  color: theme.$color-primary;
+  color: vars.$color-primary;
   text-decoration: underline;
 }
 
