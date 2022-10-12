@@ -4,7 +4,10 @@ import { SignUpComponent } from './sign-up.component';
 import { translateTestModule } from '../../../test.utils';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TranslateService } from '@ngx-translate/core';
@@ -64,7 +67,7 @@ describe('SignUpComponent', () => {
         await translateTestModule(),
         ReactiveFormsModule,
         SharedModule,
-        NoopAnimationsModule,
+        BrowserAnimationsModule,
       ],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },

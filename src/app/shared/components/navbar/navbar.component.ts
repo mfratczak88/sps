@@ -4,6 +4,7 @@ import { User } from '../../../core/state/auth/auth.model';
 import { Observable } from 'rxjs';
 import { NavigationService } from '../../../core/service/navigation.service';
 import { AuthQuery } from '../../../core/state/auth/auth.query';
+import { SharedKeys } from '../../../core/translation-keys';
 
 @Component({
   selector: 'sps-navbar',
@@ -12,6 +13,8 @@ import { AuthQuery } from '../../../core/state/auth/auth.query';
 })
 export class NavbarComponent {
   user$: Observable<User | null>;
+
+  readonly translations = SharedKeys;
 
   constructor(
     readonly authQuery: AuthQuery,

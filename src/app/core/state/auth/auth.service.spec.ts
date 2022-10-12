@@ -62,11 +62,7 @@ describe('Auth service spec', () => {
       password,
     );
   });
-  it('signInWithGoogle - calls afAuth signInWithPopup', () => {
-    afAuthSpy.signInWithPopup.and.resolveTo();
-    authService.signInWithGoogle();
-    expect(afAuthSpy.signInWithPopup).toHaveBeenCalled();
-  });
+
   it('signUp - creates user, send verification email and signs out from af', async () => {
     // given
     const checkEmailText = 'Check your email';

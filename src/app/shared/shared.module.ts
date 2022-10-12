@@ -9,6 +9,7 @@ import { ToastService } from '../core/service/toast.service';
 import { MaterialToastService } from './service/material.toast.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormErrorComponent } from './components/form-error/form-error.component';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -19,12 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TextComponent,
     FormErrorComponent,
   ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    BrowserAnimationsModule,
-    TranslateModule.forChild(),
-  ],
+  imports: [CommonModule, MaterialModule, TranslateModule.forChild()],
   exports: [
     MaterialModule,
     TranslateModule,

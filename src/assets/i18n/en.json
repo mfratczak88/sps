@@ -30,6 +30,19 @@
   "TOAST": {
     "CHECK_EMAIL": "Please check your email. Check your mailbox",
     "EMAIL_VERIFIED": "Email has been verified. You can now log in",
-    "PASS_RESET_MAIL_SENT": "Password reset email has been sent. Check your mailbox"
+    "PASS_RESET_MAIL_SENT": "Password reset email has been sent. Check your mailbox",
+    "DISMISS": "Dismiss"
+  },
+  "ERROR": {
+    "INTERNAL_SERVER_ERROR" : "Internal error",
+    "UNKNOWN_ERROR" : "Some unknown error has occurred",
+    "PAGE_NOT_FOUND": "Page not found",
+    "PAGE_NOT_FOUND_TEXT": "Page you're looking for has not been found",
+    "TO_HOME_PAGE": "To home page"
+  },
+  "SHARED": {
+    "HEY_USER": "Hey",
+    "SIGN_OUT": "Sign out"
   }
+
 }

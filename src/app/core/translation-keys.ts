@@ -39,3 +39,7 @@ export enum ToastKeys {
   PASS_RESET_MAIL_SENT = 'TOAST.PASS_RESET_MAIL_SENT',
   DISMISS = 'TOAST.DISMISS',
 }
+export enum SharedKeys {
+  HEY_USER = 'SHARED.HEY_USER',
+  SIGN_OUT = 'SHARED.SIGN_OUT',
+}

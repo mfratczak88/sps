@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import firebase from 'firebase/compat';
 import UserCredential = firebase.auth.UserCredential;
 import { AuthTranslationKeys } from '../../core/translation-keys';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SignInComponent', () => {
   let fixture: ComponentFixture<SignInComponent>;
@@ -60,6 +61,7 @@ describe('SignInComponent', () => {
           await import('../../../assets/i18n/pl.json'),
         ).withTranslations('en', await import('../../../assets/i18n/en.json')),
         SharedModule,
+        BrowserAnimationsModule,
         ReactiveFormsModule,
       ],
     }).compileComponents();
