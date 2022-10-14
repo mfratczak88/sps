@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormErrorComponent } from './components/form-error/form-error.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     FormErrorComponent,
     PageHeaderComponent,
     BreadcrumbsComponent,
+    DrawerComponent,
   ],
   imports: [CommonModule, MaterialModule, TranslateModule.forChild()],
   exports: [
@@ -32,6 +34,7 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     TextComponent,
     FormErrorComponent,
     PageHeaderComponent,
+    DrawerComponent,
   ],
   providers: [
     {

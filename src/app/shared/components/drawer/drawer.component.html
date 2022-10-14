@@ -1,0 +1,11 @@
+<mat-drawer-container class="drawer" autosize>
+  <mat-drawer #drawer mode="side" opened>
+    <div
+      class="drawer__item"
+      *ngFor="let item of items"
+      (click)="item.onClick()">
+      <mat-icon>{{item.icon}}</mat-icon>
+      <p class="drawer__item--name">{{item.name}}</p>
+    </div>
+  </mat-drawer>
+</mat-drawer-container>

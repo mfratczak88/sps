@@ -1,0 +1,21 @@
+@use "../../../../variables" as vars;
+.drawer {
+  height: 100%;
+}
+.drawer__item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  color: vars.$body-text-color;
+}
+.drawer__item--name {
+  margin-bottom: 0;
+  align-self: center;
+}
+.drawer__item[selected]{
+  background: vars.$color-drawer-selected;
+}
+.drawer__item:hover{
+  cursor: pointer;
+  background: vars.$color-drawer-hover;
+}
