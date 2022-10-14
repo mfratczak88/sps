@@ -3,9 +3,13 @@
     <div
       class="drawer__item"
       *ngFor="let item of items"
-      (click)="item.onClick()">
+      [routerLink]="'.' + '/' + item.link"
+      routerLinkActive="selected">
       <mat-icon>{{item.icon}}</mat-icon>
-      <p class="drawer__item--name">{{item.name}}</p>
+      <p class="drawer__item--name">{{item.name | translate}}</p>
     </div>
   </mat-drawer>
+  <div class="drawer__content">
+    <ng-content></ng-content>
+  </div>
 </mat-drawer-container>

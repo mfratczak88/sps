@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'sps-drawer',
@@ -8,11 +9,18 @@ import { Component, Input } from '@angular/core';
 export class DrawerComponent {
   @Input()
   items: DrawerItem[] = [];
+
+  @ViewChild(MatDrawer)
+  drawer: MatDrawer;
+
+  toggle() {
+    this.drawer.toggle();
+  }
 }
 export interface DrawerItem {
   icon: DrawerIcon;
   name: string;
-  onClick: () => void;
+  link: string;
 }
 export type DrawerIcon =
   | 'dashboard'

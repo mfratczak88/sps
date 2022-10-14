@@ -1,4 +1,6 @@
 <div class="dashboard">
-  <sps-navbar></sps-navbar>
-  <sps-drawer [items]="drawerItems"></sps-drawer>
+  <sps-navbar (hamburgerPressed)="drawerComponent.toggle()"></sps-navbar>
+  <sps-drawer #drawerComponent [items]="drawerItems">
+    <router-outlet></router-outlet>
+  </sps-drawer>
 </div>

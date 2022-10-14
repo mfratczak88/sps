@@ -12,6 +12,7 @@ import { FormErrorComponent } from './components/form-error/form-error.component
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,12 @@ import { DrawerComponent } from './components/drawer/drawer.component';
     BreadcrumbsComponent,
     DrawerComponent,
   ],
-  imports: [CommonModule, MaterialModule, TranslateModule.forChild()],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    TranslateModule.forChild(),
+    RouterModule,
+  ],
   exports: [
     MaterialModule,
     TranslateModule,

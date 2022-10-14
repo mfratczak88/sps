@@ -17,6 +17,12 @@ export enum ErrorPaths {
   NOT_FOUND = 'not-found',
   INTERNAL_SERVER_ERROR = 'internal-server-error',
 }
+export enum AdminPaths {
+  DASHBOARD = 'dashboard',
+  USERS = 'users',
+  PARKING = 'parking',
+  RESERVATIONS = 'reservations',
+}
 const routes: Routes = [
   {
     path: '',

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { DrawerItem } from '../shared/components/drawer/drawer.component';
+import { AdminPaths } from '../app-routing.module';
+import { AdminDrawerKeys } from '../core/translation-keys';
 
 @Component({
   selector: 'sps-admin-dashboard',
@@ -9,24 +11,24 @@ import { DrawerItem } from '../shared/components/drawer/drawer.component';
 export class AdminDashboardComponent {
   drawerItems: DrawerItem[] = [
     {
-      name: 'Users',
-      icon: 'person',
-      onClick: () => {},
-    },
-    {
-      name: 'Parking',
-      icon: 'emoji_transportation',
-      onClick: () => {},
-    },
-    {
-      name: 'Reservations',
-      icon: 'calendar_month',
-      onClick: () => {},
-    },
-    {
-      name: 'Dashboard',
+      name: AdminDrawerKeys.DASHBOARD,
       icon: 'dashboard',
-      onClick: () => {},
+      link: AdminPaths.DASHBOARD,
+    },
+    {
+      name: AdminDrawerKeys.USERS,
+      icon: 'person',
+      link: AdminPaths.USERS,
+    },
+    {
+      name: AdminDrawerKeys.PARKING,
+      icon: 'emoji_transportation',
+      link: AdminPaths.PARKING,
+    },
+    {
+      name: AdminDrawerKeys.RESERVATIONS,
+      icon: 'calendar_month',
+      link: AdminPaths.RESERVATIONS,
     },
   ];
 }

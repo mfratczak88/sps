@@ -43,6 +43,12 @@
   "SHARED": {
     "HEY_USER": "Hey",
     "SIGN_OUT": "Sign out"
+  },
+  "ADMIN_DRAWER" : {
+    "DASHBOARD" : "Dashboard",
+    "PARKING" : "Parking",
+    "RESERVATIONS" : "Reservations",
+    "USERS": "Users"
   }
 
 }

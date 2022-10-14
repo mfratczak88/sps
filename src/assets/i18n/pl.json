@@ -43,5 +43,11 @@
   "SHARED": {
     "HEY_USER": "Hej",
     "SIGN_OUT": "Wyloguj"
+  },
+  "ADMIN_DRAWER" : {
+    "DASHBOARD" : "Panel",
+    "PARKING" : "Parkingi",
+    "RESERVATIONS" : "Rezerwacje",
+    "USERS": "Użytkownicy"
   }
 }

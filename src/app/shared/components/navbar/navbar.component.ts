@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../../core/state/auth/auth.service';
 import { User } from '../../../core/state/auth/auth.model';
 import { Observable } from 'rxjs';
@@ -13,6 +13,9 @@ import { SharedKeys } from '../../../core/translation-keys';
 })
 export class NavbarComponent {
   user$: Observable<User | null>;
+
+  @Output()
+  readonly hamburgerPressed = new EventEmitter<void>();
 
   readonly translations = SharedKeys;
 
