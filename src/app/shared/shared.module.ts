@@ -9,6 +9,8 @@ import { ToastService } from '../core/service/toast.service';
 import { MaterialToastService } from './service/material.toast.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormErrorComponent } from './components/form-error/form-error.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { FormErrorComponent } from './components/form-error/form-error.component
     HeadingComponent,
     TextComponent,
     FormErrorComponent,
+    PageHeaderComponent,
+    BreadcrumbsComponent,
   ],
   imports: [CommonModule, MaterialModule, TranslateModule.forChild()],
   exports: [
@@ -27,6 +31,7 @@ import { FormErrorComponent } from './components/form-error/form-error.component
     HeadingComponent,
     TextComponent,
     FormErrorComponent,
+    PageHeaderComponent,
   ],
   providers: [
     {
