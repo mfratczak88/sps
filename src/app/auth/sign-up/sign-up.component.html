@@ -31,7 +31,7 @@
     {{translations.SIGN_UP | translate}}
   </button>
   <div class="sign-up-form__footer">
-    <sps-link (click)="navigationService.toSignIn()">{{translations.ALREADY_HAVE_ACCOUNT | translate}}</sps-link>
+    <sps-link (click)="routerService.toSignIn()">{{translations.ALREADY_HAVE_ACCOUNT | translate}}</sps-link>
   </div>
   <div class="sign-up-form__disclaimer">
     <p>{{translations.SIGN_UP_DISCLAIMER | translate}}<span

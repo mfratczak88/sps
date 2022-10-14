@@ -3,7 +3,7 @@
     <div
       class="drawer__item"
       *ngFor="let item of items"
-      [routerLink]="'.' + '/' + item.link"
+      [routerLink]="item.link"
       routerLinkActive="selected">
       <mat-icon>{{item.icon}}</mat-icon>
       <p class="drawer__item--name">{{item.name | translate}}</p>

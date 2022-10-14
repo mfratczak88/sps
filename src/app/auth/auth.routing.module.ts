@@ -2,11 +2,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth.component';
 import { NgModule } from '@angular/core';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { AuthPaths } from '../app-routing.module';
+
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { ActionCodeComponent } from './action-code/action-code.component';
 import { InvalidAuthLinkComponent } from './invalid-auth-link/invalid-auth-link.component';
+import { AuthPaths } from '../routes';
 
 const routes: Routes = [
   {

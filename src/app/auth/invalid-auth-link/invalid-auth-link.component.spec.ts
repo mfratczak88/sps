@@ -1,19 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InvalidAuthLinkComponent } from './invalid-auth-link.component';
-import { NavigationService } from '../../core/service/navigation.service';
+import { RouterService } from '../../core/state/router/router.service';
 import { AuthActionMode } from '../../core/state/auth/auth.model';
 import { By } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import SpyObj = jasmine.SpyObj;
+import { RouterQuery } from '../../core/state/router/router.query';
 
 describe('InvalidAuthLinkComponent', () => {
   let fixture: ComponentFixture<InvalidAuthLinkComponent>;
-  let navigationServiceSpy: SpyObj<NavigationService>;
+  let routerServiceSpy: SpyObj<RouterService>;
+  let routerQuerySpy: SpyObj<RouterQuery>;
+
   beforeEach(async () => {
-    navigationServiceSpy = jasmine.createSpyObj('NavigationService', [
-      'authActionModeFromQueryParams',
+    routerQuerySpy = jasmine.createSpyObj('RouterQuery', [
+      'authActionModeParam',
+    ]);
+    routerServiceSpy = jasmine.createSpyObj('RouterService', [
       'to404',
       'toPasswordReset',
     ]);
@@ -27,7 +32,8 @@ describe('InvalidAuthLinkComponent', () => {
         HttpClientModule,
       ],
       providers: [
-        { provide: NavigationService, useValue: navigationServiceSpy },
+        { provide: RouterService, useValue: routerServiceSpy },
+        { provide: RouterQuery, useValue: routerQuerySpy },
       ],
     }).compileComponents();
 
@@ -35,24 +41,24 @@ describe('InvalidAuthLinkComponent', () => {
   });
 
   it('Navigates to 404 if no mode query param in URL', () => {
-    navigationServiceSpy.authActionModeFromQueryParams.and.returnValue(null);
+    routerQuerySpy.authActionModeParam.and.returnValue(null);
     fixture.detectChanges();
-    expect(navigationServiceSpy.to404).toHaveBeenCalled();
+    expect(routerServiceSpy.to404).toHaveBeenCalled();
   });
   it('Navigates to 404 if mode query param is invalid', () => {
-    navigationServiceSpy.authActionModeFromQueryParams.and.returnValue('foo');
+    routerQuerySpy.authActionModeParam.and.returnValue('foo' as AuthActionMode);
     fixture.detectChanges();
-    expect(navigationServiceSpy.to404).toHaveBeenCalled();
+    expect(routerServiceSpy.to404).toHaveBeenCalled();
   });
   it('If mode === resetPassword, button navigates to passwordReset', () => {
-    navigationServiceSpy.authActionModeFromQueryParams.and.returnValue(
+    routerQuerySpy.authActionModeParam.and.returnValue(
       AuthActionMode.RESET_PASSWORD,
     );
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('button'))
       .nativeElement as HTMLButtonElement;
     button.click();
-    expect(navigationServiceSpy.to404).not.toHaveBeenCalled();
-    expect(navigationServiceSpy.toPasswordReset).toHaveBeenCalled();
+    expect(routerServiceSpy.to404).not.toHaveBeenCalled();
+    expect(routerServiceSpy.toPasswordReset).toHaveBeenCalled();
   });
 });

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../../core/state/auth/auth.service';
 import { User } from '../../../core/state/auth/auth.model';
 import { Observable } from 'rxjs';
-import { NavigationService } from '../../../core/service/navigation.service';
+import { RouterService } from '../../../core/state/router/router.service';
 import { AuthQuery } from '../../../core/state/auth/auth.query';
 import { SharedKeys } from '../../../core/translation-keys';
 
@@ -22,7 +22,7 @@ export class NavbarComponent {
   constructor(
     readonly authQuery: AuthQuery,
     readonly authService: AuthService,
-    readonly navigationService: NavigationService,
+    readonly navigationService: RouterService,
   ) {
     this.user$ = this.authQuery.select();
   }

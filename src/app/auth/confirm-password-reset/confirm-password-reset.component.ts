@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../core/service/navigation.service';
+import { Component } from '@angular/core';
+import { RouterService } from '../../core/state/router/router.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../core/state/auth/auth.service';
 import {
@@ -17,7 +17,7 @@ export class ConfirmPasswordResetComponent {
 
   constructor(
     formBuilder: FormBuilder,
-    private readonly navigationService: NavigationService,
+    private readonly routerService: RouterService,
     private readonly authService: AuthService,
   ) {
     this.form = formBuilder.group({

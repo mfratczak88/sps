@@ -12,6 +12,7 @@ import {
 } from '@angular/fire/compat/auth';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 
 const providers = [
   {
@@ -32,6 +33,7 @@ const providers = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence({ synchronizeTabs: true }),
     AngularFireAuthModule,
+    AkitaNgRouterStoreModule,
     MatSnackBarModule,
   ],
   providers: [...providers],

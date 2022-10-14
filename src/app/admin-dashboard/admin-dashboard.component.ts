@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DrawerItem } from '../shared/components/drawer/drawer.component';
-import { AdminPaths } from '../app-routing.module';
 import { AdminDrawerKeys } from '../core/translation-keys';
+import { AdminPaths } from '../routes';
 
 @Component({
   selector: 'sps-admin-dashboard',

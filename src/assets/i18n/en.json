@@ -1,24 +1,24 @@
 {
   "AUTH": {
     "RESEND_EMAIL_VERIFICATION": "Resend",
-    "RESEND_PASSWORD_RESET_EMAIL" : "Send again",
+    "RESEND_PASSWORD_RESET_EMAIL": "Send again",
     "LINK_EXPIRED": "It looks like the link has expired",
     "FORGOT_PASSWORD": "Forgot your password ?",
-    "WE_CAN_RESET_PASSWORD" : "We can resend the link to your email address to finish up creating your account.",
+    "WE_CAN_RESET_PASSWORD": "We can resend the link to your email address to finish up creating your account.",
     "ENTER_EMAIL": "Enter email",
-    "REMEMBER_IT" : "Remember it ?",
-    "DONT_HAVE_AN_ACCOUNT" : "Don't have an account ?",
-    "SIGN_IN_TITLE" : "Sign In",
+    "REMEMBER_IT": "Remember it ?",
+    "DONT_HAVE_AN_ACCOUNT": "Don't have an account ?",
+    "SIGN_IN_TITLE": "Sign In",
     "SIGN_IN": "Sign in",
-    "SIGN_UP_TITLE" : "Sign Up",
+    "SIGN_UP_TITLE": "Sign Up",
     "SIGN_UP": "Sign up",
-    "SIGN_IN_WITH_EMAIL" : "Sign in with email",
-    "SIGN_IN_WITH_GOOGLE" : "Sign in with google",
-    "ENTER_YOUR_EMAIL" : "Enter your email",
+    "SIGN_IN_WITH_EMAIL": "Sign in with email",
+    "SIGN_IN_WITH_GOOGLE": "Sign in with google",
+    "ENTER_YOUR_EMAIL": "Enter your email",
     "ENTER_YOUR_PASSWORD": "Enter your password",
-    "ALREADY_HAVE_ACCOUNT" : "Already have an account ?",
-    "SIGN_UP_DISCLAIMER" : "By submitting this form, you confirm that you have read and agree to the ",
-    "TERMS_AND_CONDITIONS" : "Terms & Conditions",
+    "ALREADY_HAVE_ACCOUNT": "Already have an account ?",
+    "SIGN_UP_DISCLAIMER": "By submitting this form, you confirm that you have read and agree to the ",
+    "TERMS_AND_CONDITIONS": "Terms & Conditions",
     "RESET_BUTTON": "Reset"
   },
   "FORM_ERROR": {
@@ -34,8 +34,8 @@
     "DISMISS": "Dismiss"
   },
   "ERROR": {
-    "INTERNAL_SERVER_ERROR" : "Internal error",
-    "UNKNOWN_ERROR" : "Some unknown error has occurred",
+    "INTERNAL_SERVER_ERROR": "Internal error",
+    "UNKNOWN_ERROR": "Some unknown error has occurred",
     "PAGE_NOT_FOUND": "Page not found",
     "PAGE_NOT_FOUND_TEXT": "Page you're looking for has not been found",
     "TO_HOME_PAGE": "To home page"
@@ -44,11 +44,18 @@
     "HEY_USER": "Hey",
     "SIGN_OUT": "Sign out"
   },
-  "ADMIN_DRAWER" : {
-    "DASHBOARD" : "Dashboard",
-    "PARKING" : "Parking",
-    "RESERVATIONS" : "Reservations",
+  "ADMIN_DRAWER": {
+    "DASHBOARD": "Dashboard",
+    "PARKING": "Parking",
+    "RESERVATIONS": "Reservations",
     "USERS": "Users"
+  },
+  "ADMIN" : {
+    "RESERVATIONS_TITLE" :"Reservations",
+    "RESERVATIONS_SUBTITLE" : "Manage your reservations",
+    "USERS_TITLE" : "Users",
+    "USERS_SUBTITLE": "Manage roles of the users",
+    "PARKING_TITLE": "Parking",
+    "PARKING_SUBTITLE" : "Manage available parking"
   }
-
 }

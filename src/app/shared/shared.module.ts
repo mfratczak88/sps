@@ -41,6 +41,7 @@ import { RouterModule } from '@angular/router';
     FormErrorComponent,
     PageHeaderComponent,
     DrawerComponent,
+    BreadcrumbsComponent,
   ],
   providers: [
     {

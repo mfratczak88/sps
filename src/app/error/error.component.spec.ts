@@ -3,22 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ErrorComponent } from './error.component';
 import { translateTestModule } from '../../test.utils';
 import SpyObj = jasmine.SpyObj;
-import { NavigationService } from '../core/service/navigation.service';
+import { RouterService } from '../core/state/router/router.service';
 import { By } from '@angular/platform-browser';
 
 describe('ErrorComponent', () => {
   let fixture: ComponentFixture<ErrorComponent>;
-  let navigationServiceSpy: SpyObj<NavigationService>;
+  let routerServiceSpy: SpyObj<RouterService>;
   beforeEach(async () => {
-    navigationServiceSpy = jasmine.createSpyObj('NavigationService', [
-      'toRoot',
-    ]);
+    routerServiceSpy = jasmine.createSpyObj('RouterService', ['toRoot']);
     await TestBed.configureTestingModule({
       declarations: [ErrorComponent],
       imports: [await translateTestModule()],
-      providers: [
-        { provide: NavigationService, useValue: navigationServiceSpy },
-      ],
+      providers: [{ provide: RouterService, useValue: routerServiceSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorComponent);
@@ -29,6 +25,6 @@ describe('ErrorComponent', () => {
     const button = fixture.debugElement.query(By.css('.error-page__to-home'))
       .nativeElement as HTMLButtonElement;
     button.click();
-    expect(navigationServiceSpy.toRoot).toHaveBeenCalled();
+    expect(routerServiceSpy.toRoot).toHaveBeenCalled();
   });
 });

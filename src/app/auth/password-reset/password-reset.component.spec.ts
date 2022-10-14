@@ -4,7 +4,7 @@ import { PasswordResetComponent } from './password-reset.component';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { NavigationService } from '../../core/service/navigation.service';
+import { RouterService } from '../../core/state/router/router.service';
 import { HeadingComponent } from '../../shared/components/heading/heading.component';
 import { TextComponent } from '../../shared/components/text/text.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +27,7 @@ import {
 describe('PasswordResetComponent', () => {
   let fixture: ComponentFixture<PasswordResetComponent>;
   let authServiceSpy: SpyObj<AuthService>;
-  let navigationServiceSpy: SpyObj<NavigationService>;
+  let routerServiceSpy: SpyObj<RouterService>;
   let translateService: TranslateService;
   let loader: HarnessLoader;
   const formFieldHarness = () => loader.getHarness(MatFormFieldHarness);
@@ -42,7 +42,7 @@ describe('PasswordResetComponent', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', [
       'sendResetPasswordEmail',
     ]);
-    navigationServiceSpy = jasmine.createSpyObj('NavigationService', [
+    routerServiceSpy = jasmine.createSpyObj('RouterService', [
       'toSignIn',
       'toSignUp',
     ]);
@@ -59,7 +59,7 @@ describe('PasswordResetComponent', () => {
         ReactiveFormsModule,
       ],
       providers: [
-        { provide: NavigationService, useValue: navigationServiceSpy },
+        { provide: RouterService, useValue: routerServiceSpy },
         { provide: AuthService, useValue: authServiceSpy },
       ],
     }).compileComponents();
@@ -133,14 +133,14 @@ describe('PasswordResetComponent', () => {
       By.css('.password-reset__footer--remember-it'),
     ).componentInstance as LinkComponent;
     rememberItLink.click.emit();
-    expect(navigationServiceSpy.toSignIn).toHaveBeenCalled();
+    expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
   });
   it('On Dont have an account navigates to sign up', () => {
     const rememberItLink = fixture.debugElement.query(
       By.css('.password-reset__footer--no-account'),
     ).componentInstance as LinkComponent;
     rememberItLink.click.emit();
-    expect(navigationServiceSpy.toSignUp).toHaveBeenCalled();
+    expect(routerServiceSpy.toSignUp).toHaveBeenCalled();
   });
   it('Calls sendResetPassword on auth service on submit and navigates to sign in', async () => {
     authServiceSpy.sendResetPasswordEmail.and.returnValue(of(void 0));
@@ -153,6 +153,6 @@ describe('PasswordResetComponent', () => {
     expect(authServiceSpy.sendResetPasswordEmail).toHaveBeenCalledWith(
       'maciek@gmail.com',
     );
-    expect(navigationServiceSpy.toSignIn).toHaveBeenCalled();
+    expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
   });
 });

@@ -9,10 +9,8 @@
   color: vars.$body-text-color;
 }
 .drawer__content {
-  display: flex;
   height: 100%;
-  align-items: center;
-  justify-content: center;
+  background: vars.$color-panel-background;
 }
 .drawer__item--name {
   margin-bottom: 0;

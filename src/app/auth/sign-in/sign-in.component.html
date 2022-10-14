@@ -4,9 +4,9 @@
     <ng-container *ngIf="showEmailSignUp; else signInType">
       <sps-email-sign-in-form class="sign-in__form--component"
                               (submit)="onEmailSignIn($event)"
-                              (back)="navigationService.toSameRoute()"
-                              (noAccount)="navigationService.toSignUp()"
-                              (forgotPassword)="navigationService.toPasswordReset()">
+                              (back)="routerService.toSameRoute()"
+                              (noAccount)="routerService.toSignUp()"
+                              (forgotPassword)="routerService.toPasswordReset()">
       </sps-email-sign-in-form>
     </ng-container>
   </div>
@@ -14,7 +14,7 @@
 <ng-template #signInType>
   <button class="sign-in__form--email-button" mat-raised-button
           color="primary"
-          (click)="navigationService.toSameRoute( { fragment: 'email',queryParamsHandling: 'preserve' })">
+          (click)="routerService.toSameRoute( { fragment: 'email',queryParamsHandling: 'preserve' })">
     {{translations.SIGN_IN_WITH_EMAIL | translate}}
   </button>
   <button class="sign-in__form--google-button"

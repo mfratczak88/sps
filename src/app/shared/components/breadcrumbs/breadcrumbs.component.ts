@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterQuery } from '../../../core/state/router/router.query';
 
 @Component({
   selector: 'sps-breadcrumbs',
@@ -6,12 +7,5 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent {
-  @Input()
-  topLevelPath: string;
-
-  @Input()
-  activePart: string;
-
-  @Output()
-  topLevelPathClicked = new EventEmitter<void>();
+  constructor(readonly routerQuery: RouterQuery) {}
 }

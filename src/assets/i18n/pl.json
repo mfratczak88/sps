@@ -49,5 +49,13 @@
     "PARKING" : "Parkingi",
     "RESERVATIONS" : "Rezerwacje",
     "USERS": "Użytkownicy"
+  },
+  "ADMIN" : {
+    "RESERVATIONS_TITLE" :"Reservations",
+    "RESERVATIONS_SUBTITLE" : "Manage your reservations",
+    "USERS_TITLE" : "Users",
+    "USERS_SUBTITLE": "Manage roles of the users",
+    "PARKING_TITLE": "Parking",
+    "PARKING_SUBTITLE" : "Manage available parking"
   }
 }

@@ -1,4 +1,4 @@
-<p class="breadcrumb">
-  <span class="top-level" (click)="topLevelPathClicked.emit()">{{topLevelPath}}</span> /
-  <span class="breadcrumb__active-part">{{activePart}}</span>
+<p class="breadcrumb" *ngIf="(routerQuery.breadCrumbs$() | async) as breadcrumbs">
+  <span class="top-level">{{breadcrumbs.root | translate}}</span> /
+  <span class="breadcrumb__active-part">{{breadcrumbs.current | translate}}</span>
 </p>

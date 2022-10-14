@@ -1377,6 +1377,13 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@datorama/akita-ng-router-store@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@datorama/akita-ng-router-store/-/akita-ng-router-store-7.0.0.tgz#38a704d15419da7a91322e7d295f77d2228e5483"
+  integrity sha512-G6aJOvkzlVdFxUas7Upz5jG0hVJMBtUHrbORPBaIr0410cdXYecCAlgyhK2DdXbblX8rYBNu+1InWi55ReUOUw==
+  dependencies:
+    tslib "^2.3.0"
+
 "@datorama/akita-ngdevtools@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@datorama/akita-ngdevtools/-/akita-ngdevtools-7.0.0.tgz#81494fc2cc3e70f6a2cab52c75acb72b711bb0f9"
