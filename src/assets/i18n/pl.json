@@ -51,11 +51,13 @@
     "USERS": "Użytkownicy"
   },
   "ADMIN" : {
-    "RESERVATIONS_TITLE" :"Reservations",
-    "RESERVATIONS_SUBTITLE" : "Manage your reservations",
-    "USERS_TITLE" : "Users",
-    "USERS_SUBTITLE": "Manage roles of the users",
-    "PARKING_TITLE": "Parking",
-    "PARKING_SUBTITLE" : "Manage available parking"
+    "RESERVATIONS_TITLE" :"Rezerwacje",
+    "RESERVATIONS_SUBTITLE" : "Zarządzaj rezerwacjami na parkingi",
+    "USERS_TITLE" : "Użytkownicy",
+    "USERS_SUBTITLE": "Przeglądaj użytkowników i nadawaj im role oraz dostępy do parkingów",
+    "PARKING_TITLE": "Parkingi",
+    "PARKING_SUBTITLE" : "Możesz dodawać oraz edytować istniejące parkingi",
+    "DASHBOARD_TITLE" : "Panel administratora",
+    "DASHBOARD_SUBTITLE" : "Wszystkie Twoje opcje w jednym miejscu"
   }
 }

@@ -13,6 +13,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
 import { RouterModule } from '@angular/router';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RouterModule } from '@angular/router';
     PageHeaderComponent,
     BreadcrumbsComponent,
     DrawerComponent,
+    CardComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import { RouterModule } from '@angular/router';
     PageHeaderComponent,
     DrawerComponent,
     BreadcrumbsComponent,
+    CardComponent,
   ],
   providers: [
     {

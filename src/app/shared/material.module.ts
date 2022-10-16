@@ -13,6 +13,7 @@ import { NgModule } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 
 const modules = [
   MatFormFieldModule,
@@ -29,7 +30,7 @@ const modules = [
   MatBadgeModule,
   MatMenuModule,
   MatSidenavModule,
-  MatListModule,
+  MatCardModule,
 ];
 @NgModule({
   imports: [...modules],

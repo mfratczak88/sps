@@ -1,5 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'sps-drawer',
@@ -12,6 +14,14 @@ export class DrawerComponent {
 
   @ViewChild(MatDrawer)
   drawer: MatDrawer;
+
+  readonly drawerOpenedFirst$;
+
+  constructor(private readonly breakpointObserver: BreakpointObserver) {
+    this.drawerOpenedFirst$ = this.breakpointObserver
+      .observe(['(min-width:500px)'])
+      .pipe(map(x => x.matches));
+  }
 
   toggle() {
     this.drawer.toggle();

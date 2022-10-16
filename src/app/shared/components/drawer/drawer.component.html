@@ -1,5 +1,5 @@
 <mat-drawer-container class="drawer" autosize>
-  <mat-drawer #drawer mode="side" opened>
+  <mat-drawer #drawer mode="side" [opened]="drawerOpenedFirst$ | async">
     <div
       class="drawer__item"
       *ngFor="let item of items"

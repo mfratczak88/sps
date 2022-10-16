@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AdminKeys } from '../../core/translation-keys';
+import { AdminPaths } from '../../routes';
 
 @Component({
   selector: 'sps-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
+  cardTranslations = AdminKeys;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  links = AdminPaths;
 }

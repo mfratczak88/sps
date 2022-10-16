@@ -3,9 +3,6 @@
   @include vars.typography-body-l;
   font-weight: vars.$font-weight-bold;
 }
-.top-level:hover {
-  cursor: pointer;
-}
 .breadcrumb__active-part {
   color: black;
 }

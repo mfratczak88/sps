@@ -1,8 +1,8 @@
 <div class="page-header">
   <ng-content></ng-content>
   <div class="page-header__heading">
-    <sps-heading size="s">{{title}}</sps-heading>
+    <sps-heading size="s">{{title | translate}}</sps-heading>
     <ng-content select="[button]"></ng-content>
   </div>
-  <sps-text size="m">{{subTitle}}</sps-text>
+  <sps-text size="m">{{subTitle | translate}}</sps-text>
 </div>

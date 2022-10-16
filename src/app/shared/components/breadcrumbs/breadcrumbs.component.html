@@ -1,4 +1,6 @@
 <p class="breadcrumb" *ngIf="(routerQuery.breadCrumbs$() | async) as breadcrumbs">
-  <span class="top-level">{{breadcrumbs.root | translate}}</span> /
-  <span class="breadcrumb__active-part">{{breadcrumbs.current | translate}}</span>
+  <span class="top-level">{{breadcrumbs.root | translate}}</span>
+  <ng-container *ngIf="breadcrumbs.current"> /
+    <span class="breadcrumb__active-part">{{breadcrumbs.current | translate}}</span>
+  </ng-container>
 </p>

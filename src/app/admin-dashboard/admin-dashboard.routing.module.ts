@@ -25,6 +25,11 @@ const routes: Routes = [
       {
         path: AdminPaths.DASHBOARD,
         component: DashboardComponent,
+        data: {
+          breadcrumbs: {
+            root: AdminDrawerKeys.DASHBOARD,
+          },
+        },
       },
       {
         path: AdminPaths.USERS,
