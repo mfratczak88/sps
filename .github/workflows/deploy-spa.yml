@@ -3,6 +3,7 @@ on:
     inputs:
       project-id:
         required: true
+        type: string
     secrets:
       service-account:
         required: true
