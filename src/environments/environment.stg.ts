@@ -10,4 +10,5 @@ export const environment = {
   },
   production: true,
   useEmulators: false,
+  functionsUrl: 'https://us-central1-sps-app-stg.cloudfunctions.net/api',
 };

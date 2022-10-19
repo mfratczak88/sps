@@ -31,7 +31,8 @@
     "CHECK_EMAIL": "Please check your email. Check your mailbox",
     "EMAIL_VERIFIED": "Email has been verified. You can now log in",
     "PASS_RESET_MAIL_SENT": "Password reset email has been sent. Check your mailbox",
-    "DISMISS": "Dismiss"
+    "DISMISS": "Dismiss",
+    "ROLE_CHANGED" : "Role has been changed"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",
@@ -50,12 +51,39 @@
     "RESERVATIONS": "Reservations",
     "USERS": "Users"
   },
-  "ADMIN" : {
-    "RESERVATIONS_TITLE" :"Reservations",
-    "RESERVATIONS_SUBTITLE" : "Manage your reservations",
-    "USERS_TITLE" : "Users",
+  "ADMIN": {
+    "RESERVATIONS_TITLE": "Reservations",
+    "RESERVATIONS_SUBTITLE": "Manage your reservations",
+    "USERS_TITLE": "Users",
     "USERS_SUBTITLE": "Manage roles of the users",
     "PARKING_TITLE": "Parking",
-    "PARKING_SUBTITLE" : "Manage available parking"
+    "PARKING_SUBTITLE": "Manage available parking",
+    "DASHBOARD_TITLE": "Administrator dashboard",
+    "DASHBOARD_SUBTITLE": "All your operations gathered in one place",
+    "ASSIGN_USER_ROLE_DIALOG_TITLE": "Assign new role",
+    "ASSIGN_USER_ROLE_DIALOG_TEXT": "Assign user a new role to change actions he or she is able to perform in SPS",
+    "COLUMN_EMAIL": "Email",
+    "COLUMN_NAME": "Name",
+    "COLUMN_ROLE": "Role",
+    "COLUMN_EDIT": "Edit"
+  },
+  "ROLE": {
+    "ADMIN": "Administrator",
+    "CLERK": "Clerk",
+    "DRIVER": "Driver"
+  },
+  "MISC": {
+    "CANCEL": "Cancel",
+    "ASSIGN": "Assign",
+    "SELECT": "Select",
+    "SEARCH": "Search"
+  },
+  "PAGINATION" : {
+    "FIRST_PAGE_LABEL": "First page",
+    "ITEMS_PER_PAGE_LABEL": "Items per page:",
+    "LAST_PAGE_LABEL": "Last page",
+    "NEXT_PAGE_LABEL": "Next page",
+    "PREVIOUS_PAGE_LABEL": "Previous page",
+    "RANGE_LABEL": "Page {{page}} of {{of}}"
   }
 }

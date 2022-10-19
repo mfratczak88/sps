@@ -10,4 +10,5 @@ export const environment = {
   },
   useEmulators: true,
   production: false,
+  functionsUrl: 'http://localhost:5001/sps-app-stg/us-central1/api',
 };

@@ -10,9 +10,9 @@ import {
   AngularFireAuthModule,
   USE_EMULATOR as USE_AUTH_EMULATOR,
 } from '@angular/fire/compat/auth';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
+import { AuthTokenHttpInterceptorProvider } from './interceptor/auth-token.interceptor';
 
 const providers = [
   {
@@ -23,6 +23,7 @@ const providers = [
     provide: USE_FIRESTORE_EMULATOR,
     useValue: environment.useEmulators ? ['localhost', '8080'] : undefined,
   },
+  AuthTokenHttpInterceptorProvider,
 ];
 
 @NgModule({
@@ -34,7 +35,6 @@ const providers = [
     AngularFirestoreModule.enablePersistence({ synchronizeTabs: true }),
     AngularFireAuthModule,
     AkitaNgRouterStoreModule,
-    MatSnackBarModule,
   ],
   providers: [...providers],
 })

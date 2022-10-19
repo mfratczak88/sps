@@ -14,6 +14,9 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
 import { DrawerComponent } from './components/drawer/drawer.component';
 import { RouterModule } from '@angular/router';
 import { CardComponent } from './components/card/card.component';
+import { TableComponent } from './components/table/table.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PaginatorIntlService } from './service/paginator.intl.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { CardComponent } from './components/card/card.component';
     BreadcrumbsComponent,
     DrawerComponent,
     CardComponent,
+    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -45,12 +49,11 @@ import { CardComponent } from './components/card/card.component';
     DrawerComponent,
     BreadcrumbsComponent,
     CardComponent,
+    TableComponent,
   ],
   providers: [
-    {
-      provide: ToastService,
-      useClass: MaterialToastService,
-    },
+    { provide: ToastService, useClass: MaterialToastService },
+    { provide: MatPaginatorIntl, useClass: PaginatorIntlService },
   ],
 })
 export class SharedModule {}

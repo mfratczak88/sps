@@ -3,3 +3,18 @@
   [subTitle]="translations.USERS_SUBTITLE">
   <sps-breadcrumbs></sps-breadcrumbs>
 </sps-page-header>
+
+<div class="users">
+  <div class="users__loading-spinner" *ngIf="usersQuery.loading$ | async; else table">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #table>
+    <sps-table class="users__table"
+               [buttons]="tableButtons"
+               [columns]="tableColumns"
+               [data]="usersQuery.users$">
+    </sps-table>
+  </ng-template>
+
+</div>
+
