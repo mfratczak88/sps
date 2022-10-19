@@ -27,9 +27,9 @@ export class UserService {
       map(users =>
         users.map(user => ({
           ...user,
-          roleTranslation: this.translateService.instant(
-            RoleToTranslationKey[user.role],
-          ),
+          roleTranslation: user.role
+            ? this.translateService.instant(RoleToTranslationKey[user.role])
+            : '',
         })),
       ),
       first(),
