@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Roles } from '../model/roles';
+import { ADMIN_USER_EMAIL } from './admin-user';
 
 export const isAuthorized = (
   req: Request,
@@ -7,7 +8,7 @@ export const isAuthorized = (
   next: NextFunction,
 ) => {
   const { role, email } = res.locals;
-  if (email === 'mfratczak88@gmail.com') return next();
+  if (email === ADMIN_USER_EMAIL) return next();
 
   if (!role) return res.status(403).send();
 
