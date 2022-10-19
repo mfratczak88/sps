@@ -5,8 +5,6 @@ on:
     secrets:
       fb-token:
         required: true
-        type: string
-
 jobs:
   deploy_function:
     runs-on: ubuntu-latest
@@ -29,9 +27,9 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Instal dependencies
         run: cd functions && yarn install --frozen-lockfile
-      - name: Install firebase CLI
-        run: curl -sL https://firebase.tools | bash
-      — name: Create SA key
-        run: echo '${{ secrets.fb-token }}' > $HOME/gcloud.json
-      — name: Deploy Cloud Function
-        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && firebase-tools deploy --only functions --json
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          GCP_SA_KEY: ${{ secrets.fb-token }}
