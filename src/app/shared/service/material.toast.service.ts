@@ -17,6 +17,9 @@ export class MaterialToastService implements ToastService {
       this.snackBarRef.open(
         text,
         this.translateService.instant(ToastKeys.DISMISS),
+        {
+          duration: 3000,
+        },
       ),
     );
   }

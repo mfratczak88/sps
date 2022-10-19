@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../core/service/navigation.service';
+import { RouterService } from '../../core/state/router/router.service';
 import { AuthActionMode } from '../../core/state/auth/auth.model';
 import { AuthTranslationKeys } from '../../core/translation-keys';
+import { RouterQuery } from '../../core/state/router/router.query';
 
 @Component({
   selector: 'sps-invalid-auth-link',
@@ -13,17 +14,20 @@ export class InvalidAuthLinkComponent implements OnInit {
 
   readonly translations = AuthTranslationKeys;
 
-  constructor(readonly navigationService: NavigationService) {}
+  constructor(
+    readonly routerService: RouterService,
+    private readonly routerQuery: RouterQuery,
+  ) {}
 
   ngOnInit() {
-    const mode = this.navigationService.authActionModeFromQueryParams();
+    const mode = this.routerQuery.authActionModeParam();
     if (
       !mode ||
       !Object.values(AuthActionMode).includes(
         (mode as unknown) as AuthActionMode,
       )
     ) {
-      this.navigationService.to404();
+      this.routerService.to404();
     } else {
       this.mode = mode as AuthActionMode;
     }

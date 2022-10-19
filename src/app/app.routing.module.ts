@@ -1,22 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TopLevelPaths } from './routes';
 
-export enum TopLevelPaths {
-  AUTH = 'auth',
-  ADMIN_DASHBOARD = 'admin-dashboard',
-  ERROR = 'error',
-}
-export enum AuthPaths {
-  SIGN_IN = 'sign-in',
-  SIGN_UP = 'sign-up',
-  FORGOT_PASSWORD = 'forgot-password',
-  INVALID_AUTH_LINK = 'invalid-auth-link',
-  ACTION_CODE = 'action-code',
-}
-export enum ErrorPaths {
-  NOT_FOUND = 'not-found',
-  INTERNAL_SERVER_ERROR = 'internal-server-error',
-}
 const routes: Routes = [
   {
     path: '',

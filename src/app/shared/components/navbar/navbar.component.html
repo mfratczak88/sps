@@ -1,9 +1,9 @@
 <mat-toolbar color="primary" class="toolbar">
-  <button mat-icon-button aria-label="Menu">
+  <button mat-icon-button aria-label="Menu" (click)="hamburgerPressed.emit()">
     <mat-icon>menu</mat-icon>
   </button>
   <img class="toolbar__logo" src="assets/logo.svg" alt="">
-  <span class="toolbar__title">Simple Parking System</span>
+  <span class="toolbar__title"></span>
   <ng-container *ngIf="!!(authQuery.isLoggedIn$ | async)">
     <ng-container *ngIf="user$ | async as user">
       <span class="toolbar__hello-message" *ngIf="user.displayName">{{translations.HEY_USER | translate}}, {{user.displayName}}</span>

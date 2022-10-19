@@ -4,7 +4,7 @@
 </ng-container>
 <ng-template #resendPasswordResetEmail>
   <button mat-raised-button
-          (click)="navigationService.toPasswordReset()"
+          (click)="routerService.toPasswordReset()"
   >{{translations.RESEND_PASSWORD_RESET_EMAIL | translate}}
   </button>
 </ng-template>

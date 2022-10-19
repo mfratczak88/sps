@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { filter, first, Subscription } from 'rxjs';
-import { NavigationService } from '../../core/service/navigation.service';
+import { first, Subscription } from 'rxjs';
+import { RouterService } from '../../core/state/router/router.service';
 import { AuthCredentials } from '../../core/state/auth/auth.model';
 import { AuthTranslationKeys } from '../../core/translation-keys';
+import { RouterQuery } from '../../core/state/router/router.query';
 
 @Component({
   selector: 'sps-sign-in',
@@ -18,15 +19,13 @@ export class SignInComponent implements OnDestroy {
   private readonly routeFragmentSub$: Subscription;
 
   constructor(
-    readonly navigationService: NavigationService,
+    readonly routerService: RouterService,
+    readonly routerQuery: RouterQuery,
     readonly authService: AuthService,
   ) {
-    this.routeFragmentSub$ = this.navigationService
-      .emailFragment$()
-      .pipe(filter(f => f))
-      .subscribe(() => {
-        this.showEmailSignUp = true;
-      });
+    this.routeFragmentSub$ = this.routerQuery.emailFragment$().subscribe(() => {
+      this.showEmailSignUp = true;
+    });
   }
 
   onEmailSignIn({ email, password }: AuthCredentials) {
@@ -43,7 +42,7 @@ export class SignInComponent implements OnDestroy {
   }
 
   onSuccessfulSignIn() {
-    this.navigationService.navigateAfterLogin();
+    this.routerService.navigateAfterLogin();
   }
 
   ngOnDestroy(): void {

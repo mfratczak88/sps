@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { NavigationService } from '../../core/service/navigation.service';
+import { RouterService } from '../../core/state/router/router.service';
 import { catchError, concatMap, first } from 'rxjs';
 import { AuthActionMode } from '../../core/state/auth/auth.model';
+import { RouterQuery } from '../../core/state/router/router.query';
 
 @Component({
   selector: 'sps-action-code',
@@ -11,32 +12,30 @@ import { AuthActionMode } from '../../core/state/auth/auth.model';
 export class ActionCodeComponent {
   constructor(
     private readonly authService: AuthService,
-    private readonly navigationService: NavigationService,
+    private readonly routerService: RouterService,
+    private readonly routerQuery: RouterQuery,
   ) {}
 
   ngOnInit(): void {
-    const {
-      oobCode,
-      mode,
-    } = this.navigationService.actionCodeParamsFromActivatedRoute();
-    if (!oobCode) {
-      this.navigationService.to404();
+    const { actionCode, mode } = this.routerQuery.authActionParams();
+    if (!actionCode) {
+      this.routerService.to404();
       return;
     }
     if (mode === AuthActionMode.VERIFY_EMAIL) {
       this.authService
-        .verifyEmail(oobCode)
+        .verifyEmail(actionCode)
         .pipe(
           first(),
           catchError(error => {
-            this.navigationService.toInvalidAuthLink(mode);
+            this.routerService.toInvalidAuthLink(mode);
             throw error;
           }),
-          concatMap(() => this.navigationService.toSignIn()),
+          concatMap(() => this.routerService.toSignIn()),
         )
         .subscribe();
     } else {
-      this.navigationService.to404();
+      this.routerService.to404();
     }
   }
 }

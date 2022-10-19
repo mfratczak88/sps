@@ -11,6 +11,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
+import { PaginatorIntlService } from './service/paginator.intl.service';
 
 const modules = [
   MatFormFieldModule,
@@ -26,6 +37,13 @@ const modules = [
   MatDialogModule,
   MatBadgeModule,
   MatMenuModule,
+  MatSidenavModule,
+  MatCardModule,
+  MatTableModule,
+  MatSortModule,
+  MatSelectModule,
+  MatProgressSpinnerModule,
+  MatPaginatorModule,
 ];
 @NgModule({
   imports: [...modules],

@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { AuthPaths, ErrorPaths, TopLevelPaths } from '../../app-routing.module';
-import {
-  AuthActionCodeQueryParams,
-  AuthActionMode,
-} from '../state/auth/auth.model';
-import { map } from 'rxjs';
+import { AuthPaths, ErrorPaths, TopLevelPaths } from 'src/app/routes';
+
+import { AuthActionMode } from '../auth/auth.model';
+import { QueryParamKeys } from './router.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NavigationService {
+export class RouterService {
   constructor(private readonly router: Router) {}
 
   urlTreeForLoginWithReturnUrl(returnUrl: string) {
     return this.router.parseUrl(
-      `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?returnUrl=${returnUrl}`,
+      `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${returnUrl}`,
     );
   }
 
@@ -35,7 +33,7 @@ export class NavigationService {
 
   toInvalidAuthLink(mode: AuthActionMode) {
     return this.router.navigate([
-      `/${TopLevelPaths.AUTH}/${AuthPaths.INVALID_AUTH_LINK}?mode=${mode}`,
+      `/${TopLevelPaths.AUTH}/${AuthPaths.INVALID_AUTH_LINK}?${QueryParamKeys.MODE}=${mode}`,
     ]);
   }
 
@@ -57,13 +55,9 @@ export class NavigationService {
     ]);
   }
 
-  emailFragment$() {
-    return this.router.routerState.root.fragment.pipe(map(f => f === 'email'));
-  }
-
   navigateAfterLogin() {
     const queryParams = this.queryParamMapFromCurrentRoute();
-    if (!queryParams.get('returnUrl')) {
+    if (!queryParams.get(QueryParamKeys.RETURN_URL)) {
       return this.router.navigate(['/']);
     }
     // return url might contain different query params -> expect the first one, the others will not be contained in the returnUrl var
@@ -75,19 +69,6 @@ export class NavigationService {
         url += `&${queryParamKey}=${queryParamValue}`;
       });
     return this.router.navigateByUrl(url, { replaceUrl: true });
-  }
-
-  actionCodeParamsFromActivatedRoute(): AuthActionCodeQueryParams {
-    const queryParamMap = this.queryParamMapFromCurrentRoute();
-    return {
-      mode: queryParamMap.get('mode') as AuthActionMode,
-      oobCode: queryParamMap.get('oobCode'),
-    };
-  }
-
-  authActionModeFromQueryParams() {
-    const queryParamMap = this.queryParamMapFromCurrentRoute();
-    return queryParamMap.get('mode');
   }
 
   to404() {

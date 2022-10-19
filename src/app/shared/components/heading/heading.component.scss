@@ -1,5 +1,7 @@
 @use "../../../../variables" as *;
-
+p {
+  margin-bottom: 0;
+}
 .heading-l {
   @include typography-heading-l;
 }

@@ -6,7 +6,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { NavigationService } from '../service/navigation.service';
+import { RouterService } from '../state/router/router.service';
 import { AuthService } from '../state/auth/auth.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { AuthService } from '../state/auth/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly authService: AuthService,
-    private readonly navigationService: NavigationService,
+    private readonly navigationService: RouterService,
   ) {}
 
   canActivate(

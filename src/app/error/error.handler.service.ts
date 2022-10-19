@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
-import { NavigationService } from '../core/service/navigation.service';
+import { RouterService } from '../core/state/router/router.service';
 import { ErrorCodes } from '../core/model/api.model';
 import { ToastService } from '../core/service/toast.service';
 import { TranslationService } from '../core/service/translation.service';
@@ -15,7 +15,7 @@ export class ErrorHandlerService implements ErrorHandler {
       console.log(error);
 
       return error.code === ErrorCodes.INTERNAL_ERROR
-        ? this.injector.get(NavigationService)?.toInternalServerErrorPage()
+        ? this.injector.get(RouterService)?.toInternalServerErrorPage()
         : toastService.show(
             translationService.translateErrorCode(
               error.code as ErrorCodes,

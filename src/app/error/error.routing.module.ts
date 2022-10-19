@@ -2,8 +2,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NgModule } from '@angular/core';
-import { ErrorPaths } from '../app-routing.module';
+
 import { InternalServerErrorComponent } from './internal-server-error/internal-server-error.component';
+import { ErrorPaths } from '../routes';
 
 const routes: Routes = [
   {

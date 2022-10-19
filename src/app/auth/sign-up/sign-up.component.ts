@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { NavigationService } from '../../core/service/navigation.service';
+import { RouterService } from '../../core/state/router/router.service';
 import { first } from 'rxjs';
 import {
   PASSWORD_MAX_LENGTH,
@@ -23,7 +23,7 @@ export class SignUpComponent {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    readonly navigationService: NavigationService,
+    readonly routerService: RouterService,
   ) {
     this.form = formBuilder.group({
       email: [null, [LocalizedValidators.required, LocalizedValidators.email]],
@@ -42,6 +42,6 @@ export class SignUpComponent {
     this.authService
       .signUp(this.form.value)
       .pipe(first())
-      .subscribe(() => this.navigationService.toSignIn());
+      .subscribe(() => this.routerService.toSignIn());
   }
 }

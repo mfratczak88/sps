@@ -40,14 +40,19 @@ $warn-palette: mat.define-palette(map_merge(mat.$red-palette, (
   900: #5C0011,
 )));
 $navbar-color: #001529;
+
 $color-primary: mat.get-color-from-palette($primary-palette);
 $color-secondary: mat.get-color-from-palette($secondary-palette);
 $color-warn: mat.get-color-from-palette($warn-palette);
+$color-drawer-selected: mat.get-color-from-palette($primary-palette, 100);
+$color-drawer-hover: mat.get-color-from-palette($primary-palette, 50);
+$color-panel-background: mat.get-color-from-palette($primary-palette, 100);
 
 /* Dimensions */
 $form-elements-gap: 1rem;
-$centered-elements-max-width:500px;
+$centered-elements-max-width: 500px;
 $form-max-width: 350px;
+$border-bottom: 1px solid #838D95;
 
 /* Typography */
 

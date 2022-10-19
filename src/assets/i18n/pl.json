@@ -31,7 +31,8 @@
     "CHECK_EMAIL": "Sprawdź swój email",
     "EMAIL_VERIFIED": "Zweryfikowaliśmy Twój email. Możesz się zalogować",
     "PASS_RESET_MAIL_SENT": "Wysłaliśmy email z linkiem. Sprawdź pocztę",
-    "DISMISS": "Dismiss"
+    "DISMISS": "Dismiss",
+    "ROLE_CHANGED" : "Zmieniono rolę"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Błąd serwera",
@@ -43,5 +44,46 @@
   "SHARED": {
     "HEY_USER": "Hej",
     "SIGN_OUT": "Wyloguj"
+  },
+  "ADMIN_DRAWER": {
+    "DASHBOARD": "Panel",
+    "PARKING": "Parkingi",
+    "RESERVATIONS": "Rezerwacje",
+    "USERS": "Użytkownicy"
+  },
+  "ADMIN": {
+    "RESERVATIONS_TITLE": "Rezerwacje",
+    "RESERVATIONS_SUBTITLE": "Zarządzaj rezerwacjami na parkingi",
+    "USERS_TITLE": "Użytkownicy",
+    "USERS_SUBTITLE": "Przeglądaj użytkowników i nadawaj im role",
+    "PARKING_TITLE": "Parkingi",
+    "PARKING_SUBTITLE": "Możesz dodawać oraz edytować istniejące parkingi",
+    "DASHBOARD_TITLE": "Panel administratora",
+    "DASHBOARD_SUBTITLE": "Wszystkie Twoje opcje w jednym miejscu",
+    "ASSIGN_USER_ROLE_DIALOG_TITLE": "Zmień rolę użytkownika",
+    "ASSIGN_USER_ROLE_DIALOG_TEXT": "Powiąż rolę z użytkownikiem, żeby zmienić możliwe akcje jakie może wykonywać w SPS",
+    "COLUMN_EMAIL": "Email",
+    "COLUMN_NAME": "Imię",
+    "COLUMN_ROLE": "Rola",
+    "COLUMN_EDIT": "Edycja"
+  },
+  "ROLE": {
+    "ADMIN": "Administrator",
+    "CLERK": "Parkingowy",
+    "DRIVER": "Kierowca"
+  },
+  "MISC": {
+    "CANCEL": "Anuluj",
+    "ASSIGN": "Zmień",
+    "SELECT": "Wybierz",
+    "SEARCH": "Szukaj"
+  },
+  "PAGINATION" : {
+    "FIRST_PAGE_LABEL": "Pierwsza strona",
+    "ITEMS_PER_PAGE_LABEL": "Elementów na stronie:",
+    "LAST_PAGE_LABEL": "Ostatnia strona",
+    "NEXT_PAGE_LABEL": "Następna strona",
+    "PREVIOUS_PAGE_LABEL": "Poprzednia strona",
+    "RANGE_LABEL": "Strona {{page}} z {{of}}"
   }
 }

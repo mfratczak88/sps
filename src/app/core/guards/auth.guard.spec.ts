@@ -1,6 +1,6 @@
 import { AuthGuard } from './auth.guard';
 import { AuthService } from '../state/auth/auth.service';
-import { NavigationService } from '../service/navigation.service';
+import { RouterService } from '../state/router/router.service';
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/compat';
 import {
@@ -14,7 +14,7 @@ import User = firebase.User;
 describe('AuthGuard', () => {
   let guard: AuthGuard;
   let authServiceSpy: SpyObj<AuthService>;
-  let navigationServiceSpy: SpyObj<NavigationService>;
+  let navigationServiceSpy: SpyObj<RouterService>;
   beforeEach(() => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['currentUser$']);
     navigationServiceSpy = jasmine.createSpyObj('NavigationService', [

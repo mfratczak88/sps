@@ -4,10 +4,7 @@ import { SignUpComponent } from './sign-up.component';
 import { translateTestModule } from '../../../test.utils';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +17,7 @@ import {
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { LinkComponent } from '../../shared/components/link/link.component';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { NavigationService } from '../../core/service/navigation.service';
+import { RouterService } from '../../core/state/router/router.service';
 import { MatInputHarness } from '@angular/material/input/testing';
 import {
   PASSWORD_MAX_LENGTH,
@@ -34,7 +31,7 @@ describe('SignUpComponent', () => {
   let loader: HarnessLoader;
   let translateService: TranslateService;
   let authServiceSpy: SpyObj<AuthService>;
-  let navigationServiceSpy: SpyObj<NavigationService>;
+  let routerServiceSpy: SpyObj<RouterService>;
   const emailFormField = () =>
     loader.getHarness(
       MatFormFieldHarness.with({
@@ -58,9 +55,7 @@ describe('SignUpComponent', () => {
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['signUp']);
-    navigationServiceSpy = jasmine.createSpyObj('NavigationService', [
-      'toSignIn',
-    ]);
+    routerServiceSpy = jasmine.createSpyObj('RouterService', ['toSignIn']);
     await TestBed.configureTestingModule({
       declarations: [SignUpComponent],
       imports: [
@@ -71,7 +66,7 @@ describe('SignUpComponent', () => {
       ],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: NavigationService, useValue: navigationServiceSpy },
+        { provide: RouterService, useValue: routerServiceSpy },
       ],
     }).compileComponents();
 
@@ -115,7 +110,7 @@ describe('SignUpComponent', () => {
   it('on already have an account navigates to sign in', () => {
     const { componentInstance } = toSignInLink();
     <LinkComponent>componentInstance.click.emit();
-    expect(navigationServiceSpy.toSignIn).toHaveBeenCalled();
+    expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
   });
   it('disables sign up button if form is invalid', async () => {
     const emailFormEl = await emailFormField();
@@ -183,6 +178,6 @@ describe('SignUpComponent', () => {
     signUpButton().click();
 
     expect(authServiceSpy.signUp).toHaveBeenCalledWith({ email, password });
-    expect(navigationServiceSpy.toSignIn).toHaveBeenCalled();
+    expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
   });
 });

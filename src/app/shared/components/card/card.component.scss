@@ -1,0 +1,11 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+.container__card {
+  justify-self: stretch;
+  min-height: 10rem;
+}
+.hoverable:hover {
+  cursor: pointer;
+}

@@ -1,21 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActionCodeComponent } from './action-code.component';
-import { NavigationService } from '../../core/service/navigation.service';
+import { RouterService } from '../../core/state/router/router.service';
 import { AuthService } from '../../core/state/auth/auth.service';
 import { AuthActionMode } from '../../core/state/auth/auth.model';
 import { of, throwError } from 'rxjs';
 import SpyObj = jasmine.SpyObj;
+import { RouterQuery } from '../../core/state/router/router.query';
 
 describe('ActionCodeComponent', () => {
   let fixture: ComponentFixture<ActionCodeComponent>;
-  let navigationServiceSpy: SpyObj<NavigationService>;
+  let routerServiceSpy: SpyObj<RouterService>;
   let authServiceSpy: SpyObj<AuthService>;
-
+  let routerQuerySpy: SpyObj<RouterQuery>;
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['verifyEmail']);
-    navigationServiceSpy = jasmine.createSpyObj('NavigationService', [
-      'actionCodeParamsFromActivatedRoute',
+    routerQuerySpy = jasmine.createSpyObj('RouterQuery', ['authActionParams']);
+    routerServiceSpy = jasmine.createSpyObj('RouterService', [
       'toInvalidAuthLink',
       'to404',
       'toSignIn',
@@ -28,8 +29,12 @@ describe('ActionCodeComponent', () => {
           useValue: authServiceSpy,
         },
         {
-          provide: NavigationService,
-          useValue: navigationServiceSpy,
+          provide: RouterService,
+          useValue: routerServiceSpy,
+        },
+        {
+          provide: RouterQuery,
+          useValue: routerQuerySpy,
         },
       ],
     }).compileComponents();
@@ -38,49 +43,49 @@ describe('ActionCodeComponent', () => {
   });
 
   it('Navigates to 404 if oobCode is missing', () => {
-    navigationServiceSpy.actionCodeParamsFromActivatedRoute.and.returnValue({
-      oobCode: null,
+    routerQuerySpy.authActionParams.and.returnValue({
+      actionCode: null,
       mode: AuthActionMode.VERIFY_EMAIL,
     });
     fixture.detectChanges();
-    expect(navigationServiceSpy.to404).toHaveBeenCalled();
+    expect(routerServiceSpy.to404).toHaveBeenCalled();
     expect(authServiceSpy.verifyEmail).not.toHaveBeenCalled();
   });
   it('Navigates to 404 if mode != verifyEmail', () => {
-    navigationServiceSpy.actionCodeParamsFromActivatedRoute.and.returnValue({
-      oobCode: '43e3ee3',
+    routerQuerySpy.authActionParams.and.returnValue({
+      actionCode: '43e3ee3',
       mode: AuthActionMode.RESET_PASSWORD,
     });
     fixture.detectChanges();
-    expect(navigationServiceSpy.to404).toHaveBeenCalled();
+    expect(routerServiceSpy.to404).toHaveBeenCalled();
     expect(authServiceSpy.verifyEmail).not.toHaveBeenCalled();
   });
   it('Verify email - Calls auth service & navigates to sign in', () => {
     const oobCode = '4das1e3d';
-    navigationServiceSpy.actionCodeParamsFromActivatedRoute.and.returnValue({
-      oobCode,
+    routerQuerySpy.authActionParams.and.returnValue({
+      actionCode: oobCode,
       mode: AuthActionMode.VERIFY_EMAIL,
     });
-    navigationServiceSpy.toSignIn.and.resolveTo(void 0);
+    routerServiceSpy.toSignIn.and.resolveTo(void 0);
     authServiceSpy.verifyEmail.and.returnValue(of(void 0));
     fixture.detectChanges();
     expect(authServiceSpy.verifyEmail).toHaveBeenCalledWith(oobCode);
-    expect(navigationServiceSpy.toSignIn).toHaveBeenCalled();
+    expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
   });
   it('Verify email - Navigates to invalid auth page on error from service', () => {
     const oobCode = '4rsczxczxc33311';
-    navigationServiceSpy.actionCodeParamsFromActivatedRoute.and.returnValue({
-      oobCode,
+    routerQuerySpy.authActionParams.and.returnValue({
+      actionCode: oobCode,
       mode: AuthActionMode.VERIFY_EMAIL,
     });
-    navigationServiceSpy.toInvalidAuthLink.and.resolveTo(void 0);
+    routerServiceSpy.toInvalidAuthLink.and.resolveTo(void 0);
     authServiceSpy.verifyEmail.and.returnValue(
       throwError(() => new Error('foo')),
     );
 
     fixture.detectChanges();
 
-    expect(navigationServiceSpy.toSignIn).not.toHaveBeenCalled();
-    expect(navigationServiceSpy.toInvalidAuthLink).toHaveBeenCalled();
+    expect(routerServiceSpy.toSignIn).not.toHaveBeenCalled();
+    expect(routerServiceSpy.toInvalidAuthLink).toHaveBeenCalled();
   });
 });
