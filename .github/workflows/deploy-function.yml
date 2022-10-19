@@ -31,9 +31,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Instal dependencies
         run: cd functions && yarn install --frozen-lockfile
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only functions hosting:${{ inputs.env-name }}
-        env:
-          FIREBASE_TOKEN: ${{ secrets.fb-token }}
+      - name: Create SA key
+        run: echo '${{ secrets.fb-token }}' > $HOME/gcloud.json
+      - name: Deploy Cloud functions
+        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools deploy --project=${{ inputs.env-name }} --only functions --json

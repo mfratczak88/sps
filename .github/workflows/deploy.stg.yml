@@ -13,6 +13,6 @@ jobs:
   deploy-functions:
     uses: ./.github/workflows/deploy-function.yml
     secrets:
-      fb-token: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPS_APP_STG }}
+      fb-token: ${{ secrets.FB_FUNCTIONS_SA_KEY_STG }}
     with:
       env-name: 'default'
