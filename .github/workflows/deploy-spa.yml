@@ -37,7 +37,7 @@ jobs:
       - name: Deploy angular app to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.repo-token }}'
-          firebaseServiceAccount: '${{ secrets.service-account }}'
-          projectId: sps-app-stg
+          repoToken: ${{ secrets.repo-token }}
+          firebaseServiceAccount: ${{ secrets.service-account }}
+          projectId: ${{ inputs.project-id }}
           channelId: live

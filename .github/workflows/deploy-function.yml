@@ -2,6 +2,10 @@ name: Deploy functions
 
 on:
   workflow_call:
+    inputs:
+      env-name:
+        required: true
+        type: string
     secrets:
       fb-token:
         required: true
@@ -30,6 +34,6 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions
+          args: deploy --only functions hosting:${{ inputs.env-name }}
         env:
-          GCP_SA_KEY: ${{ secrets.fb-token }}
+          FIREBASE_TOKEN: ${{ secrets.fb-token }}
