@@ -1,0 +1,10 @@
+{
+  "unknownPersistenceError": "Unknown error occurred during saving",
+  "valueTooLong" : "Provided value length is too big for field {field}",
+  "uniqueConstraintFailed": "Unique constraint failed. Constraint {constraint}",
+  "foreignConstraintFailed": "Foreign constraint failed for field {field}",
+  "invalidFieldValue": "Invalid value for field {field}",
+  "nullConstraintViolation" : "Null constraint violation {constraint}",
+  "relationViolation": "Relation {relation} between objects violated",
+  "outOfRange": "Range of values for the field exceeded. Details: {details}"
+}
