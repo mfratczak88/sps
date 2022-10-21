@@ -1,0 +1,13 @@
+{
+  "urlNoLongerValid" : "Link wygasł. Zarejestruj się jeszcze raz",
+  "refreshTokenUserNotFound": "Błędny użytkownik dla odświeżenia tokena",
+  "userIsNotActive": "Użytkownik nieaktywny",
+  "googleAuthError": "Błąd logowania google",
+  "userAlreadyExists": "Taki użytkownik już istnieje",
+  "invalidActivationGuid": "Błędny guid aktywacyjny. Zarejestruj się jeszcze raz",
+  "invalidUserNameOrPassword": "Błędne dane logowania",
+  "invalidPassword": "Błędne hasło",
+  "userDoesNotExist": "Użytkownik nie istnieje",
+  "userIsAlreadyActive": "Użytkownik już potwierdził założenie konta",
+  "facebookLoginError": "Facebook login error. Szczegóły: {message}"
+}
