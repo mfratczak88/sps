@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RegisterUserPayload, User } from './auth.model';
-import { SocialUser } from '@abacritt/angularx-social-login';
 import { BaseApi } from '../../service/base.api';
 import { environment } from '../../../../environments/environment';
 
@@ -18,7 +17,7 @@ export class AuthApi extends BaseApi {
 
   login(email: string, password: string): Observable<User> {
     return this.http
-      .post<LoginResponse>(
+      .post<User>(
         `${environment.apiUrl}/auth/login`,
         {
           email,
@@ -33,24 +32,12 @@ export class AuthApi extends BaseApi {
 
   loginWithGoogle(idToken: string, email: string): Observable<User> {
     return this.http
-      .post<LoginResponse>(
+      .post<User>(
         `${environment.apiUrl}/auth/loginWithGoogle`,
         {
           idToken,
           email,
         },
-        {
-          withCredentials: true,
-        },
-      )
-      .pipe(map(loginRes => ({ ...loginRes })));
-  }
-
-  loginWithFacebook(socialUser: SocialUser): Observable<User> {
-    return this.http
-      .post<LoginResponse>(
-        `${environment.apiUrl}/auth/loginWithFacebook`,
-        socialUser,
         {
           withCredentials: true,
         },
@@ -77,7 +64,7 @@ export class AuthApi extends BaseApi {
 
   refreshToken(): Observable<User> {
     return this.http
-      .get<LoginResponse>(environment.apiUrl + '/auth/refresh', {
+      .get<User>(environment.apiUrl + '/auth/refresh', {
         withCredentials: true,
       })
       .pipe(map(loginRes => ({ ...loginRes })));
@@ -97,14 +84,4 @@ export class AuthApi extends BaseApi {
       },
     );
   }
-}
-
-export class LoginResponse {
-  id: string;
-
-  email: string;
-
-  name: string;
-
-  authExpiresIn: string;
 }

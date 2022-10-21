@@ -22,7 +22,6 @@ describe('Email service', () => {
     MAILGUN_API_KEY: 'some-key',
     MAILGUN_RELAY_URL: '',
     MAILGUN_EMAIL_DOMAIN: 'some-domain.org',
-    CONTACT_EMAIL: 'contact@some-domain.com',
     ACCOUNT_EMAIL: 'account@some-domain.com',
   };
   beforeEach(() => {
@@ -34,7 +33,7 @@ describe('Email service', () => {
   });
 
   it('Sends account confirmation with confirmation email in polish', async () => {
-    const confirmationEmail = 'vappy.io/confirmation/3e3easdas';
+    const confirmationEmail = 'sps.io/confirmation/3e3easdas';
     const user: User = {
       id: '3',
       name: 'Alex',

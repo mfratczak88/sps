@@ -3,8 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignInComponent } from './sign-in.component';
 import { RouterService } from '../../core/state/router/router.service';
 import { AuthService } from '../../core/state/auth/auth.service';
-import { BehaviorSubject, of, Subject } from 'rxjs';
-import SpyObj = jasmine.SpyObj;
+import { of, Subject } from 'rxjs';
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { SharedModule } from '../../shared/shared.module';
 import { EmailSignInFormComponent } from './email-sign-in-form/email-sign-in-form.component';
@@ -12,14 +11,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HeadingComponent } from '../../shared/components/heading/heading.component';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import firebase from 'firebase/compat';
-import UserCredential = firebase.auth.UserCredential;
+
 import { AuthTranslationKeys } from '../../core/translation-keys';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterQuery } from '../../core/state/router/router.query';
+import SpyObj = jasmine.SpyObj;
+import { User } from '../../core/state/auth/auth.model';
 
 describe('SignInComponent', () => {
   let fixture: ComponentFixture<SignInComponent>;
@@ -50,8 +47,8 @@ describe('SignInComponent', () => {
       'navigateAfterLogin',
     ]);
     authServiceSpy = jasmine.createSpyObj('AuthService', [
-      'signInWithGoogle',
-      'signIn',
+      'loginWithGoogle',
+      'login',
     ]);
     routerQuerySpy.emailFragment$.and.returnValue(emailFragment$);
     await TestBed.configureTestingModule({
@@ -101,22 +98,22 @@ describe('SignInComponent', () => {
     ).toBeTruthy();
   });
   it('Click on sign in with google calls auth service', () => {
-    authServiceSpy.signInWithGoogle.and.returnValue(of({} as UserCredential));
+    authServiceSpy.loginWithGoogle.and.returnValue(of({} as User));
     signInWithGoogleButton().click();
     fixture.detectChanges();
-    expect(authServiceSpy.signInWithGoogle).toHaveBeenCalled();
+    expect(authServiceSpy.loginWithGoogle).toHaveBeenCalled();
     expect(routerServiceSpy.navigateAfterLogin).toHaveBeenCalled();
   });
   it('On successfully signed in with email navigates to root url', () => {
-    authServiceSpy.signIn.and.returnValue(of({} as UserCredential));
+    authServiceSpy.login.and.returnValue(of({} as User));
     emailFragment$.next(true);
     fixture.detectChanges();
     const email = 'maciek@gmail.com';
     const password = 'foo@bar@baz';
     const form = emailForm();
-    form.submit.emit({ email, password });
+    form.submitted.emit({ email, password });
     fixture.detectChanges();
-    expect(authServiceSpy.signIn).toHaveBeenCalledWith(email, password);
+    expect(authServiceSpy.login).toHaveBeenCalledWith(email, password);
     expect(routerServiceSpy.navigateAfterLogin).toHaveBeenCalled();
   });
   it('On forgot password navigates to password reset', () => {

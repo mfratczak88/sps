@@ -1,8 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import {
-  RegisterUserCommand,
-  RegisterUserResult,
-} from '../src/infrastructure/security/authentication.service';
+import { RegisterUserResult } from '../src/infrastructure/security/authentication.service';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { PrismaService } from '../src/persistence/prisma/prisma.service';

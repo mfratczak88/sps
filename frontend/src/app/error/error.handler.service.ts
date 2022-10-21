@@ -2,8 +2,6 @@ import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { ToastService } from '../core/service/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from '../core/model/error.model';
-import { Router } from '@angular/router';
-import { ErrorPaths } from '../routes';
 import { RouterService } from '../core/state/router/router.service';
 
 @Injectable()

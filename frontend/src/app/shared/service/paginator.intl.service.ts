@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class PaginatorIntlService implements MatPaginatorIntl {
   readonly changes: Subject<void> = new Subject<void>();
+
   firstPageLabel: string = this.translateService.instant(
     PaginationKeys.FIRST_PAGE_LABEL,
   );
@@ -22,12 +23,15 @@ export class PaginatorIntlService implements MatPaginatorIntl {
   itemsPerPageLabel: string = this.translateService.instant(
     PaginationKeys.ITEMS_PER_PAGE_LABEL,
   );
+
   lastPageLabel: string = this.translateService.instant(
     PaginationKeys.LAST_PAGE_LABEL,
   );
+
   nextPageLabel: string = this.translateService.instant(
     PaginationKeys.NEXT_PAGE_LABEL,
   );
+
   previousPageLabel: string = this.translateService.instant(
     PaginationKeys.PREVIOUS_PAGE_LABEL,
   );

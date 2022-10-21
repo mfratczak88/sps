@@ -23,9 +23,11 @@ export class SignInComponent implements OnDestroy {
     readonly routerQuery: RouterQuery,
     readonly authService: AuthService,
   ) {
-    this.routeFragmentSub$ = this.routerQuery.emailFragment$().subscribe(() => {
-      this.showEmailSignUp = true;
-    });
+    this.routeFragmentSub$ = this.routerQuery
+      .emailFragment$()
+      .subscribe(emailFragment => {
+        this.showEmailSignUp = emailFragment;
+      });
   }
 
   onEmailSignIn({ email, password }: LoginCredentials) {

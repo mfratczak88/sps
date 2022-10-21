@@ -41,7 +41,7 @@ export class AuthService {
     );
   }
 
-  register(command: RegisterUserPayload): Observable<User> {
+  register(command: RegisterUserPayload) {
     return this.authApi
       .register(command)
       .pipe(tap(() => this.toastService.show(ToastKeys.CHECK_EMAIL)));
@@ -71,17 +71,21 @@ export class AuthService {
     return this.authApi.logout().pipe(
       first(),
       tap(() => {
-        this.authStore.update(() => initialStoreState);
+        this.authStore._setState(initialStoreState);
       }),
     );
   }
 
   confirmRegistration(id: string): Observable<any> {
-    return this.authApi.confirmRegistration(id);
+    return this.authApi
+      .confirmRegistration(id)
+      .pipe(tap(() => this.toastService.show(ToastKeys.EMAIL_VERIFIED)));
   }
 
   resendActivationLink(previousGuid: string) {
-    return this.authApi.resendActivationLink(previousGuid);
+    return this.authApi
+      .resendActivationLink(previousGuid)
+      .pipe(tap(() => this.toastService.show(ToastKeys.CHECK_EMAIL)));
   }
 
   private static removeUserInfoFromLocalStorage() {

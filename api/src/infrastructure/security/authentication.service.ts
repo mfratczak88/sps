@@ -48,16 +48,20 @@ export class AuthenticationService {
     command: LoginWithGoogleCommand,
     response: Response,
   ): Promise<UserDto> {
-    const ticket = await this.googleAuthClient.verifyIdToken({
-      idToken: command.idToken,
-      audience: this.environment.GOOGLE_AUTH_ID,
-    });
+    let ticket;
+    try {
+      ticket = await this.googleAuthClient.verifyIdToken({
+        idToken: command.idToken,
+        audience: this.environment.GOOGLE_AUTH_ID,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     if (!ticket)
       throw new SecurityException(
         MessageCode.GOOGLE_AUTHENTICATION_ERROR,
         ExceptionCode.UNAUTHORIZED,
       );
-
     let user = await this.userService.findByEmail(command.email);
     if (!user) {
       user = (

@@ -22,6 +22,7 @@ export const initialStoreState: User = {
 };
 
 export interface RegisterUserPayload {
+  name: string;
   email: string;
   password: string;
 }

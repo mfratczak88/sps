@@ -18,16 +18,13 @@ export class RouterQuery {
     this.akitaRouterQuery.selectData('breadcrumbs').pipe(filter(x => !!x));
 
   emailFragment$ = (): Observable<boolean> =>
-    this.akitaRouterQuery.selectFragment().pipe(
-      filter(x => x === Fragment.EMAIL),
-      map(x => !!x),
-    );
+    this.akitaRouterQuery.selectFragment().pipe(map(x => x === Fragment.EMAIL));
 
-  get activationGuid() {
+  activationGuid() {
     return this.akitaRouterQuery.getParams(ParamKeys.ACTIVATION_GUID) || '';
   }
 
-  get previousActivationGuid() {
+  previousActivationGuid() {
     return (
       this.akitaRouterQuery.getQueryParams(
         QueryParamKeys.PREVIOUS_ACTIVATION_GUID,

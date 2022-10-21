@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly authQuery: AuthQuery,
     private readonly authService: AuthService,
-    private readonly navigationService: RouterService,
+    private readonly routerService: RouterService,
   ) {}
 
   canActivate(
@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
     return from(this.authService.restoreAuth()).pipe(
       map(user => {
         if (!user) {
-          return this.navigationService.urlTreeForLoginWithReturnUrl(state.url);
+          return this.routerService.urlTreeForLoginWithReturnUrl(state.url);
         }
         return true;
       }),

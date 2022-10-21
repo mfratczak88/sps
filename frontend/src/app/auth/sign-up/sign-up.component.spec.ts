@@ -46,6 +46,12 @@ describe('SignUpComponent', () => {
       }),
     );
 
+  const nameFormField = () =>
+    loader.getHarness(
+      MatFormFieldHarness.with({
+        selector: '.sign-up-form__fields--name',
+      }),
+    );
   const signUpButton = () =>
     fixture.debugElement.query(By.css('.sign-up-form__button'))
       .nativeElement as HTMLButtonElement;
@@ -54,7 +60,7 @@ describe('SignUpComponent', () => {
     fixture.debugElement.query(By.directive(LinkComponent));
 
   beforeEach(async () => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['signUp']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['register']);
     routerServiceSpy = jasmine.createSpyObj('RouterService', ['toSignIn']);
     await TestBed.configureTestingModule({
       declarations: [SignUpComponent],
@@ -94,6 +100,12 @@ describe('SignUpComponent', () => {
     const passwordField = await passwordFormField();
     expect(await passwordField.getLabel()).toContain(
       translateService.instant(AuthTranslationKeys.ENTER_YOUR_PASSWORD),
+    );
+  });
+  it('displays translated name field label', async () => {
+    const nameField = await nameFormField();
+    expect(await nameField.getLabel()).toContain(
+      translateService.instant(AuthTranslationKeys.ENTER_YOUR_NAME),
     );
   });
   it('displays translated sign up button', () => {
@@ -161,13 +173,16 @@ describe('SignUpComponent', () => {
     ]);
   });
   it('calls auth service on sign up and navigates to sign in page', async () => {
-    authServiceSpy.signUp.and.returnValue(of(undefined));
+    authServiceSpy.register.and.returnValue(of(void 0));
     const email = 'andrew@gmail.com';
+    const name = 'Maciek';
     const password = 'someOkPasssword333';
     const emailFormEl = await emailFormField();
     const emailInput = (await emailFormEl.getControl()) as MatInputHarness;
     const passwordField = await passwordFormField();
     const passwordInput = (await passwordField.getControl()) as MatInputHarness;
+    const nameInputField = await nameFormField();
+    const nameInput = (await nameInputField.getControl()) as MatInputHarness;
 
     await emailInput.setValue(email);
     await emailInput.blur();
@@ -175,9 +190,16 @@ describe('SignUpComponent', () => {
     await passwordInput.setValue(password);
     await emailInput.blur();
 
+    await nameInput.setValue(name);
+    await nameInput.blur();
+
     signUpButton().click();
 
-    expect(authServiceSpy.signUp).toHaveBeenCalledWith({ email, password });
+    expect(authServiceSpy.register).toHaveBeenCalledWith({
+      name,
+      email,
+      password,
+    });
     expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
   });
 });

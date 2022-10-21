@@ -22,7 +22,7 @@ export class ResendAccountActivationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.previousActivationGuid = this.routerQuery.previousActivationGuid;
+    this.previousActivationGuid = this.routerQuery.previousActivationGuid();
     if (!this.previousActivationGuid) {
       this.routerService.to404();
     }
