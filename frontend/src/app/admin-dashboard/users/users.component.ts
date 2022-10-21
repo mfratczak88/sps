@@ -43,9 +43,5 @@ export class UsersComponent {
     const dialogRef = this.dialog.open(EditRoleDialogComponent, {
       data: user,
     });
-    dialogRef
-      .afterClosed()
-      .pipe(concatMap(role => this.usersService.changeRoleTo(user, role)))
-      .subscribe();
   }
 }

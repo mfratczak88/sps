@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {
-  AuthCredentials,
+import { LoginCredentials,
   PASSWORD_MAX_LENGTH,
-  PASSWORD_MIN_LENGTH,
-} from '../../../core/state/auth/auth.model';
+  PASSWORD_MIN_LENGTH
+} from "../../../core/state/auth/auth.model";
 import { LocalizedValidators } from '../../../shared/validator';
 import { AuthTranslationKeys } from '../../../core/translation-keys';
 
@@ -19,7 +18,7 @@ export class EmailSignInFormComponent {
   readonly translations = AuthTranslationKeys;
 
   @Output()
-  readonly submit = new EventEmitter<AuthCredentials>();
+  readonly submitted = new EventEmitter<LoginCredentials>();
 
   @Output()
   readonly back = new EventEmitter<void>();
@@ -47,6 +46,6 @@ export class EmailSignInFormComponent {
   onSubmit() {
     const { email, password } = this.form.value;
     this.form.reset();
-    this.submit.emit({ email, password });
+    this.submitted.emit({ email, password });
   }
 }

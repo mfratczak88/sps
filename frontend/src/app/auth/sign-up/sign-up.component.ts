@@ -26,6 +26,7 @@ export class SignUpComponent {
     readonly routerService: RouterService,
   ) {
     this.form = formBuilder.group({
+      name: [null, [LocalizedValidators.required]],
       email: [null, [LocalizedValidators.required, LocalizedValidators.email]],
       password: [
         null,
@@ -40,7 +41,7 @@ export class SignUpComponent {
 
   onSubmit() {
     this.authService
-      .signUp(this.form.value)
+      .register(this.form.value)
       .pipe(first())
       .subscribe(() => this.routerService.toSignIn());
   }

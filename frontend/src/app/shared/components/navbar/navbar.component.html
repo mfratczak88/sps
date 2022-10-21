@@ -6,7 +6,7 @@
   <span class="toolbar__title"></span>
   <ng-container *ngIf="!!(authQuery.isLoggedIn$ | async)">
     <ng-container *ngIf="user$ | async as user">
-      <span class="toolbar__hello-message" *ngIf="user.displayName">{{translations.HEY_USER | translate}}, {{user.displayName}}</span>
+      <span class="toolbar__hello-message" *ngIf="user.name">{{translations.HEY_USER | translate}}, {{user.name}}</span>
     </ng-container>
     <div class="toolbar__tools">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Hamburger">

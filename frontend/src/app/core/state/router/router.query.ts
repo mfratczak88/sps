@@ -1,8 +1,13 @@
 import { RouterQuery as AkitaRouterQuery } from '@datorama/akita-ng-router-store';
 import { filter, map, Observable } from 'rxjs';
-import { BreadCrumbs, Fragment, QueryParamKeys } from './router.model';
+import {
+  BreadCrumbs,
+  Fragment,
+  ParamKeys,
+  QueryParamKeys,
+} from './router.model';
 import { Injectable } from '@angular/core';
-import { AuthActionMode } from '../auth/auth.model';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,18 +23,15 @@ export class RouterQuery {
       map(x => !!x),
     );
 
-  authActionModeParam(): AuthActionMode | null {
-    return this.akitaRouterQuery.getQueryParams(QueryParamKeys.MODE);
+  get activationGuid() {
+    return this.akitaRouterQuery.getParams(ParamKeys.ACTIVATION_GUID) || '';
   }
 
-  authActionParams() {
-    const mode = this.akitaRouterQuery.getQueryParams(QueryParamKeys.MODE);
-    const actionCode = this.akitaRouterQuery.getQueryParams(
-      QueryParamKeys.ACTION_CODE,
+  get previousActivationGuid() {
+    return (
+      this.akitaRouterQuery.getQueryParams(
+        QueryParamKeys.PREVIOUS_ACTIVATION_GUID,
+      ) || ''
     );
-    return {
-      mode,
-      actionCode,
-    };
   }
 }

@@ -8,11 +8,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { EmailSignInFormComponent } from './sign-in/email-sign-in-form/email-sign-in-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { PasswordResetComponent } from './password-reset/password-reset.component';
-
-import { ActionCodeComponent } from './action-code/action-code.component';
-import { InvalidAuthLinkComponent } from './invalid-auth-link/invalid-auth-link.component';
-import { ConfirmPasswordResetComponent } from './confirm-password-reset/confirm-password-reset.component';
+import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
+import { ResendAccountActivationComponent } from './resend-account-activation/resend-account-activation.component';
 
 @NgModule({
   declarations: [
@@ -20,10 +17,8 @@ import { ConfirmPasswordResetComponent } from './confirm-password-reset/confirm-
     SignInComponent,
     SignUpComponent,
     EmailSignInFormComponent,
-    PasswordResetComponent,
-    ActionCodeComponent,
-    ConfirmPasswordResetComponent,
-    InvalidAuthLinkComponent,
+    ConfirmAccountComponent,
+    ResendAccountActivationComponent,
   ],
   imports: [
     CommonModule,

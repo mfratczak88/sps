@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AuthPaths, ErrorPaths, TopLevelPaths } from 'src/app/routes';
 
-import { AuthActionMode } from '../auth/auth.model';
 import { QueryParamKeys } from './router.model';
 
 @Injectable({
@@ -22,18 +21,16 @@ export class RouterService {
   }
 
   toRoot() {
-    return this.router.navigate(['/']);
+    return this.router.navigateByUrl('/');
+  }
+
+  reload() {
+    window.location.reload();
   }
 
   toSignUp() {
     return this.router.navigate([
       `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_UP}`,
-    ]);
-  }
-
-  toInvalidAuthLink(mode: AuthActionMode) {
-    return this.router.navigate([
-      `/${TopLevelPaths.AUTH}/${AuthPaths.INVALID_AUTH_LINK}?${QueryParamKeys.MODE}=${mode}`,
     ]);
   }
 
@@ -74,6 +71,13 @@ export class RouterService {
   to404() {
     return this.router.navigate([
       `${TopLevelPaths.ERROR}/${ErrorPaths.NOT_FOUND}`,
+    ]);
+  }
+
+  toResendActivationLink(activationGuid: string) {
+    return this.router.navigate([
+      `/${TopLevelPaths.AUTH}/${AuthPaths.RESEND_ACTIVATION_LINK}`,
+      activationGuid,
     ]);
   }
 

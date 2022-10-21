@@ -1,30 +1,28 @@
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
-import { RouterService } from '../core/state/router/router.service';
-import { ErrorCodes } from '../core/model/api.model';
 import { ToastService } from '../core/service/toast.service';
-import { TranslationService } from '../core/service/translation.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorResponse } from '../core/model/error.model';
+import { Router } from '@angular/router';
+import { ErrorPaths } from '../routes';
+import { RouterService } from '../core/state/router/router.service';
 
 @Injectable()
 export class ErrorHandlerService implements ErrorHandler {
-  constructor(private readonly injector: Injector) {}
+  constructor(
+    private readonly toastService: ToastService,
+    private readonly injector: Injector,
+  ) {}
 
   handleError(error: any) {
-    const toastService = this.injector.get(ToastService);
-    const translationService = this.injector.get(TranslationService);
-    if (error.code && error.message) {
-      console.log(error);
-
-      return error.code === ErrorCodes.INTERNAL_ERROR
+    if (error instanceof HttpErrorResponse) {
+      const body: ErrorResponse = error.error;
+      console.log(body);
+      return body.statusCode === 500
         ? this.injector.get(RouterService)?.toInternalServerErrorPage()
-        : toastService.show(
-            translationService.translateErrorCode(
-              error.code as ErrorCodes,
-              error.message,
-            ),
-          );
+        : this.toastService.show(body.message);
     }
     return navigator.onLine
       ? console.error(error.message ? error.message : error.toString())
-      : toastService.show(`No Internet Connection`);
+      : this.toastService.show('No Internet Connection');
   }
 }

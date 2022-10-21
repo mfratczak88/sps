@@ -3,7 +3,7 @@
   <div class="sign-in__form">
     <ng-container *ngIf="showEmailSignUp; else signInType">
       <sps-email-sign-in-form class="sign-in__form--component"
-                              (submit)="onEmailSignIn($event)"
+                              (submitted)="onEmailSignIn($event)"
                               (back)="routerService.toSameRoute()"
                               (noAccount)="routerService.toSignUp()"
                               (forgotPassword)="routerService.toPasswordReset()">

@@ -1,20 +1,27 @@
-export interface AuthCredentials {
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  validToISO?: string;
+  authExpiresIn: string;
+}
+
+export interface LoginCredentials {
   email: string;
   password: string;
 }
-export interface User {
-  displayName: string | null;
-  email: string | null;
-  photoURL: string | null;
-  emailVerified: boolean;
-}
-export const PASSWORD_MIN_LENGTH = 8;
-export const PASSWORD_MAX_LENGTH = 25;
-export enum AuthActionMode {
-  VERIFY_EMAIL = 'verifyEmail',
-  RESET_PASSWORD = 'resetPassword',
-}
-export interface AuthActionCodeQueryParams {
-  mode: AuthActionMode | null;
-  oobCode: string | null;
+
+export const PASSWORD_MAX_LENGTH = 20;
+export const PASSWORD_MIN_LENGTH = 7;
+export const initialStoreState: User = {
+  email: '',
+  id: '',
+  validToISO: '',
+  name: '',
+  authExpiresIn: '',
+};
+
+export interface RegisterUserPayload {
+  email: string;
+  password: string;
 }

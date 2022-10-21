@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../../core/state/auth/auth.service';
 import { User } from '../../../core/state/auth/auth.model';
-import { Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
 import { RouterService } from '../../../core/state/router/router.service';
 import { AuthQuery } from '../../../core/state/auth/auth.query';
 import { SharedKeys } from '../../../core/translation-keys';
@@ -28,6 +28,9 @@ export class NavbarComponent {
   }
 
   onSignOut() {
-    this.authService.signOut().then(() => this.navigationService.toRoot());
+    this.authService
+      .logout()
+      .pipe(first())
+      .subscribe(() => this.navigationService.reload());
   }
 }

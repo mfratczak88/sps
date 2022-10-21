@@ -1,41 +1,58 @@
 import {
-  HTTP_INTERCEPTORS,
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, switchMap, take } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Injectable, Injector } from '@angular/core';
+import { AuthService } from '../state/auth/auth.service';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthTokenInterceptor implements HttpInterceptor {
-  constructor(private auth: AngularFireAuth) {}
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  private refreshingInProgress = false;
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-  ): Observable<HttpEvent<any>> {
-    return this.auth.idToken.pipe(
-      take(1),
-      switchMap(idToken => {
-        let clone = req.clone();
-        if (idToken) {
-          clone = clone.clone({
-            headers: req.headers.set('Authorization', 'Bearer ' + idToken),
-          });
+  constructor(private readonly injector: Injector) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const authReq = req.clone({
+      withCredentials: true,
+      headers: req.headers.set(
+        'X-CSRF-TOKEN',
+        localStorage.getItem('_csrf') || '',
+      ),
+    });
+    return next.handle(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          return this.refreshToken(authReq, next);
         }
-        return next.handle(clone);
+        return throwError(error);
       }),
     );
   }
-}
 
-export const AuthTokenHttpInterceptorProvider = {
-  provide: HTTP_INTERCEPTORS,
-  useClass: AuthTokenInterceptor,
-  multi: true,
-};
+  private refreshToken(
+    req: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
+    const authService = this.injector.get(AuthService);
+    if (!this.refreshingInProgress) {
+      this.refreshingInProgress = true;
+      return authService.refreshToken().pipe(
+        switchMap(() => {
+          this.refreshingInProgress = false;
+          return next.handle(req);
+        }),
+        catchError(err => {
+          authService.logout();
+          this.refreshingInProgress = false;
+          return throwError(err);
+        }),
+      );
+    } else {
+      return next.handle(req);
+    }
+  }
+}

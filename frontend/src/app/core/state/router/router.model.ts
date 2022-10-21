@@ -1,7 +1,9 @@
 export enum QueryParamKeys {
-  MODE = 'mode',
-  ACTION_CODE = 'oobCode',
   RETURN_URL = 'returnUrl',
+  PREVIOUS_ACTIVATION_GUID = 'previousActivationGuid',
+}
+export enum ParamKeys {
+  ACTIVATION_GUID = 'activationGuid',
 }
 export enum Fragment {
   EMAIL = 'email',

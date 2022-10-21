@@ -4,6 +4,15 @@
   <sps-heading [centered]="true" size="l">{{translations.SIGN_UP_TITLE | translate}}</sps-heading>
   <div class="sign-up-form__fields">
     <mat-form-field appearance="outline" class="sign-up-form__fields--email">
+      <mat-label>{{translations.ENTER_YOUR_NAME | translate}}</mat-label>
+      <mat-icon matSuffix>face</mat-icon>
+      <input
+        matInput
+        required
+        formControlName="name">
+      <sps-form-error [control]="form.get('name')!"></sps-form-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="sign-up-form__fields--email">
       <mat-label>{{translations.ENTER_YOUR_EMAIL | translate}}</mat-label>
       <mat-icon matSuffix>email</mat-icon>
       <input

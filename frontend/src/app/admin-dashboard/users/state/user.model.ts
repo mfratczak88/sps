@@ -1,7 +1,5 @@
-import { RoleKeys } from '../../../core/translation-keys';
-import { environment } from '../../../../environments/environment';
+import { RoleKeys } from "../../../core/translation-keys";
 
-export const API_URL = environment.functionsUrl + '/users';
 export interface User {
   uid: string;
   email: string;

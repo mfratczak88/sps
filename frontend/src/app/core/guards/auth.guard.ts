@@ -5,8 +5,9 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 import { RouterService } from '../state/router/router.service';
+import { AuthQuery } from '../state/auth/auth.query';
 import { AuthService } from '../state/auth/auth.service';
 
 @Injectable({
@@ -14,6 +15,7 @@ import { AuthService } from '../state/auth/auth.service';
 })
 export class AuthGuard implements CanActivate {
   constructor(
+    private readonly authQuery: AuthQuery,
     private readonly authService: AuthService,
     private readonly navigationService: RouterService,
   ) {}
@@ -26,9 +28,12 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.authService.currentUser$().pipe(
+    if (this.authQuery.loggedIn()) {
+      return true;
+    }
+    return from(this.authService.restoreAuth()).pipe(
       map(user => {
-        if (!user?.emailVerified) {
+        if (!user) {
           return this.navigationService.urlTreeForLoginWithReturnUrl(state.url);
         }
         return true;

@@ -4,10 +4,9 @@ import { NgModule } from '@angular/core';
 import { SignInComponent } from './sign-in/sign-in.component';
 
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { PasswordResetComponent } from './password-reset/password-reset.component';
-import { ActionCodeComponent } from './action-code/action-code.component';
-import { InvalidAuthLinkComponent } from './invalid-auth-link/invalid-auth-link.component';
 import { AuthPaths } from '../routes';
+import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
+import { ResendAccountActivationComponent } from './resend-account-activation/resend-account-activation.component';
 
 const routes: Routes = [
   {
@@ -28,16 +27,12 @@ const routes: Routes = [
         component: SignUpComponent,
       },
       {
-        path: AuthPaths.FORGOT_PASSWORD,
-        component: PasswordResetComponent,
+        path: AuthPaths.CONFIRM_ACCOUNT,
+        component: ConfirmAccountComponent,
       },
       {
-        path: AuthPaths.INVALID_AUTH_LINK,
-        component: InvalidAuthLinkComponent,
-      },
-      {
-        path: AuthPaths.ACTION_CODE,
-        component: ActionCodeComponent,
+        path: AuthPaths.RESEND_ACTIVATION_LINK,
+        component: ResendAccountActivationComponent,
       },
     ],
   },

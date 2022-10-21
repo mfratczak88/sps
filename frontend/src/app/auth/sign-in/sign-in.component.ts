@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../core/state/auth/auth.service';
 import { first, Subscription } from 'rxjs';
 import { RouterService } from '../../core/state/router/router.service';
-import { AuthCredentials } from '../../core/state/auth/auth.model';
+import { LoginCredentials } from '../../core/state/auth/auth.model';
 import { AuthTranslationKeys } from '../../core/translation-keys';
 import { RouterQuery } from '../../core/state/router/router.query';
 
@@ -28,16 +28,16 @@ export class SignInComponent implements OnDestroy {
     });
   }
 
-  onEmailSignIn({ email, password }: AuthCredentials) {
+  onEmailSignIn({ email, password }: LoginCredentials) {
     this.authService
-      .signIn(email, password)
+      .login(email, password)
       .pipe(first())
       .subscribe(() => this.onSuccessfulSignIn());
   }
 
   onGoogleSignIn() {
     this.authService
-      .signInWithGoogle()
+      .loginWithGoogle()
       .subscribe(() => this.onSuccessfulSignIn());
   }
 

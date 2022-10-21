@@ -19,7 +19,10 @@
     "ALREADY_HAVE_ACCOUNT": "Posiadasz już konto?",
     "SIGN_UP_DISCLAIMER": "Tworząc konto zgadzasz się na ",
     "TERMS_AND_CONDITIONS": "Regulamin i Warunki",
-    "RESET_BUTTON": "Resetuj"
+    "RESET_BUTTON": "Resetuj",
+    "ACCOUNT_CONFIRMED": "Konto potwierdzone. Możesz się zalogować",
+    "ENTER_YOUR_NAME": "Twoje imię",
+    "WE_CAN_SEND_A_NEW_ONE": "Możemy wysłać nowy link na twojego emaila"
   },
   "FORM_ERROR": {
     "REQUIRED": "To pole jest wymagane",

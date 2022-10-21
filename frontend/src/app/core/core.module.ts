@@ -1,41 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../environments/environment';
-import {
-  AngularFirestoreModule,
-  USE_EMULATOR as USE_FIRESTORE_EMULATOR,
-} from '@angular/fire/compat/firestore';
-import {
-  AngularFireAuthModule,
-  USE_EMULATOR as USE_AUTH_EMULATOR,
-} from '@angular/fire/compat/auth';
-import { HttpClientModule } from '@angular/common/http';
+
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
-import { AuthTokenHttpInterceptorProvider } from './interceptor/auth-token.interceptor';
+import { AuthInterceptor } from './interceptor/auth-token.interceptor';
+import {
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
+import { GoogleAuthService } from './service/google.auth.service';
+import { environment } from '../../environments/environment';
 
+const socialLoginProviderConfig = {
+  provide: 'SocialAuthServiceConfig',
+  useValue: {
+    autoLogin: false,
+    providers: [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleAuthService(environment.googleClientId),
+      },
+    ],
+  } as SocialAuthServiceConfig,
+};
 const providers = [
-  {
-    provide: USE_AUTH_EMULATOR,
-    useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined,
-  },
-  {
-    provide: USE_FIRESTORE_EMULATOR,
-    useValue: environment.useEmulators ? ['localhost', '8080'] : undefined,
-  },
-  AuthTokenHttpInterceptorProvider,
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  socialLoginProviderConfig,
 ];
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence({ synchronizeTabs: true }),
-    AngularFireAuthModule,
-    AkitaNgRouterStoreModule,
-  ],
+  imports: [CommonModule, HttpClientModule, AkitaNgRouterStoreModule],
   providers: [...providers],
 })
 export class CoreModule {}

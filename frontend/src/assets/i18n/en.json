@@ -19,7 +19,10 @@
     "ALREADY_HAVE_ACCOUNT": "Already have an account ?",
     "SIGN_UP_DISCLAIMER": "By submitting this form, you confirm that you have read and agree to the ",
     "TERMS_AND_CONDITIONS": "Terms & Conditions",
-    "RESET_BUTTON": "Reset"
+    "RESET_BUTTON": "Reset",
+    "ACCOUNT_CONFIRMED": "Account has been confirmed. You can now sign in",
+    "ENTER_YOUR_NAME": "Your name",
+    "WE_CAN_SEND_A_NEW_ONE": "We can send a new one to your email"
   },
   "FORM_ERROR": {
     "REQUIRED": "This field cannot be empty",
