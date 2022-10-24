@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { RegistrationTokenStore, UserStore } from './user.store';
-import { IdGenerator } from '../../application/id.generator';
-import { Id } from '../../application/id';
-import { RegistrationMethod, RegistrationToken, User } from './user';
+import { IdGenerator } from '../../../application/id.generator';
+import { Id } from '../../../application/id';
+import { RegistrationMethod, RegistrationToken, User, UserDto } from './user';
 import { CreateUserCommand } from './user.command';
-import { UnitOfWork } from '../../application/unit-of-work';
-import { MessageCode } from '../../message';
-import { SecurityException } from './security.exception';
-import { ExceptionCode } from '../../error';
-import { Environment } from '../../configuration.module';
+import { UnitOfWork } from '../../../application/unit-of-work';
+import { MessageCode } from '../../../message';
+import { SecurityException } from '../security.exception';
+import { ExceptionCode } from '../../../error';
+import { Environment } from '../../../configuration.module';
+import { Role } from '../authorization/role';
 
 @Injectable()
 export class UserService {
@@ -48,6 +49,7 @@ export class UserService {
         active,
         password,
         registrationMethod,
+        role: Role.DRIVER,
       };
       await this.userStore.save(user);
       if (registrationMethod !== RegistrationMethod.manual) {
@@ -127,6 +129,31 @@ export class UserService {
       );
     }
     user.refreshToken = refreshToken;
+    await this.userStore.save(user);
+  }
+
+  async getAll(): Promise<UserDto[]> {
+    const users = await this.userStore.findAll();
+    return users.map((user) => {
+      const { id, name, email, role } = user;
+      return {
+        id,
+        name,
+        email,
+        role,
+      };
+    });
+  }
+
+  async changeRole(userId: Id, newRole: Role) {
+    const user = await this.userStore.findById(userId);
+    if (!user) {
+      throw new SecurityException(
+        MessageCode.USER_DOES_NOT_EXIST,
+        ExceptionCode.BAD_REQUEST,
+      );
+    }
+    user.role = newRole;
     await this.userStore.save(user);
   }
 }

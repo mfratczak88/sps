@@ -1,11 +1,15 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { AuthenticationService, AuthToken } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { TokenService } from './token.service';
+import {
+  AuthenticationService,
+  AuthToken,
+} from '../authentication/authentication.service';
+import { CookieService } from '../cookie.service';
+import { TokenService } from '../token.service';
 import { Request } from 'express';
 import { ContextIdFactory, ModuleRef } from '@nestjs/core';
+import { Role } from './role';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,8 +23,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: AuthToken) {
-    return { id: payload.sub };
+  async validate({ sub, role }: AuthToken) {
+    return { id: sub, role };
   }
 }
 
@@ -51,13 +55,14 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
       contextId,
     );
     try {
-      const { id } = await authService.getUserIfTokenMatches(
+      const { id, role } = await authService.getUserIfTokenMatches(
         payload.sub,
         this.cookieService.extractRefreshCookieFromReq(request),
       );
       return (
         id && {
           id: id.toString(),
+          role,
         }
       );
     } catch (err) {
@@ -67,5 +72,5 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
 }
 
 export interface RequestWithUser extends Request {
-  user?: { id: string };
+  user?: { id: string; role: Role };
 }

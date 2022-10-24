@@ -1,4 +1,5 @@
-import { Id } from '../../application/id';
+import { Id } from '../../../application/id';
+import { Role } from '../authorization/role';
 
 export interface User {
   readonly id: Id;
@@ -16,6 +17,15 @@ export interface User {
   registrationMethod: RegistrationMethod;
 
   refreshToken?: string;
+
+  role: Role;
+}
+
+export interface UserDto {
+  id: Id;
+  email: string;
+  name: string;
+  role: Role;
 }
 export interface RegistrationToken {
   readonly id: Id;

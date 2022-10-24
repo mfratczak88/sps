@@ -16,12 +16,12 @@ import {
   ResendRegistrationConfirmationCommand,
   ConfirmRegistrationCommand,
   ChangePasswordCommand,
-} from '../security/authentication.service';
-import { JwtAuthGuard } from '../security/jwt-auth.guard';
+} from '../security/authentication/authentication.service';
+import { JwtAuthGuard } from '../security/authorization/jwt-auth.guard';
 import { Request, Response } from 'express';
 import { TokenService } from '../security/token.service';
-import { JwtRefreshGuard } from '../security/jwt-refresh.guard';
-import { RequestWithUser } from '../security/jwt.strategy';
+import { JwtRefreshGuard } from '../security/authorization/jwt-refresh.guard';
+import { RequestWithUser } from '../security/authorization/jwt.strategy';
 
 @Controller('auth')
 @UsePipes(new ValidationPipe())
@@ -74,8 +74,8 @@ export class AuthController {
     return this.authService.register(command);
   }
 
-  @UseGuards(JwtRefreshGuard)
   @Get('refresh')
+  @UseGuards(JwtRefreshGuard)
   async refreshToken(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,

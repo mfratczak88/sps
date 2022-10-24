@@ -1,7 +1,7 @@
 import { createMock } from '@golevelup/ts-jest';
 import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { RegistrationToken } from '../../../src/infrastructure/security/user';
+import { RegistrationToken } from '../../../src/infrastructure/security/user/user';
 import { PrismaRegistrationTokenStore } from '../../../src/persistence/prisma/prisma.registration-token.store';
 import clearAllMocks = jest.clearAllMocks;
 

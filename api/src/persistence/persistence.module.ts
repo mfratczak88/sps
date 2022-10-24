@@ -6,7 +6,7 @@ import { IdGenerator } from '../application/id.generator';
 import {
   RegistrationTokenStore,
   UserStore,
-} from '../infrastructure/security/user.store';
+} from '../infrastructure/security/user/user.store';
 import { PrismaUserStore } from './prisma/prisma.user.store';
 import { PrismaRegistrationTokenStore } from './prisma/prisma.registration-token.store';
 import { UnitOfWork } from '../application/unit-of-work';

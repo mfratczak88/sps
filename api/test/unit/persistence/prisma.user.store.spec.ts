@@ -5,17 +5,20 @@ import { PrismaUserStore } from '../../../src/persistence/prisma/prisma.user.sto
 import {
   RegistrationMethod,
   User,
-} from '../../../src/infrastructure/security/user';
+} from '../../../src/infrastructure/security/user/user';
+import { Role } from '../../../src/infrastructure/security/authorization/role';
 import clearAllMocks = jest.clearAllMocks;
 
 describe('Prisma user store', () => {
   let prismaUserStore: PrismaUserStore;
   const findFirst = jest.fn();
   const upsert = jest.fn();
+  const findMany = jest.fn();
   const prismaServiceMock = createMock<PrismaService>({
     user: {
       upsert,
       findFirst,
+      findMany,
     },
   });
 
@@ -67,6 +70,7 @@ describe('Prisma user store', () => {
       active: false,
       password: 'foo',
       registrationMethod: RegistrationMethod.manual,
+      role: Role.ADMIN,
     };
     await prismaUserStore.save(user);
     const { id, ...userData } = user;
@@ -83,5 +87,10 @@ describe('Prisma user store', () => {
         },
       },
     ]);
+  });
+
+  it('Fetches all users', async () => {
+    await prismaUserStore.findAll();
+    expect(findMany).toHaveBeenCalled();
   });
 });

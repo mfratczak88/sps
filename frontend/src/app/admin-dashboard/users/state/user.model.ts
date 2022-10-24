@@ -1,14 +1,8 @@
-import { RoleKeys } from "../../../core/translation-keys";
+import { RoleKeys } from '../../../core/translation-keys';
 
-export interface User {
-  uid: string;
-  email: string;
-  displayName: string;
-  role: Role;
+export type User = UserResponse & {
   roleTranslation: string;
-  lastSignInTime: string;
-  creationTime: string;
-}
+};
 
 export enum Role {
   ADMIN = 'admin',
@@ -20,6 +14,12 @@ export interface RoleWithTranslation {
   translation: string;
 }
 
+export interface UserResponse {
+  id: string;
+  email: string;
+  name: string;
+  role: Role;
+}
 export const RoleToTranslationKey = {
   [Role.ADMIN]: RoleKeys.ADMIN,
   [Role.DRIVER]: RoleKeys.DRIVER,

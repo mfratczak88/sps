@@ -122,3 +122,7 @@ $body-text-color: #636B75;
   line-height: 16px;
 }
 
+/* Elevation */
+@mixin elevation {
+  @include mat.elevation(3);
+}

@@ -2,19 +2,20 @@ import { createMock } from '@golevelup/ts-jest';
 import {
   RegistrationTokenStore,
   UserStore,
-} from '../../../../src/infrastructure/security/user.store';
+} from '../../../../../src/infrastructure/security/user/user.store';
 import {
   RegistrationMethod,
   User,
-} from '../../../../src/infrastructure/security/user';
-import { IdGenerator } from '../../../../src/application/id.generator';
-import { UnitOfWork } from '../../../../src/application/unit-of-work';
-import { UserService } from '../../../../src/infrastructure/security/user.service';
-import { CreateUserCommand } from '../../../../src/infrastructure/security/user.command';
-import { randomId } from '../../../misc.util';
-import { SecurityException } from '../../../../src/infrastructure/security/security.exception';
-import { MessageCode } from '../../../../src/message';
-import { Environment } from '../../../../src/configuration.module';
+} from '../../../../../src/infrastructure/security/user/user';
+import { IdGenerator } from '../../../../../src/application/id.generator';
+import { UnitOfWork } from '../../../../../src/application/unit-of-work';
+import { UserService } from '../../../../../src/infrastructure/security/user/user.service';
+import { CreateUserCommand } from '../../../../../src/infrastructure/security/user/user.command';
+import { randomId } from '../../../../misc.util';
+import { SecurityException } from '../../../../../src/infrastructure/security/security.exception';
+import { MessageCode } from '../../../../../src/message';
+import { Environment } from '../../../../../src/configuration.module';
+import { Role } from '../../../../../src/infrastructure/security/authorization/role';
 import clearAllMocks = jest.clearAllMocks;
 
 describe('User service', () => {
@@ -174,6 +175,7 @@ describe('User service', () => {
       email: 'mike@gmail.com',
       password: 'foo',
       active: false,
+      role: Role.ADMIN,
     };
     tokenDate.setHours(tokenDate.getHours() + 48);
     registrationTokenStore.findByActivationGuid.mockImplementation(
@@ -200,6 +202,7 @@ describe('User service', () => {
       active: true,
       email: 'legia@legia.pl',
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
     userStoreMock.findById.mockImplementation(
       async (userId) => id === userId && user,
@@ -215,6 +218,79 @@ describe('User service', () => {
     userStoreMock.findById.mockImplementation(async () => undefined);
     try {
       await userService.changePassword('123', 'newpassword');
+    } catch (err) {
+      expect(err).toBeInstanceOf(SecurityException);
+      expect((err as SecurityException).messageProps.messageKey).toEqual(
+        MessageCode.USER_DOES_NOT_EXIST,
+      );
+    }
+  });
+
+  it('Fetches all users and transforms them to dtos', async () => {
+    userStoreMock.findAll.mockResolvedValue([
+      {
+        id: '1',
+        role: Role.ADMIN,
+        email: 'foo@gmail.com',
+        name: 'Adam',
+        password: 'foo33',
+        active: true,
+        registrationMethod: RegistrationMethod.manual,
+      },
+      {
+        id: '2',
+        role: Role.DRIVER,
+        email: 'bar@gmail.com',
+        name: 'Carol',
+        password: 'carol123',
+        active: true,
+        registrationMethod: RegistrationMethod.manual,
+      },
+    ]);
+    const [first, second] = await userService.getAll();
+
+    // discard those
+    expect(first['password']).toBeFalsy();
+    expect(second['password']).toBeFalsy();
+    expect(first['active']).toBeFalsy();
+    expect(second['active']).toBeFalsy();
+    expect(first['registrationMethod']).toBeFalsy();
+    expect(second['registrationMethod']).toBeFalsy();
+
+    expect(first.id).toEqual('1');
+    expect(first.name).toEqual('Adam');
+    expect(first.email).toEqual('foo@gmail.com');
+    expect(first.role).toEqual(Role.ADMIN);
+
+    expect(second.id).toEqual('2');
+    expect(second.name).toEqual('Carol');
+    expect(second.email).toEqual('bar@gmail.com');
+    expect(second.role).toEqual(Role.DRIVER);
+  });
+
+  it('saves the new role of the user', async () => {
+    const existingUser: User = {
+      id: '2',
+      role: Role.DRIVER,
+      email: 'bar@gmail.com',
+      name: 'Carol',
+      password: 'carol123',
+      active: true,
+      registrationMethod: RegistrationMethod.manual,
+    };
+    userStoreMock.findById.mockImplementation(async (id) => {
+      if (id === '2') return existingUser;
+    });
+    await userService.changeRole('2', Role.ADMIN);
+    expect(userStoreMock.save).toHaveBeenCalledWith({
+      ...existingUser,
+      role: Role.ADMIN,
+    });
+  });
+  it('Throws exception when user does not exist on role change', async () => {
+    userStoreMock.findById.mockResolvedValue(null);
+    try {
+      await userService.changeRole('3sadsa', Role.DRIVER);
     } catch (err) {
       expect(err).toBeInstanceOf(SecurityException);
       expect((err as SecurityException).messageProps.messageKey).toEqual(

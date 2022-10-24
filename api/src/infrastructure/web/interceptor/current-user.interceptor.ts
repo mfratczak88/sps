@@ -1,7 +1,7 @@
 import { CookieService } from '../../security/cookie.service';
-import { AuthenticationService } from '../../security/authentication.service';
+import { AuthenticationService } from '../../security/authentication/authentication.service';
 import { TokenService } from '../../security/token.service';
-import { RequestWithUser } from '../../security/jwt.strategy';
+import { RequestWithUser } from '../../security/authorization/jwt.strategy';
 import {
   CallHandler,
   ExecutionContext,
@@ -24,11 +24,11 @@ export class CurrentUserInterceptor implements NestInterceptor {
         this.cookieService.extractRefreshCookieFromReq(request);
       const decodeRefreshToken =
         this.tokenService.validateAndDecodeRefreshToken(refreshToken);
-      const user = await this.authService.getUserIfTokenMatches(
+      const { id, role } = await this.authService.getUserIfTokenMatches(
         decodeRefreshToken.sub,
         refreshToken,
       );
-      request.user = { id: user.id.toString() };
+      request.user = { id, role };
     } catch (err) {}
     return next.handle();
   }

@@ -8,7 +8,6 @@ export type UserState = EntityState<User, string>;
 })
 @StoreConfig({
   name: 'user',
-  idKey: 'uid',
 })
 export class UserStore extends EntityStore<UserState> {
   constructor() {

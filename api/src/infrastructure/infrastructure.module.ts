@@ -9,15 +9,19 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigurationModule, Environment } from '../configuration.module';
 import { AuthController } from './web/auth.controller';
-import { AuthenticationService } from './security/authentication.service';
-import { UserService } from './security/user.service';
+import { AuthenticationService } from './security/authentication/authentication.service';
+import { UserService } from './security/user/user.service';
 import { CookieService } from './security/cookie.service';
-import { JwtRefreshTokenStrategy, JwtStrategy } from './security/jwt.strategy';
+import {
+  JwtRefreshTokenStrategy,
+  JwtStrategy,
+} from './security/authorization/jwt.strategy';
 import { TokenService } from './security/token.service';
 import * as Tokens from 'csrf';
 import { OAuth2Client } from 'google-auth-library';
 
 import { ApplicationModule } from '../application/application.module';
+import { UsersController } from './web/users.controller';
 
 const providers: Provider[] = [
   {
@@ -57,8 +61,8 @@ const providers: Provider[] = [
 ];
 
 @Module({
-  providers: providers,
-  controllers: [AuthController],
+  providers: [...providers],
+  controllers: [AuthController, UsersController],
   imports: [
     ConfigurationModule,
     PassportModule,
@@ -75,7 +79,6 @@ const providers: Provider[] = [
     }),
     ApplicationModule,
   ],
-
   exports: providers,
 })
 @Global()
