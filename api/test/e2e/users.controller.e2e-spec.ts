@@ -181,26 +181,4 @@ describe('users e2e', () => {
     });
     expect(role).toEqual(Role.ADMIN);
   });
-  it('Returns all users', async () => {
-    const { email, password } = adminUser;
-    const { loginCookies, csrfToken, csrfTokenCookie } = await authenticateUser(
-      email,
-      password,
-    );
-    const usersResp = await request(app.getHttpServer())
-      .get(`${baseUrl}`)
-      .set('Cookie', [...loginCookies, ...csrfTokenCookie])
-      .set(TokenService.CSRF_TOKEN_HEADER_NAME, csrfToken);
-
-    (<UserDto[]>usersResp.body).map((dto) => {
-      const { id, email, name, role } = dto;
-      const user = users.find((u) => u.id === id);
-      if (user) {
-        expect(user.id).toEqual(id);
-        expect(user.role).toEqual(role);
-        expect(user.email).toEqual(email);
-        expect(user.name).toEqual(name);
-      }
-    });
-  });
 });
