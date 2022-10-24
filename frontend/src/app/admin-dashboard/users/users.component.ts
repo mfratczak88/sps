@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { AdminKeys } from '../../core/translation-keys';
 import { UserService } from './state/user.service';
 import { UserQuery } from './state/user.query';
-import { User } from './state/user.model';
+import { Role, User } from './state/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { EditRoleDialogComponent } from './edit-role-dialog/edit-role-dialog.component';
-import { concatMap } from 'rxjs';
+import { concatMap, filter } from 'rxjs';
 import { Button, Column } from '../../shared/components/table/table.component';
 
 @Component({
@@ -18,7 +18,7 @@ export class UsersComponent {
 
   tableColumns: Column[] = [
     { name: 'email', translation: this.translations.COLUMN_EMAIL },
-    { name: 'displayName', translation: this.translations.COLUMN_NAME },
+    { name: 'name', translation: this.translations.COLUMN_NAME },
     { name: 'roleTranslation', translation: this.translations.COLUMN_ROLE },
   ];
 
@@ -40,8 +40,20 @@ export class UsersComponent {
   ) {}
 
   editDialogOpen(user: User) {
-    const dialogRef = this.dialog.open(EditRoleDialogComponent, {
-      data: user,
-    });
+    const dialogRef = this.dialog.open<EditRoleDialogComponent, User, Role>(
+      EditRoleDialogComponent,
+      {
+        data: user,
+      },
+    );
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter(newRole => !!newRole),
+        concatMap(newRole =>
+          this.usersService.changeRoleFor(user.id, newRole as Role),
+        ),
+      )
+      .subscribe();
   }
 }

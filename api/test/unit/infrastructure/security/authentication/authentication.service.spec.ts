@@ -1,9 +1,9 @@
-import { UserService } from '../../../../src/infrastructure/security/user.service';
+import { UserService } from '../../../../../src/infrastructure/security/user/user.service';
 import {
   RegistrationMethod,
   RegistrationToken,
   User,
-} from '../../../../src/infrastructure/security/user';
+} from '../../../../../src/infrastructure/security/user/user';
 import {
   anything,
   capture,
@@ -13,24 +13,25 @@ import {
   reset,
   when,
 } from 'ts-mockito';
-import { CookieService } from '../../../../src/infrastructure/security/cookie.service';
-import { TokenService } from '../../../../src/infrastructure/security/token.service';
+import { CookieService } from '../../../../../src/infrastructure/security/cookie.service';
+import { TokenService } from '../../../../../src/infrastructure/security/token.service';
 import { Response } from 'express';
 import {
   AuthenticationService,
   LoginWithGoogleCommand,
   RegisterUserCommand,
-} from '../../../../src/infrastructure/security/authentication.service';
+} from '../../../../../src/infrastructure/security/authentication/authentication.service';
 import * as bcrypt from 'bcrypt';
-import { Environment } from '../../../../src/configuration.module';
-import { EmailService } from '../../../../src/infrastructure/email/email.service';
+import { Environment } from '../../../../../src/configuration.module';
+import { EmailService } from '../../../../../src/infrastructure/email/email.service';
 
-import { SecurityException } from '../../../../src/infrastructure/security/security.exception';
-import { LanguageService } from '../../../../src/application/language.service';
-import { randomId } from '../../../misc.util';
+import { SecurityException } from '../../../../../src/infrastructure/security/security.exception';
+import { LanguageService } from '../../../../../src/application/language.service';
+import { randomId } from '../../../../misc.util';
 import { createMock } from '@golevelup/ts-jest';
 import { LoginTicket, OAuth2Client, TokenPayload } from 'google-auth-library';
-import { MessageCode } from '../../../../src/message';
+import { MessageCode } from '../../../../../src/message';
+import { Role } from '../../../../../src/infrastructure/security/authorization/role';
 
 jest.mock('bcrypt');
 describe('Auth service', () => {
@@ -147,6 +148,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
     const authToken = '3434';
     const refreshToken = '3434sdax1';
@@ -190,6 +192,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
     const authToken = '3434';
     const refreshToken = '3434sdax1';
@@ -235,6 +238,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
     const authToken = '3434';
     const refreshToken = '3434sdax1';
@@ -273,6 +277,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
     const authToken = '3434';
     const refreshToken = '3434sdax1';
@@ -312,6 +317,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
     const authToken = '3434';
     const bcryptSalt = '34433';
@@ -360,6 +366,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
 
     const authToken = '3434';
@@ -411,6 +418,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
 
     bcrypt.compareSync = jest.fn(
@@ -441,6 +449,7 @@ describe('Auth service', () => {
       name: 'Boris',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
 
     bcrypt.compareSync = jest.fn(() => false);
@@ -464,7 +473,7 @@ describe('Auth service', () => {
       name: 'Mac',
       password: '3432432432',
     };
-    const publicDomain = 'stg.vappy.io';
+    const publicDomain = 'sps.io';
     when(envMock.PUBLIC_DOMAIN).thenReturn(publicDomain);
     const user: User = {
       id: randomId(),
@@ -473,6 +482,7 @@ describe('Auth service', () => {
       name: 'Mac',
       active: true,
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
 
     const datetime = new Date();
@@ -528,6 +538,7 @@ describe('Auth service', () => {
       email: 'adam@gmail.com',
       active: true,
       registrationMethod: RegistrationMethod.google,
+      role: Role.DRIVER,
     };
     const refreshToken = randomId();
     const loginWithGoogle: LoginWithGoogleCommand = {
@@ -570,12 +581,7 @@ describe('Auth service', () => {
       ),
     ).thenResolve({ user });
     when(
-      tokenServiceMock.signAuthTokenPair(
-        deepEqual({
-          sub: user.id,
-        }),
-        anything(),
-      ),
+      tokenServiceMock.signAuthTokenPair(anything(), anything()),
     ).thenResolve({
       authToken: '2',
       refreshToken,
@@ -597,7 +603,7 @@ describe('Auth service', () => {
   it('Resends account confirmation link if user is not active', async () => {
     // given
     const id = randomId();
-    when(envMock.PUBLIC_DOMAIN).thenReturn('stg.vappy.io');
+    when(envMock.PUBLIC_DOMAIN).thenReturn('sps.io');
     const user: User = {
       id,
       name: 'Mike',
@@ -605,6 +611,7 @@ describe('Auth service', () => {
       email: 'mike@gmail.com',
       password: 'foo',
       active: false,
+      role: Role.DRIVER,
     };
     const token: RegistrationToken = {
       id: randomId(),
@@ -656,7 +663,9 @@ describe('Auth service', () => {
     ).thenResolve(undefined);
 
     try {
-      await authService.resendAccountConfirmationLink(tokenGuid);
+      await authService.resendAccountConfirmationLink({
+        activationGuid: tokenGuid,
+      });
       fail();
     } catch (err) {
       expect(err).toBeInstanceOf(SecurityException);
@@ -675,6 +684,7 @@ describe('Auth service', () => {
       email: 'mike@gmail.com',
       password: 'foo',
       active: true,
+      role: Role.DRIVER,
     };
     const oldDate = new Date();
     oldDate.setHours(oldDate.getHours() - 48);
@@ -717,6 +727,7 @@ describe('Auth service', () => {
       email: 'ali@gmail.com',
       password: 'agca',
       active: true,
+      role: Role.DRIVER,
     };
     when(userServiceMock.findById(anything())).thenResolve(user);
     user.password = 'newpassword';

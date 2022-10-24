@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-import { TokenService } from './token.service';
+import { TokenService } from '../token.service';
 
 @Injectable()
 export class CsrfGuard implements CanActivate {

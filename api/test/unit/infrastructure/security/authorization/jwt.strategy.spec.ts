@@ -1,14 +1,14 @@
 import {
   AuthenticationService,
   AuthToken,
-} from '../../../../src/infrastructure/security/authentication.service';
+} from '../../../../../src/infrastructure/security/authentication/authentication.service';
 import { createMock } from '@golevelup/ts-jest';
-import { TokenService } from '../../../../src/infrastructure/security/token.service';
-import { CookieService } from '../../../../src/infrastructure/security/cookie.service';
-import { JwtRefreshTokenStrategy } from '../../../../src/infrastructure/security/jwt.strategy';
+import { TokenService } from '../../../../../src/infrastructure/security/token.service';
+import { CookieService } from '../../../../../src/infrastructure/security/cookie.service';
+import { JwtRefreshTokenStrategy } from '../../../../../src/infrastructure/security/authorization/jwt.strategy';
 import { Request } from 'express';
 import { ContextIdFactory, ModuleRef } from '@nestjs/core';
-import { randomId } from '../../../misc.util';
+import { randomId } from '../../../../misc.util';
 
 describe('Jwt strategy', () => {
   let refreshTokenStrategy: JwtRefreshTokenStrategy;
@@ -19,6 +19,8 @@ describe('Jwt strategy', () => {
     const tokenService = createMock<TokenService>();
     const cookieService = createMock<CookieService>();
     const moduleRefMock = createMock<ModuleRef>();
+
+    // @ts-ignore
     ContextIdFactory.getByRequest = jest.fn(() => contextId);
     moduleRefMock.resolve.mockImplementation(async (context, cls) => {
       return context === contextId && authService;

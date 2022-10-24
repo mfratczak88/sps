@@ -10,7 +10,7 @@ import {
   RegisterUserCommand,
   RegisterUserResult,
   UserDto,
-} from '../../src/infrastructure/security/authentication.service';
+} from '../../src/infrastructure/security/authentication/authentication.service';
 import { GlobalExceptionFilter } from '../../src/infrastructure/web/exception/exception.filter';
 import { ExceptionCode } from '../../src/error';
 import { MessageCode } from '../../src/message';

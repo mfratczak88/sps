@@ -7,9 +7,10 @@ import { Environment } from '../../../../src/configuration.module';
 import {
   RegistrationMethod,
   User,
-} from '../../../../src/infrastructure/security/user';
+} from '../../../../src/infrastructure/security/user/user';
 import { AccountRegistrationConfirmationForm } from '../../../../src/infrastructure/email/templates/account-registration-confirmation.form';
 import MessagesClient from 'mailgun.js/messages';
+import { Role } from '../../../../src/infrastructure/security/authorization/role';
 import clearAllMocks = jest.clearAllMocks;
 
 describe('Email service', () => {
@@ -41,6 +42,7 @@ describe('Email service', () => {
       active: true,
       email: 'alex@gmail.com',
       registrationMethod: RegistrationMethod.manual,
+      role: Role.ADMIN,
     };
     messagesClient.create.mockResolvedValue({
       status: 200,
@@ -70,6 +72,7 @@ describe('Email service', () => {
       active: true,
       email: 'alex@gmail.com',
       registrationMethod: RegistrationMethod.manual,
+      role: Role.DRIVER,
     };
     messagesClient.create.mockResolvedValue({
       status: 200,

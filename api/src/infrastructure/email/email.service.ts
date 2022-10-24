@@ -5,7 +5,7 @@ import Client from 'mailgun.js/client';
 import { BaseException, ExceptionCode } from '../../error';
 import { MessageCode, MessageSourceArea } from '../../message';
 import { Environment } from '../../configuration.module';
-import { User } from '../security/user';
+import { User } from '../security/user/user';
 import { AccountRegistrationConfirmationForm } from './templates/account-registration-confirmation.form';
 import { MessagesSendResult } from 'mailgun.js/interfaces/Messages';
 

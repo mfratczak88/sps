@@ -5,18 +5,18 @@ import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
 
 import { OAuth2Client } from 'google-auth-library';
-import { UserService } from './user.service';
-import { Environment } from '../../configuration.module';
-import { CookieService } from './cookie.service';
-import { TokenService } from './token.service';
-import { EmailService } from '../email/email.service';
-import { SecurityException } from './security.exception';
-import { MessageCode } from '../../message';
-import { ExceptionCode } from '../../error';
-import { Id } from '../../application/id';
-import { RegistrationMethod, RegistrationToken, User } from './user';
-import { LanguageService } from '../../application/language.service';
-import fetch from 'node-fetch';
+import { UserService } from '../user/user.service';
+import { Environment } from '../../../configuration.module';
+import { CookieService } from '../cookie.service';
+import { TokenService } from '../token.service';
+import { EmailService } from '../../email/email.service';
+import { SecurityException } from '../security.exception';
+import { MessageCode } from '../../../message';
+import { ExceptionCode } from '../../../error';
+import { Id } from '../../../application/id';
+import { RegistrationMethod, RegistrationToken, User } from '../user/user';
+import { LanguageService } from '../../../application/language.service';
+import { Role } from '../authorization/role';
 
 @Injectable()
 export class AuthenticationService {
@@ -221,7 +221,7 @@ export class AuthenticationService {
   }
 
   private async generateAuthTokenPairFor(user: User, response: Response) {
-    const token: AuthToken = { sub: user.id };
+    const token: AuthToken = { sub: user.id, role: user.role };
     const { refreshToken } = await this.authTokenService.signAuthTokenPair(
       token,
       response,
@@ -314,6 +314,7 @@ export class UserDto {
 
 export interface AuthToken {
   sub: string;
+  role: Role;
 }
 
 export class ConfirmRegistrationCommand {

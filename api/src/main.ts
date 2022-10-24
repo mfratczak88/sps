@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { GlobalExceptionFilter } from './infrastructure/web/exception/exception.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 const corsSetup = () => {
   if (process.env.CORS_ENABLED) {
@@ -19,6 +20,7 @@ async function bootstrap() {
   });
   app.use(cookieParser());
   app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
 bootstrap();

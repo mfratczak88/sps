@@ -9,6 +9,7 @@
   width: 100%;
   padding: 3rem 1rem;
   align-items: center;
+  @include vars.elevation;
 }
 .users__table {
   width: 100%;

@@ -16,6 +16,7 @@ model User {
   active Boolean
   refreshToken String?
   registrationMethod RegistrationMethod
+  role Role @default(driver)
   registrationToken RegistrationToken[]
 }
 
@@ -30,5 +31,8 @@ enum RegistrationMethod {
   manual
   google
 }
-
-
+enum Role {
+  admin
+  clerk
+  driver
+}

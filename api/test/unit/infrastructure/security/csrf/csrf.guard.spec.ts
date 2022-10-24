@@ -1,9 +1,9 @@
-import { CsrfGuard } from '../../../../src/infrastructure/security/csrf.guard';
+import { CsrfGuard } from '../../../../../src/infrastructure/security/csrf/csrf.guard';
 import { instance, mock, reset, verify, when } from 'ts-mockito';
 import { Request } from 'express';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { ExecutionContext } from '@nestjs/common';
-import { TokenService } from '../../../../src/infrastructure/security/token.service';
+import { TokenService } from '../../../../../src/infrastructure/security/token.service';
 describe('CSRF guard unit test', () => {
   const tokenServiceMock = mock(TokenService);
   const tokenService = instance(tokenServiceMock);
