@@ -1,6 +1,7 @@
 export const enum MessageCode {
   /* Email */
   EMAIL_SENDING_FAILED = 'emailSendingFailed',
+
   /* Security */
   URL_NO_LONGER_VALID = 'urlNoLongerValid',
   REFRESH_TOKEN_USER_NOT_FOUND = 'refreshTokenUserNotFound',
@@ -30,8 +31,21 @@ export const enum MessageCode {
 
   /* Application */
   ONE_REVIEW_PER_ONE_USER = 'oneReviewPerOneUser',
+
   /* Misc */
   UNKNOWN_ERROR = 'unknownServerError',
+
+  /* Domain */
+  NON_POSITIVE_LOT_CAPACITY = 'nonPositiveLotCapacity',
+  SAME_CAPACITY = 'sameCapacity',
+  VEHICLE_ALREADY_REGISTERED = 'vehicleAlreadyRegistered',
+  PARKING_LOT_ALREADY_ASSIGNED_TO_DRIVER = 'parkingLotAlreadyAssignedToDriver',
+  PARKING_LOT_NOT_ASSIGNED_TO_DRIVER = 'parkingLotNotAssignedToDriver',
+
+  /* Validation */
+  VALIDATION_ERROR = 'validationError',
+  UNDEFINED = 'undefined',
+  EMPTY = 'empty',
 }
 
 export const enum MessageSourceArea {
@@ -40,6 +54,8 @@ export const enum MessageSourceArea {
   PERSISTENCE = 'persistence',
   INFRASTRUCTURE = 'infrastructure',
   APPLICATION = 'application',
+  DOMAIN = 'domain',
+  VALIDATION = 'validation',
 }
 
 export interface TranslatableMessage {
