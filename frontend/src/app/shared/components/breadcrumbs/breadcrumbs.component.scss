@@ -1,0 +1,9 @@
+@use "../../../../variables" as vars;
+.breadcrumb {
+  @include vars.typography-body-l;
+  font-weight: vars.$font-weight-bold;
+}
+.breadcrumb__active-part {
+  color: black;
+}
+

@@ -1,0 +1,38 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model User {
+  id      String   @id
+  name    String
+  email   String
+  password String?
+  active Boolean
+  refreshToken String?
+  registrationMethod RegistrationMethod
+  role Role @default(driver)
+  registrationToken RegistrationToken[]
+}
+
+model RegistrationToken {
+  id String @id
+  userId String
+  activationGuid String
+  guidValidTo String
+  user User @relation(fields:[userId], references:[id])
+}
+enum RegistrationMethod {
+  manual
+  google
+}
+enum Role {
+  admin
+  clerk
+  driver
+}

@@ -1,0 +1,23 @@
+@use "../../../../variables" as *;
+p {
+  margin-bottom: 0;
+}
+.heading-l {
+  @include typography-heading-l;
+}
+
+.heading-xl {
+  @include typography-heading-xl;
+}
+
+.heading-m {
+  @include typography-heading-m;
+}
+
+.heading-s {
+  @include typography-heading-s;
+}
+
+.align-center {
+  text-align: center;
+}

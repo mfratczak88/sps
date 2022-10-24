@@ -1,0 +1,13 @@
+{
+  "urlNoLongerValid" : "Expired or invalid registration confirmation link",
+  "refreshTokenUserNotFound": "User not found for refresh token",
+  "userIsNotActive": "User is not active",
+  "googleAuthError": "Google authentication error",
+  "userAlreadyExists": "User already exist",
+  "invalidActivationGuid": "Expired or invalid registration confirmation link",
+  "invalidUserNameOrPassword": "Invalid username or password",
+  "invalidPassword": "Invalid password",
+  "userDoesNotExist": "User does not exist",
+  "userIsAlreadyActive": "User has already confirmed account creation",
+  "facebookLoginError": "Facebook login error. Details: {message}"
+}

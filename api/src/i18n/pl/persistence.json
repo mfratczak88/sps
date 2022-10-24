@@ -1,0 +1,10 @@
+{
+  "unknownPersistenceError": "Wystąpił nieznany błąd przy zapisie",
+  "valueTooLong" : "Wartość dla pola {field} za długa",
+  "uniqueConstraintFailed": "Ogranicznenie dotyczące unikalności wartości naruszone. Ogarniczenie {constraint}",
+  "foreignConstraintFailed": "Ogranicznenie dotyczące relacji pomiędzy obiektami naruszone dla pola {field}",
+  "invalidFieldValue": "Błędna wartość dla pola {field}",
+  "nullConstraintViolation" : "Pole {constraint} nie może być puste",
+  "relationViolation": "Relacja {relation} pomiędzy obiektami naruszona",
+  "outOfRange": "Zakres wartośći dla pola naruszony. Szczegóły: {details}"
+}

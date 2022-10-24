@@ -1,0 +1,118 @@
+<!Doctype html>
+<head>
+  <style>
+    /**
+     * Avoid browser level font resizing.
+     * 1. Windows Mobile
+     * 2. iOS / OSX
+     */
+    body,
+    table,
+    td,
+    a {
+      -ms-text-size-adjust: 100%; /* 1 */
+      -webkit-text-size-adjust: 100%; /* 2 */
+    }
+
+    /**
+     * Remove blue links for iOS devices.
+     */
+    a[x-apple-data-detectors] {
+      font-family: inherit !important;
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+
+    html {
+      font-size: 16px;
+      line-height: 23px;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 0;
+    }
+
+    body {
+      background-color: #e6e6e6;
+      margin: 2rem;
+    }
+
+    p {
+      margin: 2rem 0;
+      line-height: 23px;
+    }
+
+    .logo {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .email-content {
+      max-width: 560px;
+      width: 90%;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 10px;
+      border: 0.4px solid black;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      padding: 4rem;
+    }
+
+    .email-content__title {
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      display: block;
+      width: 100%;
+    }
+
+    button {
+      border: 0.5px solid black;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      font-size: 1.4rem;
+      text-align: center;
+      padding: 1rem;
+      width: 50%;
+      margin: 0 auto;
+      display: block;
+      background: rgb(248.64, 207.82, 207.82);
+    }
+
+    .email-content__prompt {
+      font-weight: 400;
+      color: #adacad;
+      text-align: center;
+    }
+
+    .email-content__info {
+      font-weight: 300;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #adacad;
+    }
+  </style>
+  <title>Zweryfikuj swój adres email</title>
+</head>
+<body>
+<div class='email-content'>
+  <p class='email-content__title'>Zweryfikuj swój adres email</p>
+  <p class='email-content__prompt'>{{name}}, by dokończyć tworzenie konta, potwierdź, że to jest adres email którego
+    chcesz używać w Vappy klikając w przycisk poniżej</p>
+  <a href="{{ url }}">
+    <button>
+      Potwierdź
+    </button>
+  </a>
+  <p class='email-content__info'>Jeżeli to nie Ty zakładałeś konto, zignoruj ten email</p>
+</div>
+</body>
+

@@ -1,0 +1,6 @@
+<div class="resend-activation-link">
+  <sps-heading size="m" [centered]="true">{{translations.LINK_EXPIRED | translate}}</sps-heading>
+  <sps-text [centered]="true">{{translations.WE_CAN_SEND_A_NEW_ONE | translate}}</sps-text>
+  <button mat-raised-button color="primary" (click)="resendActivationLink()">{{translations.RESEND_EMAIL_VERIFICATION | translate}}</button>
+</div>
+

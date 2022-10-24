@@ -1,0 +1,17 @@
+@use "../../../../variables" as vars;
+
+.search {
+  display: flex;
+  gap: 2rem;
+  padding-left: 24px;
+  align-self: flex-start;
+}
+
+.table__cell {
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.pagination, .table {
+  width: 100%;
+}
