@@ -1,5 +1,5 @@
 import { RegistrationToken, User } from './user';
-import { Id } from '../../../application/id';
+import { Id } from '../../../domain/id';
 
 export abstract class UserStore {
   abstract findById(id: Id): Promise<User>;

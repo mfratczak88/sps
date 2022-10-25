@@ -41,7 +41,10 @@ export const enum MessageCode {
   VEHICLE_ALREADY_REGISTERED = 'vehicleAlreadyRegistered',
   PARKING_LOT_ALREADY_ASSIGNED_TO_DRIVER = 'parkingLotAlreadyAssignedToDriver',
   PARKING_LOT_NOT_ASSIGNED_TO_DRIVER = 'parkingLotNotAssignedToDriver',
-
+  PARKING_LOT_DOES_NOT_EXIST = 'parkingLotDoesNotExist',
+  DRIVER_DOES_NOT_EXIST = 'driverDoesNotExist',
+  HOUR_FROM_GREATER_THAN_HOUR_TO = 'hourFromGreaterThanHourTo',
+  INVALID_HOURS = 'invalidHours',
   /* Validation */
   VALIDATION_ERROR = 'validationError',
   UNDEFINED = 'undefined',

@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { RegistrationTokenStore, UserStore } from './user.store';
-import { IdGenerator } from '../../../application/id.generator';
-import { Id } from '../../../application/id';
+
+import { Id, IdGenerator } from '../../../domain/id';
 import { RegistrationMethod, RegistrationToken, User, UserDto } from './user';
 import { CreateUserCommand } from './user.command';
-import { UnitOfWork } from '../../../application/unit-of-work';
 import { MessageCode } from '../../../message';
 import { SecurityException } from '../security.exception';
 import { ExceptionCode } from '../../../error';
@@ -17,7 +16,6 @@ export class UserService {
     private readonly userStore: UserStore,
     private readonly registrationTokenStore: RegistrationTokenStore,
     private readonly idGenerator: IdGenerator,
-    private readonly unitOfWork: UnitOfWork,
     private readonly env: Environment,
   ) {}
   async findById(id: Id): Promise<User> {
@@ -37,33 +35,27 @@ export class UserService {
   async createNew(
     command: CreateUserCommand,
   ): Promise<{ user: User; registrationToken?: RegistrationToken }> {
-    await this.unitOfWork.beginTransaction();
-    try {
-      const { email, password, name, registrationMethod } = command;
-      const active = registrationMethod !== RegistrationMethod.manual;
-      const id = await this.idGenerator.generate();
-      const user: User = {
-        id,
-        name,
-        email,
-        active,
-        password,
-        registrationMethod,
-        role: Role.DRIVER,
-      };
-      await this.userStore.save(user);
-      if (registrationMethod !== RegistrationMethod.manual) {
-        return { user };
-      }
-      const registrationToken = await this.generateRegistrationTokenFor(user);
-      return {
-        user,
-        registrationToken,
-      };
-    } catch (err) {
-      await this.unitOfWork.rollback();
-      throw err;
+    const { email, password, name, registrationMethod } = command;
+    const active = registrationMethod !== RegistrationMethod.manual;
+    const id = await this.idGenerator.generate();
+    const user: User = {
+      id,
+      name,
+      email,
+      active,
+      password,
+      registrationMethod,
+      role: Role.DRIVER,
+    };
+    await this.userStore.save(user);
+    if (registrationMethod !== RegistrationMethod.manual) {
+      return { user };
     }
+    const registrationToken = await this.generateRegistrationTokenFor(user);
+    return {
+      user,
+      registrationToken,
+    };
   }
 
   async generateRegistrationTokenFor(user: User) {

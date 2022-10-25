@@ -7,8 +7,8 @@ import {
   RegistrationMethod,
   User,
 } from '../../../../../src/infrastructure/security/user/user';
-import { IdGenerator } from '../../../../../src/application/id.generator';
-import { UnitOfWork } from '../../../../../src/application/unit-of-work';
+import { IdGenerator } from '../../../../../src/domain/id';
+
 import { UserService } from '../../../../../src/infrastructure/security/user/user.service';
 import { CreateUserCommand } from '../../../../../src/infrastructure/security/user/user.command';
 import { randomId } from '../../../../misc.util';
@@ -22,7 +22,7 @@ describe('User service', () => {
   const userStoreMock = createMock<UserStore>();
   const registrationTokenStore = createMock<RegistrationTokenStore>();
   const idGeneratorMock = createMock<IdGenerator>();
-  const unitOfWorkMock = createMock<UnitOfWork>();
+
   const envMock: Partial<Environment> = {
     ACTIVATE_ACCOUNT_LINK_EXPIRATION_IN_HOURS: 48,
   };
@@ -30,7 +30,6 @@ describe('User service', () => {
     userStoreMock,
     registrationTokenStore,
     idGeneratorMock,
-    unitOfWorkMock,
     envMock as Environment,
   );
   beforeEach(() => {

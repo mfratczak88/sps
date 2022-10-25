@@ -8,11 +8,11 @@ import { IsDefined, IsNotEmpty } from 'class-validator';
 @Validate
 export class Driver {
   @IsNotEmpty()
-  private readonly id: Id;
+  readonly id: Id;
   @IsDefined()
-  private readonly vehicles: Vehicle[];
+  readonly vehicles: Vehicle[];
   @IsDefined()
-  private readonly assignedParkingLots: Id[];
+  readonly assignedParkingLots: Id[];
 
   constructor(id: Id, vehicles: Vehicle[], assignedParkingLots: Id[]) {
     this.id = id;

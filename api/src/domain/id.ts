@@ -1,4 +1,4 @@
 export type Id = string;
 export abstract class IdGenerator {
-  abstract generate(): Id;
+  abstract generate(): Promise<Id>;
 }

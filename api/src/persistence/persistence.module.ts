@@ -1,7 +1,7 @@
 import { Global, Module, Provider } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaIdGenerator } from './prisma/prisma.id.generator';
-import { IdGenerator } from '../application/id.generator';
+import { IdGenerator } from '../domain/id';
 
 import {
   RegistrationTokenStore,
@@ -9,8 +9,11 @@ import {
 } from '../infrastructure/security/user/user.store';
 import { PrismaUserStore } from './prisma/prisma.user.store';
 import { PrismaRegistrationTokenStore } from './prisma/prisma.registration-token.store';
-import { UnitOfWork } from '../application/unit-of-work';
-import { PrismaUnitOfWork } from './prisma/prisma.unit-of-work';
+
+import { DriverRepository } from '../domain/driver.repository';
+import { PrismaDriverRepository } from './prisma/prisma.driver.repository';
+import { ParkingLotRepository } from '../domain/parking-lot.repository';
+import { PrismaParkingLotRepository } from './prisma/prisma.parking-lot.repository';
 
 const providers: Provider[] = [
   {
@@ -27,8 +30,12 @@ const providers: Provider[] = [
     useClass: PrismaRegistrationTokenStore,
   },
   {
-    provide: UnitOfWork,
-    useClass: PrismaUnitOfWork,
+    provide: DriverRepository,
+    useClass: PrismaDriverRepository,
+  },
+  {
+    provide: ParkingLotRepository,
+    useClass: PrismaParkingLotRepository,
   },
 ];
 

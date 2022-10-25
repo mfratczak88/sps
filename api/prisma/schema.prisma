@@ -9,30 +9,53 @@ datasource db {
 }
 
 model User {
-  id      String   @id
-  name    String
-  email   String
-  password String?
-  active Boolean
-  refreshToken String?
+  id                 String              @id
+  name               String
+  email              String
+  password           String?
+  active             Boolean
+  refreshToken       String?
   registrationMethod RegistrationMethod
-  role Role @default(driver)
-  registrationToken RegistrationToken[]
+  role               Role                @default(driver)
+  registrationToken  RegistrationToken[]
+  vehicles           Vehicle[]
+  parkingLots        ParkingLot[]
 }
 
 model RegistrationToken {
-  id String @id
-  userId String
+  id             String @id
+  userId         String
   activationGuid String
-  guidValidTo String
-  user User @relation(fields:[userId], references:[id])
+  guidValidTo    String
+  user           User   @relation(fields: [userId], references: [id])
 }
+
 enum RegistrationMethod {
   manual
   google
 }
+
 enum Role {
   admin
   clerk
   driver
+}
+
+model Vehicle {
+  licensePlate String @id
+  userId       String
+  user         User   @relation(fields: [userId], references: [id])
+}
+
+model ParkingLot {
+  id           String @id
+  city         String
+  streetName   String
+  streetNumber String
+  capacity     Int
+  hourFrom     Int
+  hourTo       Int
+  minuteFrom   Int
+  minuteTo     Int
+  users        User[]
 }
