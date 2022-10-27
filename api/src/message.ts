@@ -45,6 +45,7 @@ export const enum MessageCode {
   DRIVER_DOES_NOT_EXIST = 'driverDoesNotExist',
   HOUR_FROM_GREATER_THAN_HOUR_TO = 'hourFromGreaterThanHourTo',
   INVALID_HOURS = 'invalidHours',
+
   /* Validation */
   VALIDATION_ERROR = 'validationError',
   UNDEFINED = 'undefined',
