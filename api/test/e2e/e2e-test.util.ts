@@ -39,7 +39,7 @@ export const createAdminUser = async (
     Role.ADMIN,
   );
 };
-export const authenticateAdmin = async (
+export const authenticateUser = async (
   email: string,
   password: string,
   app: INestApplication,
@@ -58,4 +58,33 @@ export const authenticateAdmin = async (
     loginCookies: loginResponse.headers['set-cookie'] as string[],
     csrfToken: csrfTokenResponse.body.csrfToken,
   };
+};
+export const createDummyParkingLot = async (
+  parkingLotId: string,
+  prismaService: PrismaService,
+) => {
+  await prismaService.parkingLot.create({
+    data: {
+      id: parkingLotId,
+      hourFrom: 7,
+      hourTo: 9,
+      minuteFrom: 0,
+      minuteTo: 0,
+      streetNumber: '4',
+      city: 'Warszawa',
+      streetName: 'Poznanska',
+      capacity: 4,
+    },
+  });
+};
+export const createDriverUser = async (
+  app: INestApplication,
+  prismaService: PrismaService,
+) => {
+  return await createUser(
+    app,
+    prismaService,
+    'radziwill44@gmail.com',
+    Role.DRIVER,
+  );
 };

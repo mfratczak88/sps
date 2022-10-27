@@ -3,9 +3,9 @@ import { User } from 'src/infrastructure/security/user/user';
 import { Role } from 'src/infrastructure/security/authorization/role';
 export const clear = async (prisma: PrismaClient) => {
   await prisma.registrationToken.deleteMany();
+  await prisma.vehicle.deleteMany();
   await prisma.user.deleteMany();
   await prisma.parkingLot.deleteMany();
-  await prisma.vehicle.deleteMany();
 };
 
 export const insertUser = async (prisma: PrismaClient, user: User) => {

@@ -90,7 +90,7 @@ describe('Prisma driver repository', () => {
     const [{ where, data }] = userUpdate.mock.lastCall;
     expect(where).toEqual({ id: '3' });
     expect(data).toEqual({
-      parkingLots: { connect: [{ id: '3' }, { id: '4' }] },
+      parkingLots: { set: [{ id: '3' }, { id: '4' }] },
       vehicles: { connectOrCreate: [...licensePlateConnectOrCreate] },
     });
   });

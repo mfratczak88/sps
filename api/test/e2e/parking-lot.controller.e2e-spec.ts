@@ -5,8 +5,9 @@ import { Test } from '@nestjs/testing';
 import { AppModule } from '../../src/app.module';
 import {
   authCookie,
-  authenticateAdmin,
+  authenticateUser,
   createAdminUser,
+  createDummyParkingLot,
   csrfTokenHeader,
   setUpNestApp,
 } from './e2e-test.util';
@@ -28,21 +29,7 @@ describe('Parking lot e2e', () => {
   let loginCookies: string[];
   let csrfToken: string;
   const baseUrl = '/parking-lots';
-  const createDummyParkingLot = async (parkingLotId: string) => {
-    await prismaService.parkingLot.create({
-      data: {
-        id: parkingLotId,
-        hourFrom: 7,
-        hourTo: 9,
-        minuteFrom: 0,
-        minuteTo: 0,
-        streetNumber: '4',
-        city: 'Warszawa',
-        streetName: 'Poznanska',
-        capacity: 4,
-      },
-    });
-  };
+
   const validCreateParkingLotCommand: CreateParkingLotCommand = {
     capacity: 4,
     hoursOfOperation: {
@@ -69,7 +56,7 @@ describe('Parking lot e2e', () => {
   });
   beforeEach(async () => {
     const { email, password } = adminUser;
-    ({ csrfTokenCookie, csrfToken, loginCookies } = await authenticateAdmin(
+    ({ csrfTokenCookie, csrfToken, loginCookies } = await authenticateUser(
       email,
       password,
       app,
@@ -186,7 +173,7 @@ describe('Parking lot e2e', () => {
       await changeUserRole(prismaService, adminUser.id, Role.CLERK);
       const { email, password } = adminUser;
       const { csrfTokenCookie, csrfToken, loginCookies } =
-        await authenticateAdmin(email, password, app);
+        await authenticateUser(email, password, app);
       await request(app.getHttpServer())
         .post(`${baseUrl}`)
         .set(...authCookie(loginCookies, csrfTokenCookie))
@@ -237,7 +224,7 @@ describe('Parking lot e2e', () => {
       },
     };
     beforeAll(async () => {
-      await createDummyParkingLot(parkingLotId);
+      await createDummyParkingLot(parkingLotId, prismaService);
     });
     beforeEach(async () => {
       await changeUserRole(prismaService, adminUser.id, Role.ADMIN);
@@ -291,7 +278,7 @@ describe('Parking lot e2e', () => {
       await changeUserRole(prismaService, adminUser.id, Role.CLERK);
       const { email, password } = adminUser;
       const { csrfTokenCookie, csrfToken, loginCookies } =
-        await authenticateAdmin(email, password, app);
+        await authenticateUser(email, password, app);
       await request(app.getHttpServer())
         .patch(`${baseUrl}/${parkingLotId}/${changeOperationHoursUri}`)
         .set(...authCookie(loginCookies, csrfTokenCookie))
@@ -342,7 +329,7 @@ describe('Parking lot e2e', () => {
       parkingLotId: parkingLotId,
     };
     beforeAll(async () => {
-      await createDummyParkingLot(parkingLotId);
+      await createDummyParkingLot(parkingLotId, prismaService);
     });
     beforeEach(async () => {
       await changeUserRole(prismaService, adminUser.id, Role.ADMIN);
@@ -401,7 +388,7 @@ describe('Parking lot e2e', () => {
       await changeUserRole(prismaService, adminUser.id, Role.CLERK);
       const { email, password } = adminUser;
       const { csrfTokenCookie, csrfToken, loginCookies } =
-        await authenticateAdmin(email, password, app);
+        await authenticateUser(email, password, app);
       await request(app.getHttpServer())
         .patch(`${baseUrl}/${parkingLotId}/${changeCapacityURI}`)
         .set(...authCookie(loginCookies, csrfTokenCookie))

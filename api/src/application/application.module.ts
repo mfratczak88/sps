@@ -15,7 +15,7 @@ const providers: Provider[] = [
   {
     provide: DriverService,
     useFactory: (repo: DriverRepository) => new DriverService(repo),
-    inject: [ParkingLotRepository],
+    inject: [DriverRepository],
   },
 ];
 

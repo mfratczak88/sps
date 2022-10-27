@@ -9,7 +9,7 @@ import { Role } from '../../src/infrastructure/security/authorization/role';
 import { User } from '../../src/infrastructure/security/user/user';
 import {
   authCookie,
-  authenticateAdmin,
+  authenticateUser,
   createAdminUser,
   csrfTokenHeader,
   setUpNestApp,
@@ -61,7 +61,7 @@ describe('users e2e', () => {
   });
   it('Change role - returns 401 if user does not provide valid CSRF Token', async () => {
     const { email, password } = adminUser;
-    const { loginCookies } = await authenticateAdmin(email, password, app);
+    const { loginCookies } = await authenticateUser(email, password, app);
     const { id } = randomElementFromArray<User>(users);
     request(app.getHttpServer())
       .patch(`${baseUrl}/${id}`)
@@ -74,8 +74,11 @@ describe('users e2e', () => {
   it('Change role - returns 403 if user is not admin', async () => {
     const { id: adminId, email, password } = adminUser;
     await changeUserRole(prismaService, adminId, Role.CLERK);
-    const { loginCookies, csrfToken, csrfTokenCookie } =
-      await authenticateAdmin(email, password, app);
+    const { loginCookies, csrfToken, csrfTokenCookie } = await authenticateUser(
+      email,
+      password,
+      app,
+    );
     const { id: userId } = randomElementFromArray<User>(users);
 
     request(app.getHttpServer())
@@ -93,8 +96,11 @@ describe('users e2e', () => {
   it('Get users - returns 403 if user is not admin', async () => {
     const { id: adminId, email, password } = adminUser;
     await changeUserRole(prismaService, adminId, Role.CLERK);
-    const { loginCookies, csrfToken, csrfTokenCookie } =
-      await authenticateAdmin(email, password, app);
+    const { loginCookies, csrfToken, csrfTokenCookie } = await authenticateUser(
+      email,
+      password,
+      app,
+    );
     request(app.getHttpServer())
       .get(`${baseUrl}`)
       .set(...authCookie(loginCookies, csrfTokenCookie))
@@ -103,8 +109,11 @@ describe('users e2e', () => {
   });
   it('Change role - returns 400 if role is invalid', async () => {
     const { email, password } = adminUser;
-    const { loginCookies, csrfToken, csrfTokenCookie } =
-      await authenticateAdmin(email, password, app);
+    const { loginCookies, csrfToken, csrfTokenCookie } = await authenticateUser(
+      email,
+      password,
+      app,
+    );
     request(app.getHttpServer())
       .patch(`${baseUrl}/${randomElementFromArray(users).id}`)
       .set(...authCookie(loginCookies, csrfTokenCookie))
@@ -116,8 +125,11 @@ describe('users e2e', () => {
   });
   it('Change role - returns 400 if role is missing', async () => {
     const { email, password } = adminUser;
-    const { loginCookies, csrfToken, csrfTokenCookie } =
-      await authenticateAdmin(email, password, app);
+    const { loginCookies, csrfToken, csrfTokenCookie } = await authenticateUser(
+      email,
+      password,
+      app,
+    );
     request(app.getHttpServer())
       .patch(`${baseUrl}/${randomElementFromArray(users).id}`)
       .set(...authCookie(loginCookies, csrfTokenCookie))
@@ -127,8 +139,11 @@ describe('users e2e', () => {
   });
   it('Changes user role and returns 200', async () => {
     const { email, password } = adminUser;
-    const { loginCookies, csrfToken, csrfTokenCookie } =
-      await authenticateAdmin(email, password, app);
+    const { loginCookies, csrfToken, csrfTokenCookie } = await authenticateUser(
+      email,
+      password,
+      app,
+    );
     const { id: userId } = randomElementFromArray(users);
     await request(app.getHttpServer())
       .patch(`${baseUrl}/${userId}`)

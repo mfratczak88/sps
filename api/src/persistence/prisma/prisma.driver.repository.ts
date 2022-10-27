@@ -64,7 +64,7 @@ export class PrismaDriverRepository implements DriverRepository {
       },
       data: {
         parkingLots: {
-          connect: parkingLots,
+          set: parkingLots,
         },
         vehicles: {
           connectOrCreate: [...licensePlates],
