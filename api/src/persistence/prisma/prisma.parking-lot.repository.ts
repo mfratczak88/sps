@@ -5,7 +5,9 @@ import { Id } from '../../domain/id';
 import { DomainException } from '../../domain/domain.exception';
 import { MessageCode } from '../../message';
 import { Address } from '../../domain/address';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaParkingLotRepository implements ParkingLotRepository {
   constructor(private readonly prismaService: PrismaService) {}
 

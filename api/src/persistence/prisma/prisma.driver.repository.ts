@@ -5,7 +5,9 @@ import { DomainException } from '../../domain/domain.exception';
 import { MessageCode } from '../../message';
 import { Id } from '../../domain/id';
 import { Vehicle } from '../../domain/vehicle';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaDriverRepository implements DriverRepository {
   constructor(private readonly prismaService: PrismaService) {}
 

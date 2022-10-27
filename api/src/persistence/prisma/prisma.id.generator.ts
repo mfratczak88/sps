@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class PrismaIdGenerator extends IdGenerator {
-  generate(): Id {
+  generate(): Promise<Id> {
     return uuidv4();
   }
 }
