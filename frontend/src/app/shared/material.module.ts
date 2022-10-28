@@ -17,11 +17,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {
-  MatPaginatorIntl,
-  MatPaginatorModule,
-} from '@angular/material/paginator';
-import { PaginatorIntlService } from './service/paginator.intl.service';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatListModule } from '@angular/material/list';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const modules = [
   MatFormFieldModule,
@@ -31,11 +29,14 @@ const modules = [
   MatButtonModule,
   MatIconModule,
   MatSnackBarModule,
+  MatFormFieldModule,
   MatAutocompleteModule,
   MatOptionModule,
   MatRippleModule,
   MatDialogModule,
   MatBadgeModule,
+  MatListModule,
+  MatStepperModule,
   MatMenuModule,
   MatSidenavModule,
   MatCardModule,

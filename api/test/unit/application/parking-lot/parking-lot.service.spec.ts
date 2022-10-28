@@ -26,10 +26,8 @@ describe('Parking lot service', () => {
     const command: CreateParkingLotCommand = {
       capacity: 100,
       hoursOfOperation: {
-        minuteTo: 0,
-        hourTo: 12,
-        minuteFrom: 0,
-        hourFrom: 8,
+        hourFrom: '08:00',
+        hourTo: '10:00',
       },
       address: {
         city: 'Warszawa',
@@ -60,10 +58,8 @@ describe('Parking lot service', () => {
     const command: ChangeHoursOfOperationCommand = {
       parkingLotId,
       hoursOfOperation: {
-        hourTo: 4,
-        minuteFrom: 10,
-        hourFrom: 2,
-        minuteTo: 2,
+        hourFrom: '08:00',
+        hourTo: '10:00',
       },
     };
     await service.changeHoursOfOperation(command);

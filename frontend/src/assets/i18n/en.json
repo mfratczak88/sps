@@ -35,7 +35,10 @@
     "EMAIL_VERIFIED": "Email has been verified. You can now log in",
     "PASS_RESET_MAIL_SENT": "Password reset email has been sent. Check your mailbox",
     "DISMISS": "Dismiss",
-    "ROLE_CHANGED" : "Role has been changed"
+    "ROLE_CHANGED": "Role has been changed",
+    "CAPACITY_CHANGED": "Parking lot capacity changed",
+    "HOURS_CHANGED": "Operation hours has been changed",
+    "PARKING_LOT_CREATED": "Parking lot has been created"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",
@@ -68,7 +71,31 @@
     "COLUMN_EMAIL": "Email",
     "COLUMN_NAME": "Name",
     "COLUMN_ROLE": "Role",
-    "COLUMN_EDIT": "Edit"
+    "COLUMN_EDIT": "Edit",
+    "COLUMN_DETAILS": "Details",
+    "COLUMN_ADDRESS": "Address",
+    "COLUMN_HOURS": "Hours",
+    "COLUMN_CAPACITY": "Capacity",
+    "PARKING_LOTS_TABLE_HEADER": "Parking lots",
+    "USERS_TABLE_HEADER": "Users",
+    "PLACES": "Parking places",
+    "CHANGE_HOURS_OF_OPERATION" :  "Change hours of operation",
+    "HOUR_FROM": "Hour from",
+    "HOUR_TO": "Hour to",
+    "CHANGE_CAPACITY" : "Change capacity",
+    "CREATE_NEW_PARKING_LOT" : "Create new parking lot",
+    "CREATE_NEW_PARKING_LOT_SUB_TITLE" : "After you do it, drivers will be able to book parking places",
+    "FILL_OUT_ADDRESS" : "Fill out the parking lot address",
+    "CITY": "City",
+    "STREET_NAME": "Street name",
+    "STREET_NUMBER" : "Street number",
+    "NEXT" : "Next",
+    "FILL_OUT_OPERATION_HOURS" : "Fill out operation hours",
+    "PREVIOUS": "Previous",
+    "FILL_OUT_CAPACITY": "Fill out capacity",
+    "SAVE": "Save",
+    "BACK": "Back",
+    "RESET": "Reset"
   },
   "ROLE": {
     "ADMIN": "Administrator",
@@ -79,9 +106,11 @@
     "CANCEL": "Cancel",
     "ASSIGN": "Assign",
     "SELECT": "Select",
-    "SEARCH": "Search"
+    "SEARCH": "Search",
+    "ADD": "Add",
+    "CHANGE": "Change"
   },
-  "PAGINATION" : {
+  "PAGINATION": {
     "FIRST_PAGE_LABEL": "First page",
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
     "LAST_PAGE_LABEL": "Last page",

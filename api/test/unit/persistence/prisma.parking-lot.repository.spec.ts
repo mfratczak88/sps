@@ -43,8 +43,8 @@ describe('Parking lot repository', () => {
           id,
           city: 'Warszawa',
           capacity: 100,
-          hourFrom: 8,
-          hourTo: 9,
+          hourFrom: '08:00',
+          hourTo: '10:00',
           streetName: 'Sobieskiego',
           streetNumber: '4',
         };
@@ -54,8 +54,8 @@ describe('Parking lot repository', () => {
     const parking = await repository.findByIdOrElseThrow(id);
 
     expect(parking.id).toEqual(id);
-    expect(parking.hoursOfOperation.hourTo).toEqual(9);
-    expect(parking.hoursOfOperation.hourFrom).toEqual(8);
+    expect(parking.hoursOfOperation.hourTo).toEqual('10:00');
+    expect(parking.hoursOfOperation.hourFrom).toEqual('08:00');
     expect(parking.address.streetName).toEqual('Sobieskiego');
     expect(parking.address.streetNumber).toEqual('4');
     expect(parking.address.city).toEqual('Warszawa');
@@ -66,20 +66,21 @@ describe('Parking lot repository', () => {
       id,
       new Address('Poznan', 'Cybernetyki', '4'),
       100,
-      { hourFrom: 15, hourTo: 24 },
+      {
+        hourFrom: '08:00:00',
+        hourTo: '10:00:00',
+      },
     );
 
     await repository.save(parkingLot);
 
     const expectedUpsertFields = {
-      hourTo: 24,
-      hourFrom: 15,
+      hourFrom: '08:00',
+      hourTo: '10:00',
       city: 'Poznan',
       capacity: 100,
       streetName: 'Cybernetyki',
       streetNumber: '4',
-      minuteFrom: 0,
-      minuteTo: 0,
     };
     const [{ where, update, create }] = upsert.mock.lastCall;
 

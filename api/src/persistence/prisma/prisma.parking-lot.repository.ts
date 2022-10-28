@@ -22,21 +22,13 @@ export class PrismaParkingLotRepository implements ParkingLotRepository {
         message: MessageCode.PARKING_LOT_DOES_NOT_EXIST,
       });
     }
-    const {
-      city,
-      capacity,
-      hourFrom,
-      hourTo,
-      minuteFrom,
-      minuteTo,
-      streetName,
-      streetNumber,
-    } = prismaParkingLot;
+    const { city, capacity, hourFrom, hourTo, streetName, streetNumber } =
+      prismaParkingLot;
     return new ParkingLot(
       id,
       new Address(city, streetName, streetNumber),
       capacity,
-      { hourFrom, hourTo, minuteFrom, minuteTo },
+      { hourFrom, hourTo },
     );
   }
 
@@ -45,14 +37,12 @@ export class PrismaParkingLotRepository implements ParkingLotRepository {
       id,
       capacity,
       address: { streetName, streetNumber, city },
-      hoursOfOperation: { hourTo, hourFrom, minuteFrom, minuteTo },
+      hoursOfOperation: { hourTo, hourFrom },
     } = lot;
 
     const upsertFields = {
       hourTo,
       hourFrom,
-      minuteFrom: minuteFrom || 0,
-      minuteTo: minuteTo || 0,
       streetNumber,
       streetName,
       city,

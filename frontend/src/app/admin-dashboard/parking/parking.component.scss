@@ -1,0 +1,10 @@
+@use "../../../variables" as vars;
+
+.parking-lots {
+  @include vars.card-with-table
+}
+.parking-lots__table {
+  width: 100%;
+}
+
+

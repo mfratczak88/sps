@@ -1,0 +1,27 @@
+<sps-heading size="s" mat-dialog-title>{{translations.HOURS}}</sps-heading>
+<mat-dialog-content class="dialog">
+  <sps-text size="m">{{translations.CHANGE_HOURS_OF_OPERATION | translate}}</sps-text>
+  <div class="dialog__form" [formGroup]="form">
+    <mat-form-field class="dialog__form--input" appearance="fill">
+      <mat-label>{{translations.HOUR_FROM | translate}}</mat-label>
+      <input matInput type="time" formControlName="hourFrom">
+    </mat-form-field>
+    <mat-form-field class="dialog__form--input" appearance="fill">
+      <mat-label>{{translations.HOUR_TO | translate}}</mat-label>
+      <input matInput type="time" formControlName="hourTo">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          (click)="dialogRef.close()">
+    {{translations.CANCEL | translate}}
+  </button>
+  <button mat-button
+          color="primary"
+          mat-raised-button
+          [disabled]="form.invalid || hoursNotChanged()"
+          (click)="onChange()">
+    {{translations.CHANGE}}
+  </button>
+</mat-dialog-actions>

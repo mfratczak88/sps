@@ -20,14 +20,14 @@ export class ParkingLotService {
     const id = await this.idGenerator.generate();
     const {
       address: { streetName, streetNumber, city },
-      hoursOfOperation: { hourTo, minuteFrom, minuteTo, hourFrom },
+      hoursOfOperation: { hourTo, hourFrom },
       capacity,
     } = command;
     const lot = new ParkingLot(
       id,
       new Address(city, streetName, streetNumber),
       capacity,
-      { hourFrom, hourTo, minuteFrom, minuteTo },
+      { hourFrom, hourTo },
     );
     await this.parkingLotRepository.save(lot);
     return { id };

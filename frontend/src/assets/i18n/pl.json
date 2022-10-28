@@ -35,7 +35,10 @@
     "EMAIL_VERIFIED": "Zweryfikowaliśmy Twój email. Możesz się zalogować",
     "PASS_RESET_MAIL_SENT": "Wysłaliśmy email z linkiem. Sprawdź pocztę",
     "DISMISS": "Dismiss",
-    "ROLE_CHANGED" : "Zmieniono rolę"
+    "ROLE_CHANGED" : "Zmieniono rolę",
+    "CAPACITY_CHANGED": "Zmieniono pojemność parkingu",
+    "HOURS_CHANGED": "Zmieniono godziny otwarcia",
+    "PARKING_LOT_CREATED": "Parking utworzony"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Błąd serwera",
@@ -68,7 +71,31 @@
     "COLUMN_EMAIL": "Email",
     "COLUMN_NAME": "Imię",
     "COLUMN_ROLE": "Rola",
-    "COLUMN_EDIT": "Edycja"
+    "COLUMN_EDIT": "Edycja",
+    "COLUMN_DETAILS" : "Szczegóły",
+    "COLUMN_ADDRESS" : "Adres",
+    "COLUMN_HOURS" : "Godziny",
+    "COLUMN_CAPACITY": "Ilość miejsc",
+    "PARKING_LOTS_TABLE_HEADER": "Parkingi",
+    "USERS_TABLE_HEADER": "Użytkownicy",
+    "PLACES": "miejsc parkingowych",
+    "CHANGE_HOURS_OF_OPERATION" :  "Zmień godziny otwarcia",
+    "HOUR_FROM": "Godzina od",
+    "HOUR_TO": "Godzina do",
+    "CHANGE_CAPACITY" : "Zmień ilość miejsc parkingowych",
+    "CREATE_NEW_PARKING_LOT" : "Stwórz nowy parking",
+    "CREATE_NEW_PARKING_LOT_SUB_TITLE" : "Po tym jak to zrobisz, pamiętaj, żeby dodać kierowców którzy mogą tutaj parkować",
+    "FILL_OUT_ADDRESS" : "Adres parkingu",
+    "CITY": "Miasto",
+    "STREET_NAME": "Ulica",
+    "STREET_NUMBER" : "Numer ulicy",
+    "NEXT" : "Dalej",
+    "FILL_OUT_OPERATION_HOURS" : "Godziny otwarcia",
+    "PREVIOUS": "Poprzedni",
+    "FILL_OUT_CAPACITY": "Ilość miejsc parkingowych",
+    "SAVE": "Zapisz",
+    "BACK": "Anuluj",
+    "RESET": "Resetuj formularz"
   },
   "ROLE": {
     "ADMIN": "Administrator",
@@ -79,7 +106,9 @@
     "CANCEL": "Anuluj",
     "ASSIGN": "Zmień",
     "SELECT": "Wybierz",
-    "SEARCH": "Szukaj"
+    "SEARCH": "Szukaj",
+    "ADD" : "Dodaj",
+    "CHANGE": "Zmień"
   },
   "PAGINATION" : {
     "FIRST_PAGE_LABEL": "Pierwsza strona",

@@ -9,6 +9,8 @@ import { ParkingComponent } from './parking/parking.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { AdminDrawerKeys } from '../core/translation-keys';
 import { AdminPaths } from '../routes';
+import { DetailsComponent } from './parking/details/details.component';
+import { CreateComponent } from './parking/create/create.component';
 
 const routes: Routes = [
   {
@@ -44,6 +46,26 @@ const routes: Routes = [
       {
         path: AdminPaths.PARKING,
         component: ParkingComponent,
+        data: {
+          breadcrumbs: {
+            root: AdminDrawerKeys.DASHBOARD,
+            current: AdminDrawerKeys.PARKING,
+          },
+        },
+      },
+      {
+        path: AdminPaths.PARKING_DETAILS,
+        component: DetailsComponent,
+        data: {
+          breadcrumbs: {
+            root: AdminDrawerKeys.DASHBOARD,
+            current: AdminDrawerKeys.PARKING,
+          },
+        },
+      },
+      {
+        path: AdminPaths.CREATE_PARKING,
+        component: CreateComponent,
         data: {
           breadcrumbs: {
             root: AdminDrawerKeys.DASHBOARD,

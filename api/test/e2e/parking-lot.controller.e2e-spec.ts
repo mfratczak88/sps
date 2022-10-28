@@ -33,10 +33,8 @@ describe('Parking lot e2e', () => {
   const validCreateParkingLotCommand: CreateParkingLotCommand = {
     capacity: 4,
     hoursOfOperation: {
-      minuteTo: 0,
-      hourFrom: 2,
-      hourTo: 22,
-      minuteFrom: 0,
+      hourFrom: '10:00',
+      hourTo: '22:00',
     },
     address: {
       streetName: 'Maczka',
@@ -80,12 +78,15 @@ describe('Parking lot e2e', () => {
 
       const { id } = response.body;
 
-      const { id: savedParkingLotId, ...lotData } =
-        await prismaService.parkingLot.findFirst({
-          where: {
-            id,
-          },
-        });
+      const {
+        id: savedParkingLotId,
+        createdAt,
+        ...lotData
+      } = await prismaService.parkingLot.findFirst({
+        where: {
+          id,
+        },
+      });
       expect(lotData).toEqual({
         capacity,
         ...address,
@@ -217,10 +218,8 @@ describe('Parking lot e2e', () => {
     const validChangeHoursCommand: ChangeHoursOfOperationCommand = {
       parkingLotId,
       hoursOfOperation: {
-        hourFrom: 9,
-        minuteFrom: 0,
-        minuteTo: 0,
-        hourTo: 10,
+        hourFrom: '12:00',
+        hourTo: '20:00',
       },
     };
     beforeAll(async () => {
@@ -309,14 +308,13 @@ describe('Parking lot e2e', () => {
         .send(validChangeHoursCommand)
         .expect(204);
 
-      const { hourFrom, hourTo, minuteFrom, minuteTo } =
-        await prismaService.parkingLot.findFirst({
-          where: {
-            id: parkingLotId,
-          },
-        });
+      const { hourFrom, hourTo } = await prismaService.parkingLot.findFirst({
+        where: {
+          id: parkingLotId,
+        },
+      });
 
-      expect({ hourFrom, hourTo, minuteFrom, minuteTo }).toEqual(
+      expect({ hourFrom, hourTo }).toEqual(
         validChangeHoursCommand.hoursOfOperation,
       );
     });

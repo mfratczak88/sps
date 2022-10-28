@@ -1,0 +1,29 @@
+<div class="loading" *ngIf="(parkingLotQuery.loading$ | async); else details">
+  <mat-spinner class="loading__spinner"></mat-spinner>
+</div>
+<ng-template #details>
+  <ng-container *ngIf="parkingLotQuery.active$ | async as parkingLot">
+    <div class="details">
+      <sps-breadcrumbs></sps-breadcrumbs>
+      <sps-heading size="m">{{parkingLot.streetName}} {{parkingLot.streetNumber}}, {{parkingLot.city}}</sps-heading>
+      <div class="attribute">
+        <div class="attribute__heading">
+          <p class="attribute__heading--text">{{translations.CAPACITY | translate}}</p>
+          <button mat-icon-button>
+            <mat-icon (click)="onChangeCapacity(parkingLot)">edit</mat-icon>
+          </button>
+        </div>
+        <p class="attribute__value">{{parkingLot.capacity}} {{translations.PLACES | translate}}</p>
+      </div>
+      <div class="attribute">
+        <div class="attribute__heading">
+          <p class="attribute__heading--text">{{translations.HOURS | translate}}</p>
+          <button mat-icon-button (click)="onChangeHours(parkingLot)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <p class="attribute__value">{{parkingLot.hourFrom}} - {{parkingLot.hourTo}}</p>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

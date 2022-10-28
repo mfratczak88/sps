@@ -18,5 +18,7 @@ export enum AdminPaths {
   DASHBOARD = 'dashboard',
   USERS = 'users',
   PARKING = 'parking',
+  PARKING_DETAILS = `parking/:parkingLotId`,
   RESERVATIONS = 'reservations',
+  CREATE_PARKING = 'create-parking-lot',
 }

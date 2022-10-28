@@ -24,6 +24,10 @@ export class RouterQuery {
     return this.akitaRouterQuery.getParams(ParamKeys.ACTIVATION_GUID) || '';
   }
 
+  parkingLotId() {
+    return this.akitaRouterQuery.getParams(ParamKeys.PARKING_LOT_ID);
+  }
+
   previousActivationGuid() {
     return (
       this.akitaRouterQuery.getQueryParams(

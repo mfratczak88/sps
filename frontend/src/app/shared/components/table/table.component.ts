@@ -32,6 +32,9 @@ export class TableComponent implements AfterViewInit, OnInit {
   @Input()
   buttons: Button[] = [];
 
+  @Input()
+  heading: string;
+
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   filter(value: string) {
@@ -59,6 +62,6 @@ export type Column = {
   translation: string;
 };
 export type Button = {
-  icon: 'edit';
+  icon: 'edit' | 'arrow_forward' | 'visibility';
   onClick: (row: any) => void;
 } & Column;

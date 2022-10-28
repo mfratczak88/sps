@@ -19,18 +19,10 @@ export class AddressDto {
   streetNumber: string;
 }
 export class HoursOfOperationDto {
-  @Min(0)
-  @Max(24)
-  hourFrom: number;
-  @Min(0)
-  @Max(24)
-  hourTo: number;
-  @IsOptional()
-  @IsPositive()
-  minuteFrom?: number;
-  @IsPositive()
-  @IsOptional()
-  minuteTo?: number;
+  @IsNotEmpty()
+  hourFrom: string;
+  @IsNotEmpty()
+  hourTo: string;
 }
 export class CreateParkingLotCommand {
   @IsPositive()

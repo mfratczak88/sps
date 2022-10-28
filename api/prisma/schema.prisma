@@ -48,14 +48,13 @@ model Vehicle {
 }
 
 model ParkingLot {
-  id           String @id
+  id           String   @id
+  createdAt    DateTime @default(now())
   city         String
   streetName   String
   streetNumber String
   capacity     Int
-  hourFrom     Int
-  hourTo       Int
-  minuteFrom   Int
-  minuteTo     Int
+  hourFrom     String
+  hourTo       String
   users        User[]
 }

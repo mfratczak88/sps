@@ -3,15 +3,21 @@
 .search {
   display: flex;
   gap: 2rem;
-  padding-left: 24px;
   align-self: flex-start;
 }
 
+.search, .heading {
+  padding-left: 24px;
+}
 .table__cell {
   font-size: 0.8rem;
   text-align: left;
 }
-
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 .pagination, .table {
   width: 100%;
 }

@@ -2,9 +2,12 @@
 .page-header {
   padding: 1rem 2rem;
   background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   border-bottom: vars.$border-bottom;
 }
 .page-header__heading {
   display: flex;
-  justify-content: space-between;
+  gap: 2rem;
 }

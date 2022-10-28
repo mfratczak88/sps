@@ -1,0 +1,23 @@
+<sps-heading size="s" mat-dialog-title>{{translations.CAPACITY}}</sps-heading>
+<mat-dialog-content class="dialog">
+  <sps-text size="m">{{translations.CHANGE_CAPACITY | translate}}</sps-text>
+  <div class="dialog__form" >
+    <mat-form-field class="dialog__form--input" appearance="fill">
+      <mat-label>{{translations.CAPACITY | translate}}</mat-label>
+      <input matInput [formControl]="capacity">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          (click)="dialogRef.close()">
+    {{translations.CANCEL | translate}}
+  </button>
+  <button mat-button
+          color="primary"
+          mat-raised-button
+          [disabled]="capacity.invalid || capacity.value === data.capacity"
+          (click)="onChange()">
+    {{translations.CHANGE}}
+  </button>
+</mat-dialog-actions>

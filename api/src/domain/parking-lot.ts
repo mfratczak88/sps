@@ -4,7 +4,7 @@ import { DomainException } from './domain.exception';
 import { MessageCode } from '../message';
 import { Validate } from './validate.decorator';
 import { IsDefined, IsNotEmpty, IsPositive } from 'class-validator';
-
+import { DateTime } from 'luxon';
 @Validate
 export class ParkingLot {
   @IsNotEmpty()
@@ -49,12 +49,7 @@ export class ParkingLot {
   }
 
   get hoursOfOperation(): HoursOfOperation {
-    return {
-      hourFrom: this.operationHours.hourFrom,
-      hourTo: this.operationHours.hourTo,
-      minuteFrom: this.operationHours.minuteFrom,
-      minuteTo: this.operationHours.minuteTo,
-    };
+    return this.operationHours.toPlainObject();
   }
 
   open(hours: HoursOfOperation) {
@@ -70,32 +65,26 @@ export class ParkingLot {
   }
 }
 export interface HoursOfOperation {
-  hourFrom: number;
-  hourTo: number;
-  minuteFrom?: number;
-  minuteTo?: number;
+  hourFrom: string;
+  hourTo: string;
 }
-@Validate
-class OperationHours {
-  readonly hourFrom: number;
-  readonly hourTo: number;
-  readonly minuteFrom?: number;
-  readonly minuteTo?: number;
 
-  constructor({ hourFrom, hourTo, minuteFrom, minuteTo }: HoursOfOperation) {
-    this.validateHours(hourFrom, hourTo);
+class OperationHours {
+  readonly hourFrom: DateTime;
+  readonly hourTo: DateTime;
+  constructor(hours: HoursOfOperation) {
+    const { hourFrom, hourTo } = OperationHours.parseHoursOfOperation(hours);
+    OperationHours.validateHours(hourFrom, hourTo);
     this.hourFrom = hourFrom;
     this.hourTo = hourTo;
-    this.minuteFrom = minuteFrom || 0;
-    this.minuteTo = minuteTo || 0;
   }
 
   change(hours: HoursOfOperation) {
     return new OperationHours(hours);
   }
 
-  private validateHours(hourFrom: number, hourTo: number) {
-    if (hourFrom < 0 || hourFrom > 24 || hourTo < 0 || hourTo > 24) {
+  private static validateHours(hourFrom: DateTime, hourTo: DateTime) {
+    if (!hourFrom.isValid || !hourTo.isValid) {
       throw new DomainException({
         message: MessageCode.INVALID_HOURS,
       });
@@ -108,12 +97,31 @@ class OperationHours {
   }
 
   equal(hours: HoursOfOperation) {
-    const { hourTo, hourFrom, minuteFrom, minuteTo } = hours;
-    return (
-      hourTo === this.hourTo &&
-      hourFrom === this.hourFrom &&
-      (minuteTo || 0) === this.minuteTo &&
-      (minuteFrom || 0) === this.minuteFrom
-    );
+    const { hourFrom, hourTo } = OperationHours.parseHoursOfOperation(hours);
+    return hourFrom.equals(this.hourFrom) && hourTo.equals(this.hourTo);
+  }
+  static parseHoursOfOperation({
+    hourFrom: from,
+    hourTo: to,
+  }: HoursOfOperation) {
+    return {
+      hourFrom: DateTime.fromSQL(from),
+      hourTo: DateTime.fromSQL(to),
+    };
+  }
+
+  toPlainObject(): HoursOfOperation {
+    return {
+      hourFrom: this.parseTimeToHourAndMinute(this.hourFrom),
+      hourTo: this.parseTimeToHourAndMinute(this.hourTo),
+    };
+  }
+
+  parseTimeToHourAndMinute(hour: DateTime) {
+    const [hours, minutes] = hour
+      .toSQLTime({ includeOffset: false })
+      .split('.')[0]
+      .split(':');
+    return `${hours}:${minutes}`;
   }
 }

@@ -10,6 +10,10 @@ import { ReservationsComponent } from './reservations/reservations.component';
 import { ParkingComponent } from './parking/parking.component';
 import { EditRoleDialogComponent } from './users/edit-role-dialog/edit-role-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DetailsComponent } from './parking/details/details.component';
+import { CreateComponent } from './parking/create/create.component';
+import { ChangeHoursDialogComponent } from './parking/change-hours-dialog/change-hours-dialog.component';
+import { ChangeCapacityDialogComponent } from './parking/change-capacity-dialog/change-capacity-dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReservationsComponent,
     ParkingComponent,
     EditRoleDialogComponent,
+    DetailsComponent,
+    CreateComponent,
+    ChangeHoursDialogComponent,
+    ChangeCapacityDialogComponent,
   ],
   imports: [
     CommonModule,

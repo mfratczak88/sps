@@ -1,0 +1,76 @@
+<div class="create">
+  <sps-heading size="m">{{translations.CREATE_NEW_PARKING_LOT | translate}}</sps-heading>
+  <sps-text size="m">{{translations.CREATE_NEW_PARKING_LOT_SUB_TITLE | translate}}</sps-text>
+  <div class="stepper">
+    <mat-vertical-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="addressForm">
+        <form [formGroup]="addressForm" class="stepper__form">
+          <ng-template matStepLabel>{{translations.FILL_OUT_ADDRESS | translate}}</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.CITY | translate}}</mat-label>
+            <input matInput formControlName="city" required>
+            <sps-form-error [control]="addressForm.controls['city']"></sps-form-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.STREET_NAME | translate}}</mat-label>
+            <input matInput formControlName="streetName" required>
+            <sps-form-error [control]="addressForm.controls['streetName']"></sps-form-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.STREET_NUMBER | translate}}</mat-label>
+            <input matInput formControlName="streetNumber" required>
+            <sps-form-error [control]="addressForm.controls['streetNumber']"></sps-form-error>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="hoursForm">
+        <form [formGroup]="hoursForm" class="stepper__form">
+          <ng-template matStepLabel>{{translations.FILL_OUT_OPERATION_HOURS | translate}}</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.HOUR_FROM | translate}}</mat-label>
+            <input type="time" matInput formControlName="hourFrom" required>
+            <sps-form-error [control]="hoursForm.controls['hourFrom']"></sps-form-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.HOUR_TO | translate}}</mat-label>
+            <input matInput type="time" formControlName="hourTo" required>
+            <sps-form-error [control]="hoursForm.controls['hourTo']"></sps-form-error>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>{{translations.PREVIOUS | translate}}</button>
+            <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="capacityForm">
+        <form [formGroup]="capacityForm" class="stepper__form">
+          <ng-template matStepLabel>{{translations.FILL_OUT_CAPACITY | translate}}</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.CAPACITY}}</mat-label>
+            <input matInput formControlName="capacity" required>
+            <sps-form-error [control]="capacityForm.controls['capacity']"></sps-form-error>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>{{translations.PREVIOUS}}</button>
+            <button mat-button matStepperNext>{{translations.NEXT}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{translations.SAVE | translate}}</ng-template>
+        <div>
+          <button mat-raised-button
+                  color="primary"
+                  *ngIf="capacityForm.valid && addressForm.valid && hoursForm.valid"
+                  (click)="onCreate()">{{translations.SAVE | translate}}
+          </button>
+          <button mat-button matStepperPrevious>{{translations.BACK | translate}}</button>
+          <button mat-button (click)="stepper.reset()">{{translations.RESET | translate}}</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </div>
+</div>

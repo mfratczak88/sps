@@ -2,4 +2,23 @@
   [title]="translations.PARKING_TITLE"
   [subTitle]="translations.PARKING_SUBTITLE">
   <sps-breadcrumbs></sps-breadcrumbs>
+  <button mat-raised-button color="primary" button
+          (click)="routerService.toCreateParkingLot()">
+    {{translations.ADD | translate}}
+    <mat-icon>add</mat-icon>
+  </button>
+
 </sps-page-header>
+<div class="parking-lots">
+  <div class="parking-lots__spinner" *ngIf="parkingLotQuery.loading$ | async; else table">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #table>
+    <sps-table class="parking-lots__table"
+               [buttons]="tableButtons"
+               [columns]="tableColumns"
+               heading="{{translations.PARKING_LOTS_TABLE_HEADER | translate}}"
+               [data]="parkingLots$()">
+    </sps-table>
+  </ng-template>
+</div>

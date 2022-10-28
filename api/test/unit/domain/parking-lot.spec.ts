@@ -10,7 +10,7 @@ describe('Parking lot', () => {
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: 8, hourTo: 24 },
+      { hourFrom: '08:00:00', hourTo: '10:00:00' },
     );
     try {
       parkingLot.changeCapacity(-10);
@@ -36,7 +36,7 @@ describe('Parking lot', () => {
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: 8, hourTo: 24 },
+      { hourFrom: '08:00:00', hourTo: '10:00:00' },
     );
     try {
       parkingLot.changeCapacity(100);
@@ -53,7 +53,7 @@ describe('Parking lot', () => {
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: 8, hourTo: 24 },
+      { hourFrom: '08:00:00', hourTo: '10:00:00' },
     );
 
     parkingLot.changeCapacity(150);
@@ -66,7 +66,7 @@ describe('Parking lot', () => {
         randomId(),
         new Address('Warszawa', 'Sobieskiego', '4'),
         100,
-        { hourFrom: -3, hourTo: 24 },
+        { hourFrom: '28:00:00', hourTo: '10:00:00' },
       );
       fail();
     } catch (err) {
@@ -80,7 +80,7 @@ describe('Parking lot', () => {
         randomId(),
         new Address('Warszawa', 'Sobieskiego', '4'),
         100,
-        { hourFrom: 28, hourTo: 24 },
+        { hourFrom: '-08:00:00', hourTo: '10:00:00' },
       );
       fail();
     } catch (err) {
@@ -90,13 +90,13 @@ describe('Parking lot', () => {
       );
     }
   });
-  it('throws domain exception when operation hour to is less than 0 or greater than 24', () => {
+  it('throws domain exception when operation hour to is invalid', () => {
     try {
       new ParkingLot(
         randomId(),
         new Address('Warszawa', 'Sobieskiego', '4'),
         100,
-        { hourFrom: 2, hourTo: -2 },
+        { hourFrom: '08:00:00', hourTo: '1000:00:00' },
       );
       fail();
     } catch (err) {
@@ -110,7 +110,7 @@ describe('Parking lot', () => {
         randomId(),
         new Address('Warszawa', 'Sobieskiego', '4'),
         100,
-        { hourFrom: 2, hourTo: 2434 },
+        { hourFrom: '08:00:00', hourTo: '222:00:00' },
       );
       fail();
     } catch (err) {
@@ -125,11 +125,11 @@ describe('Parking lot', () => {
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: 7, hourTo: 15 },
+      { hourFrom: '08:00:00', hourTo: '19:00:00' },
     );
     const newHours: HoursOfOperation = {
-      hourTo: 16,
-      hourFrom: 8,
+      hourFrom: '10:00:00',
+      hourTo: '20:00:00',
     };
 
     parkingLot.changeOperationHours(newHours);

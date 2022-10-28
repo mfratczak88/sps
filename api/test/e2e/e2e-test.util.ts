@@ -66,10 +66,8 @@ export const createDummyParkingLot = async (
   await prismaService.parkingLot.create({
     data: {
       id: parkingLotId,
-      hourFrom: 7,
-      hourTo: 9,
-      minuteFrom: 0,
-      minuteTo: 0,
+      hourFrom: '12:00',
+      hourTo: '20:00',
       streetNumber: '4',
       city: 'Warszawa',
       streetName: 'Poznanska',
