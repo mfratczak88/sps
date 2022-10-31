@@ -35,7 +35,7 @@ export class RouterService {
 
   toCreateParkingLot() {
     return this.router.navigate([
-      `${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.CREATE_PARKING}`,
+      `${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}/${AdminPaths.CREATE_PARKING}`,
     ]);
   }
 

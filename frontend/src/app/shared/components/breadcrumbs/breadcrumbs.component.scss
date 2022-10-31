@@ -1,9 +1,19 @@
 @use "../../../../variables" as vars;
-.breadcrumb {
-  @include vars.typography-body-l;
-  font-weight: vars.$font-weight-bold;
+.breadcrumbs {
+  display: flex;
 }
-.breadcrumb__active-part {
-  color: black;
+.breadcrumb__breadcrumbs {
+  display: flex;
+  align-items: center;
 }
-
+.breadcrumb__breadcrumbs--link {
+  text-decoration: none;
+  color:inherit;
+  font-size: 1.5rem;
+}
+.breadcrumb__breadcrumbs--icon {
+  align-self: center;
+}
+.faded {
+  opacity: .75;
+}

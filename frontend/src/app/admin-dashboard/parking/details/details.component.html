@@ -4,7 +4,6 @@
 <ng-template #details>
   <ng-container *ngIf="parkingLotQuery.active$ | async as parkingLot">
     <div class="details">
-      <sps-breadcrumbs></sps-breadcrumbs>
       <sps-heading size="m">{{parkingLot.streetName}} {{parkingLot.streetNumber}}, {{parkingLot.city}}</sps-heading>
       <div class="attribute">
         <div class="attribute__heading">

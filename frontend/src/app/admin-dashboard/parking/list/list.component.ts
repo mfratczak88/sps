@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminKeys, MiscKeys } from '../../core/translation-keys';
-import { ParkingLotQuery } from './state/parking-lot.query';
-import { ParkingLotService } from './state/parking-lot.service';
-import { Button, Column } from '../../shared/components/table/table.component';
+import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
+import {
+  Button,
+  Column,
+} from '../../../shared/components/table/table.component';
+import { ParkingLot } from '../state/parking-lot.model';
+import { ParkingLotQuery } from '../state/parking-lot.query';
+import { ParkingLotService } from '../state/parking-lot.service';
+import { RouterService } from '../../../core/state/router/router.service';
 import { map } from 'rxjs/operators';
-import { RouterService } from '../../core/state/router/router.service';
-import { ParkingLot } from './state/parking-lot.model';
 
 @Component({
-  selector: 'sps-parking',
-  templateUrl: './parking.component.html',
-  styleUrls: ['./parking.component.scss'],
+  selector: 'sps-parking-lot-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
 })
-export class ParkingComponent implements OnInit {
+export class ListComponent implements OnInit {
   readonly translations = { ...AdminKeys, ...MiscKeys };
 
   tableColumns: Column[] = [

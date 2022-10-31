@@ -27,6 +27,9 @@ export class TableComponent implements AfterViewInit, OnInit {
   data: Observable<any>;
 
   @Input()
+  loading$: Observable<boolean>;
+
+  @Input()
   columns: Column[] = [];
 
   @Input()

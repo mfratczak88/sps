@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
-import { AdminKeys } from '../../core/translation-keys';
-import { UserService } from './state/user.service';
-import { UserQuery } from './state/user.query';
-import { Role, User } from './state/user.model';
+import { Component, OnInit } from '@angular/core';
+import { AdminKeys } from '../../../core/translation-keys';
+import {
+  Button,
+  Column,
+} from '../../../shared/components/table/table.component';
+import { Role, User } from '../state/user.model';
+import { UserQuery } from '../state/user.query';
+import { UserService } from '../state/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EditRoleDialogComponent } from './edit-role-dialog/edit-role-dialog.component';
+import { EditRoleDialogComponent } from '../edit-role-dialog/edit-role-dialog.component';
 import { concatMap, filter } from 'rxjs';
-import { Button, Column } from '../../shared/components/table/table.component';
 
 @Component({
-  selector: 'sps-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
+  selector: 'sps-users-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
 })
-export class UsersComponent {
+export class ListComponent {
   readonly translations = AdminKeys;
 
   tableColumns: Column[] = [

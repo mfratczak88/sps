@@ -3,6 +3,7 @@ export enum TopLevelPaths {
   ADMIN_DASHBOARD = 'admin-dashboard',
   ERROR = 'error',
 }
+
 export enum AuthPaths {
   SIGN_IN = 'sign-in',
   SIGN_UP = 'sign-up',
@@ -10,15 +11,17 @@ export enum AuthPaths {
   CONFIRM_ACCOUNT = 'confirm-account/:activationGuid',
   RESEND_ACTIVATION_LINK = 'resend-activation-link',
 }
+
 export enum ErrorPaths {
   NOT_FOUND = 'not-found',
   INTERNAL_SERVER_ERROR = 'internal-server-error',
 }
+
 export enum AdminPaths {
   DASHBOARD = 'dashboard',
   USERS = 'users',
   PARKING = 'parking',
   PARKING_DETAILS = `parking/:parkingLotId`,
   RESERVATIONS = 'reservations',
-  CREATE_PARKING = 'create-parking-lot',
+  CREATE_PARKING = `create-parking-lot`,
 }

@@ -17,6 +17,7 @@ import { CardComponent } from './components/card/card.component';
 import { TableComponent } from './components/table/table.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './service/paginator.intl.service';
+import { PanelComponent } from './components/panel/panel.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { PaginatorIntlService } from './service/paginator.intl.service';
     DrawerComponent,
     CardComponent,
     TableComponent,
+    PanelComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ import { PaginatorIntlService } from './service/paginator.intl.service';
     BreadcrumbsComponent,
     CardComponent,
     TableComponent,
+    PanelComponent,
   ],
   providers: [
     { provide: ToastService, useClass: MaterialToastService },

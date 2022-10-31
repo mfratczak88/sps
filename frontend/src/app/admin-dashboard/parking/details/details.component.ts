@@ -11,7 +11,7 @@ import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-
 import { ChangeCapacityDialogComponent } from '../change-capacity-dialog/change-capacity-dialog.component';
 
 @Component({
-  selector: 'sps-details',
+  selector: 'sps-parking-lot-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })

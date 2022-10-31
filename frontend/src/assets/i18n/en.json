@@ -55,7 +55,8 @@
     "DASHBOARD": "Dashboard",
     "PARKING": "Parking",
     "RESERVATIONS": "Reservations",
-    "USERS": "Users"
+    "USERS": "Users",
+    "PARKING_DETAILS": "Details"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Reservations",

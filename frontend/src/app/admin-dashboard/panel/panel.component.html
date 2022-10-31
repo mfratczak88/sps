@@ -1,25 +1,20 @@
-<sps-page-header
-  [title]="cardTranslations.DASHBOARD_TITLE"
-  [subTitle]="cardTranslations.DASHBOARD_SUBTITLE">
-  <sps-breadcrumbs></sps-breadcrumbs>
-</sps-page-header>
-<div class="dashboard">
+<div class="panel">
   <sps-card
-    class="dashboard__card"
+    class="panel__card"
     [clickable]="true"
     [title]="cardTranslations.PARKING_TITLE"
     [subTitle]="cardTranslations.PARKING_SUBTITLE"
     routerLink="../{{links.PARKING}}">
   </sps-card>
   <sps-card
-    class="dashboard__card"
+    class="panel__card"
     [title]="cardTranslations.RESERVATIONS_TITLE"
     [subTitle]="cardTranslations.RESERVATIONS_SUBTITLE"
     [clickable]="true"
     routerLink="../{{links.RESERVATIONS}}">
   </sps-card>
   <sps-card
-    class="dashboard__card"
+    class="panel__card"
     [title]="cardTranslations.USERS_TITLE"
     [subTitle]="cardTranslations.USERS_SUBTITLE"
     [clickable]="true"

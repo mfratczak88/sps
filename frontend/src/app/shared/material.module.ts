@@ -20,12 +20,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const modules = [
   MatFormFieldModule,
   MatChipsModule,
   MatInputModule,
   MatToolbarModule,
+  MatExpansionModule,
   MatButtonModule,
   MatIconModule,
   MatSnackBarModule,

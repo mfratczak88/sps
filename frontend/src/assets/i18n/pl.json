@@ -55,7 +55,8 @@
     "DASHBOARD": "Panel",
     "PARKING": "Parkingi",
     "RESERVATIONS": "Rezerwacje",
-    "USERS": "Użytkownicy"
+    "USERS": "Użytkownicy",
+    "PARKING_DETAILS": "Szczegóły"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Rezerwacje",

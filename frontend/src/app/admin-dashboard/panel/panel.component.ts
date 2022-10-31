@@ -3,11 +3,11 @@ import { AdminKeys } from '../../core/translation-keys';
 import { AdminPaths } from '../../routes';
 
 @Component({
-  selector: 'sps-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'sps-admin-panel',
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.scss'],
 })
-export class DashboardComponent {
+export class PanelComponent {
   cardTranslations = AdminKeys;
 
   links = AdminPaths;

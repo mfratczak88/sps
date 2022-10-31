@@ -1,4 +1,27 @@
+@use "../../variables" as vars;
+
 .dashboard {
-  height: 100%;
-  overflow-y: hidden;
+  display: flex;
+}
+
+.dashboard__content {
+  width: 100%;
+  min-height: 100vh;
+  background: vars.$color-panel-background;
+  padding: 1rem 2rem;
+}
+
+.dashboard__content--cards {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.dashboard__card {
+  display: block;
+  max-width: 350px;
+  flex: 1;
+  height: 10rem;
 }

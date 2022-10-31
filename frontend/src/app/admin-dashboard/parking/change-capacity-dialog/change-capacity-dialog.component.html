@@ -1,4 +1,4 @@
-<sps-heading size="s" mat-dialog-title>{{translations.CAPACITY}}</sps-heading>
+<sps-heading size="s" mat-dialog-title>{{translations.CAPACITY | translate}}</sps-heading>
 <mat-dialog-content class="dialog">
   <sps-text size="m">{{translations.CHANGE_CAPACITY | translate}}</sps-text>
   <div class="dialog__form" >
@@ -18,6 +18,6 @@
           mat-raised-button
           [disabled]="capacity.invalid || capacity.value === data.capacity"
           (click)="onChange()">
-    {{translations.CHANGE}}
+    {{translations.CHANGE | translate}}
   </button>
 </mat-dialog-actions>

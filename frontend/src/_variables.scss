@@ -118,6 +118,12 @@ $font-weight-normal: 400;
   color: $body-text-color;
 }
 
+@mixin typography-body-xl {
+  @include body-font;
+  font-size: 24px;
+  line-height: 38px;
+}
+
 @mixin typography-body-l {
   @include body-font;
   font-size: 18px;
@@ -151,10 +157,7 @@ $font-weight-normal: 400;
   display: flex;
   flex-direction: column;
   background: white;
-  margin: 2rem auto;
-  max-width: 760px;
-  width: 100%;
+  margin: 2rem;
   padding: 3rem 1rem;
-
   @include elevation;
 }

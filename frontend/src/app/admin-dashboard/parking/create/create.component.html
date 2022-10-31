@@ -49,13 +49,13 @@
         <form [formGroup]="capacityForm" class="stepper__form">
           <ng-template matStepLabel>{{translations.FILL_OUT_CAPACITY | translate}}</ng-template>
           <mat-form-field appearance="fill">
-            <mat-label>{{translations.CAPACITY}}</mat-label>
+            <mat-label>{{translations.CAPACITY |translate}}</mat-label>
             <input matInput formControlName="capacity" required>
             <sps-form-error [control]="capacityForm.controls['capacity']"></sps-form-error>
           </mat-form-field>
           <div>
-            <button mat-button matStepperPrevious>{{translations.PREVIOUS}}</button>
-            <button mat-button matStepperNext>{{translations.NEXT}}</button>
+            <button mat-button matStepperPrevious>{{translations.PREVIOUS | translate}}</button>
+            <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>
           </div>
         </form>
       </mat-step>
