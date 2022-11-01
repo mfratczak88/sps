@@ -1,18 +1,11 @@
-<mat-accordion>
-  <mat-expansion-panel [(expanded)]="panelOpenState"
-                       (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="heading">
-          <span class="heading__title">{{title}}</span>
-          <ng-content select="[btn]"></ng-content>
-        </div>
-      </mat-panel-title>
-      <mat-panel-description *ngIf="description">
-        {{description}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+<mat-card>
+  <mat-card-title>
+    <div class="heading">
+      <span class="heading__title">{{title}}</span>
+      <ng-content select="[btn]"></ng-content>
+    </div>
+  </mat-card-title>
+  <mat-card-content>
     <ng-content></ng-content>
-  </mat-expansion-panel>
-</mat-accordion>
+  </mat-card-content>
+</mat-card>

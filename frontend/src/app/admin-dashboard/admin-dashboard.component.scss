@@ -3,12 +3,13 @@
 .dashboard {
   display: flex;
 }
-
+.wrapper {
+  background: vars.$color-panel-background;
+}
 .dashboard__content {
   width: 100%;
   min-height: 100vh;
-  background: vars.$color-panel-background;
-  padding: 1rem 2rem;
+  padding: 1rem;
 }
 
 .dashboard__content--cards {

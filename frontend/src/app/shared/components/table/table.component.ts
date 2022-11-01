@@ -35,9 +35,6 @@ export class TableComponent implements AfterViewInit, OnInit {
   @Input()
   buttons: Button[] = [];
 
-  @Input()
-  heading: string;
-
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   filter(value: string) {
