@@ -47,6 +47,10 @@ export const DASHBOARD_ROUTE = {
       loadChildren: () =>
         import('./reservations/module').then(m => m.ReservationsModule),
     },
+    {
+      path: AdminPaths.DRIVERS,
+      loadChildren: () => import('./drivers/module').then(m => m.DriversModule),
+    },
   ],
 };
 const routes: Routes = [DASHBOARD_ROUTE as Route];

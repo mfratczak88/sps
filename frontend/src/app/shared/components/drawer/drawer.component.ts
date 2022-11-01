@@ -36,4 +36,5 @@ export type DrawerIcon =
   | 'dashboard'
   | 'calendar_month'
   | 'person'
-  | 'emoji_transportation';
+  | 'emoji_transportation'
+  | 'camera_front';

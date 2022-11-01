@@ -56,7 +56,8 @@
     "PARKING": "Parkingi",
     "RESERVATIONS": "Rezerwacje",
     "USERS": "Użytkownicy",
-    "PARKING_DETAILS": "Szczegóły"
+    "PARKING_DETAILS": "Szczegóły",
+    "DRIVERS": "Kierowcy"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Rezerwacje",
@@ -96,7 +97,8 @@
     "FILL_OUT_CAPACITY": "Ilość miejsc parkingowych",
     "SAVE": "Zapisz",
     "BACK": "Anuluj",
-    "RESET": "Resetuj formularz"
+    "RESET": "Resetuj formularz",
+    "DRIVERS" : "Kierowcy"
   },
   "ROLE": {
     "ADMIN": "Administrator",

@@ -56,7 +56,8 @@
     "PARKING": "Parking",
     "RESERVATIONS": "Reservations",
     "USERS": "Users",
-    "PARKING_DETAILS": "Details"
+    "PARKING_DETAILS": "Details",
+    "DRIVERS": "Drivers"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Reservations",
@@ -96,7 +97,8 @@
     "FILL_OUT_CAPACITY": "Fill out capacity",
     "SAVE": "Save",
     "BACK": "Back",
-    "RESET": "Reset"
+    "RESET": "Reset",
+    "DRIVERS" : "Drivers"
   },
   "ROLE": {
     "ADMIN": "Administrator",

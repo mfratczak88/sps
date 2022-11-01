@@ -16,6 +16,8 @@ import { ParkingLotRepository } from '../domain/parking-lot.repository';
 import { PrismaParkingLotRepository } from './prisma/prisma.parking-lot.repository';
 import { ParkingLotFinder } from '../application/parking-lot/parking-lot.finder';
 import { PrismaParkingLotFinder } from './prisma/prisma.parking-lot.finder';
+import { DriverFinder } from '../application/driver/driver.finder';
+import { PrismaDriverFinder } from './prisma/prisma.driver.finder';
 
 const providers: Provider[] = [
   {
@@ -42,6 +44,10 @@ const providers: Provider[] = [
   {
     provide: ParkingLotFinder,
     useClass: PrismaParkingLotFinder,
+  },
+  {
+    provide: DriverFinder,
+    useClass: PrismaDriverFinder,
   },
 ];
 

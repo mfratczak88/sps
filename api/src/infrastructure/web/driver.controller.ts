@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   Param,
   Post,
@@ -17,11 +18,19 @@ import RoleGuard from '../security/authorization/role.guard';
 import { Role } from '../security/authorization/role';
 import { CsrfGuard } from '../security/csrf/csrf.guard';
 import { JwtAuthGuard } from '../security/authorization/jwt-auth.guard';
+import { DriverFinder } from '../../application/driver/driver.finder';
 
 @Controller('drivers')
 export class DriverController {
-  constructor(private readonly driverService: DriverService) {}
+  constructor(
+    private readonly driverService: DriverService,
+    private readonly finder: DriverFinder,
+  ) {}
 
+  @Get()
+  getAllDrivers() {
+    return this.finder.findAll();
+  }
   @UseGuards(JwtAuthGuard, CsrfGuard)
   @Post(':driverId/vehicles')
   addVehicle(

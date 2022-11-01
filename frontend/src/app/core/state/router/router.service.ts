@@ -111,4 +111,8 @@ export class RouterService {
   private queryParamsFromCurrentRoute() {
     return this.router.routerState.snapshot.root.queryParams;
   }
+
+  toDriverDetails(id: string) {
+    this.router.navigate([`${AdminPaths.DRIVERS}/${id}`]);
+  }
 }
