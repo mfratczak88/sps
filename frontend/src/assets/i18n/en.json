@@ -105,7 +105,8 @@
     "ASSIGNED_PARKING_LOTS": "Assigned parking lots",
     "DRIVER_DETAILS": "Driver details",
     "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Assign parking lot",
-    "ASSIGN_PARKING_LOT_DIALOG_DESC": "Assign parking lot to a driver. After that he/she can place reservations"
+    "ASSIGN_PARKING_LOT_DIALOG_DESC": "Assign parking lot to a driver. After that he/she can place reservations",
+    "DRIVERS_SUBTITLE": "Manage drivers, their parking lots assignments and reservations"
   },
   "ROLE": {
     "ADMIN": "Administrator",

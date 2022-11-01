@@ -105,7 +105,8 @@
     "ASSIGNED_PARKING_LOTS": "Przypisane parkingi",
     "DRIVER_DETAILS": "Szczegóły kierowcy",
     "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Przypisz parking",
-    "ASSIGN_PARKING_LOT_DIALOG_DESC": "Przypisz kierowcę do parkingu. Dzięki temu będzie mógł robić na nim rezerwacje"
+    "ASSIGN_PARKING_LOT_DIALOG_DESC": "Przypisz kierowcę do parkingu. Dzięki temu będzie mógł robić na nim rezerwacje",
+    "DRIVERS_SUBTITLE": "Zarządzaj kierowcami, dostępnymi dla nich parkingami oraz rezerwacjami"
   },
   "ROLE": {
     "ADMIN": "Administrator",
