@@ -8,6 +8,7 @@ import { RouterService } from '../../../core/state/router/router.service';
 import { DriversQuery } from '../state/drivers.query';
 import { Driver } from '../state/drivers.model';
 import { DriversService } from '../state/drivers.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sps-drivers-list',
@@ -27,6 +28,14 @@ export class DriversListComponent implements OnInit {
     this.driversService.load();
   }
 
+  drivers$() {
+    return this.driversQuery.active$.pipe(
+      map(d => ({
+        ...d,
+      })),
+    );
+  }
+
   tableColumns: Column[] = [
     { name: 'name', translation: this.translations.NAME },
     { name: 'email', translation: this.translations.EMAIL },
@@ -41,7 +50,9 @@ export class DriversListComponent implements OnInit {
       name: 'details',
       translation: this.translations.COLUMN_DETAILS,
       icon: 'visibility',
-      onClick: ({ id }: Driver) => this.routerService.toDriverDetails(id),
+      onClick: ({ id }: Driver) => {
+        this.routerService.toDriverDetails(id);
+      },
     },
   ];
 }

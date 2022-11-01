@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DASHBOARD_ROUTE } from '../routing';
 import { AdminPaths } from '../../routes';
+import { DriverDetailsComponent } from './details/details.component';
 
 const DRIVERS_LIST_ROUTE = {
   path: '',
@@ -16,8 +17,19 @@ const DRIVERS_LIST_ROUTE = {
     },
   },
 };
+const DETAILS_ROUTE = {
+  path: ':driverId',
+  component: DriverDetailsComponent,
+  data: {
+    breadcrumbs: {
+      label: AdminDrawerKeys.PARKING_DETAILS,
+      path: ':driverId',
+      parent: DRIVERS_LIST_ROUTE,
+    },
+  },
+};
 @NgModule({
-  imports: [RouterModule.forChild([DRIVERS_LIST_ROUTE])],
+  imports: [RouterModule.forChild([DRIVERS_LIST_ROUTE, DETAILS_ROUTE])],
   exports: [RouterModule],
 })
 export class DriversRoutingModule {}

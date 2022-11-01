@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { ParkingLotState, ParkingLotStore } from './parking-lot.store';
-import { ParkingLot } from './parking-lot.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

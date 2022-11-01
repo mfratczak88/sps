@@ -6,7 +6,7 @@ import {
   ChangeHoursOfOperations,
   CreateParkingLot,
   ParkingLot,
-} from './parking-lot.model';
+} from '../../../core/model/parking-lot.model';
 
 @Injectable({
   providedIn: 'root',

@@ -38,7 +38,8 @@
     "ROLE_CHANGED" : "Zmieniono rolę",
     "CAPACITY_CHANGED": "Zmieniono pojemność parkingu",
     "HOURS_CHANGED": "Zmieniono godziny otwarcia",
-    "PARKING_LOT_CREATED": "Parking utworzony"
+    "PARKING_LOT_CREATED": "Parking utworzony",
+    "PARKING_LOT_ASSIGNED" : "Przypisano do parkingu"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Błąd serwera",
@@ -98,7 +99,13 @@
     "SAVE": "Zapisz",
     "BACK": "Anuluj",
     "RESET": "Resetuj formularz",
-    "DRIVERS" : "Kierowcy"
+    "DRIVERS" : "Kierowcy",
+    "NAME": "Imię",
+    "EMAIL": "Email",
+    "ASSIGNED_PARKING_LOTS": "Przypisane parkingi",
+    "DRIVER_DETAILS": "Szczegóły kierowcy",
+    "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Przypisz parking",
+    "ASSIGN_PARKING_LOT_DIALOG_DESC": "Przypisz kierowcę do parkingu. Dzięki temu będzie mógł robić na nim rezerwacje"
   },
   "ROLE": {
     "ADMIN": "Administrator",
@@ -107,7 +114,7 @@
   },
   "MISC": {
     "CANCEL": "Anuluj",
-    "ASSIGN": "Zmień",
+    "ASSIGN": "Przypisz",
     "SELECT": "Wybierz",
     "SEARCH": "Szukaj",
     "ADD" : "Dodaj",

@@ -18,6 +18,7 @@ import { TableComponent } from './components/table/table.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './service/paginator.intl.service';
 import { PanelComponent } from './components/panel/panel.component';
+import { ParkingLotsTableComponent } from './components/parking-lots-table/parking-lots-table.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PanelComponent } from './components/panel/panel.component';
     CardComponent,
     TableComponent,
     PanelComponent,
+    ParkingLotsTableComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { PanelComponent } from './components/panel/panel.component';
     CardComponent,
     TableComponent,
     PanelComponent,
+    ParkingLotsTableComponent,
   ],
   providers: [
     { provide: ToastService, useClass: MaterialToastService },

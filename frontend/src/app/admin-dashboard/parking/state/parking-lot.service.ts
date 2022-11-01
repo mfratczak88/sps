@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { ParkingLotApi } from './parking-lot.api';
 import { finalize, first, tap } from 'rxjs';
 import { ParkingLotStore } from './parking-lot.store';
-import { ChangeHoursOfOperations, CreateParkingLot } from './parking-lot.model';
+import {
+  ChangeHoursOfOperations,
+  CreateParkingLot,
+} from '../../../core/model/parking-lot.model';
 import { ToastService } from '../../../core/service/toast.service';
 import { RouterService } from '../../../core/state/router/router.service';
 import { TranslateService } from '@ngx-translate/core';

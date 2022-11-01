@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { ParkingLot } from './parking-lot.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 export type ParkingLotState = EntityState<ParkingLot, string>;
 @Injectable({

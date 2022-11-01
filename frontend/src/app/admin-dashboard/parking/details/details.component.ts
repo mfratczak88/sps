@@ -4,7 +4,7 @@ import { ParkingLotService } from '../state/parking-lot.service';
 import { RouterQuery } from '../../../core/state/router/router.query';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { MatDialog } from '@angular/material/dialog';
-import { ParkingLot } from '../state/parking-lot.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 import { concatMap, filter, first } from 'rxjs';
 import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-dialog.component';

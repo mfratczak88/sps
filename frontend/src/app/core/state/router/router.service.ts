@@ -113,6 +113,8 @@ export class RouterService {
   }
 
   toDriverDetails(id: string) {
-    this.router.navigate([`${AdminPaths.DRIVERS}/${id}`]);
+    this.router.navigate([
+      `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.DRIVERS}/${id}`,
+    ]);
   }
 }

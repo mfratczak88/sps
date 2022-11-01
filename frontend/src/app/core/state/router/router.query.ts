@@ -32,6 +32,10 @@ export class RouterQuery {
     return this.akitaRouterQuery.getParams(ParamKeys.PARKING_LOT_ID);
   }
 
+  driverId() {
+    return this.akitaRouterQuery.getParams(ParamKeys.DRIVER_ID);
+  }
+
   previousActivationGuid() {
     return (
       this.akitaRouterQuery.getQueryParams(

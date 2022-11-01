@@ -8,12 +8,12 @@
         <mat-icon>add</mat-icon>
         {{translations.ADD | translate}}
       </button>
-      <sps-table class="parking-lots__table"
+      <sps-parking-lots-table class="parking-lots__table"
                  [loading$]="parkingLotQuery.loading$"
-                 [buttons]="tableButtons"
-                 [columns]="tableColumns"
-                 [data]="parkingLots$()">
-      </sps-table>
+                 [tableButtons]="tableButtons"
+                 [displayColumns]="['address', 'capacity', 'hours']"
+                 [parkingLots$]="parkingLotQuery.selectAll()">
+      </sps-parking-lots-table>
     </sps-panel>
 
   </ng-template>

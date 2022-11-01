@@ -35,6 +35,9 @@ export class TableComponent implements AfterViewInit, OnInit {
   @Input()
   buttons: Button[] = [];
 
+  @Input()
+  withSearch = false;
+
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   filter(value: string) {
@@ -53,7 +56,9 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   get columnNames() {
-    return [...this.columns.map(c => c.name), ...this.buttons.map(b => b.name)];
+    const buttons = this.buttons ? [...this.buttons.map(b => b.name)] : [];
+    const columns = this.columns ? [...this.columns.map(c => c.name)] : [];
+    return [...columns, ...buttons];
   }
 }
 

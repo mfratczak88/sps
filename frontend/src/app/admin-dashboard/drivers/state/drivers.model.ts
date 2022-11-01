@@ -1,4 +1,4 @@
-export interface Driver {
+export interface DriverDto {
   id: string;
   name: string;
   email: string;
@@ -8,4 +8,12 @@ export interface Driver {
     streetName: string;
     streetNumber: string;
   }[];
+}
+export type Driver = DriverDto & {
+  parkingLotCount: number;
+};
+
+export interface AssignDriverToParkingLot {
+  driverId: string;
+  parkingLotId: string;
 }

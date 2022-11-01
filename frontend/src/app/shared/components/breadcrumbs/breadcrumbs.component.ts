@@ -29,7 +29,6 @@ export class BreadcrumbsComponent {
         next = parent?.data?.['breadcrumbs'] as BreadCrumb;
       }
       this.breadCrumbs = this.breadCrumbs.reverse();
-      console.log(this.breadCrumbs);
     });
   }
 }

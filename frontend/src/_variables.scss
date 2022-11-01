@@ -1,27 +1,9 @@
 @use 'node_modules/@angular/material' as mat;
 
-$body-text-color: #636B75;
-//@function text-colors($color) {
-//  @return (
-//    base:              $color,
-//    divider:           $color,
-//    dividers:          $color,
-//    disabled:          rgba($color, 0.38),
-//    disabled-button:   rgba($color, 0.38),
-//    disabled-text:     rgba($color, 0.38),
-//    hint-text:         rgba($color, 0.38),
-//    secondary-text:    rgba($color, 0.54),
-//    icon:              rgba($color, 0.54),
-//    icons:             rgba($color, 0.54),
-//    text:              rgba($color, 0.87),
-//    slider-off:        rgba($color, 0.26),
-//    slider-off-active: rgba($color, 0.38),
-//    slider-min:        rgba($color, 0.38)
-//  );
-//};
-//
-//$foreground: text-colors(white);
+
+
 /* Colors */
+$body-text-color: #636B75;
 
 $primary-palette: mat.define-palette(map_merge(mat.$blue-palette, (
   50: #F2F7FF,
@@ -68,12 +50,12 @@ $color-warn: mat.get-color-from-palette($warn-palette);
 $color-drawer-selected: mat.get-color-from-palette($primary-palette, 100);
 $color-drawer-hover: mat.get-color-from-palette($primary-palette, 50);
 $color-panel-background: mat.get-color-from-palette($primary-palette, 100);
-
+$border-color: #838D95;
 /* Dimensions */
 $form-elements-gap: 1rem;
 $centered-elements-max-width: 500px;
 $form-max-width: 350px;
-$border-bottom: 1px solid #838D95;
+$border-bottom: 1px solid $border-color;
 
 /* Typography */
 

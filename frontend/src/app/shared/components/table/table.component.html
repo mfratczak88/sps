@@ -5,7 +5,7 @@
     </div>
   </ng-container>
   <ng-template #content>
-    <div class="search">
+    <div class="search" *ngIf="withSearch">
       <mat-form-field appearance="legacy">
         <input #searchField matInput [placeholder]="translations.SEARCH | translate"
                (keyup)="filter(searchField.value)">
@@ -31,9 +31,9 @@
       </ng-container>
       <mat-header-row mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
       <mat-row class="table__row" mat-row *matRowDef="let row; columns: columnNames"></mat-row>
-      <mat-row *matNoDataRow>
-        <td colspan="4">No data matching the filter "{{searchField.value}}"</td>
-      </mat-row>
+      <tr *matNoDataRow>
+        <td colspan="4" >No data</td>
+      </tr>
     </mat-table>
     <mat-paginator class="pagination" [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 20]">
     </mat-paginator>

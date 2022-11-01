@@ -13,9 +13,10 @@ export class MaterialToastService implements ToastService {
   ) {}
 
   show(text: string): void {
+    const translatedText = this.translateService.instant(text);
     this.ngZone.run(() =>
       this.snackBarRef.open(
-        text,
+        translatedText || text,
         this.translateService.instant(ToastKeys.DISMISS),
         {
           duration: 3000,
