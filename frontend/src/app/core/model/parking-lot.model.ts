@@ -24,3 +24,8 @@ export interface CreateParkingLot {
     streetNumber: string;
   };
 }
+export interface Address {
+  city: string;
+  streetName: string;
+  streetNumber: string;
+}

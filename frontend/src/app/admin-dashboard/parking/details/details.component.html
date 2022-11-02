@@ -3,7 +3,7 @@
 </div>
 <ng-template #details>
   <ng-container *ngIf="parkingLotQuery.active$ | async as parkingLot">
-    <sps-panel title="{{parkingLot.streetName}} {{parkingLot.streetNumber}}, {{parkingLot.city}}">
+    <sps-panel [title]="parkingLot | address">
       <div class="attribute">
         <div class="attribute__heading">
           <p class="attribute__heading--text">{{translations.CAPACITY | translate}}</p>
@@ -22,7 +22,7 @@
           <mat-icon>schedule</mat-icon>
         </div>
         <div class="attribute__value">
-          <span class="attribute__value--text">{{parkingLot.hourFrom}} - {{parkingLot.hourTo}}</span>
+          <span class="attribute__value--text">{{parkingLot | hours}}</span>
           <button  mat-icon-button (click)="onChangeHours(parkingLot)">
             <mat-icon class="attribute__value--icon">edit</mat-icon>
           </button>

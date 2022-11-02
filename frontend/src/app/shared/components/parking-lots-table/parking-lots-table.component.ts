@@ -4,6 +4,8 @@ import { Button, Column } from '../table/table.component';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AddressPipe } from '../../pipe/address.pipe';
+import { HoursPipe } from '../../pipe/hours.pipe';
 
 @Component({
   selector: 'sps-parking-lots-table',
@@ -32,6 +34,11 @@ export class ParkingLotsTableComponent implements OnInit {
     { name: 'hours', translation: this.translations.HOURS },
   ];
 
+  constructor(
+    private readonly addressPipe: AddressPipe,
+    private readonly hoursPipe: HoursPipe,
+  ) {}
+
   ngOnInit(): void {
     this.tableColumns = this.tableColumns.filter(col =>
       this.displayColumns.includes(col.name as ParkingLotTableColumnName),
@@ -43,8 +50,8 @@ export class ParkingLotsTableComponent implements OnInit {
       map(parkingLots =>
         parkingLots.map(lot => ({
           ...lot,
-          hours: `${lot.hourFrom} - ${lot.hourTo}`,
-          address: `${lot.streetName} ${lot.streetNumber}, ${lot.city}`,
+          hours: this.hoursPipe.transform(lot),
+          address: this.addressPipe.transform(lot),
         })),
       ),
     );
