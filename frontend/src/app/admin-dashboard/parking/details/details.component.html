@@ -3,26 +3,32 @@
 </div>
 <ng-template #details>
   <ng-container *ngIf="parkingLotQuery.active$ | async as parkingLot">
-    <div class="details">
-      <sps-heading size="m">{{parkingLot.streetName}} {{parkingLot.streetNumber}}, {{parkingLot.city}}</sps-heading>
+    <sps-panel title="{{parkingLot.streetName}} {{parkingLot.streetNumber}}, {{parkingLot.city}}">
       <div class="attribute">
         <div class="attribute__heading">
           <p class="attribute__heading--text">{{translations.CAPACITY | translate}}</p>
+          <mat-icon>reduce_capacity</mat-icon>
+        </div>
+        <div class="attribute__value">
+          <span class="attribute__value--text">{{parkingLot.capacity}}</span>
           <button mat-icon-button>
-            <mat-icon (click)="onChangeCapacity(parkingLot)">edit</mat-icon>
+            <mat-icon class="attribute__value--icon">edit</mat-icon>
           </button>
         </div>
-        <p class="attribute__value">{{parkingLot.capacity}} {{translations.PLACES | translate}}</p>
       </div>
       <div class="attribute">
         <div class="attribute__heading">
           <p class="attribute__heading--text">{{translations.HOURS | translate}}</p>
-          <button mat-icon-button (click)="onChangeHours(parkingLot)">
-            <mat-icon>edit</mat-icon>
+          <mat-icon>schedule</mat-icon>
+        </div>
+        <div class="attribute__value">
+          <span class="attribute__value--text">{{parkingLot.hourFrom}} - {{parkingLot.hourTo}}</span>
+          <button  mat-icon-button (click)="onChangeHours(parkingLot)">
+            <mat-icon class="attribute__value--icon">edit</mat-icon>
           </button>
         </div>
-        <p class="attribute__value">{{parkingLot.hourFrom}} - {{parkingLot.hourTo}}</p>
       </div>
-    </div>
+    </sps-panel>
   </ng-container>
 </ng-template>
+

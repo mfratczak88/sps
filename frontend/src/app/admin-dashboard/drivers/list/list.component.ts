@@ -8,7 +8,6 @@ import { RouterService } from '../../../core/state/router/router.service';
 import { DriversQuery } from '../state/drivers.query';
 import { Driver } from '../state/drivers.model';
 import { DriversService } from '../state/drivers.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sps-drivers-list',

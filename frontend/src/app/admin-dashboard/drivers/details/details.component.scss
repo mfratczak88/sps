@@ -3,19 +3,19 @@
   flex-direction: column;
   gap: 1rem;
 }
-.personal-info {
+.details-panel {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.personal-info__details {
+.details-panel__section {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.personal-info__details--item {
+.details-panel__section--item {
   display: flex;
   align-content: center;
   gap: 1rem;

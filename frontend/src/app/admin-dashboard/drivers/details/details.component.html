@@ -1,18 +1,18 @@
 <div class="page" *ngIf="driversQuery.active$ | async as driver">
   <sps-panel
     title="{{translations.DRIVER_DETAILS | translate}}">
-    <div class="personal-info">
-      <div class="personal-info__details">
-        <div class="personal-info__details--item">
+    <div class="details-panel">
+      <div class="details-panel__section">
+        <div class="details-panel__section--item">
           <mat-icon>email</mat-icon>
           <span><span>{{driver.email}}</span></span>
         </div>
-        <div class="personal-info__details--item">
+        <div class="details-panel__section--item">
           <mat-icon>face</mat-icon>
           <span><span>{{driver.name}}</span></span>
         </div>
       </div>
-      <mat-chip-list aria-label="Color selection">
+      <mat-chip-list>
         <mat-chip>
           {{translations.PARKING_TITLE | translate}}: {{driver.parkingLots.length}}
         </mat-chip>
@@ -30,7 +30,9 @@
       color="primary"
       (click)="onAssignParkingLot(driver.id)"
       *ngIf="(driversQuery.driverUnAssignedParkingLots$ | async)?.length"
-    >{{translations.ASSIGN | translate}}</button>
+    >
+      <mat-icon>assignment_add</mat-icon>
+      {{translations.ASSIGN | translate}}</button>
     <sps-parking-lots-table
       [loading$]="driversQuery.selectLoading()"
       [parkingLots$]="driverParkingLots$"

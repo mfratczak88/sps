@@ -10,17 +10,21 @@
   background: white;
   border-bottom: vars.$border-bottom;
 }
+
 .loading {
   padding-top: 10rem;
 }
+
 .loading__spinner {
   display: block;
   margin: 0 auto;
 }
+
 .attribute {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  margin: 2rem 0;
+  gap: 0.5rem;
 }
 
 .attribute__heading {
@@ -36,7 +40,14 @@
 }
 
 .attribute__value {
-  font-size: 1.1rem;
+  display: flex;
 }
+
+.attribute__value--text, .attribute__value--icon {
+  font-size: 1.1rem;
+  align-self: center;
+  color: vars.$body-text-color;
+}
+
 
 
