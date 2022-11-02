@@ -39,7 +39,8 @@
     "CAPACITY_CHANGED": "Zmieniono pojemność parkingu",
     "HOURS_CHANGED": "Zmieniono godziny otwarcia",
     "PARKING_LOT_CREATED": "Parking utworzony",
-    "PARKING_LOT_ASSIGNED" : "Przypisano do parkingu"
+    "PARKING_LOT_ASSIGNED" : "Przypisano do parkingu",
+    "PARKING_LOT_ASSIGNMENT_REMOVED" : "Usunięto przypisanie do parkingu"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Błąd serwera",
@@ -106,7 +107,8 @@
     "DRIVER_DETAILS": "Szczegóły kierowcy",
     "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Przypisz parking",
     "ASSIGN_PARKING_LOT_DIALOG_DESC": "Przypisz kierowcę do parkingu. Dzięki temu będzie mógł robić na nim rezerwacje",
-    "DRIVERS_SUBTITLE": "Zarządzaj kierowcami, dostępnymi dla nich parkingami oraz rezerwacjami"
+    "DRIVERS_SUBTITLE": "Zarządzaj kierowcami, dostępnymi dla nich parkingami oraz rezerwacjami",
+    "REMOVE_ASSIGNMENT": "Usuń przypisanie"
   },
   "ROLE": {
     "ADMIN": "Administrator",

@@ -39,7 +39,8 @@
     "CAPACITY_CHANGED": "Parking lot capacity changed",
     "HOURS_CHANGED": "Operation hours has been changed",
     "PARKING_LOT_CREATED": "Parking lot has been created",
-    "PARKING_LOT_ASSIGNED" : "Parking lot assigned"
+    "PARKING_LOT_ASSIGNED" : "Parking lot assigned",
+    "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",
@@ -106,7 +107,8 @@
     "DRIVER_DETAILS": "Driver details",
     "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Assign parking lot",
     "ASSIGN_PARKING_LOT_DIALOG_DESC": "Assign parking lot to a driver. After that he/she can place reservations",
-    "DRIVERS_SUBTITLE": "Manage drivers, their parking lots assignments and reservations"
+    "DRIVERS_SUBTITLE": "Manage drivers, their parking lots assignments and reservations",
+    "REMOVE_ASSIGNMENT": "Remove assignment"
   },
   "ROLE": {
     "ADMIN": "Administrator",

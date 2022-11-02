@@ -17,3 +17,7 @@ export interface AssignDriverToParkingLot {
   driverId: string;
   parkingLotId: string;
 }
+export interface RemoveParkingLotAssignment {
+  driverId: string;
+  parkingLotId: string;
+}

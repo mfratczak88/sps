@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { BaseApi } from '../../../core/service/base.api';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { AssignDriverToParkingLot, DriverDto } from './drivers.model';
+import {
+  AssignDriverToParkingLot,
+  DriverDto,
+  RemoveParkingLotAssignment,
+} from './drivers.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +30,15 @@ export class DriversApi extends BaseApi {
       this.http.post<void>(
         `${this.BASE_URL}/${driverId}/${this.PARKING_LOTS_URI}`,
         req,
+      ),
+    );
+  }
+
+  removeParkingLotAssignment(req: RemoveParkingLotAssignment) {
+    const { driverId, parkingLotId } = req;
+    return this.withCsrfToken(
+      this.http.delete<void>(
+        `${this.BASE_URL}/${driverId}/${this.PARKING_LOTS_URI}/${parkingLotId}`,
       ),
     );
   }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DriversStore } from './drivers.store';
 import { DriversApi } from './drivers.api';
-import { concat, finalize, tap } from 'rxjs';
+import { concatMap, finalize, tap } from 'rxjs';
 import { RouterService } from '../../../core/state/router/router.service';
 import { ParkingLotService } from '../../parking/state/parking-lot.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ToastKeys } from '../../../core/translation-keys';
+import { RemoveParkingLotAssignment } from './drivers.model';
 
 @Injectable({
   providedIn: 'root',
@@ -57,13 +58,18 @@ export class DriversService {
   }
 
   assignParkingLot(driverId: string, parkingLotId: string) {
-    return concat(
-      this.api
-        .assignParkingLot({ driverId, parkingLotId })
-        .pipe(
-          tap(() => this.toastService.show(ToastKeys.PARKING_LOT_ASSIGNED)),
-        ),
-      this.load$(),
+    return this.api.assignParkingLot({ driverId, parkingLotId }).pipe(
+      concatMap(() => this.load$()),
+      tap(() => this.toastService.show(ToastKeys.PARKING_LOT_ASSIGNED)),
+    );
+  }
+
+  removeParkingLotAssignment(req: RemoveParkingLotAssignment) {
+    return this.api.removeParkingLotAssignment(req).pipe(
+      concatMap(() => this.load$()),
+      tap(() =>
+        this.toastService.show(ToastKeys.PARKING_LOT_ASSIGNMENT_REMOVED),
+      ),
     );
   }
 }

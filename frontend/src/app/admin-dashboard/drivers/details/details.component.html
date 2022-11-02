@@ -34,6 +34,7 @@
     <sps-parking-lots-table
       [loading$]="driversQuery.selectLoading()"
       [parkingLots$]="driverParkingLots$"
+      [tableButtons]="parkingLotsTableButtons"
       [displayColumns]="['address']"
     ></sps-parking-lots-table>
   </sps-panel>

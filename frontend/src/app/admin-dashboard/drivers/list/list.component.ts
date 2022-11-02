@@ -28,14 +28,6 @@ export class DriversListComponent implements OnInit {
     this.driversService.load();
   }
 
-  drivers$() {
-    return this.driversQuery.active$.pipe(
-      map(d => ({
-        ...d,
-      })),
-    );
-  }
-
   tableColumns: Column[] = [
     { name: 'name', translation: this.translations.NAME },
     { name: 'email', translation: this.translations.EMAIL },

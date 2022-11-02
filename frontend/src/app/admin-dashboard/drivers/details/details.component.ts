@@ -6,7 +6,9 @@ import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { concatMap, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
-import { filter } from 'rxjs';
+import { filter, first } from 'rxjs';
+import { Button } from '../../../shared/components/table/table.component';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-driver-details',
@@ -15,6 +17,16 @@ import { filter } from 'rxjs';
 })
 export class DriverDetailsComponent implements OnInit {
   readonly translations = { ...AdminKeys, ...MiscKeys };
+
+  readonly parkingLotsTableButtons: Button[] = [
+    {
+      name: 'remove',
+      translation: this.translations.REMOVE_ASSIGNMENT,
+      icon: 'delete',
+      onClick: ({ id: parkingLotId }: ParkingLot) =>
+        this.onRemoveParkingLotAssignment(parkingLotId),
+    },
+  ];
 
   readonly driverParkingLots$ = this.driversQuery.active$.pipe(
     map(driver => driver?.parkingLots),
@@ -42,6 +54,22 @@ export class DriverDetailsComponent implements OnInit {
         concatMap(lotId =>
           this.driversService.assignParkingLot(driverId, lotId),
         ),
+        first(),
+      )
+      .subscribe();
+  }
+
+  onRemoveParkingLotAssignment(parkingLotId: string) {
+    this.driversQuery.active$
+      .pipe(
+        map(driver => driver.id),
+        concatMap(driverId =>
+          this.driversService.removeParkingLotAssignment({
+            driverId,
+            parkingLotId,
+          }),
+        ),
+        first(),
       )
       .subscribe();
   }

@@ -67,6 +67,6 @@ export type Column = {
   translation: string;
 };
 export type Button = {
-  icon: 'edit' | 'arrow_forward' | 'visibility';
+  icon: 'edit' | 'arrow_forward' | 'visibility' | 'delete';
   onClick: (row: any) => void;
 } & Column;
