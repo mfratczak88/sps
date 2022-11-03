@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DriversStore } from './drivers.store';
 import { DriversApi } from './drivers.api';
-import { concatMap, finalize, tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { RouterService } from '../../../core/state/router/router.service';
 import { ParkingLotService } from '../../parking/state/parking-lot.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -27,7 +27,6 @@ export class DriversService {
   private load$() {
     return this.api.getAll().pipe(
       tap(() => this.store.setLoading(true)),
-      finalize(() => this.store.setLoading(false)),
       tap(v =>
         this.store.set(
           v.map(driver => ({
@@ -36,6 +35,7 @@ export class DriversService {
           })),
         ),
       ),
+      finalize(() => this.store.setLoading(false)),
     );
   }
 

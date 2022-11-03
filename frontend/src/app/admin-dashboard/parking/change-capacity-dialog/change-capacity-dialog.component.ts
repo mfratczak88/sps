@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
