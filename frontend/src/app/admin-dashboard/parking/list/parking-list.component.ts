@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
-import {
-  Button,
-  Column,
-} from '../../../shared/components/table/table.component';
+import { Button } from '../../../shared/components/table/table.component';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
 import { ParkingLotQuery } from '../state/parking-lot.query';
 import { ParkingLotService } from '../state/parking-lot.service';
@@ -14,7 +11,7 @@ import { RouterService } from '../../../core/state/router/router.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ParkingListComponent implements OnInit {
   readonly translations = { ...AdminKeys, ...MiscKeys };
 
   tableButtons: Button[] = [

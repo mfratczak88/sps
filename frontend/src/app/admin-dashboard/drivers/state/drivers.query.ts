@@ -11,20 +11,24 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class DriversQuery extends QueryEntity<DriversState> {
-  active$: Observable<Driver> = <Observable<Driver>>this.selectActive();
-
-  driverUnAssignedParkingLots$: Observable<ParkingLot[]> = this.active$.pipe(
-    combineLatestWith(this.parkingLotQuery.selectAll()),
-    map(([driver, parkingLots]) => {
-      const driverLotsIds = driver.parkingLots.map(({ id }) => id);
-      return parkingLots.filter(({ id }) => !driverLotsIds.includes(id));
-    }),
-  );
-
   constructor(
     store: DriversStore,
     private readonly parkingLotQuery: ParkingLotQuery,
   ) {
     super(store);
+  }
+
+  active$() {
+    return <Observable<Driver>>this.selectActive();
+  }
+
+  driverUnAssignedParkingLots$(): Observable<ParkingLot[]> {
+    return this.active$().pipe(
+      combineLatestWith(this.parkingLotQuery.selectAll()),
+      map(([driver, parkingLots]) => {
+        const driverLotsIds = driver.parkingLots.map(({ id }) => id);
+        return parkingLots.filter(({ id }) => !driverLotsIds.includes(id));
+      }),
+    );
   }
 }

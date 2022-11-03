@@ -28,9 +28,9 @@ export class DriverDetailsComponent implements OnInit {
     },
   ];
 
-  readonly driverParkingLots$ = this.driversQuery.active$.pipe(
-    map(driver => driver?.parkingLots),
-  );
+  readonly driverParkingLots$ = this.driversQuery
+    .active$()
+    .pipe(map(driver => driver?.parkingLots));
 
   constructor(
     readonly driversQuery: DriversQuery,
@@ -45,7 +45,7 @@ export class DriverDetailsComponent implements OnInit {
 
   onAssignParkingLot(driverId: string) {
     const dialogRef = this.dialog.open(AssignParkingLotDialogComponent, {
-      data: this.driversQuery.driverUnAssignedParkingLots$,
+      data: this.driversQuery.driverUnAssignedParkingLots$(),
     });
     dialogRef
       .afterClosed()
@@ -60,7 +60,8 @@ export class DriverDetailsComponent implements OnInit {
   }
 
   onRemoveParkingLotAssignment(parkingLotId: string) {
-    this.driversQuery.active$
+    this.driversQuery
+      .active$()
       .pipe(
         map(driver => driver.id),
         concatMap(driverId =>

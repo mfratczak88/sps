@@ -59,14 +59,14 @@ export class DriversService {
 
   assignParkingLot(driverId: string, parkingLotId: string) {
     return this.api.assignParkingLot({ driverId, parkingLotId }).pipe(
-      concatMap(() => this.load$()),
+      tap(() => this.load$()),
       tap(() => this.toastService.show(ToastKeys.PARKING_LOT_ASSIGNED)),
     );
   }
 
   removeParkingLotAssignment(req: RemoveParkingLotAssignment) {
     return this.api.removeParkingLotAssignment(req).pipe(
-      concatMap(() => this.load$()),
+      tap(() => this.load$()),
       tap(() =>
         this.toastService.show(ToastKeys.PARKING_LOT_ASSIGNMENT_REMOVED),
       ),

@@ -7,7 +7,7 @@
       <mat-select [formControl]="selectedLot">
         <mat-option *ngFor="let lot of lots"
                     [value]="lot.id">
-          {{lot.streetName + ' ' + lot.streetNumber + ', ' + lot.city}}
+          {{lot | address}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -15,11 +15,13 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button
+          class="close-button"
           (click)="dialogRef.close()">
     {{translations.CANCEL | translate}}
   </button>
   <button mat-button
           color="primary"
+          class="assign-button"
           mat-raised-button
           [disabled]="selectedLot.invalid || selectedLot.untouched"
           (click)="onAssign()">
