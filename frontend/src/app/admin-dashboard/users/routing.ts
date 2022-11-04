@@ -4,12 +4,12 @@ import { AdminDrawerKeys } from '../../core/translation-keys';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { ListComponent } from './list/list.component';
+import { UsersListComponent } from './list/list.component';
 import { DASHBOARD_ROUTE } from '../routing';
 
 export const USER_LIST_ROUTE = {
   path: '',
-  component: ListComponent,
+  component: UsersListComponent,
   data: {
     breadcrumbs: {
       label: AdminDrawerKeys.USERS,

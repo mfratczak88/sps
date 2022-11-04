@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AdminKeys } from '../../../core/translation-keys';
 import {
   Button,
@@ -16,7 +16,7 @@ import { concatMap, filter } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent {
+export class UsersListComponent {
   readonly translations = AdminKeys;
 
   tableColumns: Column[] = [
