@@ -1,5 +1,5 @@
 <div class="parking-lots">
-  <div class="parking-lots__spinner" *ngIf="parkingLotQuery.loading$ | async; else table">
+  <div class="parking-lots__spinner" *ngIf="parkingLotQuery.selectLoading() | async; else table">
     <mat-spinner></mat-spinner>
   </div>
   <ng-template #table>
@@ -9,7 +9,7 @@
         {{translations.ADD | translate}}
       </button>
       <sps-parking-lots-table class="parking-lots__table"
-                 [loading$]="parkingLotQuery.loading$"
+                 [loading$]="parkingLotQuery.selectLoading()"
                  [tableButtons]="tableButtons"
                  [displayColumns]="['address', 'capacity', 'hours']"
                  [parkingLots$]="parkingLotQuery.selectAll()">
