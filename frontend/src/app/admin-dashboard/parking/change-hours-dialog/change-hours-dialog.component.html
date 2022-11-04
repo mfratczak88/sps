@@ -14,12 +14,14 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button
+          class="cancel-button"
           (click)="dialogRef.close()">
     {{translations.CANCEL | translate}}
   </button>
   <button mat-button
           color="primary"
           mat-raised-button
+          class="action-button"
           [disabled]="form.invalid || hoursNotChanged()"
           (click)="onChange()">
     {{translations.CHANGE | translate}}

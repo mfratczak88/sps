@@ -3,7 +3,7 @@ import { AdminDrawerKeys } from '../../core/translation-keys';
 import { DetailsComponent } from './details/details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ParkingListComponent } from './list/parking-list.component';
+import { ParkingListComponent } from './list/list.component';
 import { CreateComponent } from './create/create.component';
 import { DASHBOARD_ROUTE } from '../routing';
 

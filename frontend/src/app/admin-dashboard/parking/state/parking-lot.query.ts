@@ -8,13 +8,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ParkingLotQuery extends QueryEntity<ParkingLotState> {
-  loading$ = this.selectLoading();
-
-  active$: Observable<ParkingLot> = this.selectActive() as Observable<
-    ParkingLot
-  >;
-
   constructor(store: ParkingLotStore) {
     super(store);
+  }
+
+  active$(): Observable<ParkingLot> {
+    return this.selectActive() as Observable<ParkingLot>;
   }
 }

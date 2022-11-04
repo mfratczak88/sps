@@ -8,7 +8,7 @@ import { CreateComponent } from './create/create.component';
 import { ChangeHoursDialogComponent } from './change-hours-dialog/change-hours-dialog.component';
 import { ChangeCapacityDialogComponent } from './change-capacity-dialog/change-capacity-dialog.component';
 
-import { ParkingListComponent } from './list/parking-list.component';
+import { ParkingListComponent } from './list/list.component';
 
 @NgModule({
   imports: [

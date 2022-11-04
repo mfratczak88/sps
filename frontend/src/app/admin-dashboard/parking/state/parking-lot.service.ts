@@ -8,7 +8,6 @@ import {
 } from '../../../core/model/parking-lot.model';
 import { ToastService } from '../../../core/service/toast.service';
 import { RouterService } from '../../../core/state/router/router.service';
-import { TranslateService } from '@ngx-translate/core';
 import { ToastKeys } from '../../../core/translation-keys';
 
 @Injectable({
@@ -19,7 +18,6 @@ export class ParkingLotService {
     private readonly api: ParkingLotApi,
     private readonly store: ParkingLotStore,
     private readonly toastService: ToastService,
-    private readonly translateService: TranslateService,
     private readonly routerService: RouterService,
   ) {}
 
@@ -39,33 +37,21 @@ export class ParkingLotService {
   changeOperationHours(hours: ChangeHoursOfOperations, lotId: string) {
     return this.api.changeHours(hours, lotId).pipe(
       tap(() => this.load()),
-      tap(() =>
-        this.toastService.show(
-          this.translateService.instant(ToastKeys.HOURS_CHANGED),
-        ),
-      ),
+      tap(() => this.toastService.show(ToastKeys.HOURS_CHANGED)),
     );
   }
 
   changeCapacity(newCapacity: number, lotId: string) {
     return this.api.changeCapacity(newCapacity, lotId).pipe(
       tap(() => this.load()),
-      tap(() =>
-        this.toastService.show(
-          this.translateService.instant(ToastKeys.CAPACITY_CHANGED),
-        ),
-      ),
+      tap(() => this.toastService.show(ToastKeys.CAPACITY_CHANGED)),
     );
   }
 
   createParkingLot(data: CreateParkingLot) {
     return this.api.create(data).pipe(
       tap(() => this.load()),
-      tap(() =>
-        this.toastService.show(
-          this.translateService.instant(ToastKeys.PARKING_LOT_CREATED),
-        ),
-      ),
+      tap(() => this.toastService.show(ToastKeys.PARKING_LOT_CREATED)),
     );
   }
 
