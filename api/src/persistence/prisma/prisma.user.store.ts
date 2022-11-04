@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserStore } from '../../infrastructure/security/user/user.store';
 import { User } from '../../infrastructure/security/user/user';
-import { Id } from '../../application/id';
+import { Id } from '../../domain/id';
 
 import { PrismaService } from './prisma.service';
 
@@ -45,6 +45,6 @@ export class PrismaUserStore implements UserStore {
   }
 
   findAll(): Promise<User[]> {
-    return this.prismaService.user.findMany({}) as Promise<User[]>;
+    return this.prismaService.user.findMany() as Promise<User[]>;
   }
 }

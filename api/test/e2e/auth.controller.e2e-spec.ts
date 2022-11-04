@@ -4,16 +4,15 @@ import { Test } from '@nestjs/testing';
 import { AppModule } from '../../src/app.module';
 import { clear } from '../db.util';
 import * as request from 'supertest';
-import * as cookieParser from 'cookie-parser';
 import {
   LoginCommand,
   RegisterUserCommand,
   RegisterUserResult,
   UserDto,
 } from '../../src/infrastructure/security/authentication/authentication.service';
-import { GlobalExceptionFilter } from '../../src/infrastructure/web/exception/exception.filter';
 import { ExceptionCode } from '../../src/error';
 import { MessageCode } from '../../src/message';
+import { setUpNestApp } from './e2e-test.util';
 
 describe('Auth e2e', () => {
   let app: INestApplication;
@@ -23,10 +22,7 @@ describe('Auth e2e', () => {
       imports: [AppModule],
     }).compile();
 
-    app = moduleRef.createNestApplication();
-    app.use(cookieParser());
-    app.useGlobalFilters(new GlobalExceptionFilter());
-    await app.init();
+    app = await setUpNestApp(moduleRef);
     prismaService = moduleRef.get(PrismaService);
   });
   beforeEach(async () => {

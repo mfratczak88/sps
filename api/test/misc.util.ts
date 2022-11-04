@@ -22,6 +22,7 @@ export const randomUser = (role: Role): User => {
     active: true,
   };
 };
+export const USER_PASS = 'foo3Fczx!!';
 export const createUser = async (
   nestApp: INestApplication,
   prismaService: PrismaService,
@@ -30,7 +31,7 @@ export const createUser = async (
 ) => {
   const user = {
     email: email || 'mfratczak88@gmail.com',
-    password: 'foo3Fczx!!',
+    password: USER_PASS,
     name: 'Maciek',
   };
   const registerResponse = await request(nestApp.getHttpServer())

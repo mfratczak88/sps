@@ -99,7 +99,6 @@ export class AuthService {
   async restoreAuth() {
     let user = AuthService.userFromLocalStorage();
     if (user && AuthService.tokenExpired()) {
-      AuthService.removeUserInfoFromLocalStorage();
       user = await lastValueFrom(
         this.refreshToken().pipe(
           catchError(() => {
@@ -108,7 +107,6 @@ export class AuthService {
           }),
         ),
       );
-      this.setUserSession(user);
     }
     this.setUserSession(user);
     return user;

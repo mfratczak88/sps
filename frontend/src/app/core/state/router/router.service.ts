@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { AuthPaths, ErrorPaths, TopLevelPaths } from 'src/app/routes';
+import {
+  AdminPaths,
+  AuthPaths,
+  ErrorPaths,
+  TopLevelPaths,
+} from 'src/app/routes';
 
 import { QueryParamKeys } from './router.model';
 
@@ -14,6 +19,24 @@ export class RouterService {
     return this.router.parseUrl(
       `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${returnUrl}`,
     );
+  }
+
+  toAdminParkingLotDetails(id: string) {
+    return this.router.navigate([
+      `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}/${id}`,
+    ]);
+  }
+
+  toAdminParkingLot() {
+    return this.router.navigate([
+      `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}`,
+    ]);
+  }
+
+  toCreateParkingLot() {
+    return this.router.navigate([
+      `${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}/${AdminPaths.CREATE_PARKING}`,
+    ]);
   }
 
   toSameRoute(extras?: NavigationExtras | undefined) {
@@ -87,5 +110,11 @@ export class RouterService {
 
   private queryParamsFromCurrentRoute() {
     return this.router.routerState.snapshot.root.queryParams;
+  }
+
+  toDriverDetails(id: string) {
+    this.router.navigate([
+      `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.DRIVERS}/${id}`,
+    ]);
   }
 }

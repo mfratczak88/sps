@@ -1,0 +1,13 @@
+.panel {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.panel__card {
+  display: block;
+  max-width: 350px;
+  flex: 1;
+  height: 10rem;
+}

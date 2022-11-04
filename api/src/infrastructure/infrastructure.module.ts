@@ -22,6 +22,8 @@ import { OAuth2Client } from 'google-auth-library';
 
 import { ApplicationModule } from '../application/application.module';
 import { UsersController } from './web/users.controller';
+import { ParkingLotController } from './web/parking-lot.controller';
+import { DriverController } from './web/driver.controller';
 
 const providers: Provider[] = [
   {
@@ -62,7 +64,12 @@ const providers: Provider[] = [
 
 @Module({
   providers: [...providers],
-  controllers: [AuthController, UsersController],
+  controllers: [
+    AuthController,
+    UsersController,
+    ParkingLotController,
+    DriverController,
+  ],
   imports: [
     ConfigurationModule,
     PassportModule,

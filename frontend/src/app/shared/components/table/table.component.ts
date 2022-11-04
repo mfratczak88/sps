@@ -27,10 +27,16 @@ export class TableComponent implements AfterViewInit, OnInit {
   data: Observable<any>;
 
   @Input()
+  loading$: Observable<boolean>;
+
+  @Input()
   columns: Column[] = [];
 
   @Input()
   buttons: Button[] = [];
+
+  @Input()
+  withSearch = false;
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
@@ -50,7 +56,9 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   get columnNames() {
-    return [...this.columns.map(c => c.name), ...this.buttons.map(b => b.name)];
+    const buttons = this.buttons ? [...this.buttons.map(b => b.name)] : [];
+    const columns = this.columns ? [...this.columns.map(c => c.name)] : [];
+    return [...columns, ...buttons];
   }
 }
 
@@ -59,6 +67,6 @@ export type Column = {
   translation: string;
 };
 export type Button = {
-  icon: 'edit';
+  icon: 'edit' | 'arrow_forward' | 'visibility' | 'delete';
   onClick: (row: any) => void;
 } & Column;

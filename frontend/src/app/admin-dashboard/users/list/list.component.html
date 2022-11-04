@@ -1,0 +1,10 @@
+<div class="users">
+  <sps-panel title="{{translations.USERS_TABLE_HEADER | translate}}">
+    <sps-table class="users__table"
+               [buttons]="tableButtons"
+               [columns]="tableColumns"
+               [loading$]="usersQuery.loading$"
+               [data]="usersQuery.users$">
+    </sps-table>
+  </sps-panel>
+</div>

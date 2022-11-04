@@ -1,0 +1,22 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.details-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.details-panel__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.details-panel__section--item {
+  display: flex;
+  align-content: center;
+  gap: 1rem;
+}

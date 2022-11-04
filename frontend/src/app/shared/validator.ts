@@ -49,6 +49,13 @@ export class LocalizedValidators {
       LocalizedErrors.email(),
     );
   }
+
+  static min(value: number) {
+    return LocalizedValidators.withErrorMessage(
+      Validators.min(value),
+      LocalizedErrors.min(value),
+    );
+  }
 }
 
 export interface LocalizedValidationError extends ValidationErrors {
@@ -68,5 +75,9 @@ export const LocalizedErrors = {
   }),
   email: () => ({
     errorMessage: FormErrorKeys.EMAIL,
+  }),
+  min: (value: number) => ({
+    errorMessage: FormErrorKeys.MIN,
+    props: { value },
   }),
 };

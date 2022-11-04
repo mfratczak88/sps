@@ -1,0 +1,14 @@
+@use "../../../../variables" as vars;
+.heading {
+  display: flex;
+  padding: 1rem 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+.heading__title {
+  @include vars.typography-body-xl;
+  margin-bottom: 0;
+}
+.content {
+  padding-left: 24px;
+}

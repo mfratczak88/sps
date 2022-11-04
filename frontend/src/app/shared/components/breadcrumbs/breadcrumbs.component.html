@@ -1,6 +1,11 @@
-<p class="breadcrumb" *ngIf="(routerQuery.breadCrumbs$() | async) as breadcrumbs">
-  <span class="top-level">{{breadcrumbs.root | translate}}</span>
-  <ng-container *ngIf="breadcrumbs.current"> /
-    <span class="breadcrumb__active-part">{{breadcrumbs.current | translate}}</span>
-  </ng-container>
-</p>
+<div class="breadcrumbs">
+  <div class="breadcrumb__breadcrumbs" *ngFor="let breadcrumb of breadCrumbs; let last = last" [ngClass]="{faded: !last}">
+    <a
+      class="breadcrumb__breadcrumbs--link"
+      [routerLink]="breadcrumb.path"
+      queryParamsHandling="preserve">
+      {{breadcrumb.label | translate}}
+    </a>
+    <mat-icon *ngIf="!last" class="breadcrumb__breadcrumbs--icon">keyboard_arrow_right</mat-icon>
+  </div>
+</div>
