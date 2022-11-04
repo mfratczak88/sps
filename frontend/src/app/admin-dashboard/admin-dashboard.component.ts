@@ -16,11 +16,6 @@ export class AdminDashboardComponent {
       link: AdminPaths.DASHBOARD,
     },
     {
-      name: AdminDrawerKeys.USERS,
-      icon: 'person',
-      link: AdminPaths.USERS,
-    },
-    {
       name: AdminDrawerKeys.PARKING,
       icon: 'emoji_transportation',
       link: AdminPaths.PARKING,
@@ -29,6 +24,16 @@ export class AdminDashboardComponent {
       name: AdminDrawerKeys.RESERVATIONS,
       icon: 'calendar_month',
       link: AdminPaths.RESERVATIONS,
+    },
+    {
+      name: AdminDrawerKeys.DRIVERS,
+      icon: 'camera_front',
+      link: AdminPaths.DRIVERS,
+    },
+    {
+      name: AdminDrawerKeys.USERS,
+      icon: 'person',
+      link: AdminPaths.USERS,
     },
   ];
 }

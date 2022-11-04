@@ -3,15 +3,29 @@
 .search {
   display: flex;
   gap: 2rem;
-  padding-left: 24px;
   align-self: flex-start;
 }
+
 
 .table__cell {
   font-size: 0.8rem;
   text-align: left;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.content__loading {
+  margin: 0 auto;
+}
+
 .pagination, .table {
   width: 100%;
+}
+
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+  padding-left: 0 !important;
 }

@@ -17,6 +17,10 @@ import { CardComponent } from './components/card/card.component';
 import { TableComponent } from './components/table/table.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './service/paginator.intl.service';
+import { PanelComponent } from './components/panel/panel.component';
+import { ParkingLotsTableComponent } from './components/parking-lots-table/parking-lots-table.component';
+import { AddressPipe } from './pipe/address.pipe';
+import { HoursPipe } from './pipe/hours.pipe';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { PaginatorIntlService } from './service/paginator.intl.service';
     DrawerComponent,
     CardComponent,
     TableComponent,
+    PanelComponent,
+    ParkingLotsTableComponent,
+    AddressPipe,
+    HoursPipe,
   ],
   imports: [
     CommonModule,
@@ -50,6 +58,10 @@ import { PaginatorIntlService } from './service/paginator.intl.service';
     BreadcrumbsComponent,
     CardComponent,
     TableComponent,
+    PanelComponent,
+    ParkingLotsTableComponent,
+    AddressPipe,
+    HoursPipe,
   ],
   providers: [
     { provide: ToastService, useClass: MaterialToastService },

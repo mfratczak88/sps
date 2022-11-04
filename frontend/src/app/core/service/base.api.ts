@@ -5,11 +5,13 @@ import { CsrfToken } from '../model/auth.model';
 import { tap } from 'rxjs/operators';
 
 export class BaseApi {
+  readonly CSRF_TOKEN_URL = `${environment.apiUrl}/auth/csrfToken`;
+
   constructor(protected readonly http: HttpClient) {}
 
   protected withCsrfToken<T>(request: Observable<T>) {
     return this.http
-      .get<CsrfToken>(`${environment.apiUrl}/auth/csrfToken`, {
+      .get<CsrfToken>(this.CSRF_TOKEN_URL, {
         withCredentials: true,
       })
       .pipe(

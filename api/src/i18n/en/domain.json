@@ -1,0 +1,11 @@
+{
+  "nonPositiveLotCapacity": "Capacity must be a positive number",
+  "sameCapacity": "Capacity is the same",
+  "vehicleAlreadyRegistered": "Vehicle is already registered for this driver",
+  "parkingLotAlreadyAssignedToDriver": "Parking lot is already assigned to this driver",
+  "parkingLotNotAssignedToDriver": "Driver does not have access to this parking lot",
+  "parkingLotDoesNotExist": "Parking lot does not exist",
+  "driverDoesNotExist": "Driver does not exist",
+  "hourFromGreaterThanHourTo": "Hour from is greater than hour to",
+  "invalidHours": "Invalid hours"
+}

@@ -13,7 +13,7 @@ import { EmailService } from '../../email/email.service';
 import { SecurityException } from '../security.exception';
 import { MessageCode } from '../../../message';
 import { ExceptionCode } from '../../../error';
-import { Id } from '../../../application/id';
+import { Id } from '../../../domain/id';
 import { RegistrationMethod, RegistrationToken, User } from '../user/user';
 import { LanguageService } from '../../../application/language.service';
 import { Role } from '../authorization/role';

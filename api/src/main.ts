@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { GlobalExceptionFilter } from './infrastructure/web/exception/exception.filter';
@@ -19,7 +19,8 @@ async function bootstrap() {
     ...corsSetup(),
   });
   app.use(cookieParser());
-  app.useGlobalFilters(new GlobalExceptionFilter());
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new GlobalExceptionFilter(httpAdapter));
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }

@@ -1,0 +1,46 @@
+<div class="page" *ngIf="driversQuery.active$() | async as driver">
+  <sps-panel
+    title="{{translations.DRIVER_DETAILS | translate}}">
+    <div class="details-panel">
+      <div class="details-panel__section">
+        <div class="details-panel__section--item">
+          <mat-icon>email</mat-icon>
+          <span>{{driver.email}}</span>
+        </div>
+        <div class="details-panel__section--item">
+          <mat-icon>face</mat-icon>
+          <span>{{driver.name}}</span>
+        </div>
+      </div>
+      <mat-chip-list>
+        <mat-chip>
+          {{translations.PARKING_TITLE | translate}}: {{driver.parkingLots.length}}
+        </mat-chip>
+        <mat-chip>
+          {{translations.RESERVATIONS_TITLE | translate}}: 4
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </sps-panel>
+  <sps-panel
+    title="{{translations.ASSIGNED_PARKING_LOTS | translate}}">
+    <button
+      btn
+      mat-raised-button
+      color="primary"
+      class="assign-button"
+      (click)="onAssignParkingLot(driver.id)"
+      *ngIf="(driversQuery.driverUnAssignedParkingLots$() | async)?.length"
+    >
+      <mat-icon>assignment_add</mat-icon>
+      {{translations.ASSIGN | translate}}</button>
+    <sps-parking-lots-table
+      [loading$]="driversQuery.selectLoading()"
+      [parkingLots$]="driverParkingLots$"
+      [tableButtons]="parkingLotsTableButtons"
+      [displayColumns]="['address']"
+    ></sps-parking-lots-table>
+  </sps-panel>
+</div>
+
+

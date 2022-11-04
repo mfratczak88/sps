@@ -1,4 +1,4 @@
-import { Id } from '../../../application/id';
+import { Id } from '../../../domain/id';
 import { Role } from '../authorization/role';
 
 export interface User {

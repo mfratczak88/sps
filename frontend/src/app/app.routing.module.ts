@@ -15,9 +15,7 @@ const routes: Routes = [
   {
     path: TopLevelPaths.ADMIN_DASHBOARD,
     loadChildren: () =>
-      import('./admin-dashboard/admin-dashboard.module').then(
-        m => m.AdminDashboardModule,
-      ),
+      import('./admin-dashboard/module').then(m => m.AdminDashboardModule),
   },
   {
     path: TopLevelPaths.ERROR,

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { UserService } from '../security/user/user.service';
-import { Id } from '../../application/id';
+import { Id } from '../../domain/id';
 import { ChangeRoleCommand } from '../security/user/user.command';
 import { Role } from '../security/authorization/role';
 import RoleGuard from '../security/authorization/role.guard';
