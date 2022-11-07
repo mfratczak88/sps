@@ -1,21 +1,24 @@
-import { Param, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import {
   Body,
   Controller,
   Get,
   HttpCode,
   Post,
+  Req,
+  Res,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   AuthenticationService,
-  RegisterUserCommand,
-  LoginCommand,
-  UserDto,
-  LoginWithGoogleCommand,
-  ResendRegistrationConfirmationCommand,
-  ConfirmRegistrationCommand,
   ChangePasswordCommand,
+  ConfirmRegistrationCommand,
+  LoginCommand,
+  LoginWithGoogleCommand,
+  RegisterUserCommand,
+  ResendRegistrationConfirmationCommand,
+  UserDto,
 } from '../security/authentication/authentication.service';
 import { JwtAuthGuard } from '../security/authorization/jwt-auth.guard';
 import { Request, Response } from 'express';
@@ -91,12 +94,6 @@ export class AuthController {
     return {
       csrfToken,
     };
-  }
-
-  @Get('user/:id')
-  @UseGuards(JwtAuthGuard)
-  async getUserData(@Param('id') id: string): Promise<UserDto> {
-    return this.authService.getUserData(id);
   }
 
   @Post('confirmRegistration')

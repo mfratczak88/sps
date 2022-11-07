@@ -8,11 +8,7 @@ import { Role, RoleToTranslationKey, RoleWithTranslation } from './user.model';
   providedIn: 'root',
 })
 export class UserQuery extends QueryEntity<UserState> {
-  readonly users$ = this.selectAll();
-
-  readonly loading$ = this.selectLoading();
-
-  get roles(): RoleWithTranslation[] {
+  roles(): RoleWithTranslation[] {
     return Object.values(Role).map(value => ({
       role: value,
       translation: this.translateService.instant(RoleToTranslationKey[value]),
