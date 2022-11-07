@@ -25,9 +25,9 @@ export class EditRoleDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rolesToChoose = this.userQuery.roles.filter(
-      ({ role }) => role !== this.data.role,
-    );
+    this.rolesToChoose = this.userQuery
+      .roles()
+      .filter(({ role }) => role !== this.data.role);
   }
 
   onAssign() {

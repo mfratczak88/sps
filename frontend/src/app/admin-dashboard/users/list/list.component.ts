@@ -39,7 +39,7 @@ export class UsersListComponent {
   constructor(
     readonly usersQuery: UserQuery,
     private readonly usersService: UserService,
-    public dialog: MatDialog,
+    readonly dialog: MatDialog,
   ) {}
 
   editDialogOpen(user: User) {

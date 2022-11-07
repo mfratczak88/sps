@@ -29,7 +29,9 @@ export class CurrentUserInterceptor implements NestInterceptor {
         refreshToken,
       );
       request.user = { id, role };
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
     return next.handle();
   }
 }

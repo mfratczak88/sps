@@ -39,11 +39,7 @@ export class UserService {
   changeRoleFor(userId: string, newRole: Role) {
     return this.api.changeRole(userId, newRole).pipe(
       concatMap(() => this.loadUsers()),
-      tap(() =>
-        this.toastService.show(
-          this.translateService.instant(ToastKeys.ROLE_CHANGED),
-        ),
-      ),
+      tap(() => this.toastService.show(ToastKeys.ROLE_CHANGED)),
     );
   }
 }
