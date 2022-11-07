@@ -22,7 +22,6 @@
     "test:watch": "jest --watch",
     "test:docker:up": "docker-compose -f test/docker-compose.yml up -d",
     "test:docker:down": "docker-compose -f test/docker-compose.yml down",
-    "test:integration": "jest --config ./test/jest-integration.json --runInBand",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json --runInBand"
@@ -92,15 +91,31 @@
       "json",
       "ts"
     ],
-    "rootDir": "test",
+    "roots": ["src", "test"],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/**/*.ts",
+      "!main.(t|j)s",
+      "!**/*.module.(t|j)s",
+      "!**/*.command.(t|j)s",
+      "!**/*.guard.(t|j)s",
+      "!**/*.decorator.(t|j)s",
+      "!**/*.read-model.(t|j)s",
+      "!**/*.exception.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "test-config",
+      "interfaces",
+      "jestGlobalMocks.ts",
+      ".module.ts",
+      "<rootDir>/src/main.ts",
+      ".mock.ts"
+    ],
+    "coverageDirectory": "coverage",
     "testEnvironment": "node"
   }
 }
