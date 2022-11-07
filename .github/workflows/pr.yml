@@ -69,7 +69,7 @@ jobs:
       - name: Docker compose up
         run: yarn run test:docker:up
       - name: Run unit tests
-        run: yarn test
+        run: yarn test:cov
       - name: Setup DB for testing
         run: sudo scripts/setup-prisma.sh
       - name: Run e2e tests
