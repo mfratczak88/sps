@@ -29,13 +29,14 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Run unit tests
         run: yarn run test:cov
+      - name: Check if prod bundle is buildable
+        run: yarn run build
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          flags: api
-          files: ./coverage/coverage-final.json
-      - name: Check if prod bundle is buildable
-        run: yarn run build
+          flags: frontend
+          files: ./frontend/coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   build-and-test-backend:
     defaults:
@@ -81,5 +82,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           flags: api
-          files: ./coverage/coverage-final.json
+          files: ./api/coverage/coverage-final.json
+          token: ${{ secrets.CODECOV_TOKEN }}
 
