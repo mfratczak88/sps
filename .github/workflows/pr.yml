@@ -34,7 +34,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          flags: frontend
+          name: frontend-coverage
           files: ./frontend/coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -81,7 +81,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          flags: api
-          files: ./api/coverage/coverage-final.json
+          name: api-coverage
+          files: ./api/coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
 
