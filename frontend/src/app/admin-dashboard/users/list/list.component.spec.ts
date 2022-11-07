@@ -9,7 +9,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { mockUsers } from '../../../../../test/users.util';
 import { buttonCells } from '../../../../../test/test.util';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { EditRoleDialogComponent } from '../edit-role-dialog/edit-role-dialog.component';
 import { Role } from '../state/user.model';
@@ -61,7 +61,7 @@ describe('Users list component', () => {
   });
   it('On edit button click, it opens change role dialog', async () => {
     const [editButton] = await editButtons();
-    dialogRefSpy.afterClosed.and.returnValue(of(undefined));
+    dialogRefSpy.afterClosed.and.returnValue(EMPTY);
     await editButton.click();
 
     expect(dialogSpy.open).toHaveBeenCalledWith(EditRoleDialogComponent, {
@@ -79,7 +79,7 @@ describe('Users list component', () => {
   it('When dialog is closed with new role to be set it calls service', async () => {
     const [editButton] = await editButtons();
     dialogRefSpy.afterClosed.and.returnValue(of(Role.DRIVER));
-
+    usersServiceSpy.changeRoleFor.and.returnValue(EMPTY);
     await editButton.click();
 
     expect(usersServiceSpy.changeRoleFor).toHaveBeenCalledWith(
