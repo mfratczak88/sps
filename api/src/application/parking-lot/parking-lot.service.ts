@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Id, IdGenerator } from '../../domain/id';
-import { ParkingLotRepository } from '../../domain/parking-lot.repository';
+import { ParkingLotRepository } from '../../domain/parking-lot/parking-lot.repository';
 import {
   ChangeCapacityCommand,
   ChangeHoursOfOperationCommand,
   CreateParkingLotCommand,
 } from './parking-lot.command';
-import { ParkingLot } from '../../domain/parking-lot';
-import { Address } from '../../domain/address';
+import { ParkingLot } from '../../domain/parking-lot/parking-lot';
+import { Address } from '../../domain/parking-lot/address';
 
 @Injectable()
 export class ParkingLotService {

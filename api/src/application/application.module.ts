@@ -1,9 +1,9 @@
 import { Module, Provider } from '@nestjs/common';
 import { ParkingLotService } from './parking-lot/parking-lot.service';
 import { IdGenerator } from '../domain/id';
-import { ParkingLotRepository } from '../domain/parking-lot.repository';
+import { ParkingLotRepository } from '../domain/parking-lot/parking-lot.repository';
 import { DriverService } from './driver/driver.service';
-import { DriverRepository } from '../domain/driver.repository';
+import { DriverRepository } from '../domain/driver/driver.repository';
 
 const providers: Provider[] = [
   {

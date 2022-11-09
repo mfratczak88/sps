@@ -5,8 +5,8 @@ import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
 import { randomId } from '../../misc.util';
 import { DomainException } from '../../../src/domain/domain.exception';
 import { MessageCode } from '../../../src/message';
-import { ParkingLot } from '../../../src/domain/parking-lot';
-import { Address } from '../../../src/domain/address';
+import { ParkingLot } from '../../../src/domain/parking-lot/parking-lot';
+import { Address } from '../../../src/domain/parking-lot/address';
 
 describe('Parking lot repository', () => {
   let repository: PrismaParkingLotRepository;

@@ -1,4 +1,4 @@
-import { Id } from './id';
+import { Id } from '../id';
 import { ParkingLot } from './parking-lot';
 
 export abstract class ParkingLotRepository {

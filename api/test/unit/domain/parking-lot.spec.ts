@@ -1,8 +1,9 @@
-import { ParkingLot, HoursOfOperation } from '../../../src/domain/parking-lot';
+import { ParkingLot } from '../../../src/domain/parking-lot/parking-lot';
 import { randomId } from '../../misc.util';
-import { Address } from '../../../src/domain/address';
+import { Address } from '../../../src/domain/parking-lot/address';
 import { DomainException } from '../../../src/domain/domain.exception';
 import { MessageCode } from '../../../src/message';
+import { OperationHoursPlain } from '../../../src/domain/parking-lot/operation-hours';
 
 describe('Parking lot', () => {
   it('Throws domain exception when new parking capacity is less than or equal to 0', () => {
@@ -72,7 +73,7 @@ describe('Parking lot', () => {
     } catch (err) {
       expect(err instanceof DomainException);
       expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_HOURS,
+        MessageCode.INVALID_DATE_TIME_INTERVAL,
       );
     }
     try {
@@ -86,7 +87,7 @@ describe('Parking lot', () => {
     } catch (err) {
       expect(err instanceof DomainException);
       expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_HOURS,
+        MessageCode.INVALID_DATE_TIME_INTERVAL,
       );
     }
   });
@@ -102,7 +103,7 @@ describe('Parking lot', () => {
     } catch (err) {
       expect(err instanceof DomainException);
       expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_HOURS,
+        MessageCode.INVALID_DATE_TIME_INTERVAL,
       );
     }
     try {
@@ -116,7 +117,7 @@ describe('Parking lot', () => {
     } catch (err) {
       expect(err instanceof DomainException);
       expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_HOURS,
+        MessageCode.INVALID_DATE_TIME_INTERVAL,
       );
     }
   });
@@ -127,7 +128,7 @@ describe('Parking lot', () => {
       100,
       { hourFrom: '08:00:00', hourTo: '19:00:00' },
     );
-    const newHours: HoursOfOperation = {
+    const newHours: OperationHoursPlain = {
       hourFrom: '10:00:00',
       hourTo: '20:00:00',
     };

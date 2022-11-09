@@ -5,7 +5,7 @@ import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
 import { randomId } from '../../misc.util';
 import { DomainException } from '../../../src/domain/domain.exception';
 import { MessageCode } from '../../../src/message';
-import { Driver } from '../../../src/domain/driver';
+import { Driver } from '../../../src/domain/driver/driver';
 
 describe('Prisma driver repository', () => {
   let driverRepo: PrismaDriverRepository;

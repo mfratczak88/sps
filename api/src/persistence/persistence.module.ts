@@ -10,9 +10,9 @@ import {
 import { PrismaUserStore } from './prisma/prisma.user.store';
 import { PrismaRegistrationTokenStore } from './prisma/prisma.registration-token.store';
 
-import { DriverRepository } from '../domain/driver.repository';
+import { DriverRepository } from '../domain/driver/driver.repository';
 import { PrismaDriverRepository } from './prisma/prisma.driver.repository';
-import { ParkingLotRepository } from '../domain/parking-lot.repository';
+import { ParkingLotRepository } from '../domain/parking-lot/parking-lot.repository';
 import { PrismaParkingLotRepository } from './prisma/prisma.parking-lot.repository';
 import { ParkingLotFinder } from '../application/parking-lot/parking-lot.finder';
 import { PrismaParkingLotFinder } from './prisma/prisma.parking-lot.finder';

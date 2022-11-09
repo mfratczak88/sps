@@ -1,6 +1,6 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { IdGenerator } from '../../../../src/domain/id';
-import { ParkingLotRepository } from '../../../../src/domain/parking-lot.repository';
+import { ParkingLotRepository } from '../../../../src/domain/parking-lot/parking-lot.repository';
 import { ParkingLotService } from '../../../../src/application/parking-lot/parking-lot.service';
 import { randomId } from '../../../misc.util';
 import {
@@ -8,7 +8,7 @@ import {
   ChangeHoursOfOperationCommand,
   CreateParkingLotCommand,
 } from '../../../../src/application/parking-lot/parking-lot.command';
-import { ParkingLot } from '../../../../src/domain/parking-lot';
+import { ParkingLot } from '../../../../src/domain/parking-lot/parking-lot';
 
 describe('Parking lot service', () => {
   let idGeneratorMock: DeepMocked<IdGenerator>;
