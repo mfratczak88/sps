@@ -1,10 +1,10 @@
-import { ParkingLotRepository } from '../../domain/parking-lot/parking-lot.repository';
-import { PrismaService } from './prisma.service';
-import { ParkingLot } from '../../domain/parking-lot/parking-lot';
-import { Id } from '../../domain/id';
-import { DomainException } from '../../domain/domain.exception';
-import { MessageCode } from '../../message';
-import { Address } from '../../domain/parking-lot/address';
+import { ParkingLotRepository } from '../../../domain/parking-lot/parking-lot.repository';
+import { PrismaService } from '../prisma.service';
+import { ParkingLot } from '../../../domain/parking-lot/parking-lot';
+import { Id } from '../../../domain/id';
+import { DomainException } from '../../../domain/domain.exception';
+import { MessageCode } from '../../../message';
+import { Address } from '../../../domain/parking-lot/address';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

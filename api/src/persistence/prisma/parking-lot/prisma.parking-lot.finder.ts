@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ParkingLotFinder } from '../../application/parking-lot/parking-lot.finder';
-import { PrismaService } from './prisma.service';
-import { ParkingLotReadModel } from '../../application/parking-lot/parking-lot.read-model';
+import { ParkingLotFinder } from '../../../application/parking-lot/parking-lot.finder';
+import { PrismaService } from '../prisma.service';
+import { ParkingLotReadModel } from '../../../application/parking-lot/parking-lot.read-model';
 
 @Injectable()
 export class PrismaParkingLotFinder implements ParkingLotFinder {

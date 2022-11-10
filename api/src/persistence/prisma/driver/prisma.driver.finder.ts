@@ -1,7 +1,7 @@
-import { DriverFinder } from '../../application/driver/driver.finder';
-import { DriverReadModel } from '../../application/driver/driver.read-model';
-import { PrismaService } from './prisma.service';
-import { Role } from '../../infrastructure/security/authorization/role';
+import { DriverFinder } from '../../../application/driver/driver.finder';
+import { DriverReadModel } from '../../../application/driver/driver.read-model';
+import { PrismaService } from '../prisma.service';
+import { Role } from '../../../infrastructure/security/authorization/role';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

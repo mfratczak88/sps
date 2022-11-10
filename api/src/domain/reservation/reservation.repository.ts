@@ -3,5 +3,5 @@ import { Reservation } from './reservation';
 
 export abstract class ReservationRepository {
   abstract findByIdOrThrow(reservationId: Id): Promise<Reservation>;
-  abstract findForLotInDate(lotId: Id, date: string): Promise<Reservation[]>;
+  abstract save(reservation: Reservation): Promise<void>;
 }

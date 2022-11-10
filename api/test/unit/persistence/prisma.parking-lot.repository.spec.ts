@@ -1,4 +1,4 @@
-import { PrismaParkingLotRepository } from '../../../src/persistence/prisma/prisma.parking-lot.repository';
+import { PrismaParkingLotRepository } from '../../../src/persistence/prisma/parking-lot/prisma.parking-lot.repository';
 import Mock = jest.Mock;
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { PrismaService } from '../../../src/persistence/prisma/prisma.service';

@@ -1,10 +1,10 @@
-import { DriverRepository } from '../../domain/driver/driver.repository';
-import { Driver } from '../../domain/driver/driver';
-import { PrismaService } from './prisma.service';
-import { DomainException } from '../../domain/domain.exception';
-import { MessageCode } from '../../message';
-import { Id } from '../../domain/id';
-import { Vehicle } from '../../domain/driver/vehicle';
+import { DriverRepository } from '../../../domain/driver/driver.repository';
+import { Driver } from '../../../domain/driver/driver';
+import { PrismaService } from '../prisma.service';
+import { DomainException } from '../../../domain/domain.exception';
+import { MessageCode } from '../../../message';
+import { Id } from '../../../domain/id';
+import { Vehicle } from '../../../domain/driver/vehicle';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

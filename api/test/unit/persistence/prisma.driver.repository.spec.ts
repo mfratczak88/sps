@@ -1,4 +1,4 @@
-import { PrismaDriverRepository } from '../../../src/persistence/prisma/prisma.driver.repository';
+import { PrismaDriverRepository } from '../../../src/persistence/prisma/driver/prisma.driver.repository';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import Mock = jest.Mock;
 import { PrismaService } from '../../../src/persistence/prisma/prisma.service';

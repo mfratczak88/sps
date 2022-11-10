@@ -59,6 +59,8 @@ export const enum MessageCode {
   PARKING_TIME_IN_DIFFERENT_DAYS = 'parkingTimeInDifferentDays',
   NO_PLACE_IN_LOT = 'noPlaceInLot',
   INVALID_PARKING_TICKET_TIME = 'invalidParkingTicketTime',
+  RESERVATION_DOES_NOT_EXIST = 'reservationDoesNotExist',
+
   /* Validation */
   VALIDATION_ERROR = 'validationError',
   UNDEFINED = 'undefined',

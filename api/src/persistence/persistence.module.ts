@@ -7,17 +7,17 @@ import {
   RegistrationTokenStore,
   UserStore,
 } from '../infrastructure/security/user/user.store';
-import { PrismaUserStore } from './prisma/prisma.user.store';
-import { PrismaRegistrationTokenStore } from './prisma/prisma.registration-token.store';
+import { PrismaUserStore } from './prisma/user/prisma.user.store';
+import { PrismaRegistrationTokenStore } from './prisma/user/prisma.registration-token.store';
 
 import { DriverRepository } from '../domain/driver/driver.repository';
-import { PrismaDriverRepository } from './prisma/prisma.driver.repository';
+import { PrismaDriverRepository } from './prisma/driver/prisma.driver.repository';
 import { ParkingLotRepository } from '../domain/parking-lot/parking-lot.repository';
-import { PrismaParkingLotRepository } from './prisma/prisma.parking-lot.repository';
+import { PrismaParkingLotRepository } from './prisma/parking-lot/prisma.parking-lot.repository';
 import { ParkingLotFinder } from '../application/parking-lot/parking-lot.finder';
-import { PrismaParkingLotFinder } from './prisma/prisma.parking-lot.finder';
+import { PrismaParkingLotFinder } from './prisma/parking-lot/prisma.parking-lot.finder';
 import { DriverFinder } from '../application/driver/driver.finder';
-import { PrismaDriverFinder } from './prisma/prisma.driver.finder';
+import { PrismaDriverFinder } from './prisma/driver/prisma.driver.finder';
 
 const providers: Provider[] = [
   {

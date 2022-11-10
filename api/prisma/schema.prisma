@@ -42,14 +42,15 @@ enum Role {
 }
 
 model Vehicle {
-  licensePlate String @id
+  licensePlate String        @id
   userId       String
-  user         User   @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
+  reservations Reservation[]
 }
 
 model ParkingLot {
-  id           String   @id
-  createdAt    DateTime @default(now())
+  id           String        @id
+  createdAt    DateTime      @default(now())
   city         String
   streetName   String
   streetNumber String
@@ -57,4 +58,33 @@ model ParkingLot {
   hourFrom     String
   hourTo       String
   users        User[]
+  reservations Reservation[]
+}
+
+enum ReservationStatus {
+  Draft
+  Cancelled
+  Confirmed
+}
+
+model Reservation {
+  id            String            @id
+  createdAt     DateTime          @default(now())
+  licensePlate  String
+  vehicle       Vehicle           @relation(fields: [licensePlate], references: [licensePlate])
+  parkingLotId  String
+  parkingLot    ParkingLot        @relation(fields: [parkingLotId], references: [id])
+  startTime     DateTime          @db.Timestamp(0)
+  endTime       DateTime          @db.Timestamp(0)
+  status        ReservationStatus
+  parkingTickets ParkingTicket[]
+}
+
+model ParkingTicket {
+  id            String      @id
+  reservationId String
+  reservation   Reservation @relation(fields: [reservationId], references: [id])
+  timeOfEntry   DateTime    @db.Timestamp(0)
+  validTo       DateTime    @db.Timestamp(0)
+  timeOfLeave   DateTime?    @db.Timestamp(0)
 }
