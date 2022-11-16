@@ -1,13 +1,14 @@
-import { PeriodOfTime, toHoursAndMinutes } from '../period-of-time';
+import { TimeInterval } from '../time/interval';
+import { TimeKeeper } from '../time/time-keeper';
 
 export interface OperationHoursPlain {
   hourFrom: string;
   hourTo: string;
 }
 export class OperationHours {
-  private readonly period: PeriodOfTime;
+  private readonly period: TimeInterval;
   constructor({ hourFrom, hourTo }: OperationHoursPlain) {
-    this.period = new PeriodOfTime(hourFrom, hourTo);
+    this.period = TimeKeeper.instance.newTimeInterval(hourFrom, hourTo);
   }
 
   change(hours: OperationHoursPlain) {
@@ -19,9 +20,10 @@ export class OperationHours {
   }
 
   toPlain(): OperationHoursPlain {
+    const { start, end } = this.period.toPlain();
     return {
-      hourFrom: toHoursAndMinutes(this.period.start),
-      hourTo: toHoursAndMinutes(this.period.end),
+      hourFrom: start.toString(),
+      hourTo: end.toString(),
     };
   }
 }

@@ -8,6 +8,8 @@ import {
   User,
 } from '../src/infrastructure/security/user/user';
 import { Role } from '../src/infrastructure/security/authorization/role';
+import { TimeKeeper } from '../src/domain/time/time-keeper';
+import { PrismaTimeKeeper } from '../src/persistence/prisma/time/prisma.time-keeper';
 
 export const randomId = (): string => uuid();
 export const randomUser = (role: Role): User => {
@@ -61,3 +63,5 @@ export const randomElementFromArray = <T>(array: T[]) => {
   const index = Math.floor(Math.random() * 10) % array.length;
   return array[index];
 };
+export const setUpTimeKeeper = () =>
+  (TimeKeeper.instance = new PrismaTimeKeeper());

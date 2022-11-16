@@ -1,11 +1,12 @@
 import { ParkingLot } from '../../../src/domain/parking-lot/parking-lot';
-import { randomId } from '../../misc.util';
+import { randomId, setUpTimeKeeper } from '../../misc.util';
 import { Address } from '../../../src/domain/parking-lot/address';
 import { DomainException } from '../../../src/domain/domain.exception';
 import { MessageCode } from '../../../src/message';
 import { OperationHoursPlain } from '../../../src/domain/parking-lot/operation-hours';
 
 describe('Parking lot', () => {
+  beforeEach(setUpTimeKeeper);
   it('Throws domain exception when new parking capacity is less than or equal to 0', () => {
     const parkingLot = new ParkingLot(
       randomId(),

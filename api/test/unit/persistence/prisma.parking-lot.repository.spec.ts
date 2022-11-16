@@ -2,7 +2,7 @@ import { PrismaParkingLotRepository } from '../../../src/persistence/prisma/park
 import Mock = jest.Mock;
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
-import { randomId } from '../../misc.util';
+import { randomId, setUpTimeKeeper } from '../../misc.util';
 import { DomainException } from '../../../src/domain/domain.exception';
 import { MessageCode } from '../../../src/message';
 import { ParkingLot } from '../../../src/domain/parking-lot/parking-lot';
@@ -13,6 +13,7 @@ describe('Parking lot repository', () => {
   let findById: Mock;
   let upsert: Mock;
   let prismaService: DeepMocked<PrismaService>;
+  beforeAll(setUpTimeKeeper);
   beforeEach(() => {
     findById = jest.fn();
     upsert = jest.fn();

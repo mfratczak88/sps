@@ -18,6 +18,12 @@ import { ParkingLotFinder } from '../application/parking-lot/parking-lot.finder'
 import { PrismaParkingLotFinder } from './prisma/parking-lot/prisma.parking-lot.finder';
 import { DriverFinder } from '../application/driver/driver.finder';
 import { PrismaDriverFinder } from './prisma/driver/prisma.driver.finder';
+import { ReservationRepository } from '../domain/reservation/reservation.repository';
+import { PrismaReservationRepository } from './prisma/reservation/prisma.reservation.repository';
+import { ParkingLotAvailability } from '../domain/parking-lot-availability';
+import { PrismaParkingLotAvailability } from './prisma/reservation/prisma.parking-lot-availability';
+import { TimeKeeper } from '../domain/time/time-keeper';
+import { PrismaTimeKeeper } from './prisma/time/prisma.time-keeper';
 
 const providers: Provider[] = [
   {
@@ -48,6 +54,18 @@ const providers: Provider[] = [
   {
     provide: DriverFinder,
     useClass: PrismaDriverFinder,
+  },
+  {
+    provide: ReservationRepository,
+    useClass: PrismaReservationRepository,
+  },
+  {
+    provide: TimeKeeper,
+    useClass: PrismaTimeKeeper,
+  },
+  {
+    provide: ParkingLotAvailability,
+    useClass: PrismaParkingLotAvailability,
   },
 ];
 

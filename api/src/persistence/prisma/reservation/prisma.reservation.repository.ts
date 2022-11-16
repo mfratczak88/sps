@@ -4,10 +4,10 @@ import { PrismaService } from '../prisma.service';
 import { Reservation } from '../../../domain/reservation/reservation';
 import { Id, IdGenerator } from '../../../domain/id';
 import { ReservationStatus } from '../../../domain/reservation/reservation-status';
-import { DateTime } from 'luxon';
-import { fromSqlTime, toSqlTime } from '../../../domain/period-of-time';
+
 import { DomainException } from '../../../domain/domain.exception';
 import { MessageCode } from '../../../message';
+import { jsDateToString, stringToJsDate } from '../time/prisma.moment';
 
 @Injectable()
 export class PrismaReservationRepository implements ReservationRepository {
@@ -46,14 +46,14 @@ export class PrismaReservationRepository implements ReservationRepository {
       status: status as ReservationStatus,
       parkingTickets: parkingTickets.map(
         ({ timeOfEntry, timeOfLeave, validTo }) => ({
-          timeOfEntry: this.jsDateToSqlString(timeOfEntry),
-          timeOfLeave: this.jsDateToSqlString(timeOfLeave),
-          validTo: validTo && this.jsDateToSqlString(validTo),
+          timeOfEntry: jsDateToString(timeOfEntry),
+          timeOfLeave: timeOfLeave && jsDateToString(timeOfLeave),
+          validTo: jsDateToString(validTo),
         }),
       ),
       scheduledParkingTime: {
-        start: this.jsDateToSqlString(startTime),
-        end: this.jsDateToSqlString(endTime),
+        start: jsDateToString(startTime),
+        end: jsDateToString(endTime),
       },
     });
   }
@@ -72,34 +72,34 @@ export class PrismaReservationRepository implements ReservationRepository {
         reservationId,
       },
     });
-    const ticketsToBeSet = await Promise.all(
-      parkingTickets.map(async (t) => {
+    const parkingTicketsToSet = await Promise.all(
+      parkingTickets.map(async (ticket) => {
         const existing = existingTickets.find(
-          (e) =>
-            this.jsDateToSqlString(e.timeOfLeave) === t.timeOfLeave &&
-            this.jsDateToSqlString(e.validTo) === t.validTo,
+          (existing) =>
+            jsDateToString(existing.timeOfEntry) === ticket.timeOfEntry &&
+            jsDateToString(existing.validTo) === ticket.validTo,
         );
         if (existing) {
-          existing.validTo = this.sqlStringToJsDate(t.validTo);
+          existing.validTo = stringToJsDate(ticket.validTo);
           return existing;
         }
         return {
           id: await this.idGenerator.generate(),
           reservationId,
-          timeOfEntry: this.sqlStringToJsDate(t.timeOfEntry),
-          validTo: this.sqlStringToJsDate(t.validTo),
-          timeOfLeave: t.timeOfLeave && this.sqlStringToJsDate(t.timeOfLeave),
+          timeOfEntry: stringToJsDate(ticket.timeOfEntry),
+          validTo: stringToJsDate(ticket.validTo),
+          timeOfLeave: ticket.timeOfLeave && stringToJsDate(ticket.timeOfLeave),
         };
       }),
     );
     const prismaFields = {
       status: status,
       parkingLotId,
-      startTime: this.sqlStringToJsDate(start),
-      endTime: this.sqlStringToJsDate(end),
+      startTime: stringToJsDate(start.toString()),
+      endTime: stringToJsDate(end.toString()),
       licensePlate,
       parkingTickets: {
-        set: ticketsToBeSet,
+        set: parkingTicketsToSet,
       },
     };
     await this.prismaService.reservation.upsert({
@@ -110,15 +110,12 @@ export class PrismaReservationRepository implements ReservationRepository {
       create: {
         id: reservationId,
         ...prismaFields,
+        parkingTickets: {
+          createMany: {
+            data: parkingTicketsToSet,
+          },
+        },
       },
     });
-  }
-
-  jsDateToSqlString(date: Date) {
-    return toSqlTime(DateTime.fromJSDate(date));
-  }
-
-  sqlStringToJsDate(date: string) {
-    return fromSqlTime(date).toJSDate();
   }
 }

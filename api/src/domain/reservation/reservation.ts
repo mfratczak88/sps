@@ -3,7 +3,7 @@ import { DomainException } from '../domain.exception';
 import { MessageCode } from '../../message';
 import { ReservationStatus } from './reservation-status';
 import { ScheduledParkingTime } from './scheduled-parking-time';
-import { ParkingTicket, ParkingTicketPlain } from './parking-ticket';
+import { ParkingTicket } from './parking-ticket';
 import { ParkingLotAvailability } from '../parking-lot-availability';
 
 /* Rules
@@ -35,7 +35,7 @@ export class Reservation {
     scheduledParkingTime: { start, end },
     parkingTickets,
     licensePlate,
-  }: ReservationPlain) {
+  }: ReservationArgs) {
     this.id = id;
     this.parkingLotId = parkingLotId;
     this.licensePlate = licensePlate;
@@ -116,7 +116,7 @@ export class Reservation {
     }
     const ticket = this.scheduledParkingPeriod.parkingTicket();
     this.parkingTickets.push(ticket);
-    return ticket.toPlain();
+    return ticket;
   }
 
   returnParkingTicket() {
@@ -134,7 +134,7 @@ export class Reservation {
     previousTicket.return();
   }
 
-  toPlain(): ReservationPlain {
+  toPlain() {
     return {
       id: this.id,
       parkingLotId: this.parkingLotId,
@@ -170,19 +170,20 @@ export class Reservation {
   }
 }
 
-export interface ParkingTime {
+interface ParkingTime {
   start: string;
   end: string;
 }
 
-export interface ReservationPlain {
+interface ReservationArgs {
   id: Id;
   parkingLotId: Id;
   licensePlate: string;
   status: ReservationStatus;
-  scheduledParkingTime: {
-    start: string;
-    end: string;
-  };
-  parkingTickets: ParkingTicketPlain[];
+  scheduledParkingTime: { start: string; end: string };
+  parkingTickets: {
+    timeOfEntry: string;
+    timeOfLeave?: string;
+    validTo: string;
+  }[];
 }

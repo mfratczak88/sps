@@ -1,33 +1,28 @@
-import { DateTime } from 'luxon';
-import { fromSqlTime, toSqlTime } from '../period-of-time';
-import { DomainException } from '../domain.exception';
-import { MessageCode } from '../../message';
+import { MomentInTime } from '../time/moment';
+import { TimeKeeper } from '../time/time-keeper';
 
 export class ParkingTicket {
-  private readonly timeOfEntry: DateTime;
-  private readonly validTo: DateTime;
-  private timeOfLeave?: DateTime;
+  readonly timeOfEntry: MomentInTime;
+  readonly validTo: MomentInTime;
+  timeOfLeave?: MomentInTime;
 
-  constructor({ timeOfEntry, timeOfLeave, validTo }: ParkingTicketPlain) {
-    const timeOfEntryDateTime = fromSqlTime(timeOfEntry);
-    const validToDateTime = fromSqlTime(validTo);
-    const timeOfLeaveDateTime = timeOfLeave && fromSqlTime(timeOfLeave);
-    if (
-      !timeOfEntryDateTime.isValid ||
-      !validToDateTime.isValid ||
-      !timeOfEntryDateTime?.isValid
-    ) {
-      throw new DomainException({
-        message: MessageCode.INVALID_PARKING_TICKET_TIME,
-      });
-    }
-    this.timeOfEntry = timeOfEntryDateTime;
-    this.validTo = validToDateTime;
-    this.timeOfLeave = timeOfLeaveDateTime;
+  constructor({
+    timeOfEntry,
+    timeOfLeave,
+    validTo,
+  }: {
+    timeOfEntry: string;
+    timeOfLeave?: string;
+    validTo: string;
+  }) {
+    this.timeOfLeave =
+      timeOfLeave && TimeKeeper.instance.dateAndTimeFromString(timeOfLeave);
+    this.timeOfEntry = TimeKeeper.instance.dateAndTimeFromString(timeOfEntry);
+    this.validTo = TimeKeeper.instance.dateAndTimeFromString(validTo);
   }
 
   return() {
-    this.timeOfLeave = DateTime.now();
+    this.timeOfLeave = TimeKeeper.instance.dateAndTimeNow();
   }
 
   isReturned() {
@@ -36,9 +31,9 @@ export class ParkingTicket {
 
   toPlain(): ParkingTicketPlain {
     return {
-      timeOfEntry: toSqlTime(this.timeOfEntry),
-      timeOfLeave: this.timeOfLeave && toSqlTime(this.timeOfLeave),
-      validTo: toSqlTime(this.validTo),
+      timeOfLeave: this.timeOfLeave?.toString(),
+      validTo: this.validTo.toString(),
+      timeOfEntry: this.timeOfEntry.toString(),
     };
   }
 }

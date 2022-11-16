@@ -1,20 +1,28 @@
-import { PeriodOfTime, toSqlTime } from '../period-of-time';
-import { DateTime } from 'luxon';
 import { DomainException } from '../domain.exception';
 import { MessageCode } from '../../message';
 import { ParkingTicket } from './parking-ticket';
+import { TimeKeeper } from '../time/time-keeper';
+import { DateAndTimeInterval } from '../time/interval';
 
 export class ScheduledParkingTime {
-  private readonly period: PeriodOfTime;
+  private readonly parkingTimeInterval: DateAndTimeInterval;
 
   constructor(start: string, end: string) {
-    const period = new PeriodOfTime(start, end);
-    if (!period.start.hasSame(period.end, 'day')) {
+    const parkingTimeInterval = TimeKeeper.instance.newDateTimeInterval(
+      start,
+      end,
+    );
+    if (!parkingTimeInterval.hasSameDays()) {
       throw new DomainException({
         message: MessageCode.PARKING_TIME_IN_DIFFERENT_DAYS,
       });
     }
-    this.period = period;
+    if (parkingTimeInterval.hoursDifference() < 1) {
+      throw new DomainException({
+        message: MessageCode.MINIMUM_PARKING_TIME_IS_AN_HOUR,
+      });
+    }
+    this.parkingTimeInterval = parkingTimeInterval;
   }
 
   change(start: string, end: string) {
@@ -22,29 +30,25 @@ export class ScheduledParkingTime {
   }
 
   inThePast() {
-    return this.period.inThePast();
+    return this.parkingTimeInterval.inThePast();
   }
 
   minutesToStart() {
-    const difference = this.period.start.minus(DateTime.now());
-    return difference.hour * 60 + difference.minute;
+    return this.parkingTimeInterval.minutesToStart();
   }
 
   parkingTicket() {
     return new ParkingTicket({
-      timeOfEntry: toSqlTime(DateTime.now()),
-      validTo: toSqlTime(this.period.end),
+      timeOfEntry: TimeKeeper.instance.dateAndTimeNow().toString(),
+      validTo: this.parkingTimeInterval.end().toString(),
     });
   }
 
-  toPlain(): ScheduledParkingTimePlain {
+  toPlain() {
+    const { start, end } = this.parkingTimeInterval.toPlain();
     return {
-      start: toSqlTime(this.period.start),
-      end: toSqlTime(this.period.end),
+      start: start.toString(),
+      end: end.toString(),
     };
   }
-}
-export interface ScheduledParkingTimePlain {
-  start: string;
-  end: string;
 }
