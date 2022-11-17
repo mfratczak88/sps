@@ -41,7 +41,9 @@ export class Reservation {
     this.licensePlate = licensePlate;
     this.scheduledParkingPeriod = new ScheduledParkingTime(start, end);
     this.status = status;
-    this.parkingTickets = parkingTickets.map((t) => new ParkingTicket(t));
+    this.parkingTickets = parkingTickets.map(
+      (ticket) => new ParkingTicket(ticket),
+    );
   }
 
   confirm() {
@@ -116,7 +118,7 @@ export class Reservation {
     }
     const ticket = this.scheduledParkingPeriod.parkingTicket();
     this.parkingTickets.push(ticket);
-    return ticket;
+    return ticket.toPlain();
   }
 
   returnParkingTicket() {

@@ -1,8 +1,8 @@
-import { Driver } from '../../../src/domain/driver/driver';
-import { randomId, setUpTimeKeeper } from '../../misc.util';
-import { Vehicle } from '../../../src/domain/driver/vehicle';
-import { DomainException } from '../../../src/domain/domain.exception';
-import { MessageCode } from '../../../src/message';
+import { Driver } from '../../../../src/domain/driver/driver';
+import { randomId, setUpTimeKeeper } from '../../../misc.util';
+import { Vehicle } from '../../../../src/domain/driver/vehicle';
+import { DomainException } from '../../../../src/domain/domain.exception';
+import { MessageCode } from '../../../../src/message';
 
 describe('Driver spec', () => {
   beforeEach(setUpTimeKeeper);

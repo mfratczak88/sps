@@ -1,9 +1,9 @@
-import { ParkingLot } from '../../../src/domain/parking-lot/parking-lot';
-import { randomId, setUpTimeKeeper } from '../../misc.util';
-import { Address } from '../../../src/domain/parking-lot/address';
-import { DomainException } from '../../../src/domain/domain.exception';
-import { MessageCode } from '../../../src/message';
-import { OperationHoursPlain } from '../../../src/domain/parking-lot/operation-hours';
+import { ParkingLot } from '../../../../src/domain/parking-lot/parking-lot';
+import { randomId, setUpTimeKeeper } from '../../../misc.util';
+import { Address } from '../../../../src/domain/parking-lot/address';
+import { DomainException } from '../../../../src/domain/domain.exception';
+import { MessageCode } from '../../../../src/message';
+import { OperationHoursPlain } from '../../../../src/domain/parking-lot/operation-hours';
 
 describe('Parking lot', () => {
   beforeEach(setUpTimeKeeper);

@@ -42,7 +42,24 @@ export class PrismaParkingLotAvailability implements ParkingLotAvailability {
       DateTime.fromSQL(start),
       DateTime.fromSQL(end),
     );
-    const overlappingReservationsCount = reservationsInThatDate
+
+    return (
+      PrismaParkingLotAvailability.withinHours(
+        parkingLot,
+        requestedParkingTimeInterval,
+      ) &&
+      this.overlappingReservationsCount(
+        reservationsInThatDate,
+        requestedParkingTimeInterval,
+      ) < parkingLot.capacity
+    );
+  }
+
+  private overlappingReservationsCount(
+    reservations,
+    requestedParkingTimeInterval,
+  ) {
+    return reservations
       .map(({ startTime, endTime }) => {
         const existingReservationInterval = Interval.fromDateTimes(
           DateTime.fromJSDate(startTime),
@@ -53,6 +70,29 @@ export class PrismaParkingLotAvailability implements ParkingLotAvailability {
         );
       })
       .filter((x) => !!x).length;
-    return overlappingReservationsCount < parkingLot.capacity;
+  }
+  // maybe repeating interval instead of plain hours - lot can be op
+  private static withinHours(parkingLot, requestedParkingTimeInterval) {
+    const { hourFrom, hourTo } = parkingLot;
+    const lotHourFrom =
+      PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(hourFrom);
+    const lotHourTo =
+      PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(hourTo);
+    const parkingHourFrom =
+      PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(
+        requestedParkingTimeInterval.start,
+      );
+    const parkingHourTo = PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(
+      requestedParkingTimeInterval.end,
+    );
+    return parkingHourFrom >= lotHourFrom && parkingHourTo <= lotHourTo;
+  }
+
+  private static onlyTimeFromSqlDateTime(dateTime: DateTime) {
+    return DateTime.fromSQL(
+      dateTime.toSQLTime({
+        includeOffset: false,
+      }),
+    );
   }
 }

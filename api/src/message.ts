@@ -43,8 +43,7 @@ export const enum MessageCode {
   PARKING_LOT_NOT_ASSIGNED_TO_DRIVER = 'parkingLotNotAssignedToDriver',
   PARKING_LOT_DOES_NOT_EXIST = 'parkingLotDoesNotExist',
   DRIVER_DOES_NOT_EXIST = 'driverDoesNotExist',
-  HOUR_FROM_GREATER_THAN_HOUR_TO = 'hourFromGreaterThanHourTo',
-  INVALID_HOURS = 'invalidHours',
+
   RESERVATION_IS_CANCELLED = 'reservationIsCancelled',
   RESERVATION_IS_CONFIRMED = 'reservationIsConfirmed',
   RESERVATION_CANNOT_BE_CONFIRMED_YET = 'reservationCannotBeConfirmedYet',
@@ -58,11 +57,13 @@ export const enum MessageCode {
   INVALID_DATE_TIME_INTERVAL = 'invalidDateTimeInterval',
   PARKING_TIME_IN_DIFFERENT_DAYS = 'parkingTimeInDifferentDays',
   NO_PLACE_IN_LOT = 'noPlaceInLot',
-  INVALID_PARKING_TICKET_TIME = 'invalidParkingTicketTime',
   RESERVATION_DOES_NOT_EXIST = 'reservationDoesNotExist',
   MINIMUM_PARKING_TIME_IS_AN_HOUR = 'minimumParkingTimeIsAnHour',
   INVALID_TIME = 'invalidTime',
   INVALID_DATE_TIME = 'invalidDateTime',
+  CANNOT_RETURN_TICKET_TWICE = 'cannotReturnTicketTwice',
+  INVALID_PARKING_TICKET_TIMES = 'invalidParkingTicketTimes',
+
   /* Validation */
   VALIDATION_ERROR = 'validationError',
   UNDEFINED = 'undefined',

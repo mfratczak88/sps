@@ -3,17 +3,29 @@ import { DateTime } from 'luxon';
 import { DomainException } from '../../../domain/domain.exception';
 import { MessageCode } from '../../../message';
 
-export class PrismaTime implements MomentInTime {
-  private readonly dateTime: DateTime;
+class MomentInTimeImpl implements MomentInTime {
+  readonly dateTime: DateTime;
   constructor(time: string) {
-    const dateTime = DateTime.fromSQL(time);
-    if (!dateTime.isValid) {
+    this.dateTime = DateTime.fromSQL(time);
+  }
+
+  isBefore(other: MomentInTime): boolean {
+    return (
+      this.dateTime.diff((other as MomentInTimeImpl).dateTime).toObject()
+        .milliseconds < 0
+    );
+  }
+}
+export class PrismaTime extends MomentInTimeImpl {
+  constructor(time: string) {
+    super(time);
+    if (!this.dateTime.isValid) {
       throw new DomainException({
         message: MessageCode.INVALID_TIME,
       });
     }
-    this.dateTime = dateTime;
   }
+
   toString(): string {
     const [hours, minutes] = this.dateTime
       .toSQLTime({
@@ -25,24 +37,27 @@ export class PrismaTime implements MomentInTime {
   }
 
   static now() {
-    return new PrismaTime(luxonToSql(DateTime.now()));
+    return PrismaTime.fromLuxonDateTime(DateTime.now());
   }
 
   static fromLuxonDateTime(dateTime: DateTime) {
-    return new PrismaTime(luxonToSqlTime(dateTime));
+    return new PrismaTime(PrismaTime.luxonToSqlTime(dateTime));
   }
+
+  private static luxonToSqlTime = (dateTime: DateTime) =>
+    dateTime.toSQLTime({ includeOffset: false });
 }
-export class PrismaDateAndTime implements MomentInTime {
-  private readonly dateTime: DateTime;
+
+export class PrismaDateAndTime extends MomentInTimeImpl {
   constructor(dateTime: string) {
-    const luxonDateTime = DateTime.fromSQL(dateTime);
-    if (!luxonDateTime.isValid) {
+    super(dateTime);
+    if (!this.dateTime.isValid) {
       throw new DomainException({
         message: MessageCode.INVALID_DATE_TIME,
       });
     }
-    this.dateTime = luxonDateTime;
   }
+
   toString(): string {
     return this.dateTime.toSQL({
       includeOffset: false,
@@ -50,17 +65,21 @@ export class PrismaDateAndTime implements MomentInTime {
   }
 
   static now() {
-    return new PrismaDateAndTime(luxonToSql(DateTime.now()));
+    return PrismaDateAndTime.fromLuxonDateTime(DateTime.now());
   }
 
   static fromLuxonDateTime(dateTime: DateTime) {
-    return new PrismaTime(luxonToSql(dateTime));
+    return new PrismaTime(PrismaDateAndTime.luxonToSql(dateTime));
+  }
+
+  private static luxonToSql = (dateTime: DateTime) =>
+    dateTime.toSQL({ includeOffset: false });
+
+  static fromJsDate(d: Date) {
+    return PrismaDateAndTime.luxonToSql(DateTime.fromJSDate(d));
+  }
+
+  toJsDate() {
+    return this.dateTime.toJSDate();
   }
 }
-const luxonToSql = (dateTime: DateTime) =>
-  dateTime.toSQL({ includeOffset: false });
-const luxonToSqlTime = (dateTime: DateTime) =>
-  dateTime.toSQLTime({ includeOffset: false });
-export const jsDateToString = (d: Date) =>
-  d && luxonToSql(DateTime.fromJSDate(d));
-export const stringToJsDate = (s: string) => DateTime.fromSQL(s).toJSDate();
