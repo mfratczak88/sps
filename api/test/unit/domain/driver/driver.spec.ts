@@ -5,7 +5,6 @@ import { DomainException } from '../../../../src/domain/domain.exception';
 import { MessageCode } from '../../../../src/message';
 
 describe('Driver spec', () => {
-  beforeEach(setUpTimeKeeper);
   it('Throws exception when adding vehicles which is already assigned to a driver', () => {
     const licensePlate = 'CT331GJX';
     const driver = new Driver(randomId(), [new Vehicle(licensePlate)], []);

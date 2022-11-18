@@ -4,7 +4,7 @@ import { DomainException } from '../domain.exception';
 import { MessageCode } from '../../message';
 import { Validate } from '../validate.decorator';
 import { IsDefined, IsNotEmpty, IsPositive } from 'class-validator';
-import { OperationHoursPlain, OperationHours } from './operation-hours';
+import { OperationTime, OperationHours } from './operation-time';
 
 @Validate
 export class ParkingLot {
@@ -15,20 +15,20 @@ export class ParkingLot {
   readonly address: Address;
 
   @IsPositive()
-  capacity: number;
+  private capacity: number;
 
-  private operationHours: OperationHours;
+  private operationTime: OperationTime;
 
   constructor(
     id: Id,
     address: Address,
     capacity: number,
-    operationHours: OperationHoursPlain,
+    operatingTime: OperationTime,
   ) {
     this.id = id;
     this.address = address;
     this.capacity = capacity;
-    this.operationHours = new OperationHours(operationHours);
+    this.operationTime = operatingTime;
   }
 
   changeCapacity(newCapacity: number) {
@@ -45,16 +45,17 @@ export class ParkingLot {
     this.capacity = newCapacity;
   }
 
-  changeOperationHours(hours: OperationHoursPlain) {
-    this.operationHours = this.operationHours.change(hours);
+  changeOperationHours(hours: OperationHours) {
+    this.operationTime = this.operationTime.changeHours(hours);
   }
 
-  get hoursOfOperation(): OperationHoursPlain {
-    return this.operationHours.toPlain();
-  }
-
-  open(hours: OperationHoursPlain) {
-    return this.operationHours.equal(hours);
+  plain() {
+    return {
+      id: this.id,
+      ...this.address,
+      capacity: this.capacity,
+      timeOfOperation: this.operationTime.plain(),
+    };
   }
 
   hasCapacity(capacity: number) {

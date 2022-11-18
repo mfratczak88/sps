@@ -1,11 +1,15 @@
 import {
+  IsDate,
   IsDefined,
   IsNotEmpty,
   IsPositive,
+  Max,
+  Min,
   ValidateNested,
 } from 'class-validator';
 import { Id } from '../../domain/id';
 import { Type } from 'class-transformer';
+import { OperationTimeDays } from '../../domain/parking-lot/operation-time';
 
 export class AddressDto {
   @IsNotEmpty()
@@ -19,11 +23,21 @@ export class AddressDto {
 }
 
 export class HoursOfOperationDto {
-  @IsNotEmpty()
-  hourFrom: string;
+  @Min(0)
+  @Max(22)
+  hourFrom: number;
 
+  @Min(1)
+  @Max(23)
   @IsNotEmpty()
-  hourTo: string;
+  hourTo: number;
+
+  @IsDate()
+  validFrom: Date;
+
+  @IsDefined()
+  @IsNotEmpty()
+  days: OperationTimeDays[];
 }
 
 export class CreateParkingLotCommand {
@@ -43,8 +57,14 @@ export class ChangeHoursOfOperationCommand {
   @IsNotEmpty()
   parkingLotId: Id;
 
-  @IsDefined()
-  hoursOfOperation: HoursOfOperationDto;
+  @Min(0)
+  @Max(22)
+  hourFrom: number;
+
+  @Min(1)
+  @Max(23)
+  @IsNotEmpty()
+  hourTo: number;
 }
 
 export class ChangeCapacityCommand {

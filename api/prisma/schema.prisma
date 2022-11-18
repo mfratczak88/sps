@@ -49,16 +49,15 @@ model Vehicle {
 }
 
 model ParkingLot {
-  id           String        @id
-  createdAt    DateTime      @default(now())
-  city         String
-  streetName   String
-  streetNumber String
-  capacity     Int
-  hourFrom     String
-  hourTo       String
-  users        User[]
-  reservations Reservation[]
+  id                String        @id
+  createdAt         DateTime      @default(now())
+  city              String
+  streetName        String
+  streetNumber      String
+  capacity          Int
+  operationTimeRule String
+  users             User[]
+  reservations      Reservation[]
 }
 
 enum ReservationStatus {
@@ -68,15 +67,15 @@ enum ReservationStatus {
 }
 
 model Reservation {
-  id            String            @id
-  createdAt     DateTime          @default(now())
-  licensePlate  String
-  vehicle       Vehicle           @relation(fields: [licensePlate], references: [licensePlate])
-  parkingLotId  String
-  parkingLot    ParkingLot        @relation(fields: [parkingLotId], references: [id])
-  startTime     DateTime          @db.Timestamp(0)
-  endTime       DateTime          @db.Timestamp(0)
-  status        ReservationStatus
+  id             String            @id
+  createdAt      DateTime          @default(now())
+  licensePlate   String
+  vehicle        Vehicle           @relation(fields: [licensePlate], references: [licensePlate])
+  parkingLotId   String
+  parkingLot     ParkingLot        @relation(fields: [parkingLotId], references: [id])
+  startTime      DateTime          @db.Timestamp(0)
+  endTime        DateTime          @db.Timestamp(0)
+  status         ReservationStatus
   parkingTickets ParkingTicket[]
 }
 
@@ -86,5 +85,5 @@ model ParkingTicket {
   reservation   Reservation @relation(fields: [reservationId], references: [id])
   timeOfEntry   DateTime    @db.Timestamp(0)
   validTo       DateTime    @db.Timestamp(0)
-  timeOfLeave   DateTime?    @db.Timestamp(0)
+  timeOfLeave   DateTime?   @db.Timestamp(0)
 }

@@ -41,8 +41,8 @@ export class Reservation {
     this.licensePlate = licensePlate;
     this.scheduledParkingPeriod = new ScheduledParkingTime(start, end);
     this.status = status;
-    this.parkingTickets = parkingTickets.map(
-      (ticket) => new ParkingTicket(ticket),
+    this.parkingTickets = parkingTickets.map((ticket) =>
+      ParkingTicket.fromJsDates(ticket),
     );
   }
 
@@ -118,7 +118,6 @@ export class Reservation {
     }
     const ticket = this.scheduledParkingPeriod.parkingTicket();
     this.parkingTickets.push(ticket);
-    return ticket.toPlain();
   }
 
   returnParkingTicket() {
@@ -136,16 +135,6 @@ export class Reservation {
     previousTicket.return();
   }
 
-  toPlain() {
-    return {
-      id: this.id,
-      parkingLotId: this.parkingLotId,
-      licensePlate: this.licensePlate,
-      status: this.status,
-      scheduledParkingTime: this.scheduledParkingPeriod.toPlain(),
-      parkingTickets: this.parkingTickets.map((ticket) => ticket.toPlain()),
-    };
-  }
   private previousTicketNotReturned() {
     const last = this.lastTicket();
     return last && !last.isReturned();
@@ -173,8 +162,8 @@ export class Reservation {
 }
 
 interface ParkingTime {
-  start: string;
-  end: string;
+  start: Date;
+  end: Date;
 }
 
 interface ReservationArgs {
@@ -182,10 +171,10 @@ interface ReservationArgs {
   parkingLotId: Id;
   licensePlate: string;
   status: ReservationStatus;
-  scheduledParkingTime: { start: string; end: string };
+  scheduledParkingTime: { start: Date; end: Date };
   parkingTickets: {
-    timeOfEntry: string;
-    timeOfLeave?: string;
-    validTo: string;
+    timeOfEntry: Date;
+    timeOfLeave?: Date;
+    validTo: Date;
   }[];
 }

@@ -1,18 +1,23 @@
 import { ParkingLot } from '../../../../src/domain/parking-lot/parking-lot';
-import { randomId, setUpTimeKeeper } from '../../../misc.util';
+import { randomId } from '../../../misc.util';
 import { Address } from '../../../../src/domain/parking-lot/address';
 import { DomainException } from '../../../../src/domain/domain.exception';
 import { MessageCode } from '../../../../src/message';
-import { OperationHoursPlain } from '../../../../src/domain/parking-lot/operation-hours';
+import {
+  OperationTime,
+  OperationTimeDays,
+} from '../../../../src/domain/parking-lot/operation-time';
 
 describe('Parking lot', () => {
-  beforeEach(setUpTimeKeeper);
   it('Throws domain exception when new parking capacity is less than or equal to 0', () => {
     const parkingLot = new ParkingLot(
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: '08:00:00', hourTo: '10:00:00' },
+      new OperationTime(10, 22, [
+        OperationTimeDays.MONDAY,
+        OperationTimeDays.TUESDAY,
+      ]),
     );
     try {
       parkingLot.changeCapacity(-10);
@@ -38,7 +43,10 @@ describe('Parking lot', () => {
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: '08:00:00', hourTo: '10:00:00' },
+      new OperationTime(10, 22, [
+        OperationTimeDays.MONDAY,
+        OperationTimeDays.TUESDAY,
+      ]),
     );
     try {
       parkingLot.changeCapacity(100);
@@ -55,7 +63,10 @@ describe('Parking lot', () => {
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: '08:00:00', hourTo: '10:00:00' },
+      new OperationTime(10, 22, [
+        OperationTimeDays.MONDAY,
+        OperationTimeDays.TUESDAY,
+      ]),
     );
 
     parkingLot.changeCapacity(150);
@@ -68,7 +79,10 @@ describe('Parking lot', () => {
         randomId(),
         new Address('Warszawa', 'Sobieskiego', '4'),
         100,
-        { hourFrom: '28:00:00', hourTo: '10:00:00' },
+        new OperationTime(-2, 22, [
+          OperationTimeDays.MONDAY,
+          OperationTimeDays.TUESDAY,
+        ]),
       );
       fail();
     } catch (err) {
@@ -82,7 +96,10 @@ describe('Parking lot', () => {
         randomId(),
         new Address('Warszawa', 'Sobieskiego', '4'),
         100,
-        { hourFrom: '-08:00:00', hourTo: '10:00:00' },
+        new OperationTime(6, 28, [
+          OperationTimeDays.MONDAY,
+          OperationTimeDays.TUESDAY,
+        ]),
       );
       fail();
     } catch (err) {
@@ -92,50 +109,23 @@ describe('Parking lot', () => {
       );
     }
   });
-  it('throws domain exception when operation hour to is invalid', () => {
-    try {
-      new ParkingLot(
-        randomId(),
-        new Address('Warszawa', 'Sobieskiego', '4'),
-        100,
-        { hourFrom: '08:00:00', hourTo: '1000:00:00' },
-      );
-      fail();
-    } catch (err) {
-      expect(err instanceof DomainException);
-      expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_DATE_TIME_INTERVAL,
-      );
-    }
-    try {
-      new ParkingLot(
-        randomId(),
-        new Address('Warszawa', 'Sobieskiego', '4'),
-        100,
-        { hourFrom: '08:00:00', hourTo: '222:00:00' },
-      );
-      fail();
-    } catch (err) {
-      expect(err instanceof DomainException);
-      expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_DATE_TIME_INTERVAL,
-      );
-    }
-  });
+
   it('Changes operation hours', () => {
     const parkingLot = new ParkingLot(
       randomId(),
       new Address('Warszawa', 'Sobieskiego', '4'),
       100,
-      { hourFrom: '08:00:00', hourTo: '19:00:00' },
+      new OperationTime(6, 22, [
+        OperationTimeDays.MONDAY,
+        OperationTimeDays.TUESDAY,
+      ]),
     );
-    const newHours: OperationHoursPlain = {
-      hourFrom: '10:00:00',
-      hourTo: '20:00:00',
-    };
 
-    parkingLot.changeOperationHours(newHours);
-
-    expect(parkingLot.open(newHours)).toEqual(true);
+    parkingLot.changeOperationHours({ hourFrom: 8, hourTo: 10 });
+    const {
+      timeOfOperation: { hourFrom, hourTo },
+    } = parkingLot.plain();
+    expect(hourFrom).toEqual(8);
+    expect(hourTo).toEqual(10);
   });
 });

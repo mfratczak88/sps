@@ -13,7 +13,6 @@ export const enum MessageCode {
   INVALID_USERNAME_OR_PASSWORD = 'invalidUserNameOrPassword',
   INVALID_PASSWORD = 'invalidPassword',
   USER_DOES_NOT_EXIST = 'userDoesNotExist',
-  FACEBOOK_LOGIN_ERROR = 'facebookLoginError',
 
   /* Persistence */
   UNKNOWN_PERSISTENCE_ERROR = 'unknownPersistenceError',
@@ -24,13 +23,6 @@ export const enum MessageCode {
   NULL_CONSTRAINT_VIOLATION = 'nullConstraintViolation',
   RELATION_VIOLATION = 'relationViolation',
   OUT_OF_RANGE = 'outOfRange',
-
-  /* Infrastructure */
-  INVALID_IMAGE_TYPE = 'invalidImageType',
-  IMAGE_SAVE_ERROR = 'imageSaveError',
-
-  /* Application */
-  ONE_REVIEW_PER_ONE_USER = 'oneReviewPerOneUser',
 
   /* Misc */
   UNKNOWN_ERROR = 'unknownServerError',
@@ -43,7 +35,6 @@ export const enum MessageCode {
   PARKING_LOT_NOT_ASSIGNED_TO_DRIVER = 'parkingLotNotAssignedToDriver',
   PARKING_LOT_DOES_NOT_EXIST = 'parkingLotDoesNotExist',
   DRIVER_DOES_NOT_EXIST = 'driverDoesNotExist',
-
   RESERVATION_IS_CANCELLED = 'reservationIsCancelled',
   RESERVATION_IS_CONFIRMED = 'reservationIsConfirmed',
   RESERVATION_CANNOT_BE_CONFIRMED_YET = 'reservationCannotBeConfirmedYet',
@@ -61,7 +52,12 @@ export const enum MessageCode {
   MINIMUM_PARKING_TIME_IS_AN_HOUR = 'minimumParkingTimeIsAnHour',
   INVALID_TIME = 'invalidTime',
   INVALID_DATE_TIME = 'invalidDateTime',
+  INVALID_MOMENT_IN_TIME = 'invalidMomentInTime',
+  INVALID_TIME_PERIOD = 'invalidTimePeriod',
   CANNOT_RETURN_TICKET_TWICE = 'cannotReturnTicketTwice',
+  INVALID_LOT_HOURS_OF_OPERATION = 'invalidHoursOfOperation',
+  HOURS_OF_OPERATION_VALID_FROM_NOT_FULL_HOUR = 'notFullHour',
+  PARKING_TIME_HOUR_MUST_BE_FULL = 'parkingTimeHourMustBeFull',
   INVALID_PARKING_TICKET_TIMES = 'invalidParkingTicketTimes',
 
   /* Validation */
