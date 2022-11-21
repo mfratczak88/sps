@@ -20,11 +20,6 @@ export class ScheduledParkingTime {
         message: MessageCode.PARKING_TIME_IN_DIFFERENT_DAYS,
       });
     }
-    if (parkingTime.hoursDifference() < 1) {
-      throw new DomainException({
-        message: MessageCode.MINIMUM_PARKING_TIME_IS_AN_HOUR,
-      });
-    }
     this.parkingTime = parkingTime;
   }
 
@@ -47,19 +42,10 @@ export class ScheduledParkingTime {
         message: MessageCode.TICKET_CANNOT_BE_ISSUED_ANYMORE,
       });
     }
-    if (!this.startsToday()) {
-      throw new DomainException({
-        message: MessageCode.RESERVED_PARKING_TIME_IN_THE_PAST,
-      });
-    }
     return new ParkingTicket({
       timeOfEntry: MomentInTime.now(),
       validTo: this.parkingTime.end(),
     });
-  }
-
-  private startsToday() {
-    return this.parkingTime.start().hasSameDay(MomentInTime.now());
   }
 
   private parkingEndInThePast() {
