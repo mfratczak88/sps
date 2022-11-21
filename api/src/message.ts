@@ -59,7 +59,7 @@ export const enum MessageCode {
   HOURS_OF_OPERATION_VALID_FROM_NOT_FULL_HOUR = 'notFullHour',
   PARKING_TIME_HOUR_MUST_BE_FULL = 'parkingTimeHourMustBeFull',
   INVALID_PARKING_TICKET_TIMES = 'invalidParkingTicketTimes',
-
+  INVALID_OPERATION_TIME_DAYS = 'invalidOperationTimeDays',
   /* Validation */
   VALIDATION_ERROR = 'validationError',
   UNDEFINED = 'undefined',

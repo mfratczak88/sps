@@ -31,7 +31,19 @@ export class OperationTime {
         message: MessageCode.INVALID_LOT_HOURS_OF_OPERATION,
       });
     }
-
+    if (hourFrom < 0 || hourTo < 0 || hourFrom > 22 || hourTo > 23) {
+      throw new DomainException({
+        message: MessageCode.INVALID_LOT_HOURS_OF_OPERATION,
+      });
+    }
+    if (
+      !days.length ||
+      days.some((dayNumber) => dayNumber > 6 || dayNumber < 0)
+    ) {
+      throw new DomainException({
+        message: MessageCode.INVALID_OPERATION_TIME_DAYS,
+      });
+    }
     this.hourFrom = hourFrom;
     this.hourTo = hourTo;
     this.days = days;
@@ -39,11 +51,10 @@ export class OperationTime {
     this.rrule = this.buildRRule(days);
   }
 
-  withinStartAndEndDate(start: Date, end: Date) {
+  withinOperationHours(start: Date, end: Date) {
     const periodOfTime = new PeriodOfTime(start, end);
     return (
-      periodOfTime.hoursDifference() ===
-      this.rrule.between(start, end, true).length
+      periodOfTime.hoursDifference() <= this.timeSlotsWithin(start, end).length
     );
   }
 
@@ -54,6 +65,10 @@ export class OperationTime {
       this.days,
       this.validFromDate.jsDate(),
     );
+  }
+
+  private timeSlotsWithin(start: Date, end: Date) {
+    return this.rrule.between(start, end, true);
   }
 
   plain() {
@@ -67,11 +82,19 @@ export class OperationTime {
   }
 
   static fromRRule(rrule: string) {
-    const rule = RRule.fromString(rrule);
-    const hourFrom = rule.options.byhour[0];
-    const hourTo = rule.options.byhour[rule.options.byhour.length - 1];
-    const days = rule.options.byweekday;
-    const startFromDate = rule.options.dtstart;
+    let rule: RRule;
+    try {
+      rule = RRule.fromString(rrule);
+    } catch (err) {
+      throw new DomainException({
+        message: MessageCode.INVALID_LOT_HOURS_OF_OPERATION,
+      });
+    }
+    const {
+      options: { byhour, byweekday: days, dtstart: startFromDate },
+    } = rule;
+    const hourFrom = byhour[0];
+    const hourTo = byhour[byhour.length - 1] + 1;
     return new OperationTime(hourFrom, hourTo, days, startFromDate);
   }
 
@@ -87,9 +110,8 @@ export class OperationTime {
         ),
       });
     } catch (e) {
-      console.log(e);
       throw new DomainException({
-        message: MessageCode.INVALID_DATE_TIME,
+        message: MessageCode.INVALID_LOT_HOURS_OF_OPERATION,
       });
     }
   }
