@@ -16,7 +16,10 @@ export class ParkingTicket {
     timeOfLeave?: MomentInTime;
     validTo: MomentInTime;
   }) {
-    if (validTo.isBefore(timeOfEntry)) {
+    if (
+      validTo.isBefore(timeOfEntry) ||
+      (timeOfLeave && timeOfLeave.isBefore(timeOfEntry))
+    ) {
       throw new DomainException({
         message: MessageCode.INVALID_PARKING_TICKET_TIMES,
       });
@@ -27,7 +30,7 @@ export class ParkingTicket {
   }
 
   return() {
-    if (this.timeOfLeave) {
+    if (this.isReturned()) {
       throw new DomainException({
         message: MessageCode.CANNOT_RETURN_TICKET_TWICE,
       });
@@ -49,6 +52,14 @@ export class ParkingTicket {
       timeOfLeave: timeOfLeave && new MomentInTime(timeOfLeave),
       validTo: new MomentInTime(validTo),
     });
+  }
+
+  plain(): ParkingTicketInJsDates {
+    return {
+      validTo: this.validTo.jsDate(),
+      timeOfEntry: this.timeOfEntry.jsDate(),
+      timeOfLeave: this.timeOfLeave.jsDate(),
+    };
   }
 }
 interface ParkingTicketInJsDates {
