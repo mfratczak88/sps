@@ -24,7 +24,7 @@ export class Reservation {
   private readonly id: Id;
   private readonly parkingLotId: Id;
   private readonly licensePlate: string;
-  private scheduledParkingPeriod: ScheduledParkingTime;
+  private scheduledParkingTime: ScheduledParkingTime;
   private status: ReservationStatus;
   private readonly parkingTickets: ParkingTicket[];
 
@@ -39,7 +39,7 @@ export class Reservation {
     this.id = id;
     this.parkingLotId = parkingLotId;
     this.licensePlate = licensePlate;
-    this.scheduledParkingPeriod = new ScheduledParkingTime(start, end);
+    this.scheduledParkingTime = new ScheduledParkingTime(start, end);
     this.status = status;
     this.parkingTickets = parkingTickets.map((ticket) =>
       ParkingTicket.fromJsDates(ticket),
@@ -89,10 +89,7 @@ export class Reservation {
         message: MessageCode.NO_PLACE_IN_LOT,
       });
     }
-    this.scheduledParkingPeriod = this.scheduledParkingPeriod.change(
-      start,
-      end,
-    );
+    this.scheduledParkingTime = this.scheduledParkingTime.change(start, end);
   }
 
   issueParkingTicket() {
@@ -106,33 +103,34 @@ export class Reservation {
         message: MessageCode.RESERVATION_IS_CANCELLED,
       });
     }
-    if (this.scheduledParkingPeriod.inThePast()) {
-      throw new DomainException({
-        message: MessageCode.RESERVED_PARKING_TIME_IN_THE_PAST,
-      });
-    }
     if (this.previousTicketNotReturned()) {
       throw new DomainException({
         message: MessageCode.PREVIOUS_TICKET_NOT_RETURNED,
       });
     }
-    const ticket = this.scheduledParkingPeriod.parkingTicket();
+    const ticket = this.scheduledParkingTime.parkingTicket();
     this.parkingTickets.push(ticket);
   }
 
   returnParkingTicket() {
     const previousTicket = this.lastTicket();
-    if (!previousTicket) {
+    if (!previousTicket || previousTicket.isReturned()) {
       throw new DomainException({
         message: MessageCode.TICKET_NOT_FOUND,
       });
     }
-    if (previousTicket.isReturned()) {
-      throw new DomainException({
-        message: MessageCode.TICKET_ALREADY_RETURNED,
-      });
-    }
     previousTicket.return();
+  }
+
+  plain() {
+    return {
+      id: this.id,
+      status: this.status,
+      parkingLotId: this.parkingLotId,
+      licensePlate: this.licensePlate,
+      scheduledParkingTime: this.scheduledParkingTime.plain(),
+      parkingTickets: this.parkingTickets.map((ticket) => ticket.plain()),
+    };
   }
 
   private previousTicketNotReturned() {
@@ -141,7 +139,7 @@ export class Reservation {
   }
 
   private validateConfirmationTime() {
-    const minutesToStart = this.scheduledParkingPeriod.minutesToStart();
+    const minutesToStart = this.scheduledParkingTime.minutesToStart();
     if (minutesToStart > 240) {
       throw new DomainException({
         message: MessageCode.RESERVATION_CANNOT_BE_CONFIRMED_YET,

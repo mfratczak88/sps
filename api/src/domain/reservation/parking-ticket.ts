@@ -58,11 +58,11 @@ export class ParkingTicket {
     return {
       validTo: this.validTo.jsDate(),
       timeOfEntry: this.timeOfEntry.jsDate(),
-      timeOfLeave: this.timeOfLeave.jsDate(),
+      timeOfLeave: this.timeOfLeave?.jsDate(),
     };
   }
 }
-interface ParkingTicketInJsDates {
+export interface ParkingTicketInJsDates {
   timeOfEntry: Date;
   validTo: Date;
   timeOfLeave?: Date;

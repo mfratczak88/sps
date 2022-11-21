@@ -32,18 +32,44 @@ export class ScheduledParkingTime {
     return new ScheduledParkingTime(start, end);
   }
 
-  inThePast() {
-    return this.parkingTime.inThePast();
-  }
-
   minutesToStart() {
     return this.parkingTime.minutesToStart();
   }
 
   parkingTicket() {
+    if (this.minutesToStart() > 5) {
+      throw new DomainException({
+        message: MessageCode.TOO_EARLY_TO_ISSUE_PARKING_TICKET,
+      });
+    }
+    if (this.parkingEndInThePast()) {
+      throw new DomainException({
+        message: MessageCode.TICKET_CANNOT_BE_ISSUED_ANYMORE,
+      });
+    }
+    if (!this.startsToday()) {
+      throw new DomainException({
+        message: MessageCode.RESERVED_PARKING_TIME_IN_THE_PAST,
+      });
+    }
     return new ParkingTicket({
       timeOfEntry: MomentInTime.now(),
       validTo: this.parkingTime.end(),
     });
+  }
+
+  private startsToday() {
+    return this.parkingTime.start().hasSameDay(MomentInTime.now());
+  }
+
+  private parkingEndInThePast() {
+    return this.parkingTime.end().isBefore(MomentInTime.now());
+  }
+
+  plain() {
+    return {
+      start: this.parkingTime.start().jsDate(),
+      end: this.parkingTime.end().jsDate(),
+    };
   }
 }

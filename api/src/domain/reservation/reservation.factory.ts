@@ -37,6 +37,6 @@ export class ReservationFactory {
 export interface ReservationData {
   licensePlate: string;
   parkingLotId: string;
-  start: string;
-  end: string;
+  start: Date;
+  end: Date;
 }

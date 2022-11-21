@@ -42,6 +42,8 @@ export const enum MessageCode {
   SCHEDULED_TIME_CANNOT_BE_CHANGED_ANYMORE = 'scheduledTimeCannotBeChangedAnymore',
   RESERVATION_NEEDS_TO_BE_CONFIRMED_FIRST = 'reservationNeedsToBeConfirmedFirst',
   RESERVED_PARKING_TIME_IN_THE_PAST = 'reservedParkingTimeInThePast',
+  TOO_EARLY_TO_ISSUE_PARKING_TICKET = 'tooEarlyToIssueParkingTicket',
+  TICKET_CANNOT_BE_ISSUED_ANYMORE = 'ticketCannotBeIssuedAnymore',
   PREVIOUS_TICKET_NOT_RETURNED = 'previousTicketNotReturned',
   TICKET_NOT_FOUND = 'ticketNotFound',
   TICKET_ALREADY_RETURNED = 'ticketAlreadyReturned',

@@ -32,6 +32,10 @@ export class MomentInTime {
     return this.dateTime.diff(other.dateTime, 'minutes').minutes;
   }
 
+  hasSameDay(other: MomentInTime) {
+    return this.dateTime.hasSame(other.dateTime, 'day');
+  }
+
   isFullHour() {
     return (
       this.dateTime.minute === 0 &&
