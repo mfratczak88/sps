@@ -47,7 +47,7 @@ export class PeriodOfTime {
   }
 
   inThePast(): boolean {
-    return this.startMoment.minutesDiff(MomentInTime.now()) < 0;
+    return this.minutesToStart() < 0;
   }
 
   hoursDifference(): number {

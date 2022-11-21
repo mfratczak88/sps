@@ -16,7 +16,7 @@ export class MomentInTime {
 
   isBefore(momentInTime: MomentInTime) {
     return (
-      this.dateTime.diff(momentInTime.dateTime).toObject().milliseconds > 0
+      this.dateTime.diff(momentInTime.dateTime).toObject().milliseconds < 0
     );
   }
 
@@ -35,7 +35,7 @@ export class MomentInTime {
   isFullHour() {
     return (
       this.dateTime.minute === 0 &&
-      this.dateTime.minute === 0 &&
+      this.dateTime.second === 0 &&
       this.dateTime.millisecond === 0
     );
   }
