@@ -94,12 +94,6 @@ export class AuthenticationService {
     }
   }
 
-  async getUserData(userId: Id): Promise<UserDto> {
-    let user = await this.userService.findById(userId);
-    if (!user) user = await this.userService.findByEmail(userId);
-    return AuthenticationService.userToDto(user);
-  }
-
   async getUserIfTokenMatches(userId: Id, refreshToken: string) {
     let user = await this.userService.findById(userId);
     if (!user) user = await this.userService.findByEmail(userId);

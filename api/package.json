@@ -5,7 +5,9 @@
   "author": "Maciej Frątczak",
   "private": true,
   "license": "MIT",
-
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
