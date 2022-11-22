@@ -6,25 +6,30 @@ import { DomainException } from '../../../domain/domain.exception';
 import { MessageCode } from '../../../message';
 import { ReservationStatus } from '../../../domain/reservation/reservation-status';
 import { DateTime, Interval } from 'luxon';
+import { ParkingLotRepository } from '../../../domain/parking-lot/parking-lot.repository';
+import { ReservationRepository } from '../../../domain/reservation/reservation.repository';
 
 @Injectable()
 export class PrismaParkingLotAvailability implements ParkingLotAvailability {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly parkingLotRepository: ParkingLotRepository,
+    readonly reservationRepository: ReservationRepository,
+  ) {}
   async placeInLotAvailable(
     lotId: Id,
-    start: string,
-    end: string,
+    start: Date,
+    end: Date,
   ): Promise<boolean> {
-    const parkingLot = await this.prismaService.parkingLot.findUnique({
-      where: {
-        id: lotId,
-      },
-    });
+    const parkingLot = await this.parkingLotRepository.findByIdOrElseThrow(
+      lotId,
+    );
     if (!parkingLot) {
       throw new DomainException({
         message: MessageCode.PARKING_LOT_DOES_NOT_EXIST,
       });
     }
+    const { capacity } = parkingLot.plain();
 
     const reservationsInThatDate =
       await this.prismaService.reservation.findMany({
@@ -39,19 +44,16 @@ export class PrismaParkingLotAvailability implements ParkingLotAvailability {
         },
       });
     const requestedParkingTimeInterval = Interval.fromDateTimes(
-      DateTime.fromSQL(start),
-      DateTime.fromSQL(end),
+      DateTime.fromJSDate(start),
+      DateTime.fromJSDate(end),
     );
 
     return (
-      PrismaParkingLotAvailability.withinHours(
-        parkingLot,
-        requestedParkingTimeInterval,
-      ) &&
+      parkingLot.openForParkingAt(start, end) &&
       this.overlappingReservationsCount(
         reservationsInThatDate,
         requestedParkingTimeInterval,
-      ) < parkingLot.capacity
+      ) < capacity
     );
   }
 
@@ -70,29 +72,5 @@ export class PrismaParkingLotAvailability implements ParkingLotAvailability {
         );
       })
       .filter((x) => !!x).length;
-  }
-  // maybe repeating interval instead of plain hours - lot can be op
-  private static withinHours(parkingLot, requestedParkingTimeInterval) {
-    const { hourFrom, hourTo } = parkingLot;
-    const lotHourFrom =
-      PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(hourFrom);
-    const lotHourTo =
-      PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(hourTo);
-    const parkingHourFrom =
-      PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(
-        requestedParkingTimeInterval.start,
-      );
-    const parkingHourTo = PrismaParkingLotAvailability.onlyTimeFromSqlDateTime(
-      requestedParkingTimeInterval.end,
-    );
-    return parkingHourFrom >= lotHourFrom && parkingHourTo <= lotHourTo;
-  }
-
-  private static onlyTimeFromSqlDateTime(dateTime: DateTime) {
-    return DateTime.fromSQL(
-      dateTime.toSQLTime({
-        includeOffset: false,
-      }),
-    );
   }
 }

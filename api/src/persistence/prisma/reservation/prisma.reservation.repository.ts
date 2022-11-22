@@ -7,7 +7,6 @@ import { ReservationStatus } from '../../../domain/reservation/reservation-statu
 
 import { DomainException } from '../../../domain/domain.exception';
 import { MessageCode } from '../../../message';
-import { PrismaDateAndTime } from '../time/prisma.moment';
 
 @Injectable()
 export class PrismaReservationRepository implements ReservationRepository {
@@ -44,17 +43,10 @@ export class PrismaReservationRepository implements ReservationRepository {
       parkingLotId,
       licensePlate,
       status: status as ReservationStatus,
-      parkingTickets: parkingTickets.map(
-        ({ timeOfEntry, timeOfLeave, validTo }) => ({
-          timeOfEntry: PrismaDateAndTime.fromJsDate(timeOfEntry).toString(),
-          timeOfLeave:
-            timeOfLeave && PrismaDateAndTime.fromJsDate(timeOfLeave).toString(),
-          validTo: PrismaDateAndTime.fromJsDate(validTo).toString(),
-        }),
-      ),
+      parkingTickets,
       scheduledParkingTime: {
-        start: PrismaDateAndTime.fromJsDate(startTime).toString(),
-        end: PrismaDateAndTime.fromJsDate(endTime).toString(),
+        start: startTime,
+        end: endTime,
       },
     });
   }
@@ -67,7 +59,7 @@ export class PrismaReservationRepository implements ReservationRepository {
       scheduledParkingTime: { start, end },
       parkingLotId,
       licensePlate,
-    } = reservation.toPlain();
+    } = reservation.plain();
     const existingTickets = await this.prismaService.parkingTicket.findMany({
       where: {
         reservationId,
@@ -77,31 +69,27 @@ export class PrismaReservationRepository implements ReservationRepository {
       parkingTickets.map(async (ticket) => {
         const existing = existingTickets.find(
           (existing) =>
-            PrismaDateAndTime.fromJsDate(existing.timeOfEntry).toString() ===
-              ticket.timeOfEntry &&
-            PrismaDateAndTime.fromJsDate(existing.validTo).toString() ===
-              ticket.validTo,
+            existing.timeOfEntry === ticket.timeOfEntry &&
+            existing.validTo === ticket.validTo,
         );
         if (existing) {
-          existing.validTo = new PrismaDateAndTime(ticket.validTo).toJsDate();
+          existing.validTo = ticket.validTo;
           return existing;
         }
         return {
           id: await this.idGenerator.generate(),
           reservationId,
-          timeOfEntry: new PrismaDateAndTime(ticket.timeOfEntry).toJsDate(),
-          validTo: new PrismaDateAndTime(ticket.validTo).toJsDate(),
-          timeOfLeave:
-            ticket.timeOfLeave &&
-            new PrismaDateAndTime(ticket.timeOfLeave).toJsDate(),
+          timeOfEntry: ticket.timeOfEntry,
+          validTo: ticket.validTo,
+          timeOfLeave: ticket.timeOfLeave,
         };
       }),
     );
     const prismaFields = {
       status: status,
       parkingLotId,
-      startTime: new PrismaDateAndTime(start).toString(),
-      endTime: new PrismaDateAndTime(end).toString(),
+      startTime: start,
+      endTime: end,
       licensePlate,
       parkingTickets: {
         set: parkingTicketsToSet,

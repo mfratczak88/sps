@@ -49,6 +49,10 @@ export class ParkingLot {
     this.operationTime = this.operationTime.changeHours(hours);
   }
 
+  openForParkingAt(start: Date, end: Date) {
+    return this.operationTime.withinOperationHours(start, end);
+  }
+
   plain() {
     return {
       id: this.id,

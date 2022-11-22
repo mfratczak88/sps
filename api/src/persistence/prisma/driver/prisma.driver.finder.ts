@@ -3,22 +3,38 @@ import { DriverReadModel } from '../../../application/driver/driver.read-model';
 import { PrismaService } from '../prisma.service';
 import { Role } from '../../../infrastructure/security/authorization/role';
 import { Injectable } from '@nestjs/common';
+import { PrismaParkingLotFinder } from '../parking-lot/prisma.parking-lot.finder';
 
 @Injectable()
 export class PrismaDriverFinder implements DriverFinder {
   constructor(private readonly prismaService: PrismaService) {}
 
-  findAll(): Promise<DriverReadModel[]> {
-    return this.prismaService.user.findMany({
-      where: {
-        role: Role.DRIVER,
-      },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        parkingLots: true,
-      },
+  async findAll(): Promise<DriverReadModel[]> {
+    return (
+      await this.prismaService.user.findMany({
+        where: {
+          role: Role.DRIVER,
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          parkingLots: true,
+        },
+      })
+    ).map((user) => {
+      const parkingLots = user.parkingLots.map((lot) => {
+        const { id, city, hourFrom, hourTo, streetName } =
+          PrismaParkingLotFinder.prismaLotToDto(lot);
+        return {
+          id,
+          city,
+          hourTo,
+          hourFrom,
+          streetName,
+        };
+      });
+      return { ...user, parkingLots };
     });
   }
 }
