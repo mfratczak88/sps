@@ -77,7 +77,12 @@ describe('Operation time', () => {
     }
   });
   it('should return true on checking parking time if parking time hours count equals operation hours slot', () => {
-    const operationTime = new OperationTime(10, 22, [OperationTimeDays.MONDAY]);
+    const operationTime = new OperationTime(
+      10,
+      22,
+      [OperationTimeDays.MONDAY],
+      dateWithHour('06:00'),
+    );
     const parkingTimeStart = dateWithHour('10:00');
     const parkingTimeEnd = dateWithHour('22:00');
 
@@ -86,7 +91,12 @@ describe('Operation time', () => {
     ).toEqual(true);
   });
   it('should return true on checking parking time if parking time hours count is less than operation hours slot', () => {
-    const operationTime = new OperationTime(10, 22, [OperationTimeDays.MONDAY]);
+    const operationTime = new OperationTime(
+      10,
+      22,
+      [OperationTimeDays.MONDAY],
+      dateWithHour('06:00'),
+    );
     const parkingTimeStart = dateWithHour('10:00');
     const parkingTimeEnd = dateWithHour('12:00');
 
@@ -95,7 +105,12 @@ describe('Operation time', () => {
     ).toEqual(true);
   });
   it('should return false on checking parking time if parking time hours exceeds hours of operation', () => {
-    const operationTime = new OperationTime(10, 22, [OperationTimeDays.MONDAY]);
+    const operationTime = new OperationTime(
+      10,
+      22,
+      [OperationTimeDays.MONDAY],
+      dateWithHour('06:00'),
+    );
     const parkingTimeStart = dateWithHour('10:00');
     const parkingTimeEnd = dateWithHour('23:00');
 
@@ -120,7 +135,12 @@ describe('Operation time', () => {
     ).toEqual(false);
   });
   it('should return false on checking parking time when parking time start is before hours of operation', () => {
-    const operationTime = new OperationTime(10, 22, [OperationTimeDays.MONDAY]);
+    const operationTime = new OperationTime(
+      10,
+      22,
+      [OperationTimeDays.MONDAY],
+      dateWithHour('06:00'),
+    );
     const parkingTimeStart = dateWithHour('07:00');
     const parkingTimeEnd = dateWithHour('15:00');
 

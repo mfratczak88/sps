@@ -88,7 +88,7 @@ describe('Parking lot', () => {
     } catch (err) {
       expect(err instanceof DomainException);
       expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_DATE_TIME_INTERVAL,
+        MessageCode.INVALID_LOT_HOURS_OF_OPERATION,
       );
     }
     try {
@@ -105,7 +105,7 @@ describe('Parking lot', () => {
     } catch (err) {
       expect(err instanceof DomainException);
       expect((err as DomainException).messageProps.messageKey).toEqual(
-        MessageCode.INVALID_DATE_TIME_INTERVAL,
+        MessageCode.INVALID_LOT_HOURS_OF_OPERATION,
       );
     }
   });

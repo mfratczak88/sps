@@ -24,7 +24,7 @@ export class PrismaDriverFinder implements DriverFinder {
       })
     ).map((user) => {
       const parkingLots = user.parkingLots.map((lot) => {
-        const { id, city, hourFrom, hourTo, streetName } =
+        const { id, city, hourFrom, hourTo, streetName, streetNumber } =
           PrismaParkingLotFinder.prismaLotToDto(lot);
         return {
           id,
@@ -32,6 +32,7 @@ export class PrismaDriverFinder implements DriverFinder {
           hourTo,
           hourFrom,
           streetName,
+          streetNumber,
         };
       });
       return { ...user, parkingLots };
