@@ -33,9 +33,9 @@ export class HoursOfOperationDto {
   hourTo: number;
 
   @IsDate()
+  @Type(() => Date)
   validFrom: Date;
 
-  @IsDefined()
   @IsNotEmpty()
   days: OperationTimeDays[];
 }
@@ -50,6 +50,8 @@ export class CreateParkingLotCommand {
   address: AddressDto;
 
   @IsDefined()
+  @ValidateNested()
+  @Type(() => HoursOfOperationDto)
   hoursOfOperation: HoursOfOperationDto;
 }
 

@@ -8,13 +8,14 @@ import { Role } from '../../src/infrastructure/security/authorization/role';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from '../../src/persistence/prisma/prisma.service';
 import * as request from 'supertest';
+import { OperationTime } from '../../src/domain/parking-lot/operation-time';
 
 export const setUpNestApp = async (moduleRef: TestingModule) => {
   const app = moduleRef.createNestApplication();
   app.use(cookieParser());
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new GlobalExceptionFilter(httpAdapter));
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   await app.init();
   return app;
 };
@@ -62,16 +63,22 @@ export const authenticateUser = async (
 export const createDummyParkingLot = async (
   parkingLotId: string,
   prismaService: PrismaService,
+  hourFrom?: number,
+  hourTo?: number,
+  days?: number[],
 ) => {
   await prismaService.parkingLot.create({
     data: {
       id: parkingLotId,
-      hourFrom: '12:00',
-      hourTo: '20:00',
       streetNumber: '4',
       city: 'Warszawa',
       streetName: 'Poznanska',
       capacity: 4,
+      operationTimeRule: new OperationTime(
+        hourFrom || 6,
+        hourTo || 22,
+        days || [0, 1, 2, 3, 4, 5, 6],
+      ).plain().rrule,
     },
   });
 };
