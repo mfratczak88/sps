@@ -8,6 +8,7 @@ import {
 } from './parking-lot.command';
 import { ParkingLot } from '../../domain/parking-lot/parking-lot';
 import { Address } from '../../domain/parking-lot/address';
+import { OperationTime } from '../../domain/parking-lot/operation-time';
 
 @Injectable()
 export class ParkingLotService {
@@ -20,25 +21,25 @@ export class ParkingLotService {
     const id = await this.idGenerator.generate();
     const {
       address: { streetName, streetNumber, city },
-      hoursOfOperation: { hourTo, hourFrom },
+      hoursOfOperation: { hourTo, hourFrom, validFrom, days },
       capacity,
     } = command;
     const lot = new ParkingLot(
       id,
       new Address(city, streetName, streetNumber),
       capacity,
-      { hourFrom, hourTo },
+      new OperationTime(hourFrom, hourTo, days, validFrom),
     );
     await this.parkingLotRepository.save(lot);
     return { id };
   }
 
   async changeHoursOfOperation(command: ChangeHoursOfOperationCommand) {
-    const { parkingLotId, hoursOfOperation } = command;
+    const { parkingLotId, hourTo, hourFrom } = command;
     const parkingLot = await this.parkingLotRepository.findByIdOrElseThrow(
       parkingLotId,
     );
-    parkingLot.changeOperationHours({ ...hoursOfOperation });
+    parkingLot.changeOperationHours({ hourFrom, hourTo });
     await this.parkingLotRepository.save(parkingLot);
   }
   async changeCapacity(command: ChangeCapacityCommand) {

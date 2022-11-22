@@ -1,5 +1,5 @@
 import { Id } from '../../domain/id';
-import { IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 
 export class CreateReservationCommand {
   @IsNotEmpty()
@@ -8,9 +8,20 @@ export class CreateReservationCommand {
   @IsNotEmpty()
   licensePlate: string;
 
-  @IsNotEmpty()
-  start: string;
+  @IsDate()
+  start: Date;
 
+  @IsDate()
+  end: Date;
+}
+
+export class ChangeTimeCommand {
   @IsNotEmpty()
-  end: string;
+  reservationId: Id;
+
+  @IsDate()
+  start: Date;
+
+  @IsDate()
+  end: Date;
 }

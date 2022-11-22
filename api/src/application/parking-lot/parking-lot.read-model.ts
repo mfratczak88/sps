@@ -1,4 +1,5 @@
 import { Id } from '../../domain/id';
+import { OperationTimeDays } from '../../domain/parking-lot/operation-time';
 
 export interface ParkingLotReadModel {
   id: Id;
@@ -6,6 +7,8 @@ export interface ParkingLotReadModel {
   city: string;
   streetName: string;
   capacity: number;
-  hourFrom: string;
-  hourTo: string;
+  hourFrom: number;
+  hourTo: number;
+  validFrom: Date;
+  days: OperationTimeDays[];
 }

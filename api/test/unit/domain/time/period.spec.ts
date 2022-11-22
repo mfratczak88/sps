@@ -5,7 +5,7 @@ import { DomainException } from '../../../../src/domain/domain.exception';
 import { MessageCode } from '../../../../src/message';
 
 describe('Period of time', () => {
-  it('Throws domain exception when given start and end date doesnt create an interval', async () => {
+  it('Throws domain exception when given start is after end', async () => {
     const now = MomentInTime.now();
     await wait(100);
     const after100Milliseconds = MomentInTime.now();
