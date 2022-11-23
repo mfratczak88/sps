@@ -19,6 +19,16 @@ describe('Driver spec', () => {
     }
   });
 
+  it('Adds not yet added vehicle', () => {
+    const licensePlate = 'CT331GJX';
+    const driver = new Driver(randomId(), [], []);
+    driver.addVehicle(licensePlate);
+
+    expect(
+      driver.vehicles.find((v) => v.licensePlate === licensePlate),
+    ).toBeTruthy();
+  });
+
   it('Assigns new parking lot if not assigned yet', () => {
     const driver = new Driver(randomId(), [], []);
     const parkingLotId = randomId();
