@@ -8,6 +8,7 @@ import {
   User,
 } from '../src/infrastructure/security/user/user';
 import { Role } from '../src/infrastructure/security/authorization/role';
+import { DateTime } from 'luxon';
 
 export const randomId = (): string => uuid();
 export const randomUser = (role: Role): User => {
@@ -60,4 +61,15 @@ export const createUser = async (
 export const randomElementFromArray = <T>(array: T[]) => {
   const index = Math.floor(Math.random() * 10) % array.length;
   return array[index];
+};
+
+export const wait = (milliseconds: number) =>
+  new Promise((resolve) => setTimeout(() => resolve(true), milliseconds));
+
+export const approxTheSameTime = (dateA: Date, dateB: Date) => {
+  return (
+    DateTime.fromJSDate(dateA)
+      .diff(DateTime.fromJSDate(dateB))
+      .as('milliseconds') < 1000
+  );
 };

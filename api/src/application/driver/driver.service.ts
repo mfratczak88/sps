@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DriverRepository } from '../../domain/driver.repository';
+import { DriverRepository } from '../../domain/driver/driver.repository';
 import {
   AddVehicleCommand,
   AssignParkingLotCommand,

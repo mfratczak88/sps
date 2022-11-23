@@ -1,8 +1,8 @@
-import { Driver } from '../../../src/domain/driver';
-import { randomId } from '../../misc.util';
-import { Vehicle } from '../../../src/domain/vehicle';
-import { DomainException } from '../../../src/domain/domain.exception';
-import { MessageCode } from '../../../src/message';
+import { Driver } from '../../../../src/domain/driver/driver';
+import { randomId } from '../../../misc.util';
+import { Vehicle } from '../../../../src/domain/driver/vehicle';
+import { DomainException } from '../../../../src/domain/domain.exception';
+import { MessageCode } from '../../../../src/message';
 
 describe('Driver spec', () => {
   it('Throws exception when adding vehicles which is already assigned to a driver', () => {
@@ -17,6 +17,16 @@ describe('Driver spec', () => {
         MessageCode.VEHICLE_ALREADY_REGISTERED,
       );
     }
+  });
+
+  it('Adds not yet added vehicle', () => {
+    const licensePlate = 'CT331GJX';
+    const driver = new Driver(randomId(), [], []);
+    driver.addVehicle(licensePlate);
+
+    expect(
+      driver.vehicles.find((v) => v.licensePlate === licensePlate),
+    ).toBeTruthy();
   });
 
   it('Assigns new parking lot if not assigned yet', () => {

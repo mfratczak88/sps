@@ -1,11 +1,12 @@
-import { ParkingLotRepository } from '../../domain/parking-lot.repository';
-import { PrismaService } from './prisma.service';
-import { ParkingLot } from '../../domain/parking-lot';
-import { Id } from '../../domain/id';
-import { DomainException } from '../../domain/domain.exception';
-import { MessageCode } from '../../message';
-import { Address } from '../../domain/address';
+import { ParkingLotRepository } from '../../../domain/parking-lot/parking-lot.repository';
+import { PrismaService } from '../prisma.service';
+import { ParkingLot } from '../../../domain/parking-lot/parking-lot';
+import { Id } from '../../../domain/id';
+import { DomainException } from '../../../domain/domain.exception';
+import { MessageCode } from '../../../message';
+import { Address } from '../../../domain/parking-lot/address';
 import { Injectable } from '@nestjs/common';
+import { OperationTime } from '../../../domain/parking-lot/operation-time';
 
 @Injectable()
 export class PrismaParkingLotRepository implements ParkingLotRepository {
@@ -22,35 +23,35 @@ export class PrismaParkingLotRepository implements ParkingLotRepository {
         message: MessageCode.PARKING_LOT_DOES_NOT_EXIST,
       });
     }
-    const { city, capacity, hourFrom, hourTo, streetName, streetNumber } =
+    const { city, capacity, operationTimeRule, streetName, streetNumber } =
       prismaParkingLot;
     return new ParkingLot(
       id,
       new Address(city, streetName, streetNumber),
       capacity,
-      { hourFrom, hourTo },
+      OperationTime.fromRRule(operationTimeRule),
     );
   }
 
   async save(lot: ParkingLot): Promise<void> {
     const {
       id,
+      city,
+      streetName,
+      streetNumber,
+      timeOfOperation: { rrule },
       capacity,
-      address: { streetName, streetNumber, city },
-      hoursOfOperation: { hourTo, hourFrom },
-    } = lot;
-
+    } = lot.plain();
     const upsertFields = {
-      hourTo,
-      hourFrom,
       streetNumber,
       streetName,
       city,
       capacity,
+      operationTimeRule: rrule,
     };
     await this.prismaService.parkingLot.upsert({
       where: {
-        id: lot.id,
+        id,
       },
       update: {
         ...upsertFields,

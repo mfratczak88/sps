@@ -1,8 +1,8 @@
-import { Id } from './id';
+import { Id } from '../id';
 import { Vehicle } from './vehicle';
-import { DomainException } from './domain.exception';
-import { MessageCode } from '../message';
-import { Validate } from './validate.decorator';
+import { DomainException } from '../domain.exception';
+import { MessageCode } from '../../message';
+import { Validate } from '../validate.decorator';
 import { IsDefined, IsNotEmpty } from 'class-validator';
 
 @Validate

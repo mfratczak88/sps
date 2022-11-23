@@ -6,7 +6,7 @@
   "private": true,
   "license": "MIT",
   "prisma": {
-    "seed": "ts-node prisma/seed/seed-db.ts"
+    "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -54,6 +54,7 @@
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
+    "rrule": "^2.7.1",
     "rxjs": "^7.2.0",
     "sharp": "^0.30.5",
     "uuid": "^8.3.2"
@@ -91,7 +92,10 @@
       "json",
       "ts"
     ],
-    "roots": ["src", "test"],
+    "roots": [
+      "src",
+      "test"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

@@ -1,18 +1,23 @@
-import { PrismaParkingLotRepository } from '../../../src/persistence/prisma/prisma.parking-lot.repository';
-import Mock = jest.Mock;
+import { PrismaParkingLotRepository } from '../../../src/persistence/prisma/parking-lot/prisma.parking-lot.repository';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
 import { randomId } from '../../misc.util';
 import { DomainException } from '../../../src/domain/domain.exception';
 import { MessageCode } from '../../../src/message';
-import { ParkingLot } from '../../../src/domain/parking-lot';
-import { Address } from '../../../src/domain/address';
+import { ParkingLot } from '../../../src/domain/parking-lot/parking-lot';
+import { Address } from '../../../src/domain/parking-lot/address';
+import {
+  OperationTime,
+  OperationTimeDays,
+} from '../../../src/domain/parking-lot/operation-time';
+import Mock = jest.Mock;
 
 describe('Parking lot repository', () => {
   let repository: PrismaParkingLotRepository;
   let findById: Mock;
   let upsert: Mock;
   let prismaService: DeepMocked<PrismaService>;
+
   beforeEach(() => {
     findById = jest.fn();
     upsert = jest.fn();
@@ -37,14 +42,16 @@ describe('Parking lot repository', () => {
   });
   it('find by id - returns domain object', async () => {
     const id = randomId();
+
     findById.mockImplementation((query) => {
       if (query.where.id === id) {
         return {
           id,
           city: 'Warszawa',
           capacity: 100,
-          hourFrom: '08:00',
-          hourTo: '10:00',
+          operationTimeRule: new OperationTime(10, 22, [
+            OperationTimeDays.WEDNESDAY,
+          ]).plain().rrule,
           streetName: 'Sobieskiego',
           streetNumber: '4',
         };
@@ -52,31 +59,38 @@ describe('Parking lot repository', () => {
     });
 
     const parking = await repository.findByIdOrElseThrow(id);
-
+    const {
+      city,
+      capacity,
+      streetNumber,
+      streetName,
+      timeOfOperation: { hourFrom, hourTo, operationDays },
+    } = parking.plain();
     expect(parking.id).toEqual(id);
-    expect(parking.hoursOfOperation.hourTo).toEqual('10:00');
-    expect(parking.hoursOfOperation.hourFrom).toEqual('08:00');
-    expect(parking.address.streetName).toEqual('Sobieskiego');
-    expect(parking.address.streetNumber).toEqual('4');
-    expect(parking.address.city).toEqual('Warszawa');
+    expect(streetName).toEqual('Sobieskiego');
+    expect(streetNumber).toEqual('4');
+    expect(city).toEqual('Warszawa');
+    expect(capacity).toEqual(100);
+    expect(hourFrom).toEqual(10);
+    expect(hourTo).toEqual(22);
+    expect(operationDays).toEqual([OperationTimeDays.WEDNESDAY]);
   });
   it('save - upserts parking lot', async () => {
     const id = randomId();
+    const operationTime = new OperationTime(10, 22, [
+      OperationTimeDays.WEDNESDAY,
+    ]);
     const parkingLot = new ParkingLot(
       id,
       new Address('Poznan', 'Cybernetyki', '4'),
       100,
-      {
-        hourFrom: '08:00:00',
-        hourTo: '10:00:00',
-      },
+      operationTime,
     );
 
     await repository.save(parkingLot);
 
     const expectedUpsertFields = {
-      hourFrom: '08:00',
-      hourTo: '10:00',
+      operationTimeRule: operationTime.plain().rrule,
       city: 'Poznan',
       capacity: 100,
       streetName: 'Cybernetyki',

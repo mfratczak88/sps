@@ -21,7 +21,7 @@ async function bootstrap() {
   app.use(cookieParser());
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new GlobalExceptionFilter(httpAdapter));
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   await app.listen(3000);
 }
 bootstrap();

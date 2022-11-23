@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { RegistrationTokenStore } from '../../infrastructure/security/user/user.store';
-import { PrismaService } from './prisma.service';
-import { Id } from '../../domain/id';
-import { RegistrationToken } from '../../infrastructure/security/user/user';
+import { RegistrationTokenStore } from '../../../infrastructure/security/user/user.store';
+import { PrismaService } from '../prisma.service';
+import { Id } from '../../../domain/id';
+import { RegistrationToken } from '../../../infrastructure/security/user/user';
 
 @Injectable()
 export class PrismaRegistrationTokenStore implements RegistrationTokenStore {

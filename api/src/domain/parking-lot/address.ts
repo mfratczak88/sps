@@ -1,4 +1,4 @@
-import { Validate } from './validate.decorator';
+import { Validate } from '../validate.decorator';
 import { IsNotEmpty } from 'class-validator';
 
 @Validate

@@ -13,7 +13,6 @@ export const enum MessageCode {
   INVALID_USERNAME_OR_PASSWORD = 'invalidUserNameOrPassword',
   INVALID_PASSWORD = 'invalidPassword',
   USER_DOES_NOT_EXIST = 'userDoesNotExist',
-  FACEBOOK_LOGIN_ERROR = 'facebookLoginError',
 
   /* Persistence */
   UNKNOWN_PERSISTENCE_ERROR = 'unknownPersistenceError',
@@ -24,13 +23,6 @@ export const enum MessageCode {
   NULL_CONSTRAINT_VIOLATION = 'nullConstraintViolation',
   RELATION_VIOLATION = 'relationViolation',
   OUT_OF_RANGE = 'outOfRange',
-
-  /* Infrastructure */
-  INVALID_IMAGE_TYPE = 'invalidImageType',
-  IMAGE_SAVE_ERROR = 'imageSaveError',
-
-  /* Application */
-  ONE_REVIEW_PER_ONE_USER = 'oneReviewPerOneUser',
 
   /* Misc */
   UNKNOWN_ERROR = 'unknownServerError',
@@ -43,9 +35,33 @@ export const enum MessageCode {
   PARKING_LOT_NOT_ASSIGNED_TO_DRIVER = 'parkingLotNotAssignedToDriver',
   PARKING_LOT_DOES_NOT_EXIST = 'parkingLotDoesNotExist',
   DRIVER_DOES_NOT_EXIST = 'driverDoesNotExist',
-  HOUR_FROM_GREATER_THAN_HOUR_TO = 'hourFromGreaterThanHourTo',
-  INVALID_HOURS = 'invalidHours',
-
+  RESERVATION_IS_CANCELLED = 'reservationIsCancelled',
+  RESERVATION_IS_CONFIRMED = 'reservationIsConfirmed',
+  RESERVATION_CANNOT_BE_CONFIRMED_YET = 'reservationCannotBeConfirmedYet',
+  RESERVATION_CANNOT_BE_CONFIRMED_ANYMORE = 'reservationCannotBeConfirmedAnymore',
+  SCHEDULED_TIME_CANNOT_BE_CHANGED_ANYMORE = 'scheduledTimeCannotBeChangedAnymore',
+  RESERVATION_NEEDS_TO_BE_CONFIRMED_FIRST = 'reservationNeedsToBeConfirmedFirst',
+  RESERVED_PARKING_TIME_IN_THE_PAST = 'reservedParkingTimeInThePast',
+  TOO_EARLY_TO_ISSUE_PARKING_TICKET = 'tooEarlyToIssueParkingTicket',
+  TICKET_CANNOT_BE_ISSUED_ANYMORE = 'ticketCannotBeIssuedAnymore',
+  PREVIOUS_TICKET_NOT_RETURNED = 'previousTicketNotReturned',
+  TICKET_NOT_FOUND = 'ticketNotFound',
+  TICKET_ALREADY_RETURNED = 'ticketAlreadyReturned',
+  INVALID_DATE_TIME_INTERVAL = 'invalidDateTimeInterval',
+  PARKING_TIME_IN_DIFFERENT_DAYS = 'parkingTimeInDifferentDays',
+  NO_PLACE_IN_LOT = 'noPlaceInLot',
+  RESERVATION_DOES_NOT_EXIST = 'reservationDoesNotExist',
+  MINIMUM_PARKING_TIME_IS_AN_HOUR = 'minimumParkingTimeIsAnHour',
+  INVALID_TIME = 'invalidTime',
+  INVALID_DATE_TIME = 'invalidDateTime',
+  INVALID_MOMENT_IN_TIME = 'invalidMomentInTime',
+  INVALID_TIME_PERIOD = 'invalidTimePeriod',
+  CANNOT_RETURN_TICKET_TWICE = 'cannotReturnTicketTwice',
+  INVALID_LOT_HOURS_OF_OPERATION = 'invalidHoursOfOperation',
+  HOURS_OF_OPERATION_VALID_FROM_NOT_FULL_HOUR = 'notFullHour',
+  PARKING_TIME_HOUR_MUST_BE_FULL = 'parkingTimeHourMustBeFull',
+  INVALID_PARKING_TICKET_TIMES = 'invalidParkingTicketTimes',
+  INVALID_OPERATION_TIME_DAYS = 'invalidOperationTimeDays',
   /* Validation */
   VALIDATION_ERROR = 'validationError',
   UNDEFINED = 'undefined',

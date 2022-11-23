@@ -20,6 +20,10 @@ import {
 } from '../../src/application/parking-lot/parking-lot.command';
 import { Role } from '../../src/infrastructure/security/authorization/role';
 import { randomId } from '../misc.util';
+import {
+  OperationTime,
+  OperationTimeDays,
+} from '../../src/domain/parking-lot/operation-time';
 
 describe('Parking lot e2e', () => {
   let app: INestApplication;
@@ -33,8 +37,18 @@ describe('Parking lot e2e', () => {
   const validCreateParkingLotCommand: CreateParkingLotCommand = {
     capacity: 4,
     hoursOfOperation: {
-      hourFrom: '10:00',
-      hourTo: '22:00',
+      hourFrom: 10,
+      hourTo: 22,
+      validFrom: new Date(Date.UTC(2022, 10, 10, 10)),
+      days: [
+        OperationTimeDays.MONDAY,
+        OperationTimeDays.TUESDAY,
+        OperationTimeDays.WEDNESDAY,
+        OperationTimeDays.THURSDAY,
+        OperationTimeDays.FRIDAY,
+        OperationTimeDays.SATURDAY,
+        OperationTimeDays.SUNDAY,
+      ],
     },
     address: {
       streetName: 'Maczka',
@@ -68,8 +82,6 @@ describe('Parking lot e2e', () => {
 
   describe('Create parking lot', () => {
     it('Creates parking lot and returns 201', async () => {
-      const { capacity, hoursOfOperation, address } =
-        validCreateParkingLotCommand;
       const response = await request(app.getHttpServer())
         .post(`${baseUrl}`)
         .set(...authCookie(loginCookies, csrfTokenCookie))
@@ -80,18 +92,26 @@ describe('Parking lot e2e', () => {
 
       const {
         id: savedParkingLotId,
-        createdAt,
-        ...lotData
+        city,
+        streetName,
+        streetNumber,
+        operationTimeRule,
       } = await prismaService.parkingLot.findFirst({
         where: {
           id,
         },
       });
-      expect(lotData).toEqual({
-        capacity,
-        ...address,
-        ...hoursOfOperation,
-      });
+      expect({ city, streetName, streetNumber }).toEqual(
+        validCreateParkingLotCommand.address,
+      );
+      const { hourFrom, hourTo, validFromDate, operationDays } =
+        OperationTime.fromRRule(operationTimeRule).plain();
+      expect({
+        hourFrom,
+        hourTo,
+        validFrom: validFromDate,
+        days: operationDays,
+      }).toEqual(validCreateParkingLotCommand.hoursOfOperation);
       expect(savedParkingLotId).toEqual(id);
     });
     it('Returns 400 if address is empty', async () => {
@@ -217,10 +237,8 @@ describe('Parking lot e2e', () => {
     const changeOperationHoursUri = 'hoursOfOperation';
     const validChangeHoursCommand: ChangeHoursOfOperationCommand = {
       parkingLotId,
-      hoursOfOperation: {
-        hourFrom: '12:00',
-        hourTo: '20:00',
-      },
+      hourFrom: 13,
+      hourTo: 22,
     };
     beforeAll(async () => {
       await createDummyParkingLot(parkingLotId, prismaService);
@@ -251,18 +269,14 @@ describe('Parking lot e2e', () => {
         .expect(400);
     });
     it('Returns 400 if hours are invalid', async () => {
-      const { parkingLotId, hoursOfOperation } = validChangeHoursCommand;
       await request(app.getHttpServer())
         .patch(`${baseUrl}/${parkingLotId}/${changeOperationHoursUri}`)
         .set(...authCookie(loginCookies, csrfTokenCookie))
         .set(...csrfTokenHeader(csrfToken))
         .send({
-          parkingLotId,
-          hoursOfOperation: {
-            ...hoursOfOperation,
-            hourFrom: 9,
-            hourTo: -3,
-          },
+          ...validChangeHoursCommand,
+          hourFrom: -8,
+          hourTo: -20,
         })
         .expect(400);
     });
@@ -308,15 +322,16 @@ describe('Parking lot e2e', () => {
         .send(validChangeHoursCommand)
         .expect(204);
 
-      const { hourFrom, hourTo } = await prismaService.parkingLot.findFirst({
+      const { operationTimeRule } = await prismaService.parkingLot.findFirst({
         where: {
           id: parkingLotId,
         },
       });
+      const { hourFrom, hourTo } =
+        OperationTime.fromRRule(operationTimeRule).plain();
 
-      expect({ hourFrom, hourTo }).toEqual(
-        validChangeHoursCommand.hoursOfOperation,
-      );
+      expect(hourFrom).toEqual(validChangeHoursCommand.hourFrom);
+      expect(hourTo).toEqual(validChangeHoursCommand.hourTo);
     });
   });
   describe('Change capacity', () => {
