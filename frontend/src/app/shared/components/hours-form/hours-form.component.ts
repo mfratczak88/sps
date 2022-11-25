@@ -56,7 +56,7 @@ export class HoursFormComponent
   }
 
   ngOnDestroy(): void {
-    this.valueChangesSub$.unsubscribe();
+    this.valueChangesSub$ && this.valueChangesSub$.unsubscribe();
   }
 
   registerOnChange(fn: any): void {

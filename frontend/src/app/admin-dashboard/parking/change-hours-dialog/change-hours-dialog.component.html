@@ -2,14 +2,9 @@
 <mat-dialog-content class="dialog">
   <sps-text size="m">{{translations.CHANGE_HOURS_OF_OPERATION | translate}}</sps-text>
   <div class="dialog__form" [formGroup]="form">
-    <mat-form-field class="dialog__form--input" appearance="fill">
-      <mat-label>{{translations.HOUR_FROM | translate}}</mat-label>
-      <input matInput type="time" formControlName="hourFrom">
-    </mat-form-field>
-    <mat-form-field class="dialog__form--input" appearance="fill">
-      <mat-label>{{translations.HOUR_TO | translate}}</mat-label>
-      <input matInput type="time" formControlName="hourTo">
-    </mat-form-field>
+    <sps-hours-form formControlName="hours">
+      <sps-form-error [control]="form.controls.hours"></sps-form-error>
+    </sps-hours-form>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>

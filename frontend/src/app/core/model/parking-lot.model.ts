@@ -41,11 +41,11 @@ export const DayToShortTranslation = {
   [OperationTimeDays.SATURDAY]: WeekDaysShort.SATURDAY,
   [OperationTimeDays.SUNDAY]: WeekDaysShort.SUNDAY,
 };
-
-export interface ChangeHoursOfOperations {
+export interface HoursOfOperation {
   hourFrom: number;
   hourTo: number;
 }
+export type ChangeHoursOfOperations = HoursOfOperation;
 
 export interface CreateParkingLot {
   capacity: number;

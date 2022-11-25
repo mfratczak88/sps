@@ -124,8 +124,8 @@ describe('Parking details spec', () => {
   });
   it('On close hours dialog with actual hours it calls service', async () => {
     const hours = {
-      hourFrom: '10:00',
-      hourTo: '11:00',
+      hourFrom: 10,
+      hourTo: 12,
     };
     dialogSpy.open.and.returnValue(dialogRefSpy);
     dialogRefSpy.afterClosed.and.returnValue(of(hours));
