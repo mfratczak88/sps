@@ -56,6 +56,13 @@ export class LocalizedValidators {
       LocalizedErrors.min(value),
     );
   }
+
+  static max(value: number) {
+    return LocalizedValidators.withErrorMessage(
+      Validators.max(value),
+      LocalizedErrors.max(value),
+    );
+  }
 }
 
 export interface LocalizedValidationError extends ValidationErrors {
@@ -79,5 +86,15 @@ export const LocalizedErrors = {
   min: (value: number) => ({
     errorMessage: FormErrorKeys.MIN,
     props: { value },
+  }),
+  max: (value: number) => ({
+    errorMessage: FormErrorKeys.MAX,
+    props: { value },
+  }),
+  hourFromGreaterThanHourTo: () => ({
+    errorMessage: FormErrorKeys.HOUR_FROM_GREATER_THAN_HOUR_TO,
+  }),
+  noCheckboxSelected: () => ({
+    errorMessage: FormErrorKeys.NONE_CHECKBOX_SELECTED,
   }),
 };

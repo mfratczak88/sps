@@ -31,9 +31,7 @@ export class ParkingLotApi extends BaseApi {
       this.http.patch<void>(
         `${this.BASE_URL}/${parkingLotId}/${this.HOURS_URI}`,
         {
-          hoursOfOperation: {
-            ...hours,
-          },
+          ...hours,
           parkingLotId: parkingLotId,
         },
       ),

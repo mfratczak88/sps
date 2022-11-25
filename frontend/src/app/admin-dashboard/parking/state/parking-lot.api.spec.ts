@@ -7,6 +7,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
+  OperationTimeDays,
 } from '../../../core/model/parking-lot.model';
 
 describe('Parking lot api spec', () => {
@@ -33,8 +34,8 @@ describe('Parking lot api spec', () => {
   });
   it('Change hours sends patch request with csrf token', async () => {
     const req: ChangeHoursOfOperations = {
-      hourFrom: '10:00',
-      hourTo: '12:00',
+      hourFrom: 10,
+      hourTo: 12,
     };
     const parkingLotId = '44';
 
@@ -49,9 +50,8 @@ describe('Parking lot api spec', () => {
     );
     expect(changeHoursReq.request.method).toEqual('PATCH');
     expect(changeHoursReq.request.body).toEqual({
-      hoursOfOperation: {
-        ...req,
-      },
+      ...req,
+
       parkingLotId,
     });
 
@@ -61,8 +61,10 @@ describe('Parking lot api spec', () => {
   it('Create sends post request with csrf token', () => {
     const payload: CreateParkingLot = {
       hoursOfOperation: {
-        hourFrom: '10:00',
-        hourTo: '12:00',
+        hourFrom: 10,
+        hourTo: 12,
+        days: [OperationTimeDays.WEDNESDAY],
+        validFrom: new Date(Date.now()),
       },
       address: {
         streetNumber: '4',

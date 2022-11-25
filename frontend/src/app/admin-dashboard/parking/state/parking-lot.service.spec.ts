@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
+  OperationTimeDays,
 } from '../../../core/model/parking-lot.model';
 import { ToastKeys } from '../../../core/translation-keys';
 import SpyObj = jasmine.SpyObj;
@@ -53,8 +54,8 @@ describe('Parking lot service', () => {
     api.getAll.and.returnValue(of(mockParkingLots));
     api.changeHours.and.returnValue(of(undefined));
     const hoursChange: ChangeHoursOfOperations = {
-      hourFrom: '10:00',
-      hourTo: '13:00',
+      hourFrom: 10,
+      hourTo: 13,
     };
     const parkingLotId = mockParkingLots[0].id;
     parkingLotService
@@ -88,8 +89,10 @@ describe('Parking lot service', () => {
         streetNumber: '44',
       },
       hoursOfOperation: {
-        hourTo: '10:00',
-        hourFrom: '07:00',
+        hourTo: 10,
+        hourFrom: 7,
+        days: [OperationTimeDays.WEDNESDAY],
+        validFrom: new Date(Date.now()),
       },
       capacity: 10,
     };

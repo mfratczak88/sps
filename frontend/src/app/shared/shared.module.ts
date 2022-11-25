@@ -21,6 +21,11 @@ import { PanelComponent } from './components/panel/panel.component';
 import { ParkingLotsTableComponent } from './components/parking-lots-table/parking-lots-table.component';
 import { AddressPipe } from './pipe/address.pipe';
 import { HoursPipe } from './pipe/hours.pipe';
+import { DaysPipe } from './pipe/days.pipe';
+import { HourPipe } from './pipe/hour.pipe';
+import { HoursFormComponent } from './components/hours-form/hours-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.component';
 
 @NgModule({
   declarations: [
@@ -38,12 +43,17 @@ import { HoursPipe } from './pipe/hours.pipe';
     ParkingLotsTableComponent,
     AddressPipe,
     HoursPipe,
+    DaysPipe,
+    HourPipe,
+    HoursFormComponent,
+    WeekdaysFormComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     TranslateModule.forChild(),
     RouterModule,
+    ReactiveFormsModule,
   ],
   exports: [
     MaterialModule,
@@ -62,6 +72,10 @@ import { HoursPipe } from './pipe/hours.pipe';
     ParkingLotsTableComponent,
     AddressPipe,
     HoursPipe,
+    DaysPipe,
+    HourPipe,
+    HoursFormComponent,
+    WeekdaysFormComponent,
   ],
   providers: [
     { provide: ToastService, useClass: MaterialToastService },

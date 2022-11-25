@@ -28,7 +28,10 @@
     "REQUIRED": "To pole jest wymagane",
     "MIN_LENGTH": "To pole musi mieć conajmniej {{length}} znaków",
     "MAX_LENGTH": "To pole musi mieć maksymalnie {{length}} znaków",
-    "EMAIL": "Niepoprawny adres email"
+    "EMAIL": "Niepoprawny adres email",
+    "MIN": "Minimalna wartość - {{value}}",
+    "MAX": "Maksymalna wartość - {{value}}",
+    "HOUR_FROM_GREATER_THAN_HOUR_TO": "Błędne godziny"
   },
   "TOAST": {
     "CHECK_EMAIL": "Sprawdź swój email",
@@ -108,7 +111,8 @@
     "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Przypisz parking",
     "ASSIGN_PARKING_LOT_DIALOG_DESC": "Przypisz kierowcę do parkingu. Dzięki temu będzie mógł robić na nim rezerwacje",
     "DRIVERS_SUBTITLE": "Zarządzaj kierowcami, dostępnymi dla nich parkingami oraz rezerwacjami",
-    "REMOVE_ASSIGNMENT": "Usuń przypisanie"
+    "REMOVE_ASSIGNMENT": "Usuń przypisanie",
+    "DAYS": "Dni"
   },
   "ROLE": {
     "ADMIN": "Administrator",
@@ -130,5 +134,21 @@
     "NEXT_PAGE_LABEL": "Następna strona",
     "PREVIOUS_PAGE_LABEL": "Poprzednia strona",
     "RANGE_LABEL": "Strona {{page}} z {{of}}"
+  },
+  "WEEKDAYS" : {
+    "MONDAY": "Poniedziałek",
+    "TUESDAY" : "Wtorek",
+    "WEDNESDAY": "Środa",
+    "THURSDAY" : "Czwartek",
+    "FRIDAY" : "Piątek",
+    "SATURDAY" : "Sobota",
+    "SUNDAY": "Niedziela",
+    "MONDAY_SHORT": "Pn",
+    "TUESDAY_SHORT" : "Wt",
+    "WEDNESDAY_SHORT": "Śr",
+    "THURSDAY_SHORT" : "Czw",
+    "FRIDAY_SHORT" : "Pt",
+    "SATURDAY_SHORT" : "Sb",
+    "SUNDAY_SHORT": "Nd"
   }
 }

@@ -29,16 +29,18 @@
       <mat-step [stepControl]="hoursForm">
         <form [formGroup]="hoursForm" class="stepper__form">
           <ng-template matStepLabel>{{translations.FILL_OUT_OPERATION_HOURS | translate}}</ng-template>
+          <sps-hours-form formControlName="hours">
+            <sps-form-error [control]="hoursForm.controls['hours']"></sps-form-error>
+          </sps-hours-form>
           <mat-form-field appearance="fill">
-            <mat-label>{{translations.HOUR_FROM | translate}}</mat-label>
-            <input type="time" matInput formControlName="hourFrom" required>
-            <sps-form-error [control]="hoursForm.controls['hourFrom']"></sps-form-error>
+            <mat-label>Choose a date</mat-label>
+            <input formControlName="validFrom" matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>{{translations.HOUR_TO | translate}}</mat-label>
-            <input matInput type="time" formControlName="hourTo" required>
-            <sps-form-error [control]="hoursForm.controls['hourTo']"></sps-form-error>
-          </mat-form-field>
+          <sps-weekdays-form formControlName="days">
+            <sps-form-error [control]="hoursForm.controls['days']"></sps-form-error>
+          </sps-weekdays-form>
           <div>
             <button mat-button matStepperPrevious>{{translations.PREVIOUS | translate}}</button>
             <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>

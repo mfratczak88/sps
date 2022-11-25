@@ -7,7 +7,7 @@ import { Injectable, Pipe, PipeTransform } from '@angular/core';
   providedIn: 'root',
 })
 export class HoursPipe implements PipeTransform {
-  transform(hours: { hourFrom?: string; hourTo?: string }): unknown {
+  transform(hours: { hourFrom?: number; hourTo?: number }): unknown {
     const { hourFrom, hourTo } = hours;
     return `${hourFrom} - ${hourTo}`;
   }
