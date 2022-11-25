@@ -13,15 +13,11 @@ import { ParkingLot } from '../../../core/model/parking-lot.model';
 export class ChangeHoursDialogComponent {
   translations = { ...AdminKeys, ...MiscKeys };
 
-  initialHours: { hourFrom: string; hourTo: string };
+  initialHours: { hourFrom: number; hourTo: number };
 
   form = new FormGroup({
-    hourFrom: new FormControl<string | null>(null, [
-      LocalizedValidators.required,
-    ]),
-    hourTo: new FormControl<string | null>(null, [
-      LocalizedValidators.required,
-    ]),
+    hourFrom: new FormControl<number>(0, [LocalizedValidators.required]),
+    hourTo: new FormControl<number>(0, [LocalizedValidators.required]),
   });
 
   constructor(
