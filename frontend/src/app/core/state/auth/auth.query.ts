@@ -15,6 +15,10 @@ export class AuthQuery extends Query<AuthState> {
     return AuthQuery.nonEmptyAuth(this.getValue());
   }
 
+  role() {
+    return this.getValue()?.role;
+  }
+
   constructor(store: AuthStore) {
     super(store);
   }

@@ -21,10 +21,28 @@ export class RouterService {
     );
   }
 
+  adminDashBoardUrlTree() {
+    return this.router.parseUrl(TopLevelPaths.ADMIN_DASHBOARD);
+  }
+
+  clerkDashboardUrlTree() {
+    return this.router.parseUrl(TopLevelPaths.CLERK_DASHBOARD);
+  }
+
+  driverDashboardUrlTree() {
+    return this.router.parseUrl(TopLevelPaths.DRIVER_DASHBOARD);
+  }
+
   toAdminParkingLotDetails(id: string) {
     return this.router.navigate([
       `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}/${id}`,
     ]);
+  }
+
+  unAuthorizedUrlTree() {
+    return this.router.parseUrl(
+      `${TopLevelPaths.ERROR}/${ErrorPaths.UNAUTHORIZED}`,
+    );
   }
 
   toAdminParkingLot() {

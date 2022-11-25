@@ -4,8 +4,13 @@ export interface User {
   name: string;
   validToISO?: string;
   authExpiresIn: string;
+  role: Role;
 }
-
+export enum Role {
+  ADMIN = 'admin',
+  DRIVER = 'driver',
+  CLERK = 'clerk',
+}
 export interface LoginCredentials {
   email: string;
   password: string;
@@ -19,6 +24,7 @@ export const initialStoreState: User = {
   validToISO: '',
   name: '',
   authExpiresIn: '',
+  role: Role.DRIVER,
 };
 
 export interface RegisterUserPayload {

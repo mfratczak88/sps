@@ -1,6 +1,8 @@
 export enum TopLevelPaths {
   AUTH = 'auth',
   ADMIN_DASHBOARD = 'admin-dashboard',
+  CLERK_DASHBOARD = 'clerk-dashboard',
+  DRIVER_DASHBOARD = 'driver-dashboard',
   ERROR = 'error',
 }
 
@@ -15,6 +17,7 @@ export enum AuthPaths {
 export enum ErrorPaths {
   NOT_FOUND = 'not-found',
   INTERNAL_SERVER_ERROR = 'internal-server-error',
+  UNAUTHORIZED = 'unauthorized',
 }
 
 export enum AdminPaths {
@@ -26,4 +29,10 @@ export enum AdminPaths {
   CREATE_PARKING = `create-parking-lot`,
   DRIVERS = 'drivers',
   DRIVER_DETAILS = 'drivers/:id',
+}
+export enum ClerkPaths {
+  DASHBOARD = 'dashboard',
+}
+export enum DriverPaths {
+  DASHBOARD = 'dashboard',
 }

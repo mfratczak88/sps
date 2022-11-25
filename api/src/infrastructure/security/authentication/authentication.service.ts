@@ -195,7 +195,7 @@ export class AuthenticationService {
   }
 
   private static userToDto(user: User, tokenExpiration?: number): UserDto {
-    const { id, email, name } = user;
+    const { id, email, name, role } = user;
     const tokenExpirationDate = new Date();
     tokenExpirationDate.setSeconds(
       tokenExpirationDate.getSeconds() + Number(tokenExpiration || 0),
@@ -206,6 +206,7 @@ export class AuthenticationService {
       email,
       authExpiresIn: tokenExpiration + 's',
       validToISO: tokenExpirationDate.toISOString(),
+      role,
     };
   }
 
@@ -304,6 +305,8 @@ export class UserDto {
   authExpiresIn: string | undefined;
 
   validToISO: string;
+
+  role: Role;
 }
 
 export interface AuthToken {

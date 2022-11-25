@@ -6,11 +6,12 @@ import { AuthGuard } from '../core/guards/auth.guard';
 import { AdminDrawerKeys } from '../core/translation-keys';
 import { AdminPaths, TopLevelPaths } from '../routes';
 import { PanelComponent } from './panel/panel.component';
+import { AdminGuard } from '../core/guards/role.guard';
 
 export const DASHBOARD_ROUTE = {
   path: '',
   component: AdminDashboardComponent,
-  canActivate: [AuthGuard],
+  canActivate: [AuthGuard, AdminGuard],
   runGuardsAndResolvers: 'always',
   data: {
     breadcrumbs: {
