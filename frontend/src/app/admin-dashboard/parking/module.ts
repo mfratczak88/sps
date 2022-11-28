@@ -22,7 +22,6 @@ import { ParkingListComponent } from './list/list.component';
     CreateComponent,
     ChangeHoursDialogComponent,
     ChangeCapacityDialogComponent,
-
     ParkingListComponent,
   ],
 })

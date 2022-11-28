@@ -9,6 +9,7 @@ export interface ParkingLotDto {
   id: Id;
   city: string;
   streetName: string;
-  hourFrom: string;
-  hourTo: string;
+  streetNumber: string;
+  hourFrom: number;
+  hourTo: number;
 }

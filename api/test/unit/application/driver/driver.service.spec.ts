@@ -1,8 +1,8 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { DriverRepository } from '../../../../src/domain/driver.repository';
+import { DriverRepository } from '../../../../src/domain/driver/driver.repository';
 import { DriverService } from '../../../../src/application/driver/driver.service';
 import { randomId } from '../../../misc.util';
-import { Driver } from '../../../../src/domain/driver';
+import { Driver } from '../../../../src/domain/driver/driver';
 import {
   AddVehicleCommand,
   AssignParkingLotCommand,

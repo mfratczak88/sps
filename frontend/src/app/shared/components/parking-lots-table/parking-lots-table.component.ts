@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AddressPipe } from '../../pipe/address.pipe';
 import { HoursPipe } from '../../pipe/hours.pipe';
+import { DaysPipe } from '../../pipe/days.pipe';
 
 @Component({
   selector: 'sps-parking-lots-table',
@@ -32,11 +33,14 @@ export class ParkingLotsTableComponent implements OnInit {
     { name: 'address', translation: this.translations.COLUMN_ADDRESS },
     { name: 'capacity', translation: this.translations.CAPACITY },
     { name: 'hours', translation: this.translations.HOURS },
+    { name: 'days', translation: this.translations.DAYS },
+    { name: 'validFrom', translation: this.translations.VALID_FROM },
   ];
 
   constructor(
     private readonly addressPipe: AddressPipe,
     private readonly hoursPipe: HoursPipe,
+    private readonly daysPipe: DaysPipe,
   ) {}
 
   ngOnInit(): void {
@@ -52,9 +56,15 @@ export class ParkingLotsTableComponent implements OnInit {
           ...lot,
           hours: this.hoursPipe.transform(lot),
           address: this.addressPipe.transform(lot),
+          days: this.daysPipe.transform(lot),
         })),
       ),
     );
   }
 }
-export type ParkingLotTableColumnName = 'address' | 'capacity' | 'hours';
+export type ParkingLotTableColumnName =
+  | 'address'
+  | 'capacity'
+  | 'hours'
+  | 'days'
+  | 'validFrom';

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 
 import { InternalServerErrorComponent } from './internal-server-error/internal-server-error.component';
 import { ErrorPaths } from '../routes';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
       {
         path: ErrorPaths.INTERNAL_SERVER_ERROR,
         component: InternalServerErrorComponent,
+      },
+      {
+        path: ErrorPaths.UNAUTHORIZED,
+        component: UnauthorizedComponent,
       },
       {
         path: '',

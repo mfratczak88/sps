@@ -28,7 +28,11 @@
     "REQUIRED": "This field cannot be empty",
     "MIN_LENGTH": "It needs to be at least {{length}} characters",
     "MAX_LENGTH": "It needs to be max {{length}} characters",
-    "EMAIL": "Invalid email address"
+    "EMAIL": "Invalid email address",
+    "MIN": "Min value - {{value}}",
+    "MAX": "Max value - {{value}}",
+    "HOUR_FROM_GREATER_THAN_HOUR_TO": "Invalid hours",
+    "NONE_CHECKBOX_SELECTED": "Select at least one"
   },
   "TOAST": {
     "CHECK_EMAIL": "Please check your email. Check your mailbox",
@@ -47,7 +51,9 @@
     "UNKNOWN_ERROR": "Some unknown error has occurred",
     "PAGE_NOT_FOUND": "Page not found",
     "PAGE_NOT_FOUND_TEXT": "Page you're looking for has not been found",
-    "TO_HOME_PAGE": "To home page"
+    "TO_HOME_PAGE": "To home page",
+    "UNAUTHORIZED": "Unauthorized",
+    "UNAUTHORIZED_TEXT": "You're not authorized to view this page"
   },
   "SHARED": {
     "HEY_USER": "Hey",
@@ -108,7 +114,9 @@
     "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Assign parking lot",
     "ASSIGN_PARKING_LOT_DIALOG_DESC": "Assign parking lot to a driver. After that he/she can place reservations",
     "DRIVERS_SUBTITLE": "Manage drivers, their parking lots assignments and reservations",
-    "REMOVE_ASSIGNMENT": "Remove assignment"
+    "REMOVE_ASSIGNMENT": "Remove assignment",
+    "DAYS": "Days",
+    "VALID_FROM": "Valid from"
   },
   "ROLE": {
     "ADMIN": "Administrator",
@@ -130,5 +138,21 @@
     "NEXT_PAGE_LABEL": "Next page",
     "PREVIOUS_PAGE_LABEL": "Previous page",
     "RANGE_LABEL": "Page {{page}} of {{of}}"
+  },
+  "WEEKDAYS" : {
+    "MONDAY": "Monday",
+    "TUESDAY" : "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY" : "Thursday",
+    "FRIDAY" : "Friday",
+    "SATURDAY" : "Saturday",
+    "SUNDAY": "Sunday",
+    "MONDAY_SHORT": "Mon",
+    "TUESDAY_SHORT" : "Tue",
+    "WEDNESDAY_SHORT": "Wed",
+    "THURSDAY_SHORT" : "Thu",
+    "FRIDAY_SHORT" : "Fri",
+    "SATURDAY_SHORT" : "Sat",
+    "SUNDAY_SHORT": "Sun"
   }
 }

@@ -94,12 +94,6 @@ export class AuthenticationService {
     }
   }
 
-  async getUserData(userId: Id): Promise<UserDto> {
-    let user = await this.userService.findById(userId);
-    if (!user) user = await this.userService.findByEmail(userId);
-    return AuthenticationService.userToDto(user);
-  }
-
   async getUserIfTokenMatches(userId: Id, refreshToken: string) {
     let user = await this.userService.findById(userId);
     if (!user) user = await this.userService.findByEmail(userId);
@@ -201,7 +195,7 @@ export class AuthenticationService {
   }
 
   private static userToDto(user: User, tokenExpiration?: number): UserDto {
-    const { id, email, name } = user;
+    const { id, email, name, role } = user;
     const tokenExpirationDate = new Date();
     tokenExpirationDate.setSeconds(
       tokenExpirationDate.getSeconds() + Number(tokenExpiration || 0),
@@ -212,6 +206,7 @@ export class AuthenticationService {
       email,
       authExpiresIn: tokenExpiration + 's',
       validToISO: tokenExpirationDate.toISOString(),
+      role,
     };
   }
 
@@ -310,6 +305,8 @@ export class UserDto {
   authExpiresIn: string | undefined;
 
   validToISO: string;
+
+  role: Role;
 }
 
 export interface AuthToken {

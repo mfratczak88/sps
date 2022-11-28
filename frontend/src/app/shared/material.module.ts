@@ -1,6 +1,10 @@
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatOptionModule, MatRippleModule } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  MatOptionModule,
+  MatRippleModule,
+} from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -21,6 +25,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const modules = [
   MatFormFieldModule,
@@ -47,6 +53,9 @@ const modules = [
   MatSelectModule,
   MatProgressSpinnerModule,
   MatPaginatorModule,
+  MatCheckboxModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
 ];
 @NgModule({
   imports: [...modules],

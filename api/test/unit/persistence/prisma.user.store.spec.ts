@@ -1,7 +1,7 @@
 import { createMock } from '@golevelup/ts-jest';
 import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaUserStore } from '../../../src/persistence/prisma/prisma.user.store';
+import { PrismaUserStore } from '../../../src/persistence/prisma/user/prisma.user.store';
 import {
   RegistrationMethod,
   User,

@@ -36,15 +36,20 @@ export class CreateComponent {
       ],
     });
     this.hoursForm = this.formBuilder.group({
-      hourFrom: [null, [LocalizedValidators.required]],
-      hourTo: [null, [LocalizedValidators.required]],
+      hours: [{ hourFrom: 6, hourTo: 22 }],
+      validFrom: [new Date(Date.now())],
+      days: [[0, 1, 2, 3, 4, 5, 6]],
     });
   }
 
   onCreate() {
     const { city, streetName, streetNumber } = this.addressForm.value;
     const { capacity } = this.capacityForm.value;
-    const { hourFrom, hourTo } = this.hoursForm.value;
+    const {
+      hours: { hourFrom, hourTo },
+      validFrom,
+      days,
+    } = this.hoursForm.value;
     this.parkingService
       .createParkingLot({
         capacity: Number(capacity),
@@ -56,6 +61,8 @@ export class CreateComponent {
         hoursOfOperation: {
           hourFrom,
           hourTo,
+          validFrom,
+          days,
         },
       })
       .subscribe(() => this.routerService.toAdminParkingLot());

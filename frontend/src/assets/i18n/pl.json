@@ -28,7 +28,11 @@
     "REQUIRED": "To pole jest wymagane",
     "MIN_LENGTH": "To pole musi mieć conajmniej {{length}} znaków",
     "MAX_LENGTH": "To pole musi mieć maksymalnie {{length}} znaków",
-    "EMAIL": "Niepoprawny adres email"
+    "EMAIL": "Niepoprawny adres email",
+    "MIN": "Minimalna wartość - {{value}}",
+    "MAX": "Maksymalna wartość - {{value}}",
+    "HOUR_FROM_GREATER_THAN_HOUR_TO": "Błędne godziny",
+    "NONE_CHECKBOX_SELECTED": "Zaznacz przynajmniej jeden"
   },
   "TOAST": {
     "CHECK_EMAIL": "Sprawdź swój email",
@@ -47,7 +51,9 @@
     "UNKNOWN_ERROR": "Wystąpił nieznany błąd",
     "PAGE_NOT_FOUND": "Strona nie istnieje",
     "PAGE_NOT_FOUND_TEXT": "Strona której szukasz nie istnieje",
-    "TO_HOME_PAGE": "Strona główna"
+    "TO_HOME_PAGE": "Strona główna",
+    "UNAUTHORIZED": "Brak dostępu",
+    "UNAUTHORIZED_TEXT": "Nie masz dostępu do tej strony"
   },
   "SHARED": {
     "HEY_USER": "Hej",
@@ -108,7 +114,9 @@
     "ASSIGN_PARKING_LOT_DIALOG_TITLE": "Przypisz parking",
     "ASSIGN_PARKING_LOT_DIALOG_DESC": "Przypisz kierowcę do parkingu. Dzięki temu będzie mógł robić na nim rezerwacje",
     "DRIVERS_SUBTITLE": "Zarządzaj kierowcami, dostępnymi dla nich parkingami oraz rezerwacjami",
-    "REMOVE_ASSIGNMENT": "Usuń przypisanie"
+    "REMOVE_ASSIGNMENT": "Usuń przypisanie",
+    "DAYS": "Dni",
+    "VALID_FROM": "Otwarty od"
   },
   "ROLE": {
     "ADMIN": "Administrator",
@@ -130,5 +138,21 @@
     "NEXT_PAGE_LABEL": "Następna strona",
     "PREVIOUS_PAGE_LABEL": "Poprzednia strona",
     "RANGE_LABEL": "Strona {{page}} z {{of}}"
+  },
+  "WEEKDAYS" : {
+    "MONDAY": "Poniedziałek",
+    "TUESDAY" : "Wtorek",
+    "WEDNESDAY": "Środa",
+    "THURSDAY" : "Czwartek",
+    "FRIDAY" : "Piątek",
+    "SATURDAY" : "Sobota",
+    "SUNDAY": "Niedziela",
+    "MONDAY_SHORT": "Pn",
+    "TUESDAY_SHORT" : "Wt",
+    "WEDNESDAY_SHORT": "Śr",
+    "THURSDAY_SHORT" : "Czw",
+    "FRIDAY_SHORT" : "Pt",
+    "SATURDAY_SHORT" : "Sb",
+    "SUNDAY_SHORT": "Nd"
   }
 }

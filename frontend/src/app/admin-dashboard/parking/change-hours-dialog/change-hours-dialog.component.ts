@@ -1,9 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
-import { FormControl, FormGroup } from '@angular/forms';
-import { LocalizedValidators } from '../../../shared/validator';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import {
+  HoursOfOperation,
+  ParkingLot,
+} from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-change-hours-dialog',
@@ -13,34 +15,24 @@ import { ParkingLot } from '../../../core/model/parking-lot.model';
 export class ChangeHoursDialogComponent {
   translations = { ...AdminKeys, ...MiscKeys };
 
-  initialHours: { hourFrom: string; hourTo: string };
+  initialHours: HoursOfOperation;
 
-  form = new FormGroup({
-    hourFrom: new FormControl<string | null>(null, [
-      LocalizedValidators.required,
-    ]),
-    hourTo: new FormControl<string | null>(null, [
-      LocalizedValidators.required,
-    ]),
-  });
+  form: FormGroup<{ hours: FormControl<HoursOfOperation> }>;
 
   constructor(
     readonly dialogRef: MatDialogRef<ChangeHoursDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private readonly data: ParkingLot,
+    private readonly fb: FormBuilder,
   ) {
     const { hourFrom, hourTo } = data;
-    this.initialHours = {
-      hourTo,
-      hourFrom,
-    };
-    this.form.setValue({
-      hourTo,
-      hourFrom,
+    this.initialHours = { hourFrom, hourTo };
+    this.form = this.fb.nonNullable.group({
+      hours: [{ hourFrom, hourTo }],
     });
   }
 
   onChange() {
-    const { hourFrom, hourTo } = this.form.value;
+    const { hourFrom, hourTo } = this.form.controls.hours.value;
     this.dialogRef.close({
       hourFrom,
       hourTo,
@@ -48,7 +40,7 @@ export class ChangeHoursDialogComponent {
   }
 
   hoursNotChanged() {
-    const { hourFrom, hourTo } = this.form.value;
+    const { hourFrom, hourTo } = this.form.controls.hours.value;
     return (
       hourFrom === this.initialHours.hourFrom &&
       hourTo === this.initialHours.hourTo

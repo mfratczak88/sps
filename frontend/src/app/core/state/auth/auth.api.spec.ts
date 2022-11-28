@@ -5,7 +5,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { environment } from '../../../../environments/environment';
-import { RegisterUserPayload, User } from './auth.model';
+import { RegisterUserPayload, Role, User } from './auth.model';
 
 describe('Auth api spec', () => {
   let api: AuthApi;
@@ -29,6 +29,7 @@ describe('Auth api spec', () => {
       name: 'Maciek',
       validToISO: new Date().toISOString(),
       authExpiresIn: '900',
+      role: Role.DRIVER,
     };
     api.login(email, password).subscribe(data => {
       expect(data).toEqual(userResponse);
@@ -51,6 +52,7 @@ describe('Auth api spec', () => {
       name: 'Alex',
       validToISO: new Date().toISOString(),
       authExpiresIn: '900',
+      role: Role.DRIVER,
     };
     api
       .loginWithGoogle(idToken, email)
@@ -112,6 +114,7 @@ describe('Auth api spec', () => {
       name: 'Alex Sanchez',
       validToISO: new Date().toISOString(),
       authExpiresIn: '900',
+      role: Role.DRIVER,
     };
     api.refreshToken().subscribe(res => expect(res).toEqual(user));
 

@@ -4,12 +4,17 @@ import {
   SocialAuthService,
   SocialUser,
 } from '@abacritt/angularx-social-login';
-import SpyObj = jasmine.SpyObj;
 import { AuthApi } from './auth.api';
-import { initialStoreState, RegisterUserPayload, User } from './auth.model';
+import {
+  initialStoreState,
+  RegisterUserPayload,
+  Role,
+  User,
+} from './auth.model';
 import { of } from 'rxjs';
 import { AuthStore } from './auth.store';
 import { ToastService } from '../../service/toast.service';
+import SpyObj = jasmine.SpyObj;
 
 describe('Auth service', () => {
   let authService: AuthService;
@@ -51,6 +56,7 @@ describe('Auth service', () => {
       id: '3',
       validToISO: new Date().toISOString(),
       authExpiresIn: '900s',
+      role: Role.DRIVER,
     };
     const password = '444fdsad33/23@#';
 
@@ -85,6 +91,7 @@ describe('Auth service', () => {
       id: '2137',
       validToISO: new Date().toISOString(),
       authExpiresIn: '900s',
+      role: Role.DRIVER,
     };
     authApi.refreshToken.and.returnValue(of(userResponse));
     authService.refreshToken().subscribe(res => {
@@ -112,6 +119,7 @@ describe('Auth service', () => {
       email: googleSignInResult.email!,
       validToISO: new Date().toISOString(),
       authExpiresIn: '900s',
+      role: Role.DRIVER,
     };
 
     authApi.loginWithGoogle.and.returnValue(of(user));
@@ -170,6 +178,7 @@ describe('Auth service', () => {
       email: 'michelle@gmail.com',
       validToISO: validToInThePast.toISOString(),
       authExpiresIn: '900s',
+      role: Role.DRIVER,
     };
     const userWithUpdatedToken: User = {
       ...user,
@@ -197,6 +206,7 @@ describe('Auth service', () => {
       email: 'mike@gmail.com',
       validToISO: validDate.toISOString(),
       authExpiresIn: '900s',
+      role: Role.DRIVER,
     };
     localStorage.setItem('user', JSON.stringify(user));
     authService.restoreAuth();
