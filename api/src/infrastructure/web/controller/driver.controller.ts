@@ -8,17 +8,20 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { DriverService } from '../../application/driver/driver.service';
-import { Id } from '../../domain/id';
+import { DriverService } from '../../../application/driver/driver.service';
+import { Id } from '../../../domain/id';
 import {
   AddVehicleCommand,
   AssignParkingLotCommand,
-} from '../../application/driver/driver.command';
-import RoleGuard from '../security/authorization/role.guard';
-import { Role } from '../security/authorization/role';
-import { CsrfGuard } from '../security/csrf/csrf.guard';
-import { JwtAuthGuard } from '../security/authorization/jwt-auth.guard';
-import { DriverFinder } from '../../application/driver/driver.finder';
+} from '../../../application/driver/driver.command';
+import RoleGuard from '../../security/authorization/role.guard';
+import { Role } from '../../security/authorization/role';
+import { CsrfGuard } from '../../security/csrf/csrf.guard';
+import { JwtAuthGuard } from '../../security/authorization/jwt-auth.guard';
+import { DriverFinder } from '../../../application/driver/driver.finder';
+import { PoliciesGuard } from '../../security/authorization/policy/policies.guard';
+import { CheckPolicies } from '../../security/authorization/policy/check-policies.decorator';
+import { CanAddVehicle } from '../../security/authorization/policy/driver.policy';
 
 @Controller('drivers')
 export class DriverController {
@@ -28,11 +31,14 @@ export class DriverController {
   ) {}
 
   @Get()
+  @UseGuards(RoleGuard(Role.ADMIN))
   getAllDrivers() {
     return this.finder.findAll();
   }
-  @UseGuards(JwtAuthGuard, CsrfGuard)
+
   @Post(':driverId/vehicles')
+  @UseGuards(JwtAuthGuard, CsrfGuard, PoliciesGuard)
+  @CheckPolicies(new CanAddVehicle())
   addVehicle(
     @Param('driverId') driverId: Id,
     @Body() command: AddVehicleCommand,
@@ -42,8 +48,9 @@ export class DriverController {
       driverId,
     });
   }
-  @UseGuards(RoleGuard(Role.ADMIN), CsrfGuard)
+
   @Post(':driverId/parkingLots')
+  @UseGuards(RoleGuard(Role.ADMIN), CsrfGuard)
   addParkingLot(
     @Param('driverId') driverId: Id,
     @Body() command: AssignParkingLotCommand,
@@ -53,6 +60,7 @@ export class DriverController {
       driverId,
     });
   }
+
   @UseGuards(RoleGuard(Role.ADMIN), CsrfGuard)
   @HttpCode(202)
   @Delete(':driverId/parkingLots/:parkingLotId')

@@ -6,12 +6,14 @@ import { SharedModule } from '../shared/shared.module';
 import { ErrorRoutingModule } from './error.routing.module';
 import { InternalServerErrorComponent } from './internal-server-error/internal-server-error.component';
 import { CoreModule } from '../core/core.module';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
     NotFoundComponent,
     ErrorComponent,
     InternalServerErrorComponent,
+    UnauthorizedComponent,
   ],
   imports: [CommonModule, ErrorRoutingModule, CoreModule, SharedModule],
 })

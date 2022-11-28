@@ -8,17 +8,17 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ParkingLotService } from '../../application/parking-lot/parking-lot.service';
+import { ParkingLotService } from '../../../application/parking-lot/parking-lot.service';
 import {
   ChangeCapacityCommand,
   ChangeHoursOfOperationCommand,
   CreateParkingLotCommand,
-} from '../../application/parking-lot/parking-lot.command';
-import { Id } from '../../domain/id';
-import { CsrfGuard } from '../security/csrf/csrf.guard';
-import RoleGuard from '../security/authorization/role.guard';
-import { Role } from '../security/authorization/role';
-import { ParkingLotFinder } from '../../application/parking-lot/parking-lot.finder';
+} from '../../../application/parking-lot/parking-lot.command';
+import { Id } from '../../../domain/id';
+import { CsrfGuard } from '../../security/csrf/csrf.guard';
+import RoleGuard from '../../security/authorization/role.guard';
+import { Role } from '../../security/authorization/role';
+import { ParkingLotFinder } from '../../../application/parking-lot/parking-lot.finder';
 
 @Controller('parking-lots')
 export class ParkingLotController {

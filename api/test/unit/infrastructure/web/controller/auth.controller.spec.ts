@@ -7,12 +7,12 @@ import {
   LoginWithGoogleCommand,
   RegisterUserCommand,
   ResendRegistrationConfirmationCommand,
-} from '../../../../src/infrastructure/security/authentication/authentication.service';
-import { TokenService } from '../../../../src/infrastructure/security/token.service';
-import { AuthController } from '../../../../src/infrastructure/web/auth.controller';
+} from '../../../../../src/infrastructure/security/authentication/authentication.service';
+import { TokenService } from '../../../../../src/infrastructure/security/token.service';
+import { AuthController } from '../../../../../src/infrastructure/web/controller/auth.controller';
 import { Request, Response } from 'express';
-import { RequestWithUser } from '../../../../src/infrastructure/security/authorization/jwt.strategy';
-import { Role } from '../../../../src/infrastructure/security/authorization/role';
+import { RequestWithUser } from '../../../../../src/infrastructure/security/authorization/jwt.strategy';
+import { Role } from '../../../../../src/infrastructure/security/authorization/role';
 describe('Auth controller', () => {
   let authServiceMock: DeepMocked<AuthenticationService>;
   let tokenServiceMock: DeepMocked<TokenService>;

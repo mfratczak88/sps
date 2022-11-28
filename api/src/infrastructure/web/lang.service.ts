@@ -3,6 +3,7 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { getI18nContextFromRequest } from 'nestjs-i18n';
+
 @Injectable({
   scope: Scope.REQUEST,
 })

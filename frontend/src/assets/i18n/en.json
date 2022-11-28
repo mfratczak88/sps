@@ -31,7 +31,8 @@
     "EMAIL": "Invalid email address",
     "MIN": "Min value - {{value}}",
     "MAX": "Max value - {{value}}",
-    "HOUR_FROM_GREATER_THAN_HOUR_TO": "Invalid hours"
+    "HOUR_FROM_GREATER_THAN_HOUR_TO": "Invalid hours",
+    "NONE_CHECKBOX_SELECTED": "Select at least one"
   },
   "TOAST": {
     "CHECK_EMAIL": "Please check your email. Check your mailbox",
@@ -50,7 +51,9 @@
     "UNKNOWN_ERROR": "Some unknown error has occurred",
     "PAGE_NOT_FOUND": "Page not found",
     "PAGE_NOT_FOUND_TEXT": "Page you're looking for has not been found",
-    "TO_HOME_PAGE": "To home page"
+    "TO_HOME_PAGE": "To home page",
+    "UNAUTHORIZED": "Unauthorized",
+    "UNAUTHORIZED_TEXT": "You're not authorized to view this page"
   },
   "SHARED": {
     "HEY_USER": "Hey",
@@ -112,7 +115,8 @@
     "ASSIGN_PARKING_LOT_DIALOG_DESC": "Assign parking lot to a driver. After that he/she can place reservations",
     "DRIVERS_SUBTITLE": "Manage drivers, their parking lots assignments and reservations",
     "REMOVE_ASSIGNMENT": "Remove assignment",
-    "DAYS": "Days"
+    "DAYS": "Days",
+    "VALID_FROM": "Valid from"
   },
   "ROLE": {
     "ADMIN": "Administrator",

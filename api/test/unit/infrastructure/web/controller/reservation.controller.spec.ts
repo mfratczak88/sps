@@ -1,11 +1,11 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { ReservationService } from '../../../../src/application/reservation/reservation.service';
-import { ReservationController } from '../../../../src/infrastructure/web/reservation.controller';
+import { ReservationService } from '../../../../../src/application/reservation/reservation.service';
+import { ReservationController } from '../../../../../src/infrastructure/web/controller/reservation.controller';
 import {
   ChangeTimeCommand,
   CreateReservationCommand,
-} from '../../../../src/application/reservation/reservation.command';
-import { randomId } from '../../../misc.util';
+} from '../../../../../src/application/reservation/reservation.command';
+import { randomId } from '../../../../misc.util';
 
 describe('Reservation controller', () => {
   let reservationServiceMock: DeepMocked<ReservationService>;

@@ -8,7 +8,7 @@ import { LanguageService } from '../application/language.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigurationModule, Environment } from '../configuration.module';
-import { AuthController } from './web/auth.controller';
+import { AuthController } from './web/controller/auth.controller';
 import { AuthenticationService } from './security/authentication/authentication.service';
 import { UserService } from './security/user/user.service';
 import { CookieService } from './security/cookie.service';
@@ -21,10 +21,10 @@ import * as Tokens from 'csrf';
 import { OAuth2Client } from 'google-auth-library';
 
 import { ApplicationModule } from '../application/application.module';
-import { UsersController } from './web/users.controller';
-import { ParkingLotController } from './web/parking-lot.controller';
-import { DriverController } from './web/driver.controller';
-import { ReservationController } from './web/reservation.controller';
+import { UsersController } from './web/controller/users.controller';
+import { ParkingLotController } from './web/controller/parking-lot.controller';
+import { DriverController } from './web/controller/driver.controller';
+import { ReservationController } from './web/controller/reservation.controller';
 
 const providers: Provider[] = [
   {

@@ -1,13 +1,13 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { ParkingLotService } from '../../../../src/application/parking-lot/parking-lot.service';
-import { ParkingLotFinder } from '../../../../src/application/parking-lot/parking-lot.finder';
-import { ParkingLotController } from '../../../../src/infrastructure/web/parking-lot.controller';
+import { ParkingLotService } from '../../../../../src/application/parking-lot/parking-lot.service';
+import { ParkingLotFinder } from '../../../../../src/application/parking-lot/parking-lot.finder';
+import { ParkingLotController } from '../../../../../src/infrastructure/web/controller/parking-lot.controller';
 import {
   ChangeCapacityCommand,
   ChangeHoursOfOperationCommand,
   CreateParkingLotCommand,
-} from '../../../../src/application/parking-lot/parking-lot.command';
-import { randomId } from '../../../misc.util';
+} from '../../../../../src/application/parking-lot/parking-lot.command';
+import { randomId } from '../../../../misc.util';
 
 describe('Parking lot controller', () => {
   let parkingLotService: DeepMocked<ParkingLotService>;
