@@ -1,9 +1,9 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { UserService } from '../../../../src/infrastructure/security/user/user.service';
-import { UsersController } from '../../../../src/infrastructure/web/users.controller';
-import { randomId } from '../../../misc.util';
-import { ChangeRoleCommand } from '../../../../src/infrastructure/security/user/user.command';
-import { Role } from '../../../../src/infrastructure/security/authorization/role';
+import { UserService } from '../../../../../src/infrastructure/security/user/user.service';
+import { UsersController } from '../../../../../src/infrastructure/web/controller/users.controller';
+import { randomId } from '../../../../misc.util';
+import { ChangeRoleCommand } from '../../../../../src/infrastructure/security/user/user.command';
+import { Role } from '../../../../../src/infrastructure/security/authorization/role';
 
 describe('Users controller', () => {
   let usersServiceMock: DeepMocked<UserService>;

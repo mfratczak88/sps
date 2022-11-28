@@ -1,12 +1,12 @@
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { DriverService } from '../../../../src/application/driver/driver.service';
-import { DriverFinder } from '../../../../src/application/driver/driver.finder';
-import { DriverController } from '../../../../src/infrastructure/web/driver.controller';
+import { DriverService } from '../../../../../src/application/driver/driver.service';
+import { DriverFinder } from '../../../../../src/application/driver/driver.finder';
+import { DriverController } from '../../../../../src/infrastructure/web/controller/driver.controller';
 import {
   AddVehicleCommand,
   AssignParkingLotCommand,
-} from '../../../../src/application/driver/driver.command';
-import { randomId } from '../../../misc.util';
+} from '../../../../../src/application/driver/driver.command';
+import { randomId } from '../../../../misc.util';
 
 describe('Driver controller', () => {
   let driverServiceMock: DeepMocked<DriverService>;

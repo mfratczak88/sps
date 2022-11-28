@@ -59,6 +59,12 @@ describe('Driver e2e', () => {
       await createDummyParkingLot(parkingLotId, prismaService);
     });
     beforeEach(async () => {
+      const { email, password } = driver;
+      ({ csrfTokenCookie, csrfToken, loginCookies } = await authenticateUser(
+        email,
+        password,
+        app,
+      ));
       await prismaService.vehicle.deleteMany({
         where: {
           userId: driver.id,

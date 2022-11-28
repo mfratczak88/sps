@@ -6,14 +6,14 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ReservationService } from '../../application/reservation/reservation.service';
+import { ReservationService } from '../../../application/reservation/reservation.service';
 import {
   ChangeTimeCommand,
   CreateReservationCommand,
-} from '../../application/reservation/reservation.command';
-import { Id } from '../../domain/id';
-import { PoliciesGuard } from '../security/authorization/policy/policies.guard';
-import { CheckPolicies } from '../security/authorization/policy/check-policies.decorator';
+} from '../../../application/reservation/reservation.command';
+import { Id } from '../../../domain/id';
+import { PoliciesGuard } from '../../security/authorization/policy/policies.guard';
+import { CheckPolicies } from '../../security/authorization/policy/check-policies.decorator';
 import {
   CanCancelReservation,
   CanChangeTimeOfReservation,
@@ -21,7 +21,7 @@ import {
   CanCreateReservation,
   CanIssueParkingTicket,
   CanReturnParkingTicket,
-} from '../security/authorization/policy/reservation.policy';
+} from '../../security/authorization/policy/reservation.policy';
 
 @Controller('reservations')
 export class ReservationController {

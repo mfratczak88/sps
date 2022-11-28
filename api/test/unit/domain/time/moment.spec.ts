@@ -1,7 +1,6 @@
 import { DomainException } from '../../../../src/domain/domain.exception';
 import { MessageCode } from '../../../../src/message';
 import { MomentInTime } from '../../../../src/domain/time/moment';
-import { DateTime } from 'luxon';
 import { wait } from '../../../misc.util';
 
 describe('Moment in time', () => {
