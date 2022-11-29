@@ -35,4 +35,7 @@ export enum ClerkPaths {
 }
 export enum DriverPaths {
   DASHBOARD = 'dashboard',
+  RESERVATIONS = 'reservations',
+  PARKING_LOTS = 'parking-lots',
+  VEHICLES = 'vehicles',
 }

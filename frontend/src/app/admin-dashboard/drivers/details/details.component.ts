@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
 import { filter, first } from 'rxjs';
 import { Button } from '../../../shared/components/table/table.component';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-driver-details',
@@ -23,7 +23,7 @@ export class DriverDetailsComponent implements OnInit {
       name: 'remove',
       translation: this.translations.REMOVE_ASSIGNMENT,
       icon: 'delete',
-      onClick: ({ id: parkingLotId }: ParkingLot) =>
+      onClick: ({ id: parkingLotId }: ParkingLotAdminModel) =>
         this.onRemoveParkingLotAssignment(parkingLotId),
     },
   ];

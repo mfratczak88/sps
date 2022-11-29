@@ -36,6 +36,11 @@ export class DriverController {
     return this.finder.findAll();
   }
 
+  @Get(':driverId')
+  getDriver(@Param('driverId') id: Id) {
+    return this.finder.findById(id);
+  }
+
   @Post(':driverId/vehicles')
   @UseGuards(JwtAuthGuard, CsrfGuard, PoliciesGuard)
   @CheckPolicies(new CanAddVehicle())

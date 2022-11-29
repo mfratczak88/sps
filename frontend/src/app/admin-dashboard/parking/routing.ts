@@ -1,5 +1,5 @@
 import { AdminPaths } from '../../routes';
-import { AdminDrawerKeys } from '../../core/translation-keys';
+import { DrawerKeys } from '../../core/translation-keys';
 import { DetailsComponent } from './details/details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ const PARKING_LOT_LIST_ROUTE = {
   component: ParkingListComponent,
   data: {
     breadcrumbs: {
-      label: AdminDrawerKeys.PARKING,
+      label: DrawerKeys.PARKING,
       path: AdminPaths.PARKING,
       parent: DASHBOARD_ROUTE,
     },
@@ -23,7 +23,7 @@ const CREATE_PARKING_ROUTE = {
   component: CreateComponent,
   data: {
     breadcrumbs: {
-      label: AdminDrawerKeys.PARKING,
+      label: DrawerKeys.PARKING,
       path: AdminPaths.PARKING,
       parent: PARKING_LOT_LIST_ROUTE,
     },
@@ -34,7 +34,7 @@ const DETAILS_ROUTE = {
   component: DetailsComponent,
   data: {
     breadcrumbs: {
-      label: AdminDrawerKeys.PARKING_DETAILS,
+      label: DrawerKeys.PARKING_DETAILS,
       path: ':parkingLotId',
       parent: PARKING_LOT_LIST_ROUTE,
     },

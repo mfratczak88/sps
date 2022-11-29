@@ -7,18 +7,19 @@ import { RouterQuery } from '../../../core/state/router/router.query';
 import { DriversService } from '../state/drivers.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DriversQuery } from '../state/drivers.query';
-import { Driver } from '../state/drivers.model';
+
 import { EMPTY, lastValueFrom, NEVER, Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ParkingLotsTableComponent } from '../../../shared/components/parking-lots-table/parking-lots-table.component';
 import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
 import { buttonCells } from '../../../../../test/test.util';
 import SpyObj = jasmine.SpyObj;
+import { Driver } from '../../../core/model/driver.model';
 
 describe('Driver details component', () => {
   let fixture: ComponentFixture<DriverDetailsComponent>;
@@ -110,7 +111,7 @@ describe('Driver details component', () => {
     // then
     const [componentClass, data] = dialogSpy.open.calls.mostRecent().args;
     expect(componentClass).toEqual(AssignParkingLotDialogComponent);
-    (data?.data as Observable<ParkingLot[]>).subscribe(lots => {
+    (data?.data as Observable<ParkingLotAdminModel[]>).subscribe(lots => {
       expect(lots[0]).toEqual(parkingLots[1]);
       expect(lots.length).toEqual(1);
     });

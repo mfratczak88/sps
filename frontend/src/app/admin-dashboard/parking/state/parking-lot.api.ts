@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BaseApi } from '../../../core/service/base.api';
+import { BaseApi } from '../../../core/api/base.api';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
-  ParkingLot,
+  ParkingLotAdminModel,
 } from '../../../core/model/parking-lot.model';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class ParkingLotApi extends BaseApi {
   }
 
   getAll() {
-    return this.http.get<ParkingLot[]>(this.BASE_URL);
+    return this.http.get<ParkingLotAdminModel[]>(this.BASE_URL);
   }
 
   changeHours(hours: ChangeHoursOfOperations, parkingLotId: string) {

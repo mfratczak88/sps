@@ -1,0 +1,13 @@
+<sps-card class="vehicles" *ngIf="driverQuery.select() | async as driver"
+          [title]="translations.VEHICLES"
+          [subTitle]="translations.VEHICLES_ADD_PROMPT">
+  <div class="vehicles__list" content>
+    <span class="vehicles__list--vehicle" *ngFor="let vehicle of driver.vehicles">
+      {{vehicle.licensePlate}}
+    </span>
+  </div>
+  <button mat-raised-button color="primary" (click)="onAddNewVehicle()">
+    <mat-icon>add</mat-icon>
+    {{translations.ADD | translate}}
+  </button>
+</sps-card>

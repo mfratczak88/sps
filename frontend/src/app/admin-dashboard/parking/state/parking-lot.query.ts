@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { ParkingLotState, ParkingLotStore } from './parking-lot.store';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class ParkingLotQuery extends QueryEntity<ParkingLotState> {
     super(store);
   }
 
-  active$(): Observable<ParkingLot> {
-    return this.selectActive() as Observable<ParkingLot>;
+  active$(): Observable<ParkingLotAdminModel> {
+    return this.selectActive() as Observable<ParkingLotAdminModel>;
   }
 }

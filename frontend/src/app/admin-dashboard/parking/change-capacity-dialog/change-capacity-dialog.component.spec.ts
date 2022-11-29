@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangeCapacityDialogComponent } from './change-capacity-dialog.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { mockParkingLots } from '../../../../../test/driver.utils';
@@ -17,7 +17,7 @@ import SpyObj = jasmine.SpyObj;
 describe('ChangeCapacityDialogComponent', () => {
   let fixture: ComponentFixture<ChangeCapacityDialogComponent>;
   let loader: HarnessLoader;
-  let parkingLot: ParkingLot;
+  let parkingLot: ParkingLotAdminModel;
   let dialogRefSpy: SpyObj<MatDialogRef<ChangeCapacityDialogComponent>>;
 
   const inputHarness = async () => {

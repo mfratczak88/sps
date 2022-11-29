@@ -1,0 +1,13 @@
+@use "../../../variables" as vars;
+.vehicles {
+  display: block;
+  max-width: 350px;
+}
+.vehicles__list {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+.vehicles__list--vehicle {
+  @include vars.typography-body-m()
+}

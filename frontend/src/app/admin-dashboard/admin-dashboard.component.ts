@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DrawerItem } from '../shared/components/drawer/drawer.component';
-import { AdminDrawerKeys } from '../core/translation-keys';
+import { DrawerKeys } from '../core/translation-keys';
 import { AdminPaths } from '../routes';
 
 @Component({
@@ -11,27 +11,27 @@ import { AdminPaths } from '../routes';
 export class AdminDashboardComponent {
   drawerItems: DrawerItem[] = [
     {
-      name: AdminDrawerKeys.DASHBOARD,
+      name: DrawerKeys.DASHBOARD,
       icon: 'dashboard',
       link: AdminPaths.DASHBOARD,
     },
     {
-      name: AdminDrawerKeys.PARKING,
+      name: DrawerKeys.PARKING,
       icon: 'emoji_transportation',
       link: AdminPaths.PARKING,
     },
     {
-      name: AdminDrawerKeys.RESERVATIONS,
+      name: DrawerKeys.RESERVATIONS,
       icon: 'calendar_month',
       link: AdminPaths.RESERVATIONS,
     },
     {
-      name: AdminDrawerKeys.DRIVERS,
+      name: DrawerKeys.DRIVERS,
       icon: 'camera_front',
       link: AdminPaths.DRIVERS,
     },
     {
-      name: AdminDrawerKeys.USERS,
+      name: DrawerKeys.USERS,
       icon: 'person',
       link: AdminPaths.USERS,
     },

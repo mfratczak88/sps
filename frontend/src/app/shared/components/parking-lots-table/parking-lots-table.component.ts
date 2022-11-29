@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { Button, Column } from '../table/table.component';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AddressPipe } from '../../pipe/address.pipe';
@@ -17,7 +17,7 @@ export class ParkingLotsTableComponent implements OnInit {
   readonly translations = { ...AdminKeys, ...MiscKeys };
 
   @Input()
-  parkingLots$: Observable<Partial<ParkingLot>[]> = of([]);
+  parkingLots$: Observable<Partial<ParkingLotAdminModel>[]> = of([]);
 
   @Input()
   tableButtons: Button[];

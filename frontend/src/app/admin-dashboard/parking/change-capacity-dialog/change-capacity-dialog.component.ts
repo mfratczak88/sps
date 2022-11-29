@@ -3,7 +3,7 @@ import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-change-capacity-dialog',
@@ -17,7 +17,7 @@ export class ChangeCapacityDialogComponent {
 
   constructor(
     readonly dialogRef: MatDialogRef<ChangeCapacityDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) readonly data: ParkingLot,
+    @Inject(MAT_DIALOG_DATA) readonly data: ParkingLotAdminModel,
   ) {
     this.capacity.setValue(data.capacity);
   }

@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { DriversState, DriversStore } from './drivers.store';
 import { combineLatestWith, Observable } from 'rxjs';
-import { Driver } from './drivers.model';
+
 import { ParkingLotQuery } from '../../parking/state/parking-lot.query';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { map } from 'rxjs/operators';
+import { Driver } from '../../../core/model/driver.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class DriversQuery extends QueryEntity<DriversState> {
     return <Observable<Driver>>this.selectActive();
   }
 
-  driverUnAssignedParkingLots$(): Observable<ParkingLot[]> {
+  driverUnAssignedParkingLots$(): Observable<ParkingLotAdminModel[]> {
     return this.active$().pipe(
       combineLatestWith(this.parkingLotQuery.selectAll()),
       map(([driver, parkingLots]) => {

@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   DayToShortTranslation,
   OperationTimeDays,
-  ParkingLot,
+  ParkingLotAdminModel,
 } from '../../core/model/parking-lot.model';
 import { mockParkingLots } from '../../../../test/driver.utils';
 
@@ -21,7 +21,7 @@ describe('DaysPipe', () => {
   });
 
   it('shows first and last day with hyphen if no gap between', () => {
-    const lot: ParkingLot = {
+    const lot: ParkingLotAdminModel = {
       ...mockParkingLots[0],
       days: [
         OperationTimeDays.MONDAY,
@@ -43,7 +43,7 @@ describe('DaysPipe', () => {
     expect(actualDaysString).toEqual(expectedDaysString);
   });
   it('shows days separated by comma if in some day theres a gap', () => {
-    const lot: ParkingLot = {
+    const lot: ParkingLotAdminModel = {
       ...mockParkingLots[0],
       days: [
         OperationTimeDays.MONDAY,

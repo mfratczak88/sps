@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { first, Observable } from 'rxjs';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { FormControl } from '@angular/forms';
@@ -16,11 +16,12 @@ export class AssignParkingLotDialogComponent {
 
   selectedLot = new FormControl(null, [LocalizedValidators.required]);
 
-  lots: ParkingLot[] = [];
+  lots: ParkingLotAdminModel[] = [];
 
   constructor(
     readonly dialogRef: MatDialogRef<AssignParkingLotDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private readonly data: Observable<ParkingLot[]>,
+    @Inject(MAT_DIALOG_DATA)
+    private readonly data: Observable<ParkingLotAdminModel[]>,
   ) {
     this.data.pipe(first()).subscribe(lots => {
       this.lots = lots;

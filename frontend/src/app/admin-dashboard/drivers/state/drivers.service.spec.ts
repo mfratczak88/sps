@@ -1,6 +1,6 @@
 import SpyObj = jasmine.SpyObj;
 import { DriversStore } from './drivers.store';
-import { DriversApi } from './drivers.api';
+
 import { ParkingLotService } from '../../parking/state/parking-lot.service';
 import { ToastService } from '../../../core/service/toast.service';
 import { RouterService } from '../../../core/state/router/router.service';
@@ -8,6 +8,7 @@ import { DriversService } from './drivers.service';
 import { of } from 'rxjs';
 import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
 import { ToastKeys } from '../../../core/translation-keys';
+import { DriversApi } from '../../../core/api/drivers.api';
 
 describe('Drivers service', () => {
   let storeSpy: SpyObj<DriversStore>;

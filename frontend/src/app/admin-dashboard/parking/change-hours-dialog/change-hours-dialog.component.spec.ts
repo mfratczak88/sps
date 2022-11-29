@@ -4,7 +4,7 @@ import { ChangeHoursDialogComponent } from './change-hours-dialog.component';
 import { By } from '@angular/platform-browser';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { mockParkingLots } from '../../../../../test/driver.utils';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +17,7 @@ import SpyObj = jasmine.SpyObj;
 describe('ChangeHoursDialogComponent', () => {
   let fixture: ComponentFixture<ChangeHoursDialogComponent>;
   let loader: HarnessLoader;
-  let parkingLot: ParkingLot;
+  let parkingLot: ParkingLotAdminModel;
   let dialogRefSpy: SpyObj<MatDialogRef<ChangeHoursDialogComponent>>;
 
   const selectHarnesses = async () => {

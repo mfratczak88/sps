@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   HoursOfOperation,
-  ParkingLot,
+  ParkingLotAdminModel,
 } from '../../../core/model/parking-lot.model';
 
 @Component({
@@ -21,7 +21,7 @@ export class ChangeHoursDialogComponent {
 
   constructor(
     readonly dialogRef: MatDialogRef<ChangeHoursDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private readonly data: ParkingLot,
+    @Inject(MAT_DIALOG_DATA) private readonly data: ParkingLotAdminModel,
     private readonly fb: FormBuilder,
   ) {
     const { hourFrom, hourTo } = data;
