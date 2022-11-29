@@ -17,7 +17,7 @@ export class PoliciesGuard implements CanActivate {
         context.getHandler(),
       ) || [];
     const request = context.switchToHttp().getRequest();
-    const { user, body } = request;
+    const { user, body, params } = request;
     return (
       await Promise.all(
         policyHandlers.map((policyHandler) =>
@@ -25,6 +25,7 @@ export class PoliciesGuard implements CanActivate {
             moduleRef: this.moduleRef,
             userId: user.id,
             command: body,
+            params,
           }),
         ),
       )

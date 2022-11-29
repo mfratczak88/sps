@@ -40,7 +40,7 @@ export class DriverController {
   }
 
   @Get(':id')
-  @UseGuards(PoliciesGuard)
+  @UseGuards(JwtAuthGuard, PoliciesGuard)
   @CheckPolicies(new CanViewDriverDetails())
   getDriver(@Param('id') id: Id) {
     return this.finder.findById(id);
