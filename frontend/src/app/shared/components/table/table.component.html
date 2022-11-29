@@ -1,9 +1,6 @@
 <div class="content">
-  <ng-container *ngIf="(loading$ | async) else content">
-    <div class="content__loading">
-      <mat-spinner></mat-spinner>
-    </div>
-  </ng-container>
+  <sps-loading-spinner *ngIf="(loading$ | async) else content">
+  </sps-loading-spinner>
   <ng-template #content>
     <div class="search" *ngIf="withSearch">
       <mat-form-field appearance="legacy">

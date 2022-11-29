@@ -1,7 +1,6 @@
 <div class="parking-lots">
-  <div class="parking-lots__spinner" *ngIf="parkingLotQuery.selectLoading() | async; else table">
-    <mat-spinner></mat-spinner>
-  </div>
+  <sps-loading-spinner class="parking-lots__spinner" *ngIf="parkingLotQuery.selectLoading() | async; else table">
+  </sps-loading-spinner>
   <ng-template #table>
     <sps-panel title="{{translations.PARKING_LOTS_TABLE_HEADER | translate}}">
       <button btn mat-raised-button color="primary" (click)="routerService.toCreateParkingLot()">

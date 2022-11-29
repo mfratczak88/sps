@@ -1,6 +1,5 @@
-<div class="loading" *ngIf="(parkingLotQuery.selectLoading() | async); else details">
-  <mat-spinner class="loading__spinner"></mat-spinner>
-</div>
+<sps-loading-spinner class="loading" *ngIf="(parkingLotQuery.selectLoading() | async); else details">
+</sps-loading-spinner>
 <ng-template #details>
   <ng-container *ngIf="parkingLotQuery.active$() | async as parkingLot">
     <sps-panel [title]="parkingLot | address">

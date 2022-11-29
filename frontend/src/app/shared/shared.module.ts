@@ -26,6 +26,7 @@ import { HourPipe } from './pipe/hour.pipe';
 import { HoursFormComponent } from './components/hours-form/hours-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.
     HourPipe,
     HoursFormComponent,
     WeekdaysFormComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -76,6 +78,7 @@ import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.
     HourPipe,
     HoursFormComponent,
     WeekdaysFormComponent,
+    LoadingSpinnerComponent,
   ],
   providers: [
     { provide: ToastService, useClass: MaterialToastService },

@@ -1,7 +1,7 @@
 import { DriverStore } from './driver.store';
 import { AuthQuery } from '../../core/state/auth/auth.query';
 import { DriversApi } from '../../core/api/drivers.api';
-import { concatMap, filter, NEVER, tap } from 'rxjs';
+import { concatMap, filter, finalize, NEVER, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Driver, Vehicle } from '../../core/model/driver.model';
 import { ToastService } from '../../core/service/toast.service';
@@ -25,7 +25,9 @@ export class DriverService {
       .select()
       .pipe(
         filter(auth => !!auth?.id),
+        tap(() => this.store.setLoading(true)),
         concatMap(auth => (auth ? this.driverApi.getById(auth.id) : NEVER)),
+        finalize(() => this.store.setLoading(false)),
       )
       .subscribe(driver => this.store._setState(driver));
   }
