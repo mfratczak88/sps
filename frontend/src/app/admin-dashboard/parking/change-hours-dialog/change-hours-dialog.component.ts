@@ -2,10 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {
-  HoursOfOperation,
-  ParkingLotAdminModel,
-} from '../../../core/model/parking-lot.model';
+import { HoursOfOperation, ParkingLot } from '../../../core/model/admin.model';
 
 @Component({
   selector: 'sps-change-hours-dialog',
@@ -21,7 +18,7 @@ export class ChangeHoursDialogComponent {
 
   constructor(
     readonly dialogRef: MatDialogRef<ChangeHoursDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private readonly data: ParkingLotAdminModel,
+    @Inject(MAT_DIALOG_DATA) private readonly data: ParkingLot,
     private readonly fb: FormBuilder,
   ) {
     const { hourFrom, hourTo } = data;

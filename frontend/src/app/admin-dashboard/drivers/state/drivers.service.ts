@@ -7,7 +7,7 @@ import { ParkingLotService } from '../../parking/state/parking-lot.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ToastKeys } from '../../../core/translation-keys';
 import { DriversApi } from '../../../core/api/drivers.api';
-import { RemoveParkingLotAssignment } from '../../../core/model/driver.model';
+import { RemoveParkingLotAssignment } from '../../../core/model/admin.model';
 
 @Injectable({
   providedIn: 'root',

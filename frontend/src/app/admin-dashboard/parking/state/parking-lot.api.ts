@@ -5,8 +5,8 @@ import { environment } from '../../../../environments/environment';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
-  ParkingLotAdminModel,
-} from '../../../core/model/parking-lot.model';
+  ParkingLot,
+} from '../../../core/model/admin.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class ParkingLotApi extends BaseApi {
   }
 
   getAll() {
-    return this.http.get<ParkingLotAdminModel[]>(this.BASE_URL);
+    return this.http.get<ParkingLot[]>(this.BASE_URL);
   }
 
   changeHours(hours: ChangeHoursOfOperations, parkingLotId: string) {

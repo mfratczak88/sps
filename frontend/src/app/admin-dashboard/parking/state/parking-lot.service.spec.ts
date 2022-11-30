@@ -5,13 +5,14 @@ import { ParkingLotStore } from './parking-lot.store';
 import { ParkingLotApi } from './parking-lot.api';
 import { mockParkingLots } from '../../../../../test/driver.utils';
 import { of } from 'rxjs';
+
+import { ToastKeys } from '../../../core/translation-keys';
+import SpyObj = jasmine.SpyObj;
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
-  OperationTimeDays,
-} from '../../../core/model/parking-lot.model';
-import { ToastKeys } from '../../../core/translation-keys';
-import SpyObj = jasmine.SpyObj;
+} from '../../../core/model/admin.model';
+import { OperationTimeDays } from '../../../core/model/common.model';
 
 describe('Parking lot service', () => {
   let storeSpy: SpyObj<ParkingLotStore>;

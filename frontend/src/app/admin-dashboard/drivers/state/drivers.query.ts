@@ -4,9 +4,8 @@ import { DriversState, DriversStore } from './drivers.store';
 import { combineLatestWith, Observable } from 'rxjs';
 
 import { ParkingLotQuery } from '../../parking/state/parking-lot.query';
-import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 import { map } from 'rxjs/operators';
-import { Driver } from '../../../core/model/driver.model';
+import { Driver, ParkingLot } from '../../../core/model/admin.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +22,7 @@ export class DriversQuery extends QueryEntity<DriversState> {
     return <Observable<Driver>>this.selectActive();
   }
 
-  driverUnAssignedParkingLots$(): Observable<ParkingLotAdminModel[]> {
+  driverUnAssignedParkingLots$(): Observable<ParkingLot[]> {
     return this.active$().pipe(
       combineLatestWith(this.parkingLotQuery.selectAll()),
       map(([driver, parkingLots]) => {

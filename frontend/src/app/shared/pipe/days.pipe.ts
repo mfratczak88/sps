@@ -1,10 +1,11 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
+
+import { TranslateService } from '@ngx-translate/core';
+import { ParkingLot } from '../../core/model/admin.model';
 import {
   DayToShortTranslation,
   OperationTimeDays,
-  ParkingLotAdminModel,
-} from '../../core/model/parking-lot.model';
-import { TranslateService } from '@ngx-translate/core';
+} from '../../core/model/common.model';
 
 @Pipe({
   name: 'days',
@@ -15,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class DaysPipe implements PipeTransform {
   constructor(private readonly translationService: TranslateService) {}
 
-  transform(lot?: Partial<ParkingLotAdminModel>): unknown {
+  transform(lot?: Partial<ParkingLot>): unknown {
     if (!lot || !lot.days) return '';
     const { days } = lot;
     for (let i = 1; i < days.length; i++) {

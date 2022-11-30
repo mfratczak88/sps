@@ -7,9 +7,9 @@ import { DriversApi } from './drivers.api';
 
 import {
   AssignDriverToParkingLot,
-  Driver,
+  Driver as AdminView,
   RemoveParkingLotAssignment,
-} from '../model/driver.model';
+} from '../model/admin.model';
 import { mockDriver } from '../../../../test/driver.utils';
 
 describe('Drivers api spec', () => {
@@ -24,7 +24,7 @@ describe('Drivers api spec', () => {
     httpTestingController = moduleRef.inject(HttpTestingController);
   });
   it('Get all calls api with base url', async () => {
-    const driversDto: Driver[] = [mockDriver];
+    const driversDto: AdminView[] = [mockDriver];
     api.getAll().subscribe(d => expect(d).toEqual(driversDto));
     const req = httpTestingController.expectOne(api.BASE_URL);
     expect(req.request.method).toEqual('GET');

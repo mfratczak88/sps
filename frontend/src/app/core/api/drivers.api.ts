@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { BaseApi } from './base.api';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Driver as DriverView } from '../model/driver.model';
 import {
   AssignDriverToParkingLot,
-  Driver,
-  DriverDetails,
+  Driver as AdminView,
   RemoveParkingLotAssignment,
-} from '../model/driver.model';
-
+} from '../model/admin.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -24,11 +23,11 @@ export class DriversApi extends BaseApi {
   }
 
   getById(id: string) {
-    return this.http.get<DriverDetails>(`${this.BASE_URL}/${id}`);
+    return this.http.get<DriverView>(`${this.BASE_URL}/${id}`);
   }
 
   getAll() {
-    return this.http.get<Driver[]>(this.BASE_URL);
+    return this.http.get<AdminView[]>(this.BASE_URL);
   }
 
   addVehicle(licensePlate: string, driverId: string) {

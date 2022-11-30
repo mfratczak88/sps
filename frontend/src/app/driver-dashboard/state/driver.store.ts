@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { DriverDetails } from '../../core/model/driver.model';
+import { Driver } from '../../core/model/driver.model';
 
-export type DriverState = DriverDetails;
+export type DriverState = Driver;
 
 @Injectable({
   providedIn: 'root',

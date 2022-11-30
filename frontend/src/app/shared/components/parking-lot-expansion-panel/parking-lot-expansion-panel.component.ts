@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ParkingLotBaseModel } from '../../../core/model/parking-lot.model';
+import { ParkingLot } from '../../../core/model/driver.model';
 
 @Component({
   selector: 'sps-parking-lot-expansion-panel',
@@ -10,5 +10,5 @@ export class ParkingLotExpansionPanelComponent {
   opened = false;
 
   @Input()
-  parkingLot: ParkingLotBaseModel;
+  parkingLot: ParkingLot;
 }

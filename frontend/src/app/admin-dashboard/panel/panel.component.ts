@@ -8,7 +8,7 @@ import { AdminPaths } from '../../routes';
   styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent {
-  cardTranslations = AdminKeys;
+  translations = AdminKeys;
 
   links = AdminPaths;
 }

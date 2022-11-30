@@ -4,11 +4,11 @@ import { ParkingLotService } from '../state/parking-lot.service';
 import { RouterQuery } from '../../../core/state/router/router.query';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { MatDialog } from '@angular/material/dialog';
-import { ParkingLotAdminModel } from '../../../core/model/parking-lot.model';
 
 import { concatMap, filter, first } from 'rxjs';
 import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-dialog.component';
 import { ChangeCapacityDialogComponent } from '../change-capacity-dialog/change-capacity-dialog.component';
+import { ParkingLot } from '../../../core/model/admin.model';
 
 @Component({
   selector: 'sps-parking-lot-details',
@@ -29,7 +29,7 @@ export class DetailsComponent implements OnInit {
     this.parkingLotService.select(this.routerQuery.parkingLotId());
   }
 
-  onChangeHours(lot: ParkingLotAdminModel) {
+  onChangeHours(lot: ParkingLot) {
     const dialogRef = this.dialog.open(ChangeHoursDialogComponent, {
       data: lot,
     });
@@ -45,7 +45,7 @@ export class DetailsComponent implements OnInit {
       .subscribe();
   }
 
-  onChangeCapacity(lot: ParkingLotAdminModel) {
+  onChangeCapacity(lot: ParkingLot) {
     const dialogRef = this.dialog.open(ChangeCapacityDialogComponent, {
       data: lot,
     });
