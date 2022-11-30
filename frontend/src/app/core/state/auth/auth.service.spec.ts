@@ -4,7 +4,7 @@ import {
   SocialAuthService,
   SocialUser,
 } from '@abacritt/angularx-social-login';
-import { AuthApi } from './auth.api';
+import { AuthApi } from '../../api/auth.api';
 import {
   initialStoreState,
   RegisterUserPayload,

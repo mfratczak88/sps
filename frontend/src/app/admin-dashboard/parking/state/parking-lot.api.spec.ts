@@ -7,8 +7,8 @@ import { TestBed } from '@angular/core/testing';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
-  OperationTimeDays,
-} from '../../../core/model/parking-lot.model';
+} from '../../../core/model/admin.model';
+import { OperationTimeDays } from '../../../core/model/common.model';
 
 describe('Parking lot api spec', () => {
   let httpTestingController: HttpTestingController;

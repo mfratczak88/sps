@@ -3,7 +3,7 @@ import { Route, RouterModule, Routes } from '@angular/router';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { AuthGuard } from '../core/guards/auth.guard';
 
-import { AdminDrawerKeys } from '../core/translation-keys';
+import { DrawerKeys } from '../core/translation-keys';
 import { AdminPaths, TopLevelPaths } from '../routes';
 import { PanelComponent } from './panel/panel.component';
 import { AdminGuard } from '../core/guards/role.guard';
@@ -15,7 +15,7 @@ export const DASHBOARD_ROUTE = {
   runGuardsAndResolvers: 'always',
   data: {
     breadcrumbs: {
-      label: AdminDrawerKeys.DASHBOARD,
+      label: DrawerKeys.DASHBOARD,
       path: '/' + TopLevelPaths.ADMIN_DASHBOARD,
     },
   },
@@ -30,7 +30,7 @@ export const DASHBOARD_ROUTE = {
       component: PanelComponent,
       data: {
         breadcrumbs: {
-          label: AdminDrawerKeys.DASHBOARD,
+          label: DrawerKeys.DASHBOARD,
           path: '/' + TopLevelPaths.ADMIN_DASHBOARD,
         },
       },

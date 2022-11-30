@@ -4,12 +4,13 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { DriversApi } from './drivers.api';
-import { mockDriver } from '../../../../../test/driver.utils';
+
 import {
   AssignDriverToParkingLot,
-  DriverDto,
+  Driver as AdminView,
   RemoveParkingLotAssignment,
-} from './drivers.model';
+} from '../model/admin.model';
+import { mockDriver } from '../../../../test/driver.utils';
 
 describe('Drivers api spec', () => {
   let httpTestingController: HttpTestingController;
@@ -23,7 +24,7 @@ describe('Drivers api spec', () => {
     httpTestingController = moduleRef.inject(HttpTestingController);
   });
   it('Get all calls api with base url', async () => {
-    const driversDto: DriverDto[] = [mockDriver];
+    const driversDto: AdminView[] = [mockDriver];
     api.getAll().subscribe(d => expect(d).toEqual(driversDto));
     const req = httpTestingController.expectOne(api.BASE_URL);
     expect(req.request.method).toEqual('GET');

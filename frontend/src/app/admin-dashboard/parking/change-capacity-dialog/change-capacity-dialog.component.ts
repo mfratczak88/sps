@@ -3,7 +3,7 @@ import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLot } from '../../../core/model/admin.model';
 
 @Component({
   selector: 'sps-change-capacity-dialog',

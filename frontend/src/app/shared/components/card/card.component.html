@@ -1,13 +1,21 @@
-<div class="container" [class.hoverable]="clickable">
-  <mat-card class="container__card" (click)="clickable && clicked.emit()">
-    <mat-card-title>{{title | translate}}</mat-card-title>
-    <mat-card-subtitle>{{subTitle | translate}}</mat-card-subtitle>
-    <mat-card-content>
-      <ng-content select="[content]"></ng-content>
-    </mat-card-content>
-    <mat-card-actions>
-      <ng-content></ng-content>
-    </mat-card-actions>
+<div [class.hoverable]="clickable">
+  <mat-card class="card" (click)="clickable && clicked.emit()">
+    <div class="card__header">
+      <div class="card__header--title">
+        <mat-card-title>{{title | translate}}</mat-card-title>
+        <ng-content select="[chip]"></ng-content>
+      </div>
+      <mat-card-subtitle>{{subTitle | translate}}</mat-card-subtitle>
+    </div>
+    <sps-loading-spinner *ngIf="loading$ && (loading$ | async) else content"></sps-loading-spinner>
+    <ng-template #content>
+      <mat-card-content>
+        <ng-content select="[content]"></ng-content>
+      </mat-card-content>
+      <mat-card-actions>
+        <ng-content></ng-content>
+      </mat-card-actions>
+    </ng-template>
   </mat-card>
 </div>
 

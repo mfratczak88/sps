@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { WeekDays } from '../../../core/translation-keys';
-import { DayToTranslation } from '../../../core/model/parking-lot.model';
+
 import {
   ControlValueAccessor,
   FormArray,
@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { LocalizedErrors, LocalizedValidationError } from '../../validator';
 import { Subscription } from 'rxjs';
+import { DayToTranslation } from '../../../core/model/common.model';
 
 @Component({
   selector: 'sps-weekdays-form',

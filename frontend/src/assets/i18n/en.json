@@ -44,7 +44,8 @@
     "HOURS_CHANGED": "Operation hours has been changed",
     "PARKING_LOT_CREATED": "Parking lot has been created",
     "PARKING_LOT_ASSIGNED" : "Parking lot assigned",
-    "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed"
+    "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed",
+    "VEHICLE_ADDED" : "Vehicle added"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",
@@ -59,13 +60,14 @@
     "HEY_USER": "Hey",
     "SIGN_OUT": "Sign out"
   },
-  "ADMIN_DRAWER": {
+  "DRAWER": {
     "DASHBOARD": "Dashboard",
     "PARKING": "Parking",
     "RESERVATIONS": "Reservations",
     "USERS": "Users",
     "PARKING_DETAILS": "Details",
-    "DRIVERS": "Drivers"
+    "DRIVERS": "Drivers",
+    "VEHICLES": "Vehicles"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Reservations",
@@ -154,5 +156,17 @@
     "FRIDAY_SHORT" : "Fri",
     "SATURDAY_SHORT" : "Sat",
     "SUNDAY_SHORT": "Sun"
+  },
+  "DRIVER": {
+    "ADD_VEHICLE_DIALOG_TITLE": "Add vehicle",
+    "LICENSE_PLATE": "License plate",
+    "VEHICLES": "Vehicles",
+    "VEHICLES_ADD_PROMPT": "Add vehicles to be able to make parking reservations",
+    "AVAILABLE_LOTS" : "Available parking lots",
+    "AVAILABLE_LOTS_INFO" : "You can reserve parking spot on those parking lots",
+    "REQUEST_ACCESS": "Request access",
+    "REQUEST_ACCESS_INFO": "In order to park here you need to request access",
+    "RESERVE": "Reserve"
+
   }
 }

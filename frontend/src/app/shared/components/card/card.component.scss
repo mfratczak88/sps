@@ -1,11 +1,22 @@
+@use "../../../../variables" as vars;
+
 .card {
-  display: flex;
-  flex-direction: column;
-}
-.container__card {
   justify-self: stretch;
   min-height: 10rem;
 }
+
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem
+}
+
+.card__header--title {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .hoverable:hover {
   cursor: pointer;
 }

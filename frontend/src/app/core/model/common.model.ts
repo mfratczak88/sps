@@ -1,18 +1,5 @@
 import { WeekDays, WeekDaysShort } from '../translation-keys';
 
-export interface ParkingLot {
-  id: string;
-  createdAt: string;
-  city: string;
-  streetName: string;
-  streetNumber: string;
-  capacity: number;
-  hourFrom: number;
-  hourTo: number;
-  validFrom: Date;
-  days: OperationTimeDays[];
-}
-
 export enum OperationTimeDays {
   MONDAY,
   TUESDAY,
@@ -41,29 +28,3 @@ export const DayToShortTranslation = {
   [OperationTimeDays.SATURDAY]: WeekDaysShort.SATURDAY,
   [OperationTimeDays.SUNDAY]: WeekDaysShort.SUNDAY,
 };
-export interface HoursOfOperation {
-  hourFrom: number;
-  hourTo: number;
-}
-export type ChangeHoursOfOperations = HoursOfOperation;
-
-export interface CreateParkingLot {
-  capacity: number;
-  hoursOfOperation: {
-    hourFrom: number;
-    hourTo: number;
-    validFrom: Date;
-    days: OperationTimeDays[];
-  };
-  address: {
-    city: string;
-    streetName: string;
-    streetNumber: string;
-  };
-}
-
-export interface Address {
-  city: string;
-  streetName: string;
-  streetNumber: string;
-}

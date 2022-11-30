@@ -6,8 +6,9 @@ import {
 } from '../../../shared/components/table/table.component';
 import { RouterService } from '../../../core/state/router/router.service';
 import { DriversQuery } from '../state/drivers.query';
-import { Driver } from '../state/drivers.model';
+
 import { DriversService } from '../state/drivers.service';
+import { Driver } from '../../../core/model/driver.model';
 
 @Component({
   selector: 'sps-drivers-list',

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DriversStore } from './drivers.store';
-import { DriversApi } from './drivers.api';
+
 import { finalize, tap } from 'rxjs';
 import { RouterService } from '../../../core/state/router/router.service';
 import { ParkingLotService } from '../../parking/state/parking-lot.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ToastKeys } from '../../../core/translation-keys';
-import { RemoveParkingLotAssignment } from './drivers.model';
+import { DriversApi } from '../../../core/api/drivers.api';
+import { RemoveParkingLotAssignment } from '../../../core/model/admin.model';
 
 @Injectable({
   providedIn: 'root',

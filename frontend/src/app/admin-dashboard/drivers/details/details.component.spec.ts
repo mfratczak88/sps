@@ -7,12 +7,12 @@ import { RouterQuery } from '../../../core/state/router/router.query';
 import { DriversService } from '../state/drivers.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DriversQuery } from '../state/drivers.query';
-import { Driver } from '../state/drivers.model';
+
 import { EMPTY, lastValueFrom, NEVER, Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ParkingLotsTableComponent } from '../../../shared/components/parking-lots-table/parking-lots-table.component';
 import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { ParkingLot, Driver } from '../../../core/model/admin.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
@@ -33,7 +33,7 @@ describe('Driver details component', () => {
   const driver: Driver = {
     ...mockDriver,
     parkingLots: [parkingLots[0]],
-    parkingLotCount: 1,
+    parkingLotsCount: 1,
   };
 
   const assignButton = () =>

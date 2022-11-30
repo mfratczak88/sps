@@ -1,5 +1,5 @@
-import { Driver } from '../src/app/admin-dashboard/drivers/state/drivers.model';
-import { OperationTimeDays } from '../src/app/core/model/parking-lot.model';
+import { OperationTimeDays } from '../src/app/core/model/common.model';
+import { Driver } from '../src/app/core/model/admin.model';
 
 export const mockParkingLots = [
   {
@@ -32,5 +32,5 @@ export const mockDriver: Driver = {
   email: 'foo@gmail.com',
   name: 'Alex',
   parkingLots: [],
-  parkingLotCount: 0,
+  parkingLotsCount: 0,
 };

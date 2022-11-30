@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { DriversState, DriversStore } from './drivers.store';
 import { combineLatestWith, Observable } from 'rxjs';
-import { Driver } from './drivers.model';
+
 import { ParkingLotQuery } from '../../parking/state/parking-lot.query';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
 import { map } from 'rxjs/operators';
+import { Driver, ParkingLot } from '../../../core/model/admin.model';
 
 @Injectable({
   providedIn: 'root',

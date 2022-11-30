@@ -21,7 +21,10 @@ import { JwtAuthGuard } from '../../security/authorization/jwt-auth.guard';
 import { DriverFinder } from '../../../application/driver/driver.finder';
 import { PoliciesGuard } from '../../security/authorization/policy/policies.guard';
 import { CheckPolicies } from '../../security/authorization/policy/check-policies.decorator';
-import { CanAddVehicle } from '../../security/authorization/policy/driver.policy';
+import {
+  CanAddVehicle,
+  CanViewDriverDetails,
+} from '../../security/authorization/policy/driver.policy';
 
 @Controller('drivers')
 export class DriverController {
@@ -34,6 +37,13 @@ export class DriverController {
   @UseGuards(RoleGuard(Role.ADMIN))
   getAllDrivers() {
     return this.finder.findAll();
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard, PoliciesGuard)
+  @CheckPolicies(new CanViewDriverDetails())
+  getDriver(@Param('id') id: Id) {
+    return this.finder.findById(id);
   }
 
   @Post(':driverId/vehicles')

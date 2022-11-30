@@ -1,10 +1,11 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
+
+import { TranslateService } from '@ngx-translate/core';
+import { ParkingLot } from '../../core/model/admin.model';
 import {
   DayToShortTranslation,
   OperationTimeDays,
-  ParkingLot,
-} from '../../core/model/parking-lot.model';
-import { TranslateService } from '@ngx-translate/core';
+} from '../../core/model/common.model';
 
 @Pipe({
   name: 'days',

@@ -2,12 +2,13 @@ import { DaysPipe } from './days.pipe';
 import { TestBed } from '@angular/core/testing';
 import { translateTestModule } from '../../../test.utils';
 import { TranslateService } from '@ngx-translate/core';
+
+import { mockParkingLots } from '../../../../test/driver.utils';
+import { ParkingLot } from '../../core/model/driver.model';
 import {
   DayToShortTranslation,
   OperationTimeDays,
-  ParkingLot,
-} from '../../core/model/parking-lot.model';
-import { mockParkingLots } from '../../../../test/driver.utils';
+} from '../../core/model/common.model';
 
 describe('DaysPipe', () => {
   let daysPipe: DaysPipe;

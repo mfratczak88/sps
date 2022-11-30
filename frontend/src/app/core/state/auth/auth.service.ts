@@ -15,7 +15,7 @@ import {
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
 import { initialStoreState, RegisterUserPayload, User } from './auth.model';
-import { AuthApi } from './auth.api';
+import { AuthApi } from '../../api/auth.api';
 import { AuthStore } from './auth.store';
 import { ToastService } from '../../service/toast.service';
 import { ToastKeys } from '../../translation-keys';

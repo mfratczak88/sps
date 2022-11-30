@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'sps-card',
@@ -14,6 +15,9 @@ export class CardComponent {
 
   @Input()
   clickable = false;
+
+  @Input()
+  loading$: Observable<boolean>;
 
   @Output()
   clicked = new EventEmitter<void>();
