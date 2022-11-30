@@ -1,0 +1,10 @@
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none;
+}
+.mat-action-row {
+  border-top: none;
+}
+.lot-property {
+  display: flex;
+  gap: 1rem;
+}

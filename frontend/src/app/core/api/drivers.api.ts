@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   AssignDriverToParkingLot,
   Driver,
+  DriverDetails,
   RemoveParkingLotAssignment,
 } from '../model/driver.model';
 
@@ -23,7 +24,7 @@ export class DriversApi extends BaseApi {
   }
 
   getById(id: string) {
-    return this.http.get<Driver>(`${this.BASE_URL}/${id}`);
+    return this.http.get<DriverDetails>(`${this.BASE_URL}/${id}`);
   }
 
   getAll() {

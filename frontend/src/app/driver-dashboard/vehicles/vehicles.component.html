@@ -1,6 +1,7 @@
 <sps-card class="vehicles" *ngIf="driverQuery.select() | async as driver"
           [title]="translations.VEHICLES"
           [subTitle]="translations.VEHICLES_ADD_PROMPT">
+  <sps-number-chip chip>{{driver.vehicles.length}}</sps-number-chip>
   <div class="vehicles__list" content>
     <sps-loading-spinner *ngIf="(driverQuery.selectLoading() | async) else vehiclesList"></sps-loading-spinner>
     <ng-template #vehiclesList>

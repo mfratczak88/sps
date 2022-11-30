@@ -162,6 +162,11 @@
     "ADD_VEHICLE_DIALOG_TITLE": "Dodaj pojazd",
     "LICENSE_PLATE": "Numer rejestracyjny",
     "VEHICLES": "Pojazdy",
-    "VEHICLES_ADD_PROMPT": "Dodaj pojazdy żeby móc robić rezerwacje"
+    "VEHICLES_ADD_PROMPT": "Dodaj pojazdy żeby móc robić rezerwacje",
+    "AVAILABLE_LOTS" : "Dostępne parkingi",
+    "AVAILABLE_LOTS_INFO" : "Możesz zarezerwować miejsce na tych parkingach",
+    "REQUEST_ACCESS": "Wystąp o dostęp",
+    "REQUEST_ACCESS_INFO": "Żeby móc tutaj zaparkować, musisz wystąpić o dostęp",
+    "RESERVE": "Rezerwuj"
   }
 }

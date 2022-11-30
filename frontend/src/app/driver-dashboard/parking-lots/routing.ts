@@ -1,14 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
-import { ParkingLotsComponent } from './parking-lots.component';
 import { DrawerKeys } from '../../core/translation-keys';
 import { DriverPaths } from '../../routes';
 import { DASHBOARD_ROUTE } from '../routing';
 import { NgModule } from '@angular/core';
+import { ParkingLotsListComponent } from './list/list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ParkingLotsComponent,
+    component: ParkingLotsListComponent,
     data: {
       breadcrumbs: {
         label: DrawerKeys.PARKING,

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { Driver } from '../../core/model/driver.model';
+import { DriverDetails } from '../../core/model/driver.model';
 
-export type DriverState = Driver;
+export type DriverState = DriverDetails;
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,7 @@ export class DriverStore extends Store<DriverState> {
       name: '',
       email: '',
       parkingLots: [],
+      unAssignedLots: [],
       vehicles: [],
     });
   }

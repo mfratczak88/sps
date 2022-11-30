@@ -161,6 +161,12 @@
     "ADD_VEHICLE_DIALOG_TITLE": "Add vehicle",
     "LICENSE_PLATE": "License plate",
     "VEHICLES": "Vehicles",
-    "VEHICLES_ADD_PROMPT": "Add vehicles to be able to make parking reservations"
+    "VEHICLES_ADD_PROMPT": "Add vehicles to be able to make parking reservations",
+    "AVAILABLE_LOTS" : "Available parking lots",
+    "AVAILABLE_LOTS_INFO" : "You can reserve parking spot on those parking lots",
+    "REQUEST_ACCESS": "Request access",
+    "REQUEST_ACCESS_INFO": "In order to park here you need to request access",
+    "RESERVE": "Reserve"
+
   }
 }

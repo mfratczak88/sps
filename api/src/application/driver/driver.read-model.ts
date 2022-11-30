@@ -5,6 +5,7 @@ export interface DriverReadModel {
   name: string;
   email: string;
   parkingLots: ParkingLotDto[];
+  unAssignedLots: ParkingLotDto[];
   vehicles: {
     licensePlate: string;
   }[];

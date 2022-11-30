@@ -7,6 +7,9 @@ export interface Driver {
   parkingLots: ParkingLotBaseModel[];
   vehicles: Vehicle[];
 }
+export type DriverDetails = Driver & {
+  unAssignedLots: ParkingLotBaseModel[];
+};
 export interface Vehicle {
   licensePlate: string;
 }
