@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import {
   AdminPaths,
@@ -13,7 +13,10 @@ import { QueryParamKeys } from './router.model';
   providedIn: 'root',
 })
 export class RouterService {
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly ngZone: NgZone,
+  ) {}
 
   urlTreeForLoginWithReturnUrl(returnUrl: string) {
     return this.router.parseUrl(
@@ -88,9 +91,11 @@ export class RouterService {
   }
 
   toInternalServerErrorPage() {
-    return this.router.navigate([
-      `/${TopLevelPaths.ERROR}/${ErrorPaths.INTERNAL_SERVER_ERROR}`,
-    ]);
+    return this.ngZone.run(() =>
+      this.router.navigate([
+        `/${TopLevelPaths.ERROR}/${ErrorPaths.INTERNAL_SERVER_ERROR}`,
+      ]),
+    );
   }
 
   navigateAfterLogin() {

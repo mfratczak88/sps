@@ -45,8 +45,8 @@
     "PARKING_LOT_CREATED": "Parking utworzony",
     "PARKING_LOT_ASSIGNED" : "Przypisano do parkingu",
     "PARKING_LOT_ASSIGNMENT_REMOVED" : "Usunięto przypisanie do parkingu",
-    "VEHICLE_ADDED" : "Dodano pojazd"
-
+    "VEHICLE_ADDED" : "Dodano pojazd",
+    "RESERVATION_CREATED": "Złożono rezerwacje"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Błąd serwera",
@@ -65,6 +65,7 @@
     "DASHBOARD": "Panel",
     "PARKING": "Parkingi",
     "RESERVATIONS": "Rezerwacje",
+    "CREATE_RESERVATION": "Create reservation",
     "USERS": "Użytkownicy",
     "PARKING_DETAILS": "Szczegóły",
     "DRIVERS": "Kierowcy",
@@ -87,7 +88,6 @@
     "COLUMN_EDIT": "Edycja",
     "COLUMN_DETAILS" : "Szczegóły",
     "COLUMN_ADDRESS" : "Adres",
-    "COLUMN_HOURS" : "Godziny",
     "COLUMN_CAPACITY": "Ilość miejsc",
     "PARKING_LOTS_TABLE_HEADER": "Parkingi",
     "USERS_TABLE_HEADER": "Użytkownicy",
@@ -102,13 +102,9 @@
     "CITY": "Miasto",
     "STREET_NAME": "Ulica",
     "STREET_NUMBER" : "Numer ulicy",
-    "NEXT" : "Dalej",
     "FILL_OUT_OPERATION_HOURS" : "Godziny otwarcia",
     "PREVIOUS": "Poprzedni",
     "FILL_OUT_CAPACITY": "Ilość miejsc parkingowych",
-    "SAVE": "Zapisz",
-    "BACK": "Anuluj",
-    "RESET": "Resetuj formularz",
     "DRIVERS" : "Kierowcy",
     "NAME": "Imię",
     "EMAIL": "Email",
@@ -132,7 +128,13 @@
     "SELECT": "Wybierz",
     "SEARCH": "Szukaj",
     "ADD" : "Dodaj",
-    "CHANGE": "Zmień"
+    "CHANGE": "Zmień",
+    "SAVE": "Zapisz",
+    "BACK": "Cofnij",
+    "PREVIOUS": "Poprzedni",
+    "RESET": "Resetuj",
+    "NEXT": "Dalej",
+    "HOURS": "Godziny"
   },
   "PAGINATION" : {
     "FIRST_PAGE_LABEL": "Pierwsza strona",
@@ -167,6 +169,14 @@
     "AVAILABLE_LOTS_INFO" : "Możesz zarezerwować miejsce na tych parkingach",
     "REQUEST_ACCESS": "Wystąp o dostęp",
     "REQUEST_ACCESS_INFO": "Żeby móc tutaj zaparkować, musisz wystąpić o dostęp",
-    "RESERVE": "Rezerwuj"
+    "RESERVE": "Rezerwuj",
+    "SELECT_PARKING_LOT": "Wybierz parking",
+    "PARKING_LOT": "Parking",
+    "CHOSE_A_DATE": "Wybierz date",
+    "DATE": "Data",
+    "MAKE_RESERVATION_TITLE": "Zarezerwuj miejsce parkingowe",
+    "MAKE_RESERVATION_SUBTITLE": "Pamiętaj żeby potwierdzić rezerwacje. Czas na potwierdzenie zaczyna się 4 godziny a kończy 30 minut przed planowanym przyjazdem",
+    "CHOOSE_VEHICLE": "Wybierz pojazd",
+    "VEHICLE": "Nr rejestracyjny"
   }
 }

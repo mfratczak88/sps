@@ -1,15 +1,18 @@
+@use "../../../../variables" as vars;
 .create {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  min-height: 100%;
   padding: 2rem;
   background: white;
+  @include vars.elevation();
 }
+
 .stepper {
   max-width: 350px;
 
 }
+
 .stepper__form {
   display: flex;
   flex-direction: column;

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
 import { ParkingLotService } from '../state/parking-lot.service';
 import { RouterService } from '../../../core/state/router/router.service';
-import { AdminKeys } from '../../../core/translation-keys';
+import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 
 @Component({
   selector: 'sps-create',
@@ -17,7 +17,7 @@ export class CreateComponent {
 
   hoursForm: FormGroup;
 
-  translations = AdminKeys;
+  translations = { ...AdminKeys, ...MiscKeys };
 
   constructor(
     private readonly formBuilder: FormBuilder,
