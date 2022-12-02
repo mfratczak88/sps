@@ -5,15 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { DriverDashboardRoutingModule } from './routing';
-import { ReservationsComponent } from './reservations/reservations.component';
-import { CreateReservationComponent } from './reservations/create/create.component';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    ReservationsComponent,
-    CreateReservationComponent,
-  ],
+  declarations: [DashboardComponent],
   imports: [
     DriverDashboardRoutingModule,
     CommonModule,

@@ -5,8 +5,6 @@ import { AuthGuard } from '../core/guards/auth.guard';
 import { DriverGuard } from '../core/guards/role.guard';
 import { DrawerKeys } from '../core/translation-keys';
 import { DriverPaths, TopLevelPaths } from '../routes';
-import { ReservationsComponent } from './reservations/reservations.component';
-import { CreateReservationComponent } from './reservations/create/create.component';
 
 export const DASHBOARD_ROUTE: Route = {
   path: '',
@@ -27,23 +25,8 @@ export const DASHBOARD_ROUTE: Route = {
     },
     {
       path: DriverPaths.RESERVATIONS,
-      component: ReservationsComponent,
-      data: {
-        breadcrumbs: {
-          label: DrawerKeys.RESERVATIONS,
-          path: '/' + TopLevelPaths.DRIVER_DASHBOARD,
-        },
-      },
-    },
-    {
-      path: DriverPaths.CREATE_RESERVATION,
-      component: CreateReservationComponent,
-      data: {
-        breadcrumbs: {
-          label: DrawerKeys.CREATE_RESERVATION,
-          path: '/' + TopLevelPaths.DRIVER_DASHBOARD,
-        },
-      },
+      loadChildren: () =>
+        import('./reservations/module').then(m => m.ReservationsModule),
     },
     {
       path: DriverPaths.VEHICLES,
