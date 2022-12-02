@@ -3,6 +3,7 @@ import {
   IsDefined,
   IsNotEmpty,
   IsPositive,
+  IsString,
   Max,
   Min,
   ValidateNested,
@@ -13,12 +14,15 @@ import { OperationTimeDays } from '../../domain/parking-lot/operation-time';
 
 export class AddressDto {
   @IsNotEmpty()
+  @IsString()
   city: string;
 
   @IsNotEmpty()
+  @IsString()
   streetName: string;
 
   @IsNotEmpty()
+  @IsString()
   streetNumber: string;
 }
 
@@ -57,6 +61,7 @@ export class CreateParkingLotCommand {
 
 export class ChangeHoursOfOperationCommand {
   @IsNotEmpty()
+  @IsString()
   parkingLotId: Id;
 
   @Min(0)
@@ -71,6 +76,7 @@ export class ChangeHoursOfOperationCommand {
 
 export class ChangeCapacityCommand {
   @IsNotEmpty()
+  @IsString()
   parkingLotId: Id;
 
   @IsPositive()

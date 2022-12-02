@@ -75,14 +75,14 @@ describe('ChangeHoursDialogComponent', () => {
   it('Sends new hours on action button', async () => {
     const [hoursFrom, hourTo] = await selectHarnesses();
     await Promise.all([hoursFrom.open(), hourTo.open()]);
-    await (await hoursFrom.getOptions())[11].click();
-    await (await hourTo.getOptions())[13].click();
+    await (await hoursFrom.getOptions())[0].click();
+    await (await hourTo.getOptions())[1].click();
 
     actionButton().click();
 
     expect(dialogRefSpy.close).toHaveBeenCalledWith({
-      hourFrom: 11,
-      hourTo: 13,
+      hourFrom: 0,
+      hourTo: 2,
     });
   });
 });

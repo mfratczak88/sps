@@ -22,3 +22,9 @@ export interface ParkingLot {
   hourTo: number;
   days: OperationTimeDays[];
 }
+export interface MakeReservation {
+  licensePlate: string;
+  parkingLotId: string;
+  start: Date;
+  end: Date;
+}

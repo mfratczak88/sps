@@ -45,7 +45,8 @@
     "PARKING_LOT_CREATED": "Parking lot has been created",
     "PARKING_LOT_ASSIGNED" : "Parking lot assigned",
     "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed",
-    "VEHICLE_ADDED" : "Vehicle added"
+    "VEHICLE_ADDED" : "Vehicle added",
+    "RESERVATION_CREATED": "Reservation created"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",
@@ -64,6 +65,7 @@
     "DASHBOARD": "Dashboard",
     "PARKING": "Parking",
     "RESERVATIONS": "Reservations",
+    "CREATE_RESERVATION": "Create reservation",
     "USERS": "Users",
     "PARKING_DETAILS": "Details",
     "DRIVERS": "Drivers",
@@ -86,7 +88,6 @@
     "COLUMN_EDIT": "Edit",
     "COLUMN_DETAILS": "Details",
     "COLUMN_ADDRESS": "Address",
-    "COLUMN_HOURS": "Hours",
     "COLUMN_CAPACITY": "Capacity",
     "PARKING_LOTS_TABLE_HEADER": "Parking lots",
     "USERS_TABLE_HEADER": "Users",
@@ -101,13 +102,9 @@
     "CITY": "City",
     "STREET_NAME": "Street name",
     "STREET_NUMBER": "Street number",
-    "NEXT": "Next",
     "FILL_OUT_OPERATION_HOURS": "Fill out operation hours",
     "PREVIOUS": "Previous",
     "FILL_OUT_CAPACITY": "Fill out capacity",
-    "SAVE": "Save",
-    "BACK": "Back",
-    "RESET": "Reset",
     "DRIVERS": "Drivers",
     "NAME": "Name",
     "EMAIL": "Email",
@@ -131,7 +128,13 @@
     "SELECT": "Select",
     "SEARCH": "Search",
     "ADD": "Add",
-    "CHANGE": "Change"
+    "CHANGE": "Change",
+    "SAVE": "Save",
+    "BACK": "Back",
+    "PREVIOUS": "Previous",
+    "RESET": "Reset",
+    "NEXT": "Next",
+    "HOURS": "Hours"
   },
   "PAGINATION": {
     "FIRST_PAGE_LABEL": "First page",
@@ -166,7 +169,14 @@
     "AVAILABLE_LOTS_INFO" : "You can reserve parking spot on those parking lots",
     "REQUEST_ACCESS": "Request access",
     "REQUEST_ACCESS_INFO": "In order to park here you need to request access",
-    "RESERVE": "Reserve"
-
+    "RESERVE": "Reserve",
+    "SELECT_PARKING_LOT": "Select parking lot",
+    "PARKING_LOT": "Parking lot",
+    "CHOSE_A_DATE": "Choose a date",
+    "DATE": "Date",
+    "MAKE_RESERVATION_TITLE": "Make a reservation",
+    "MAKE_RESERVATION_SUBTITLE": "Remember that you need to confirm it. Confirmation time starts 4 hours prior arrival, and ends 30 minutes before",
+    "CHOOSE_VEHICLE": "Choose vehicle",
+    "VEHICLE": "License plate"
   }
 }

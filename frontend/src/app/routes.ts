@@ -38,4 +38,5 @@ export enum DriverPaths {
   RESERVATIONS = 'reservations',
   PARKING_LOTS = 'parking-lots',
   VEHICLES = 'vehicles',
+  CREATE_RESERVATION = 'create-reservation',
 }
