@@ -141,3 +141,10 @@ $font-weight-normal: 400;
   padding: 3rem 1rem;
   @include elevation;
 }
+
+/* Chip */
+@mixin chip-primary {
+  border: 0.3px solid rgba($color-primary, 0.4);
+  background-color: rgba($color-primary, 0.2);
+  color: rgba($color-primary, 0.8);
+}

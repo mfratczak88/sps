@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { Button, Column } from '../table/table.component';
-import { ParkingLot } from '../../../core/model/driver.model';
+
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AddressPipe } from '../../pipe/address.pipe';
 import { HoursPipe } from '../../pipe/hours.pipe';
 import { DaysPipe } from '../../pipe/days.pipe';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-parking-lots-table',

@@ -1,5 +1,5 @@
 import { OperationTimeDays } from '../src/app/core/model/common.model';
-import { Driver } from '../src/app/core/model/admin.model';
+import { Driver } from '../src/app/core/model/driver.model';
 
 export const mockParkingLots = [
   {

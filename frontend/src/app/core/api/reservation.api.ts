@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BaseApi } from './base.api';
-import { HttpClient } from '@angular/common/http';
-import { MakeReservation } from '../model/driver.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { MakeReservation } from '../model/reservation.model';
 import { environment } from '../../../environments/environment';
+import { Reservation } from '../model/reservation.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,12 @@ export class ReservationApi extends BaseApi {
 
   constructor(http: HttpClient) {
     super(http);
+  }
+
+  getForDriver(driverId: string) {
+    return this.http.get<Reservation[]>(this.BASE_URL, {
+      params: new HttpParams().set('driverId', driverId),
+    });
   }
 
   makeReservation(req: MakeReservation) {

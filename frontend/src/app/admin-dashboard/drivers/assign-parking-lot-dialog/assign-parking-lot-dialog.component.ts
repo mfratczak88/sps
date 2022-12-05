@@ -5,7 +5,7 @@ import { first, Observable } from 'rxjs';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
-import { ParkingLot } from '../../../core/model/admin.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-assign-parking-lot-dialog',

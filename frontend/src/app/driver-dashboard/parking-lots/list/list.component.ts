@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { DriverQuery } from '../../state/driver.query';
-import { DriverService } from '../../state/driver.service';
+import { DriverQuery } from '../../state/driver/driver.query';
+import { DriverService } from '../../state/driver/driver.service';
 import { DriverKeys } from '../../../core/translation-keys';
 
 @Component({

@@ -14,7 +14,7 @@
       </div>
       <mat-chip-list>
         <mat-chip>
-          {{translations.PARKING_TITLE | translate}}: {{driver.parkingLots.length}}
+          {{translations.PARKING_TITLE | translate}}: {{driver.parkingLotIds.length}}
         </mat-chip>
         <mat-chip>
           {{translations.RESERVATIONS_TITLE | translate}}: 4
@@ -36,7 +36,7 @@
       {{translations.ASSIGN | translate}}</button>
     <sps-parking-lots-table
       [loading$]="driversQuery.selectLoading()"
-      [parkingLots$]="driverParkingLots$"
+      [parkingLots$]="driversQuery.driverParkingLots$()"
       [tableButtons]="parkingLotsTableButtons"
       [displayColumns]="['address']"
     ></sps-parking-lots-table>

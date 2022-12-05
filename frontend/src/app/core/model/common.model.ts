@@ -9,6 +9,7 @@ export enum OperationTimeDays {
   SATURDAY,
   SUNDAY,
 }
+export type Id = string;
 
 export const DayToTranslation = {
   [OperationTimeDays.MONDAY]: WeekDays.MONDAY,

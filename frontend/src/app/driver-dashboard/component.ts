@@ -3,6 +3,9 @@ import { DrawerItem } from '../shared/components/drawer/drawer.component';
 import { DrawerKeys } from '../core/translation-keys';
 import { DriverPaths } from '../routes';
 
+import { ParkingLotService } from './state/parking-lot/parking-lot.service';
+import { DriverService } from './state/driver/driver.service';
+
 @Component({
   selector: 'sps-driver-dashboard',
   templateUrl: './component.html',
@@ -26,4 +29,12 @@ export class DashboardComponent {
       link: DriverPaths.VEHICLES,
     },
   ];
+
+  constructor(
+    private readonly driverService: DriverService,
+    private readonly parkingLotService: ParkingLotService,
+  ) {
+    this.parkingLotService.load();
+    this.driverService.load();
+  }
 }

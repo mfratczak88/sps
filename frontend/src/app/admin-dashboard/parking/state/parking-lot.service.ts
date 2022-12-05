@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ParkingLotApi } from './parking-lot.api';
+import { ParkingLotApi } from '../../../core/api/parking-lot.api';
 import { finalize, first, tap } from 'rxjs';
 import { ParkingLotStore } from './parking-lot.store';
 
@@ -9,7 +9,7 @@ import { ToastKeys } from '../../../core/translation-keys';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
-} from '../../../core/model/admin.model';
+} from '../../../core/model/parking-lot.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,13 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
-import { DriverQuery } from '../../state/driver.query';
-import { DriverService } from '../../state/driver.service';
-import { ParkingLot } from '../../../core/model/driver.model';
+import { DriverQuery } from '../../state/driver/driver.query';
+import { DriverService } from '../../state/driver/driver.service';
+
 import { DateTime } from 'luxon';
 import { HoursFormComponent } from '../../../shared/components/hours-form/hours-form.component';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
 import { first } from 'rxjs';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 interface HoursForm {
   hours: FormControl<{ hourFrom: number; hourTo: number } | null>;

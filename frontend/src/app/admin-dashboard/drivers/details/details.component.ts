@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
 import { filter, first } from 'rxjs';
 import { Button } from '../../../shared/components/table/table.component';
-import { ParkingLot } from '../../../core/model/admin.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-driver-details',
@@ -27,10 +27,6 @@ export class DriverDetailsComponent implements OnInit {
         this.onRemoveParkingLotAssignment(parkingLotId),
     },
   ];
-
-  readonly driverParkingLots$ = this.driversQuery
-    .active$()
-    .pipe(map(driver => driver?.parkingLots));
 
   constructor(
     readonly driversQuery: DriversQuery,

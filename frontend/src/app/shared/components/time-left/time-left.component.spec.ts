@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { TimeLeftComponent } from './time-left.component';
+
+describe('TimeLeftComponent', () => {
+  let component: TimeLeftComponent;
+  let fixture: ComponentFixture<TimeLeftComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ TimeLeftComponent ]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(TimeLeftComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

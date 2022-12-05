@@ -3,8 +3,8 @@ import { DriverReadModel } from '../../../application/driver/driver.read-model';
 import { PrismaService } from '../prisma.service';
 import { Role } from '../../../infrastructure/security/authorization/role';
 import { Injectable } from '@nestjs/common';
-import { PrismaParkingLotFinder } from '../parking-lot/prisma.parking-lot.finder';
 import { Id } from '../../../domain/id';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class PrismaDriverFinder implements DriverFinder {
@@ -17,20 +17,8 @@ export class PrismaDriverFinder implements DriverFinder {
       },
       ...PrismaDriverFinder.prismaSelect(),
     });
-    const unAssignedLots = await this.prismaService.parkingLot.findMany({
-      where: {
-        users: {
-          none: {
-            id,
-          },
-        },
-      },
-    });
     return {
-      ...PrismaDriverFinder.mapUserToDto(prismaDriver),
-      unAssignedLots: unAssignedLots.map((lot) =>
-        PrismaDriverFinder.lotToDto(lot),
-      ),
+      ...this.mapPrismaRawDataToDto(prismaDriver),
     };
   }
 
@@ -42,42 +30,63 @@ export class PrismaDriverFinder implements DriverFinder {
         },
         ...PrismaDriverFinder.prismaSelect(),
       })
-    ).map((user) => PrismaDriverFinder.mapUserToDto(user));
+    ).map((user) => this.mapPrismaRawDataToDto(user));
   }
 
-  private static mapUserToDto(user) {
+  private mapPrismaRawDataToDto(user) {
+    const { parkingLots, vehicles, ...rest } = user;
     return {
-      ...user,
-      parkingLots: user.parkingLots.map((lot) =>
-        PrismaDriverFinder.lotToDto(lot),
-      ),
-    };
-  }
-
-  private static lotToDto(lot) {
-    const { id, city, hourFrom, hourTo, streetName, streetNumber, days } =
-      PrismaParkingLotFinder.prismaLotToDto(lot);
-    return {
-      id,
-      city,
-      hourTo,
-      hourFrom,
-      streetName,
-      streetNumber,
-      days,
+      ...rest,
+      vehicles: vehicles.map(({ licensePlate }) => ({ licensePlate })),
+      parkingLotIds: parkingLots.map(({ id }) => id),
+      reservationsPendingApprovalIds: vehicles
+        .map(({ reservations }) => reservations.map((r) => r.id))
+        .flat(),
     };
   }
 
   private static prismaSelect() {
+    const now = DateTime.now();
+    const fourHoursFromNow = DateTime.now()
+      .set({
+        hour: now.hour + 4,
+      })
+      .toUTC()
+      .toJSDate();
+    const thirtyMinutesFromNow = DateTime.now()
+      .set({
+        minute: now.minute + 30,
+      })
+      .toUTC()
+      .toJSDate();
     return {
       select: {
         id: true,
         email: true,
         name: true,
-        parkingLots: true,
+        parkingLots: {
+          select: {
+            id: true,
+          },
+        },
         vehicles: {
           select: {
             licensePlate: true,
+            reservations: {
+              select: {
+                id: true,
+                startTime: true,
+                endTime: true,
+                createdAt: true,
+                parkingLotId: true,
+              },
+              where: {
+                startTime: {
+                  lt: fourHoursFromNow,
+                  gt: thirtyMinutesFromNow,
+                },
+              },
+            },
           },
         },
       },

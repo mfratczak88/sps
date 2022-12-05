@@ -177,6 +177,13 @@
     "MAKE_RESERVATION_TITLE": "Make a reservation",
     "MAKE_RESERVATION_SUBTITLE": "Remember that you need to confirm it. Confirmation time starts 4 hours prior arrival, and ends 30 minutes before",
     "CHOOSE_VEHICLE": "Choose vehicle",
-    "VEHICLE": "License plate"
+    "VEHICLE": "License plate",
+    "DUE_NEXT": "Due next",
+    "DUE_NEXT_PROMPT": "You're incoming parking - please be on time",
+    "CONFIRM": "Confirm",
+    "CONFIRM_PROMPT": "In order to enter the parking lot you need to first confirm reservation",
+    "CONFIRM_TITLE": "To be confirmed",
+    "TIME_TO_CONFIRM": "Time left to confirm",
+    "CHANGE_TIME": "Change time"
   }
 }

@@ -5,12 +5,12 @@ import {
 import { TestBed } from '@angular/core/testing';
 import { DriversApi } from './drivers.api';
 
+import { mockDriver } from '../../../../test/driver.utils';
 import {
   AssignDriverToParkingLot,
-  Driver as AdminView,
   RemoveParkingLotAssignment,
-} from '../model/admin.model';
-import { mockDriver } from '../../../../test/driver.utils';
+} from '../model/parking-lot.model';
+import { Driver as AdminView } from '../model/driver.model';
 
 describe('Drivers api spec', () => {
   let httpTestingController: HttpTestingController;

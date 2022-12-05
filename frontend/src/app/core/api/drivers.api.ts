@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { BaseApi } from './base.api';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Driver as DriverView } from '../model/driver.model';
+import {
+  Driver as AdminView,
+  Driver as DriverView,
+} from '../model/driver.model';
 import {
   AssignDriverToParkingLot,
-  Driver as AdminView,
   RemoveParkingLotAssignment,
-} from '../model/admin.model';
+} from '../model/parking-lot.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ReservationService } from '../../../application/reservation/reservation.service';
@@ -24,10 +26,17 @@ import {
 } from '../../security/authorization/policy/reservation.policy';
 import { JwtAuthGuard } from '../../security/authorization/jwt-auth.guard';
 import { CsrfGuard } from '../../security/csrf/csrf.guard';
+import {
+  ReservationFinder,
+  ReservationQuery,
+} from '../../../application/reservation/reservation.finder';
 
 @Controller('reservations')
 export class ReservationController {
-  constructor(private readonly service: ReservationService) {}
+  constructor(
+    private readonly service: ReservationService,
+    private readonly finder: ReservationFinder,
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard, CsrfGuard, PoliciesGuard)
@@ -75,5 +84,11 @@ export class ReservationController {
   @CheckPolicies(new CanReturnParkingTicket())
   returnParkingTicket(@Param('id') reservationId: Id) {
     return this.service.returnParkingTicket(reservationId);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  getAll(@Query() query: ReservationQuery) {
+    return this.finder.findAll(query);
   }
 }

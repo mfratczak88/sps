@@ -2,17 +2,17 @@ import { ParkingLotService } from './parking-lot.service';
 import { ToastService } from '../../../core/service/toast.service';
 import { RouterService } from '../../../core/state/router/router.service';
 import { ParkingLotStore } from './parking-lot.store';
-import { ParkingLotApi } from './parking-lot.api';
+import { ParkingLotApi } from '../../../core/api/parking-lot.api';
 import { mockParkingLots } from '../../../../../test/driver.utils';
 import { of } from 'rxjs';
 
 import { ToastKeys } from '../../../core/translation-keys';
 import SpyObj = jasmine.SpyObj;
+import { OperationTimeDays } from '../../../core/model/common.model';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
-} from '../../../core/model/admin.model';
-import { OperationTimeDays } from '../../../core/model/common.model';
+} from '../../../core/model/parking-lot.model';
 
 describe('Parking lot service', () => {
   let storeSpy: SpyObj<ParkingLotStore>;

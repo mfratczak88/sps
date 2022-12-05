@@ -177,6 +177,13 @@
     "MAKE_RESERVATION_TITLE": "Zarezerwuj miejsce parkingowe",
     "MAKE_RESERVATION_SUBTITLE": "Pamiętaj żeby potwierdzić rezerwacje. Czas na potwierdzenie zaczyna się 4 godziny a kończy 30 minut przed planowanym przyjazdem",
     "CHOOSE_VEHICLE": "Wybierz pojazd",
-    "VEHICLE": "Nr rejestracyjny"
+    "VEHICLE": "Nr rejestracyjny",
+    "DUE_NEXT": "Nadchodzące",
+    "DUE_NEXT_PROMPT": "Twoje nadchodzące parkowania - bądź na czas",
+    "CONFIRM": "Potwierdź",
+    "CONFIRM_PROMPT": "By móc skorzystać z parkingu musisz potwierdzić rezerwacje",
+    "CONFIRM_TITLE": "Do potwierdzenia",
+    "TIME_TO_CONFIRM": "Czas na potwierdzenie",
+    "CHANGE_TIME": "Zmień czas"
   }
 }

@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { concatMap, filter, first } from 'rxjs';
 import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-dialog.component';
 import { ChangeCapacityDialogComponent } from '../change-capacity-dialog/change-capacity-dialog.component';
-import { ParkingLot } from '../../../core/model/admin.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-parking-lot-details',

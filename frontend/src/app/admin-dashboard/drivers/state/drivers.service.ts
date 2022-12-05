@@ -7,7 +7,8 @@ import { ParkingLotService } from '../../parking/state/parking-lot.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ToastKeys } from '../../../core/translation-keys';
 import { DriversApi } from '../../../core/api/drivers.api';
-import { RemoveParkingLotAssignment } from '../../../core/model/admin.model';
+import { RemoveParkingLotAssignment } from '../../../core/model/parking-lot.model';
+import { ParkingLotQuery } from '../../parking/state/parking-lot.query';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class DriversService {
   constructor(
     private readonly store: DriversStore,
     private readonly api: DriversApi,
-    private readonly parkingLotService: ParkingLotService,
+    private readonly parkingLotQuery: ParkingLotQuery,
     private readonly toastService: ToastService,
     private readonly routerService: RouterService,
   ) {}
@@ -32,7 +33,7 @@ export class DriversService {
         this.store.set(
           v.map(driver => ({
             ...driver,
-            parkingLotCount: driver.parkingLots.length,
+            parkingLotCount: driver.parkingLotIds.length,
           })),
         ),
       ),
@@ -41,7 +42,6 @@ export class DriversService {
   }
 
   select(id: string) {
-    this.parkingLotService.load();
     if (!this.store.getValue().ids?.includes(id)) {
       return this.load$()
         .pipe(

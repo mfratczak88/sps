@@ -1,0 +1,10 @@
+.reservations {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.reservations__card--timer {
+  display: flex;
+  align-items: center;
+}

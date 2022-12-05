@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BaseApi } from '../../../core/api/base.api';
+import { BaseApi } from './base.api';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
   ParkingLot,
-} from '../../../core/model/admin.model';
+} from '../model/parking-lot.model';
 
 @Injectable({
   providedIn: 'root',

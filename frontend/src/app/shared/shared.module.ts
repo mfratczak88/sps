@@ -29,6 +29,9 @@ import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { NumberChipComponent } from './components/number-chip/number-chip.component';
 import { ParkingLotExpansionPanelComponent } from './components/parking-lot-expansion-panel/parking-lot-expansion-panel.component';
+import { ChipComponent } from './components/chip/chip.component';
+import { TimeLeftComponent } from './components/time-left/time-left.component';
+import { CountdownModule } from 'ngx-countdown';
 
 const components = [
   NavbarComponent,
@@ -52,6 +55,8 @@ const components = [
   LoadingSpinnerComponent,
   NumberChipComponent,
   ParkingLotExpansionPanelComponent,
+  ChipComponent,
+  TimeLeftComponent,
 ];
 @NgModule({
   declarations: components,

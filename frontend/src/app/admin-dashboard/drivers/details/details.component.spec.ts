@@ -12,13 +12,14 @@ import { EMPTY, lastValueFrom, NEVER, Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ParkingLotsTableComponent } from '../../../shared/components/parking-lots-table/parking-lots-table.component';
 import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
-import { ParkingLot, Driver } from '../../../core/model/admin.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
 import { buttonCells } from '../../../../../test/test.util';
 import SpyObj = jasmine.SpyObj;
+import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { Driver } from '../../../core/model/driver.model';
 
 describe('Driver details component', () => {
   let fixture: ComponentFixture<DriverDetailsComponent>;

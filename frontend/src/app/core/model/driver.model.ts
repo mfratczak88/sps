@@ -1,30 +1,14 @@
-import { OperationTimeDays } from './common.model';
+import { Id } from './common.model';
 
 export interface Driver {
   id: string;
   name: string;
   email: string;
-  parkingLots: ParkingLot[];
+  parkingLotIds: Id[];
   vehicles: Vehicle[];
-  unAssignedLots: ParkingLot[];
+  reservationsPendingApprovalIds: Id[];
 }
 
 export interface Vehicle {
   licensePlate: string;
-}
-
-export interface ParkingLot {
-  id: string;
-  city: string;
-  streetName: string;
-  streetNumber: string;
-  hourFrom: number;
-  hourTo: number;
-  days: OperationTimeDays[];
-}
-export interface MakeReservation {
-  licensePlate: string;
-  parkingLotId: string;
-  start: Date;
-  end: Date;
 }
