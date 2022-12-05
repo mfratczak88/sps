@@ -11,11 +11,13 @@
             <sps-time-left
               [deadLine]="reservation.startTime"
               [caption]="translations.TIME_TO_CONFIRM | translate"
-              >
+            >
             </sps-time-left>
           </div>
-          <button mat-button color="warn">{{translations.CANCEL | translate}}</button>
-          <button mat-button color="primary">{{translations.CONFIRM | translate}}</button>
+          <button mat-button color="warn"
+                  (click)="onCancelReservation(reservation)">{{translations.CANCEL | translate}}</button>
+          <button mat-button color="primary"
+                  (click)="onConfirmReservation(reservation)">{{translations.CONFIRM | translate}}</button>
         </sps-reservation-expansion-panel>
       </div>
     </div>
@@ -30,7 +32,8 @@
         <sps-reservation-expansion-panel [reservation]="reservation">
           <div class="reservations__card--timer" timer>
           </div>
-          <button mat-button color="warn">{{translations.CANCEL | translate}}</button>
+          <button mat-button color="warn"
+                  (click)="onCancelReservation(reservation)">{{translations.CANCEL | translate}}</button>
           <button mat-button color="primary">{{translations.CHANGE_TIME | translate}}</button>
         </sps-reservation-expansion-panel>
       </div>

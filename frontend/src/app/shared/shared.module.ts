@@ -31,7 +31,7 @@ import { NumberChipComponent } from './components/number-chip/number-chip.compon
 import { ParkingLotExpansionPanelComponent } from './components/parking-lot-expansion-panel/parking-lot-expansion-panel.component';
 import { ChipComponent } from './components/chip/chip.component';
 import { TimeLeftComponent } from './components/time-left/time-left.component';
-import { CountdownModule } from 'ngx-countdown';
+import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
 
 const components = [
   NavbarComponent,
@@ -57,6 +57,7 @@ const components = [
   ParkingLotExpansionPanelComponent,
   ChipComponent,
   TimeLeftComponent,
+  ConfirmActionDialogComponent,
 ];
 @NgModule({
   declarations: components,

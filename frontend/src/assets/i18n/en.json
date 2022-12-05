@@ -46,7 +46,9 @@
     "PARKING_LOT_ASSIGNED" : "Parking lot assigned",
     "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed",
     "VEHICLE_ADDED" : "Vehicle added",
-    "RESERVATION_CREATED": "Reservation created"
+    "RESERVATION_CREATED": "Reservation created",
+    "RESERVATION_CONFIRMED": "Reservation confirmed",
+    "RESERVATION_CANCELLED": "Reservation cancelled"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",

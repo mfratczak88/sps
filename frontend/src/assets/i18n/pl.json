@@ -46,7 +46,9 @@
     "PARKING_LOT_ASSIGNED" : "Przypisano do parkingu",
     "PARKING_LOT_ASSIGNMENT_REMOVED" : "Usunięto przypisanie do parkingu",
     "VEHICLE_ADDED" : "Dodano pojazd",
-    "RESERVATION_CREATED": "Złożono rezerwacje"
+    "RESERVATION_CREATED": "Złożono rezerwacje",
+    "RESERVATION_CONFIRMED": "Potwierdzono rezerwacje",
+    "RESERVATION_CANCELLED": "Rezerwacja anulowana"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Błąd serwera",

@@ -1,7 +1,15 @@
 import { DriverStore } from './driver.store';
 import { AuthQuery } from '../../../core/state/auth/auth.query';
 import { DriversApi } from '../../../core/api/drivers.api';
-import { combineLatest, concatMap, filter, finalize, NEVER, tap } from 'rxjs';
+import {
+  combineLatest,
+  concatMap,
+  filter,
+  finalize,
+  NEVER,
+  Observable,
+  tap,
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Driver } from '../../../core/model/driver.model';
 import { ToastService } from '../../../core/service/toast.service';
@@ -100,6 +108,23 @@ export class DriverService {
       parkingLotIds,
       ...driverData
     } = driver;
+
+    this.store._setState({
+      ...driverData,
+      ...this.splitReservationsIntoGroups(
+        reservations,
+        reservationsPendingApprovalIds,
+      ),
+      parkingLots: parkingLots.filter(lot =>
+        parkingLotIds.find(id => lot.id === id),
+      ),
+    });
+  }
+
+  private splitReservationsIntoGroups(
+    reservations: Reservation[],
+    pendingAcceptanceIds: string[],
+  ) {
     const reservationsPendingApproval: ReservationWithParkingLot[] = [];
     const reservationsHistory: ReservationWithParkingLot[] = [];
 
@@ -107,7 +132,7 @@ export class DriverService {
       const correspondingParkingLot = this.parkingLotQuery.getEntity(
         reservation.parkingLotId,
       )!;
-      if (reservationsPendingApprovalIds.includes(reservation.id)) {
+      if (pendingAcceptanceIds.includes(reservation.id)) {
         reservationsPendingApproval.push({
           ...reservation,
           ...DriverService.expandReservationWithParkingLot(
@@ -125,14 +150,10 @@ export class DriverService {
         });
       }
     });
-    this.store._setState({
-      ...driverData,
-      reservationsHistory,
+    return {
       reservationsPendingApproval,
-      parkingLots: parkingLots.filter(lot =>
-        parkingLotIds.find(id => lot.id === id),
-      ),
-    });
+      reservationsHistory,
+    };
   }
 
   private static expandReservationWithParkingLot(
@@ -159,5 +180,19 @@ export class DriverService {
         millisecond: 0,
       })
       .toJSDate();
+  }
+
+  confirmReservation({ id }: Reservation) {
+    return this.reservationApi.confirmReservation(id).pipe(
+      tap(() => this.load()),
+      tap(() => this.toastService.show(ToastKeys.RESERVATION_CONFIRMED)),
+    );
+  }
+
+  cancelReservation({ id }: Reservation) {
+    return this.reservationApi.cancelReservation(id).pipe(
+      tap(() => this.load()),
+      tap(() => this.toastService.show(ToastKeys.RESERVATION_CANCELLED)),
+    );
   }
 }
