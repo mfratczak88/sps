@@ -136,7 +136,8 @@
     "PREVIOUS": "Previous",
     "RESET": "Reset",
     "NEXT": "Next",
-    "HOURS": "Hours"
+    "HOURS": "Hours",
+    "CONFIRM": "Proceeed"
   },
   "PAGINATION": {
     "FIRST_PAGE_LABEL": "First page",
@@ -182,10 +183,15 @@
     "VEHICLE": "License plate",
     "DUE_NEXT": "Due next",
     "DUE_NEXT_PROMPT": "You're incoming parking - please be on time",
-    "CONFIRM": "Confirm",
     "CONFIRM_PROMPT": "In order to enter the parking lot you need to first confirm reservation",
     "CONFIRM_TITLE": "To be confirmed",
     "TIME_TO_CONFIRM": "Time left to confirm",
-    "CHANGE_TIME": "Change time"
+    "REJECT": "Reject",
+    "HISTORY": "Reservation history",
+    "CHANGE_TIME": "Change time",
+    "CANCEL_RESERVATION": "Cancel reservation",
+    "CANCEL_RESERVATION_QUESTION": "Would you like to cancel reservation ?",
+    "CONFIRM_RESERVATION": "Confirm",
+    "CONFIRM_RESERVATION_QUESTION": "Do you want to confirm reservation ?"
   }
 }

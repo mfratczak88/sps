@@ -9,8 +9,7 @@ import {
   ConfirmDialogProps,
   ConfirmResult,
 } from '../../../shared/components/confirm-action-dialog/confirm-action-dialog.component';
-import { concatMap, first, NEVER, Observable, tap } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { concatMap, first, NEVER, Observable } from 'rxjs';
 
 @Component({
   selector: 'sps-driver-reservation-list',

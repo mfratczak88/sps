@@ -1,25 +1,14 @@
 import { DriverStore } from './driver.store';
 import { AuthQuery } from '../../../core/state/auth/auth.query';
 import { DriversApi } from '../../../core/api/drivers.api';
-import {
-  combineLatest,
-  concatMap,
-  filter,
-  finalize,
-  NEVER,
-  Observable,
-  tap,
-} from 'rxjs';
+import { combineLatest, concatMap, filter, finalize, NEVER, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Driver } from '../../../core/model/driver.model';
+import { Driver, DriverReservations } from '../../../core/model/driver.model';
 import { ToastService } from '../../../core/service/toast.service';
 import { ToastKeys } from '../../../core/translation-keys';
 import { DateTime } from 'luxon';
 import { ReservationApi } from '../../../core/api/reservation.api';
-import {
-  Reservation,
-  ReservationWithParkingLot,
-} from '../../../core/model/reservation.model';
+import { Reservation } from '../../../core/model/reservation.model';
 import { ParkingLotQuery } from '../parking-lot/parking-lot.query';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
 
@@ -46,7 +35,7 @@ export class DriverService {
           auth
             ? combineLatest([
                 this.driverApi.getById(auth.id),
-                this.loadReservations(auth.id),
+                this.driverApi.getDriverReservations(auth.id),
                 this.parkingLotQuery.selectAll(),
               ])
             : NEVER,
@@ -94,94 +83,6 @@ export class DriverService {
       );
   }
 
-  private loadReservations(driverId: string) {
-    return this.reservationApi.getForDriver(driverId);
-  }
-
-  private fillStoreWith(
-    driver: Driver,
-    reservations: Reservation[],
-    parkingLots: ParkingLot[],
-  ) {
-    const {
-      reservationsPendingApprovalIds,
-      parkingLotIds,
-      ...driverData
-    } = driver;
-
-    this.store._setState({
-      ...driverData,
-      ...this.splitReservationsIntoGroups(
-        reservations,
-        reservationsPendingApprovalIds,
-      ),
-      parkingLots: parkingLots.filter(lot =>
-        parkingLotIds.find(id => lot.id === id),
-      ),
-    });
-  }
-
-  private splitReservationsIntoGroups(
-    reservations: Reservation[],
-    pendingAcceptanceIds: string[],
-  ) {
-    const reservationsPendingApproval: ReservationWithParkingLot[] = [];
-    const reservationsHistory: ReservationWithParkingLot[] = [];
-
-    reservations.forEach(reservation => {
-      const correspondingParkingLot = this.parkingLotQuery.getEntity(
-        reservation.parkingLotId,
-      )!;
-      if (pendingAcceptanceIds.includes(reservation.id)) {
-        reservationsPendingApproval.push({
-          ...reservation,
-          ...DriverService.expandReservationWithParkingLot(
-            reservation,
-            correspondingParkingLot,
-          ),
-        });
-      } else {
-        reservationsHistory.push({
-          ...reservation,
-          ...DriverService.expandReservationWithParkingLot(
-            reservation,
-            correspondingParkingLot,
-          ),
-        });
-      }
-    });
-    return {
-      reservationsPendingApproval,
-      reservationsHistory,
-    };
-  }
-
-  private static expandReservationWithParkingLot(
-    reservation: Reservation,
-    parkingLot: ParkingLot,
-  ): ReservationWithParkingLot {
-    const { city, streetName, streetNumber } = parkingLot;
-    return {
-      ...reservation,
-      parkingLot: {
-        city,
-        streetName,
-        streetNumber,
-      },
-    };
-  }
-
-  static fullHour(dateTime: DateTime, hour: number) {
-    return dateTime
-      .set({
-        hour: hour,
-        second: 0,
-        minute: 0,
-        millisecond: 0,
-      })
-      .toJSDate();
-  }
-
   confirmReservation({ id }: Reservation) {
     return this.reservationApi.confirmReservation(id).pipe(
       tap(() => this.load()),
@@ -194,5 +95,31 @@ export class DriverService {
       tap(() => this.load()),
       tap(() => this.toastService.show(ToastKeys.RESERVATION_CANCELLED)),
     );
+  }
+
+  private fillStoreWith(
+    driver: Driver,
+    reservations: DriverReservations,
+    parkingLots: ParkingLot[],
+  ) {
+    const { parkingLotIds, ...driverData } = driver;
+    this.store._setState({
+      ...driverData,
+      ...reservations,
+      parkingLots: parkingLots.filter(lot =>
+        parkingLotIds.find(id => lot.id === id),
+      ),
+    });
+  }
+
+  static fullHour(dateTime: DateTime, hour: number) {
+    return dateTime
+      .set({
+        hour: hour,
+        second: 0,
+        minute: 0,
+        millisecond: 0,
+      })
+      .toJSDate();
   }
 }

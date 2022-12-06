@@ -1,4 +1,5 @@
 import { Id } from './common.model';
+import { Reservation } from './reservation.model';
 
 export interface Driver {
   id: string;
@@ -6,9 +7,20 @@ export interface Driver {
   email: string;
   parkingLotIds: Id[];
   vehicles: Vehicle[];
-  reservationsPendingApprovalIds: Id[];
 }
 
 export interface Vehicle {
   licensePlate: string;
+}
+export type DriverReservation = Reservation & {
+  parkingLot: {
+    city: string;
+    streetName: string;
+    streetNumber: string;
+  };
+};
+export interface DriverReservations {
+  pendingAction: DriverReservation[];
+  dueNext: DriverReservation[];
+  history: DriverReservation[];
 }

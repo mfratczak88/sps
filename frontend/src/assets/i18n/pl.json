@@ -136,7 +136,8 @@
     "PREVIOUS": "Poprzedni",
     "RESET": "Resetuj",
     "NEXT": "Dalej",
-    "HOURS": "Godziny"
+    "HOURS": "Godziny",
+    "CONFIRM": "Ok"
   },
   "PAGINATION" : {
     "FIRST_PAGE_LABEL": "Pierwsza strona",
@@ -182,10 +183,15 @@
     "VEHICLE": "Nr rejestracyjny",
     "DUE_NEXT": "Nadchodzące",
     "DUE_NEXT_PROMPT": "Twoje nadchodzące parkowania - bądź na czas",
-    "CONFIRM": "Potwierdź",
     "CONFIRM_PROMPT": "By móc skorzystać z parkingu musisz potwierdzić rezerwacje",
     "CONFIRM_TITLE": "Do potwierdzenia",
     "TIME_TO_CONFIRM": "Czas na potwierdzenie",
-    "CHANGE_TIME": "Zmień czas"
+    "REJECT": "Odrzuć",
+    "HISTORY": "Historia rezerwacji",
+    "CHANGE_TIME": "Zmień czas",
+    "CANCEL_RESERVATION": "Anuluj rezerwację",
+    "CANCEL_RESERVATION_QUESTION": "Czy chcesz anulować rezerwację ?",
+    "CONFIRM_RESERVATION": "Potwierdź rezerwacje",
+    "CONFIRM_RESERVATION_QUESTION": "Czy chesz potwierdzić rezerwację ?"
   }
 }

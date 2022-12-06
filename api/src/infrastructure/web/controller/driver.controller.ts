@@ -24,6 +24,7 @@ import { CheckPolicies } from '../../security/authorization/policy/check-policie
 import {
   CanAddVehicle,
   CanViewDriverDetails,
+  CanViewDriverReservations,
 } from '../../security/authorization/policy/driver.policy';
 
 @Controller('drivers')
@@ -44,6 +45,13 @@ export class DriverController {
   @CheckPolicies(new CanViewDriverDetails())
   getDriver(@Param('id') id: Id) {
     return this.finder.findById(id);
+  }
+
+  @Get(':id/reservations')
+  @UseGuards(JwtAuthGuard, PoliciesGuard)
+  @CheckPolicies(new CanViewDriverReservations())
+  getDriverReservations(@Param('id') id: Id) {
+    return this.finder.findDriverReservations(id);
   }
 
   @Post(':driverId/vehicles')
