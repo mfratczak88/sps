@@ -193,5 +193,12 @@
     "CANCEL_RESERVATION_QUESTION": "Czy chcesz anulować rezerwację ?",
     "CONFIRM_RESERVATION": "Potwierdź rezerwacje",
     "CONFIRM_RESERVATION_QUESTION": "Czy chesz potwierdzić rezerwację ?"
+  },
+  "TABLE_KEYS": {
+    "LICENSE_PLATE": "Nr rejestracyjny",
+    "TIME": "Czas parkowania",
+    "RESERVATION_DATE": "Data",
+    "RESERVATION_STATUS": "Status",
+    "PARKING_LOT_ADDRESS": "Parking"
   }
 }

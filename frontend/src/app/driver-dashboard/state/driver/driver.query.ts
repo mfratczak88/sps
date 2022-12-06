@@ -28,4 +28,8 @@ export class DriverQuery extends Query<DriverState> {
       ),
     );
   }
+
+  reservationsHistory$() {
+    return this.select().pipe(map(reservation => reservation.history));
+  }
 }

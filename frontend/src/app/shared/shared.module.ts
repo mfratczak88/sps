@@ -32,6 +32,8 @@ import { ParkingLotExpansionPanelComponent } from './components/parking-lot-expa
 import { ChipComponent } from './components/chip/chip.component';
 import { TimeLeftComponent } from './components/time-left/time-left.component';
 import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
+import { ReservationsTableComponent } from './components/reservations-table/reservations-table.component';
+import { TimePipe } from './pipe/time.pipe';
 
 const components = [
   NavbarComponent,
@@ -58,6 +60,7 @@ const components = [
   ChipComponent,
   TimeLeftComponent,
   ConfirmActionDialogComponent,
+  ReservationsTableComponent,
 ];
 @NgModule({
   declarations: components,
@@ -72,6 +75,7 @@ const components = [
   providers: [
     { provide: ToastService, useClass: MaterialToastService },
     { provide: MatPaginatorIntl, useClass: PaginatorIntlService },
+    TimePipe,
   ],
 })
 export class SharedModule {}

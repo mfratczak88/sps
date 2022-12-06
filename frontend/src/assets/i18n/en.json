@@ -193,5 +193,12 @@
     "CANCEL_RESERVATION_QUESTION": "Would you like to cancel reservation ?",
     "CONFIRM_RESERVATION": "Confirm",
     "CONFIRM_RESERVATION_QUESTION": "Do you want to confirm reservation ?"
+  },
+  "TABLE_KEYS": {
+    "LICENSE_PLATE": "License plate",
+    "TIME": "Time",
+    "RESERVATION_DATE": "Date",
+    "RESERVATION_STATUS": "Status",
+    "PARKING_LOT_ADDRESS": "Parking lot"
   }
 }

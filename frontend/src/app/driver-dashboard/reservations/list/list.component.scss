@@ -1,10 +1,14 @@
+@use "../../../../variables" as vars;
+
 .reservations {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
 .reservations__card--timer {
   display: flex;
   align-items: center;
 }
+
