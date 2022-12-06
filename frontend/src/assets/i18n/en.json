@@ -137,7 +137,8 @@
     "RESET": "Reset",
     "NEXT": "Next",
     "HOURS": "Hours",
-    "CONFIRM": "Proceeed"
+    "CONFIRM": "Proceeed",
+    "CREATE": "Create"
   },
   "PAGINATION": {
     "FIRST_PAGE_LABEL": "First page",
@@ -187,7 +188,7 @@
     "CONFIRM_TITLE": "To be confirmed",
     "TIME_TO_CONFIRM": "Time left to confirm",
     "REJECT": "Reject",
-    "HISTORY": "Reservation history",
+    "RESERVATIONS": "Reservations",
     "CHANGE_TIME": "Change time",
     "CANCEL_RESERVATION": "Cancel reservation",
     "CANCEL_RESERVATION_QUESTION": "Would you like to cancel reservation ?",

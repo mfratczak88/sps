@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import {
   AdminPaths,
   AuthPaths,
+  DriverPaths,
   ErrorPaths,
   TopLevelPaths,
 } from 'src/app/routes';
@@ -39,6 +40,12 @@ export class RouterService {
   toAdminParkingLotDetails(id: string) {
     return this.router.navigate([
       `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}/${id}`,
+    ]);
+  }
+
+  toCreateReservation() {
+    return this.router.navigate([
+      `/${TopLevelPaths.DRIVER_DASHBOARD}/${DriverPaths.RESERVATIONS}/${DriverPaths.CREATE_RESERVATION}`,
     ]);
   }
 

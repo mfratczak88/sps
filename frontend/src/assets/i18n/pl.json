@@ -137,7 +137,8 @@
     "RESET": "Resetuj",
     "NEXT": "Dalej",
     "HOURS": "Godziny",
-    "CONFIRM": "Ok"
+    "CONFIRM": "Ok",
+    "CREATE": "Utwórz"
   },
   "PAGINATION" : {
     "FIRST_PAGE_LABEL": "Pierwsza strona",
@@ -187,7 +188,7 @@
     "CONFIRM_TITLE": "Do potwierdzenia",
     "TIME_TO_CONFIRM": "Czas na potwierdzenie",
     "REJECT": "Odrzuć",
-    "HISTORY": "Historia rezerwacji",
+    "RESERVATIONS": "Rezerwacje",
     "CHANGE_TIME": "Zmień czas",
     "CANCEL_RESERVATION": "Anuluj rezerwację",
     "CANCEL_RESERVATION_QUESTION": "Czy chcesz anulować rezerwację ?",

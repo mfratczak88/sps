@@ -10,6 +10,7 @@ import {
   ConfirmResult,
 } from '../../../shared/components/confirm-action-dialog/confirm-action-dialog.component';
 import { concatMap, first, NEVER, Observable } from 'rxjs';
+import { RouterService } from '../../../core/state/router/router.service';
 
 @Component({
   selector: 'sps-driver-reservation-list',
@@ -22,6 +23,7 @@ export class ReservationListComponent {
   constructor(
     readonly query: DriverQuery,
     readonly service: DriverService,
+    readonly routerService: RouterService,
     readonly dialog: MatDialog,
   ) {}
 

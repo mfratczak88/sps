@@ -44,7 +44,14 @@
 </div>
 <div>
   <sps-panel
-    [title]="translations.HISTORY | translate">
+    [title]="translations.RESERVATIONS | translate">
+    <button btn
+            mat-raised-button
+            color="primary"
+            (click)="routerService.toCreateReservation()">
+      <mat-icon>add</mat-icon>
+      {{translations.CREATE | translate}}
+    </button>
     <sps-reservations-table
       [loading$]="query.selectLoading()"
       [reservations$]="query.reservationsHistory$()"
