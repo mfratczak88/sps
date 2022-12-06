@@ -147,4 +147,10 @@ export class RouterService {
       `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.DRIVERS}/${id}`,
     ]);
   }
+
+  toDriverReservations() {
+    return this.router.navigate([
+      `/${TopLevelPaths.DRIVER_DASHBOARD}/${DriverPaths.RESERVATIONS}`,
+    ]);
+  }
 }

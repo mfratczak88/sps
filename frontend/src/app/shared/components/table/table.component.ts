@@ -1,13 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MiscKeys } from '../../../core/translation-keys';
 
@@ -16,12 +10,22 @@ import { MiscKeys } from '../../../core/translation-keys';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatSort) sort: MatSort;
+export class TableComponent implements OnInit {
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.sort = sort;
+    this.setDataSourceAttributes();
+  }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    this.paginator = paginator;
+    this.setDataSourceAttributes();
+  }
 
   readonly translations = MiscKeys;
+
+  private paginator: MatPaginator;
+
+  private sort: MatSort;
 
   @Input()
   data: Observable<any>;
@@ -50,7 +54,7 @@ export class TableComponent implements AfterViewInit, OnInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  setDataSourceAttributes(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }

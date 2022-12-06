@@ -7,8 +7,9 @@ import { DriverService } from '../../state/driver/driver.service';
 import { DateTime } from 'luxon';
 import { HoursFormComponent } from '../../../shared/components/hours-form/hours-form.component';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
-import { first } from 'rxjs';
+import { concatMap, first } from 'rxjs';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { RouterService } from '../../../core/state/router/router.service';
 
 interface HoursForm {
   hours: FormControl<{ hourFrom: number; hourTo: number } | null>;
@@ -61,6 +62,7 @@ export class CreateReservationComponent {
     private readonly formBuilder: FormBuilder,
     readonly driverQuery: DriverQuery,
     private readonly driverService: DriverService,
+    private readonly routerService: RouterService,
   ) {
     this.parkingLotForm.valueChanges.subscribe(({ parkingLot }) => {
       if (!this.parkingLotForm.invalid && parkingLot) {
@@ -88,7 +90,10 @@ export class CreateReservationComponent {
           parkingLotId: parkingLot.id,
           licensePlate,
         })
-        .pipe(first())
+        .pipe(
+          first(),
+          concatMap(() => this.routerService.toDriverReservations()),
+        )
         .subscribe();
   }
 
