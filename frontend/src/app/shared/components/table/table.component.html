@@ -4,8 +4,7 @@
   <ng-template #content>
     <div class="search" *ngIf="withSearch">
       <mat-form-field appearance="legacy">
-        <input #searchField matInput [placeholder]="translations.SEARCH | translate"
-               (keyup)="filter(searchField.value)">
+        <input #searchField matInput [placeholder]="translations.SEARCH | translate">
         <mat-icon matSuffix *ngIf="!searchField.value">search</mat-icon>
         <button *ngIf="searchField.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchField.value=''">
           <mat-icon>close</mat-icon>

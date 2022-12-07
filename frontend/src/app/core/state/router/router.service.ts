@@ -134,6 +134,16 @@ export class RouterService {
     ]);
   }
 
+  changePageQueryParam(page: number) {
+    this.router.navigate([], {
+      relativeTo: this.router.routerState.root,
+      queryParams: {
+        page,
+      },
+      queryParamsHandling: 'merge', // remove to replace all query params by provided
+    });
+  }
+
   private queryParamMapFromCurrentRoute() {
     return this.router.routerState.snapshot.root.queryParamMap;
   }

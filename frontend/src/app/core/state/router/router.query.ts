@@ -5,6 +5,7 @@ import {
   Fragment,
   ParamKeys,
   QueryParamKeys,
+  QueryParams,
 } from './router.model';
 import { Injectable } from '@angular/core';
 
@@ -19,6 +20,9 @@ export class RouterQuery {
 
   emailFragment$ = (): Observable<boolean> =>
     this.akitaRouterQuery.selectFragment().pipe(map(x => x === Fragment.EMAIL));
+
+  queryParams$ = (): Observable<QueryParams> =>
+    this.akitaRouterQuery.selectQueryParams<QueryParams>();
 
   activationGuid() {
     return this.akitaRouterQuery.getParams(ParamKeys.ACTIVATION_GUID) || '';
