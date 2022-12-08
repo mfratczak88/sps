@@ -44,6 +44,7 @@ export class TableComponent implements OnInit {
 export type Column = {
   name: string;
   translation: string;
+  sortable?: boolean;
 };
 export type Button = {
   icon: 'edit' | 'arrow_forward' | 'visibility' | 'delete';

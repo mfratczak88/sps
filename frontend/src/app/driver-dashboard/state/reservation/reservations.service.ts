@@ -3,7 +3,11 @@ import { ReservationsStore } from './reservations.store';
 import { ReservationApi } from '../../../core/api/reservation.api';
 import { Id } from '../../../core/model/common.model';
 import { DateTime } from 'luxon';
-import { Reservation } from '../../../core/model/reservation.model';
+import {
+  Reservation,
+  SortBy,
+  SortOrder,
+} from '../../../core/model/reservation.model';
 import { concatMap, finalize, tap } from 'rxjs';
 import { ToastKeys } from '../../../core/translation-keys';
 import { ToastService } from '../../../core/service/toast.service';
@@ -28,9 +32,19 @@ export class ReservationsService {
       .queryParams$()
       .pipe(
         tap(() => this.store.setLoading(true)),
-        map(({ page, pageSize }) => ({ page: +page, pageSize: +pageSize })),
-        concatMap(({ page, pageSize }) =>
-          this.api.getReservations({ driverId, page, pageSize }),
+        map(({ page, pageSize, ...rest }) => ({
+          page: +page,
+          pageSize: +pageSize,
+          ...rest,
+        })),
+        concatMap(({ page, pageSize, sortOrder, sortBy }) =>
+          this.api.getReservations({
+            driverId,
+            page,
+            pageSize,
+            sortOrder: sortOrder as SortOrder,
+            sortBy: sortBy as SortBy,
+          }),
         ),
       )
       .subscribe(({ data, ...paging }) => {

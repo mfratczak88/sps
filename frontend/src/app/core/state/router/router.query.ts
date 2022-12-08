@@ -48,6 +48,15 @@ export class RouterQuery {
     return this.akitaRouterQuery.getQueryParams(QueryParamKeys.PAGE_SIZE);
   }
 
+  getSortingQueryParams() {
+    return {
+      sortBy: this.akitaRouterQuery.getQueryParams(QueryParamKeys.SORT_BY),
+      sortOrder: this.akitaRouterQuery.getQueryParams(
+        QueryParamKeys.SORT_ORDER,
+      ),
+    };
+  }
+
   previousActivationGuid() {
     return (
       this.akitaRouterQuery.getQueryParams(

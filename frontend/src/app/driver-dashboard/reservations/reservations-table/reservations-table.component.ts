@@ -7,7 +7,6 @@ import { TableKeys } from '../../../core/translation-keys';
 import { map } from 'rxjs/operators';
 import { AddressPipe } from '../../../shared/pipe/address.pipe';
 import { TimePipe } from '../../../shared/pipe/time.pipe';
-import { ReservationsQuery } from '../../state/reservation/reservations.query';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { RouterService } from '../../../core/state/router/router.service';
@@ -28,7 +27,15 @@ export class ReservationsTableComponent {
     });
   }
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    sort?.sortChange.subscribe(({ active, direction }) => {
+      this.routerService.changeQueryParams({
+        page: '1',
+        sortBy: direction ? active : '',
+        sortOrder: direction,
+      });
+    });
+  }
 
   @Input()
   set reservations$(reservations: Observable<Reservation[]>) {
@@ -62,7 +69,7 @@ export class ReservationsTableComponent {
 
   reservationsTranslations = { ...TableKeys };
 
-  data: Reservation[] = [];
+  data: unknown[] = [];
 
   displayedColumns: ReservationColumnName[] = [];
 
@@ -70,6 +77,7 @@ export class ReservationsTableComponent {
     {
       name: 'createdAt',
       translation: this.reservationsTranslations.CREATED_AT,
+      sortable: true,
     },
     {
       name: 'licensePlate',
@@ -77,12 +85,14 @@ export class ReservationsTableComponent {
     },
     { name: 'time', translation: this.reservationsTranslations.TIME },
     {
-      name: 'reservationDate',
+      name: 'date',
       translation: this.reservationsTranslations.RESERVATION_DATE,
+      sortable: true,
     },
     {
       name: 'status',
       translation: this.reservationsTranslations.RESERVATION_STATUS,
+      sortable: true,
     },
     {
       name: 'parkingLotAddress',
@@ -93,23 +103,21 @@ export class ReservationsTableComponent {
   constructor(
     private readonly addressPipe: AddressPipe,
     private readonly timePipe: TimePipe,
-    readonly reservationsQuery: ReservationsQuery,
     readonly routerService: RouterService,
     readonly routerQuery: RouterQuery,
   ) {}
 
   private derivedData(reservation: Reservation) {
-    const { startTime, endTime } = reservation;
+    const { startTime, endTime, date } = reservation;
 
     const time = `${this.timePipe.transformTime(
       startTime,
     )} - ${this.timePipe.transformTime(endTime)}`;
-    const reservationDate = this.timePipe.transformDate(startTime);
     const parkingLotAddress = this.addressPipe.transform(reservation);
 
     return {
       time,
-      reservationDate,
+      date: this.timePipe.transformDate(date),
       parkingLotAddress,
     };
   }
@@ -119,6 +127,6 @@ export type ReservationColumnName =
   | 'createdAt'
   | 'licensePlate'
   | 'time'
-  | 'reservationDate'
+  | 'date'
   | 'status'
   | 'parkingLotAddress';

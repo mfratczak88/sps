@@ -1,14 +1,6 @@
 import { Id } from '../../domain/id';
 import { ReservationStatus } from '../../domain/reservation/reservation-status';
-import {
-  IsIn,
-  IsInt,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Max,
-  Min,
-} from 'class-validator';
+import { IsIn, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export interface ReservationsReadModel {
@@ -45,7 +37,7 @@ const enumValues = (e: unknown) => Object.values(e);
 export enum SortBy {
   STATUS = 'status',
   PARKING_LOT = 'parkingLot',
-  CREATED_AT = 'createdAt',
+  DATE = 'date',
 }
 
 export enum SortOrder {

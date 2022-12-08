@@ -5,6 +5,8 @@ import {
   ReservationQuery,
   ReservationReadModel,
   ReservationsReadModel,
+  SortBy,
+  SortOrder,
 } from '../../../application/reservation/reservation.read-model';
 import { ReservationStatus } from '../../../domain/reservation/reservation-status';
 import { DateTime } from 'luxon';
@@ -114,16 +116,20 @@ export class PrismaReservationFinder implements ReservationFinder {
 
   orderByClauseFrom(query: ReservationQuery) {
     const { sortOrder, sortBy } = query;
-    const byParkingLotId = sortBy === 'parkingLot' && {
+    const byParkingLotId = sortBy === SortBy.PARKING_LOT && {
       parkingLotId: sortOrder,
     };
-    const byDate = sortBy === 'createdAt' && {
-      createdAt: sortOrder,
+    const byDate = sortBy === SortBy.DATE && {
+      startTime: sortOrder,
     };
-    const byStatus = sortBy === 'status' && {
+    const byStatus = sortBy === SortBy.STATUS && {
       status: sortOrder,
     };
-    return byParkingLotId || byDate || byStatus || { createdAt: 'desc' };
+    return (
+      byParkingLotId ||
+      byDate ||
+      byStatus || { startTime: SortOrder.DESCENDING }
+    );
   }
 
   static selectClause = {
