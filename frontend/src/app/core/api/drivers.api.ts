@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BaseApi } from './base.api';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Driver, DriverReservations } from '../model/driver.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Driver, DriverQueryModel } from '../model/driver.model';
 import {
   AssignDriverToParkingLot,
   RemoveParkingLotAssignment,
@@ -27,14 +27,13 @@ export class DriversApi extends BaseApi {
     return this.http.get<Driver[]>(this.BASE_URL);
   }
 
-  getById(id: string) {
-    return this.http.get<Driver>(`${this.BASE_URL}/${id}`);
-  }
-
-  getDriverReservations(driverId: Id) {
-    return this.http.get<DriverReservations>(
-      `${this.BASE_URL}/${driverId}/reservations`,
-    );
+  getById(id: Id, query?: DriverQueryModel) {
+    const { timeHorizon } = query ?? {};
+    const params =
+      timeHorizon && new HttpParams().set('timeHorizon', timeHorizon.join(','));
+    return this.http.get<Driver>(`${this.BASE_URL}/${id}`, {
+      params,
+    });
   }
 
   addVehicle(licensePlate: string, driverId: string) {

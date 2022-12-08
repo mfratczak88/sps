@@ -40,6 +40,14 @@ export class RouterQuery {
     return this.akitaRouterQuery.getParams(ParamKeys.DRIVER_ID);
   }
 
+  getPageQueryParam() {
+    return this.akitaRouterQuery.getQueryParams(QueryParamKeys.PAGE);
+  }
+
+  getPageSizeQueryParam() {
+    return this.akitaRouterQuery.getQueryParams(QueryParamKeys.PAGE_SIZE);
+  }
+
   previousActivationGuid() {
     return (
       this.akitaRouterQuery.getQueryParams(

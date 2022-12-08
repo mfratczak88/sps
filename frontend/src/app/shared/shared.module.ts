@@ -34,7 +34,7 @@ import { TimeLeftComponent } from './components/time-left/time-left.component';
 import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
 import { ReservationsTableComponent } from '../driver-dashboard/reservations/reservations-table/reservations-table.component';
 import { TimePipe } from './pipe/time.pipe';
-import { AsyncTableComponent } from './components/async-table/async-table.component';
+
 import { SyncTableComponent } from './components/sync-table/sync-table.component';
 
 const components = [
@@ -63,7 +63,6 @@ const components = [
   TimeLeftComponent,
   ConfirmActionDialogComponent,
   ReservationsTableComponent,
-  AsyncTableComponent,
   SyncTableComponent,
 ];
 @NgModule({

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { DriverQuery } from '../../state/driver/driver.query';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
 import { Reservation } from '../../../core/model/reservation.model';
-import { DriverService } from '../../state/driver/driver.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmActionDialogComponent,
@@ -11,6 +10,8 @@ import {
 } from '../../../shared/components/confirm-action-dialog/confirm-action-dialog.component';
 import { concatMap, first, NEVER, Observable } from 'rxjs';
 import { RouterService } from '../../../core/state/router/router.service';
+import { ReservationsService } from '../../state/reservation/reservations.service';
+import { ReservationsQuery } from '../../state/reservation/reservations.query';
 
 @Component({
   selector: 'sps-driver-reservation-list',
@@ -21,8 +22,9 @@ export class ReservationListComponent {
   translations = { ...DriverKeys, ...MiscKeys };
 
   constructor(
-    readonly query: DriverQuery,
-    readonly service: DriverService,
+    readonly driverQuery: DriverQuery,
+    readonly reservationsQuery: ReservationsQuery,
+    readonly service: ReservationsService,
     readonly routerService: RouterService,
     readonly dialog: MatDialog,
   ) {}

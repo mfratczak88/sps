@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ReservationWithParkingLot } from '../../../core/model/reservation.model';
+import { Reservation } from '../../../core/model/reservation.model';
 
 @Component({
   selector: 'sps-reservation-expansion-panel',
@@ -11,5 +11,5 @@ export class ReservationExpansionPanelComponent {
   expanded = false;
 
   @Input()
-  reservation: ReservationWithParkingLot;
+  reservation: Reservation;
 }

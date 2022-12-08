@@ -1,6 +1,22 @@
-<sps-sync-table  [loading$]="loading$"
-                 [buttons]="buttons"
-                 [columns]="tableColumns"
-                 [data]="tableData$()"
-                 [withSearch]="true">
-</sps-sync-table>
+<div class="content">
+  <sps-loading-spinner *ngIf="(loading$ | async) else content">
+  </sps-loading-spinner>
+  <ng-template #content>
+    <mat-table  mat-table [dataSource]="data" class="table" matSort>
+      <ng-container [matColumnDef]="column.name" *ngFor="let column of tableColumns">
+        <mat-header-cell mat-header-cell *matHeaderCellDef
+                         mat-sort-header>{{column.translation | translate}}</mat-header-cell>
+        <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name]}} </mat-cell>
+      </ng-container>
+      <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row class="table__row" mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <tr *matNoDataRow>
+        <td colspan="4">No data</td>
+      </tr>
+    </mat-table>
+    <mat-paginator [pageSize]="routerQuery.getPageSizeQueryParam() || 5" [pageIndex]="routerQuery.getPageQueryParam() - 1" [length]="length$ | async" class="pagination"
+                   [pageSizeOptions]="[5, 10, 15, 20]">
+    </mat-paginator>
+  </ng-template>
+</div>
+

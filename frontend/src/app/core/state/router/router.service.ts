@@ -8,7 +8,7 @@ import {
   TopLevelPaths,
 } from 'src/app/routes';
 
-import { QueryParamKeys } from './router.model';
+import { QueryParamKeys, QueryParams } from './router.model';
 
 @Injectable({
   providedIn: 'root',
@@ -134,11 +134,11 @@ export class RouterService {
     ]);
   }
 
-  changePageQueryParam(page: number) {
+  changeQueryParams(queryParams: Partial<QueryParams>) {
     this.router.navigate([], {
       relativeTo: this.router.routerState.root,
       queryParams: {
-        page,
+        ...queryParams,
       },
       queryParamsHandling: 'merge', // remove to replace all query params by provided
     });

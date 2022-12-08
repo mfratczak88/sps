@@ -7,20 +7,20 @@ export interface Driver {
   email: string;
   parkingLotIds: Id[];
   vehicles: Vehicle[];
+  timeHorizon?: {
+    dueNext?: Reservation[];
+    ongoing?: Reservation[];
+    pendingAction?: Reservation[];
+  };
 }
-
 export interface Vehicle {
   licensePlate: string;
 }
-export type DriverReservation = Reservation & {
-  parkingLot: {
-    city: string;
-    streetName: string;
-    streetNumber: string;
-  };
-};
-export interface DriverReservations {
-  pendingAction: DriverReservation[];
-  dueNext: DriverReservation[];
-  history: DriverReservation[];
+export interface DriverQueryModel {
+  timeHorizon?: TimeHorizon[];
+}
+export enum TimeHorizon {
+  ONGOING = 'ongoing',
+  DUE_NEXT = 'dueNext',
+  PENDING_ACTION = 'pendingAction',
 }

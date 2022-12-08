@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BaseApi } from './base.api';
-import { HttpClient } from '@angular/common/http';
-import { MakeReservation } from '../model/reservation.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  MakeReservation,
+  Reservations,
+  ReservationQueryModel,
+  Reservation,
+} from '../model/reservation.model';
 import { environment } from '../../../environments/environment';
 import { Id } from '../model/common.model';
 
@@ -13,6 +18,26 @@ export class ReservationApi extends BaseApi {
 
   constructor(http: HttpClient) {
     super(http);
+  }
+
+  getReservations(query?: ReservationQueryModel) {
+    const params = this.fillHttpQueryParams(query);
+    return this.http.get<Reservations>(`${this.BASE_URL}`, { params });
+  }
+
+  getReservation(id: Id) {
+    return this.http.get<Reservation>(`${this.BASE_URL}/${id}`);
+  }
+
+  fillHttpQueryParams(query?: ReservationQueryModel) {
+    let httpParams = new HttpParams();
+    query &&
+      Object.entries(query)
+        .filter(([key, val]) => !!val)
+        .forEach(([key, value]) => {
+          httpParams = httpParams.set(key, value);
+        });
+    return httpParams;
   }
 
   makeReservation(req: MakeReservation) {

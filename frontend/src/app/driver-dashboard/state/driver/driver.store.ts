@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { DriverReservation, Vehicle } from '../../../core/model/driver.model';
+import { Vehicle } from '../../../core/model/driver.model';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { Reservation } from '../../../core/model/reservation.model';
 
 export interface DriverState {
   id: string;
@@ -9,9 +10,9 @@ export interface DriverState {
   email: string;
   parkingLots: ParkingLot[];
   vehicles: Vehicle[];
-  pendingAction: DriverReservation[];
-  dueNext: DriverReservation[];
-  history: DriverReservation[];
+  pendingAction: Reservation[];
+  dueNext: Reservation[];
+  ongoing: Reservation[];
 }
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class DriverStore extends Store<DriverState> {
       vehicles: [],
       pendingAction: [],
       dueNext: [],
-      history: [],
+      ongoing: [],
     });
   }
 }

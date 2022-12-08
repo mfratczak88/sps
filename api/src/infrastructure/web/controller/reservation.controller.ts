@@ -26,10 +26,8 @@ import {
 } from '../../security/authorization/policy/reservation.policy';
 import { JwtAuthGuard } from '../../security/authorization/jwt-auth.guard';
 import { CsrfGuard } from '../../security/csrf/csrf.guard';
-import {
-  ReservationFinder,
-  ReservationQuery,
-} from '../../../application/reservation/reservation.finder';
+import { ReservationFinder } from '../../../application/reservation/reservation.finder';
+import { ReservationQuery } from '../../../application/reservation/reservation.read-model';
 
 @Controller('reservations')
 export class ReservationController {

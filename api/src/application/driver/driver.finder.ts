@@ -1,8 +1,10 @@
-import { DriverReadModel, DriverReservations } from './driver.read-model';
+import { DriverQuery, DriverReadModel } from './driver.read-model';
 import { Id } from '../../domain/id';
 
 export abstract class DriverFinder {
   abstract findAll(): Promise<DriverReadModel[]>;
-  abstract findById(id: Id): Promise<DriverReadModel>;
-  abstract findDriverReservations(driverId: Id): Promise<DriverReservations>;
+  abstract findSingle(
+    driverId: Id,
+    query: DriverQuery,
+  ): Promise<DriverReadModel>;
 }

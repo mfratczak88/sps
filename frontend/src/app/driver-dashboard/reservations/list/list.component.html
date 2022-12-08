@@ -1,8 +1,8 @@
-<div class="reservations" *ngIf="(query.select() | async) as driver">
+<div class="reservations" *ngIf="(driverQuery.select() | async) as driver">
   <sps-card class="reservations__card"
             [title]="translations.CONFIRM_TITLE"
             [subTitle]="translations.CONFIRM_PROMPT"
-            [loading$]="query.selectLoading()"
+            [loading$]="driverQuery.selectLoading()"
             *ngIf="driver.pendingAction.length">
     <sps-number-chip chip>{{driver.pendingAction.length}}</sps-number-chip>
     <div>
@@ -26,7 +26,7 @@
   <sps-card class="reservations__card"
             [title]="translations.DUE_NEXT"
             [subTitle]="translations.DUE_NEXT_PROMPT"
-            [loading$]="query.selectLoading()"
+            [loading$]="driverQuery.selectLoading()"
             *ngIf="driver.dueNext.length">
     <sps-number-chip chip>{{driver.dueNext.length}}</sps-number-chip>
     <div>
@@ -53,8 +53,9 @@
       {{translations.CREATE | translate}}
     </button>
     <sps-reservations-table
-      [loading$]="query.selectLoading()"
-      [reservations$]="query.reservationsHistory$()"
+      [reservations$]="reservationsQuery.driverReservationHistory$()"
+      [loading$]="reservationsQuery.selectLoading()"
+      [length$]="reservationsQuery.count$()"
       [displayColumns]="['licensePlate','time','reservationDate','status','parkingLotAddress']"
     ></sps-reservations-table>
   </sps-panel>
