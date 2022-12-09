@@ -1,0 +1,18 @@
+@use "../../../../variables" as vars;
+.color-red {
+  color: #4FFF70;
+  background: rgba(#4FFF70, 0.2);
+}
+.color-red {
+  color: #FE3C3C;
+  background: rgba(#FE3C3C, 0.2);
+}
+.color-grey {
+  color: #9B9B9B;
+  background: rgba(#9B9B9B, 0.2);
+}
+.chip {
+  padding: 0.25rem 1.5rem;
+  border-radius: 3px;
+  @include vars.elevation();
+}

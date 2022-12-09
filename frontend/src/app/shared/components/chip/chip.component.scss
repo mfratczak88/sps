@@ -1,4 +1,5 @@
 @use "../../../../variables" as vars;
+
 .chip {
   display: flex;
   gap: 0.3rem;
@@ -7,6 +8,7 @@
   padding: 4px;
   justify-content: flex-end;
 }
+
 .chip__content {
   justify-self: flex-start;
 }

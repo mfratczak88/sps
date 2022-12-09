@@ -12,6 +12,7 @@ export enum ParamKeys {
   ACTIVATION_GUID = 'activationGuid',
   PARKING_LOT_ID = 'parkingLotId',
   DRIVER_ID = 'driverId',
+  RESERVATION_ID = 'reservationId',
 }
 export enum Fragment {
   EMAIL = 'email',

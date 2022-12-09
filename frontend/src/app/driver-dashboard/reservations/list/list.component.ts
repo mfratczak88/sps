@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DriverQuery } from '../../state/driver/driver.query';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
 import { Reservation } from '../../../core/model/reservation.model';
@@ -8,7 +8,7 @@ import {
   ConfirmDialogProps,
   ConfirmResult,
 } from '../../../shared/components/confirm-action-dialog/confirm-action-dialog.component';
-import { concatMap, first, NEVER, Observable } from 'rxjs';
+import { concatMap, first, NEVER, Observable, takeWhile } from 'rxjs';
 import { RouterService } from '../../../core/state/router/router.service';
 import { ReservationsService } from '../../state/reservation/reservations.service';
 import { ReservationsQuery } from '../../state/reservation/reservations.query';
@@ -18,16 +18,23 @@ import { ReservationsQuery } from '../../state/reservation/reservations.query';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ReservationListComponent {
+export class ReservationListComponent implements OnDestroy {
   translations = { ...DriverKeys, ...MiscKeys };
+
+  alive = true;
 
   constructor(
     readonly driverQuery: DriverQuery,
     readonly reservationsQuery: ReservationsQuery,
-    readonly service: ReservationsService,
+    readonly reservationsService: ReservationsService,
     readonly routerService: RouterService,
     readonly dialog: MatDialog,
-  ) {}
+  ) {
+    this.reservationsService
+      .reloadOnPagingChange$({ forDriver: true })
+      .pipe(takeWhile(() => this.alive))
+      .subscribe();
+  }
 
   onConfirmReservation(reservation: Reservation) {
     this.confirmWithDialog(
@@ -35,7 +42,7 @@ export class ReservationListComponent {
         title: this.translations.CONFIRM_RESERVATION,
         subTitle: this.translations.CONFIRM_RESERVATION_QUESTION,
       },
-      () => this.service.confirmReservation(reservation),
+      () => this.reservationsService.confirmReservation(reservation),
     );
   }
 
@@ -45,8 +52,12 @@ export class ReservationListComponent {
         title: this.translations.CANCEL_RESERVATION,
         subTitle: this.translations.CANCEL_RESERVATION_QUESTION,
       },
-      () => this.service.cancelReservation(reservation),
+      () => this.reservationsService.cancelReservation(reservation),
     );
+  }
+
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 
   private confirmWithDialog(

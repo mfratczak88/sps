@@ -158,6 +158,12 @@ export class RouterService {
     ]);
   }
 
+  toDriverReservationDetails(id: string) {
+    this.router.navigate([
+      `${TopLevelPaths.DRIVER_DASHBOARD}/${AdminPaths.RESERVATIONS}/${id}`,
+    ]);
+  }
+
   toDriverReservations() {
     return this.router.navigate([
       `/${TopLevelPaths.DRIVER_DASHBOARD}/${DriverPaths.RESERVATIONS}`,

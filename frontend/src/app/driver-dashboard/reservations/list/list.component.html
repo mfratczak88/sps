@@ -56,6 +56,7 @@
       [reservations$]="reservationsQuery.driverReservationHistory$()"
       [loading$]="reservationsQuery.selectLoading()"
       [length$]="reservationsQuery.count$()"
+      (reservationClicked)="routerService.toDriverReservationDetails($event)"
       [displayColumns]="['licensePlate','time','date','status','parkingLotAddress']"
     ></sps-reservations-table>
   </sps-panel>

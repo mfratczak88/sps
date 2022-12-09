@@ -1,5 +1,12 @@
 import { RouterQuery as AkitaRouterQuery } from '@datorama/akita-ng-router-store';
-import { filter, map, Observable } from 'rxjs';
+import {
+  delay,
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+  tap,
+} from 'rxjs';
 import {
   BreadCrumbs,
   Fragment,
@@ -34,6 +41,10 @@ export class RouterQuery {
 
   parkingLotId() {
     return this.akitaRouterQuery.getParams(ParamKeys.PARKING_LOT_ID);
+  }
+
+  reservationId$() {
+    return this.akitaRouterQuery.selectParams(ParamKeys.RESERVATION_ID);
   }
 
   driverId() {

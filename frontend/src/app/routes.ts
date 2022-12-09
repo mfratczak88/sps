@@ -39,4 +39,5 @@ export enum DriverPaths {
   PARKING_LOTS = 'parking-lots',
   VEHICLES = 'vehicles',
   CREATE_RESERVATION = 'create-reservation',
+  RESERVATION_DETAILS = ':reservationId',
 }

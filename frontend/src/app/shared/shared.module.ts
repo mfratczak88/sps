@@ -32,10 +32,11 @@ import { ParkingLotExpansionPanelComponent } from './components/parking-lot-expa
 import { ChipComponent } from './components/chip/chip.component';
 import { TimeLeftComponent } from './components/time-left/time-left.component';
 import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
-import { ReservationsTableComponent } from '../driver-dashboard/reservations/reservations-table/reservations-table.component';
+import { ReservationsTableComponent } from './components/reservations-table/reservations-table.component';
 import { TimePipe } from './pipe/time.pipe';
 
 import { SyncTableComponent } from './components/sync-table/sync-table.component';
+import { ReservationStatusChipComponent } from './components/reservation-status-chip/reservation-status-chip.component';
 
 const components = [
   NavbarComponent,
@@ -64,6 +65,7 @@ const components = [
   ConfirmActionDialogComponent,
   ReservationsTableComponent,
   SyncTableComponent,
+  ReservationStatusChipComponent,
 ];
 @NgModule({
   declarations: components,

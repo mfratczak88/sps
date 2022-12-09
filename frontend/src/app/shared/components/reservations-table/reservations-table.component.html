@@ -16,7 +16,7 @@
         <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name]}} </mat-cell>
       </ng-container>
       <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row class="table__row" mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-row class="table__row" (click)="reservationClicked.emit(row.id)" mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       <tr *matNoDataRow>
         <td colspan="4">No data</td>
       </tr>

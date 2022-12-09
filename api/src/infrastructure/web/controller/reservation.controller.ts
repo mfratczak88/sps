@@ -89,4 +89,10 @@ export class ReservationController {
   getAll(@Query() query: ReservationQuery) {
     return this.finder.findAll(query);
   }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  getById(@Param('id') id: Id) {
+    return this.finder.findById(id);
+  }
 }

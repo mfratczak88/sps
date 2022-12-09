@@ -1,16 +1,23 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Reservation } from '../../../core/model/reservation.model';
 
-import { Column } from '../../../shared/components/table/table.component';
+import { Column } from '../table/table.component';
 import { TableKeys } from '../../../core/translation-keys';
 import { map } from 'rxjs/operators';
-import { AddressPipe } from '../../../shared/pipe/address.pipe';
-import { TimePipe } from '../../../shared/pipe/time.pipe';
+import { AddressPipe } from '../../pipe/address.pipe';
+import { TimePipe } from '../../pipe/time.pipe';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { RouterService } from '../../../core/state/router/router.service';
 import { RouterQuery } from '../../../core/state/router/router.query';
+import { Id } from '../../../core/model/common.model';
 
 @Component({
   selector: 'sps-reservations-table',
@@ -66,6 +73,9 @@ export class ReservationsTableComponent {
 
   @Input()
   length$: Observable<number> = of(0);
+
+  @Output()
+  reservationClicked = new EventEmitter<Id>();
 
   reservationsTranslations = { ...TableKeys };
 

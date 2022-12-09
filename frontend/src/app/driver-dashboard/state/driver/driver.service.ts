@@ -9,6 +9,7 @@ import { ToastKeys } from '../../../core/translation-keys';
 import { ParkingLotQuery } from '../parking-lot/parking-lot.query';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
 import { ReservationsService } from '../reservation/reservations.service';
+import { DriverQuery } from './driver.query';
 
 @Injectable({
   providedIn: 'root',

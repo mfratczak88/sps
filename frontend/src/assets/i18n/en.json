@@ -71,7 +71,8 @@
     "USERS": "Users",
     "PARKING_DETAILS": "Details",
     "DRIVERS": "Drivers",
-    "VEHICLES": "Vehicles"
+    "VEHICLES": "Vehicles",
+    "RESERVATION_DETAILS": "Details"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Reservations",
@@ -201,5 +202,10 @@
     "RESERVATION_DATE": "Date",
     "RESERVATION_STATUS": "Status",
     "PARKING_LOT_ADDRESS": "Parking lot"
+  },
+  "RESERVATION_STATUS": {
+    "DRAFT": "Draft",
+    "CANCELLED": "Cancelled",
+    "ACCEPTED": "Accepted"
   }
 }

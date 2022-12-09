@@ -1,18 +1,19 @@
 import { Id } from './common.model';
+import { ReservationStatusKey } from '../translation-keys';
 
 export interface Reservation {
   id: Id;
   parkingLotId: Id;
   status: ReservationStatus;
-  startTime: Date;
-  endTime: Date;
-  date: Date;
+  startTime: string;
+  endTime: string;
+  date: string;
   licensePlate: string;
   city: string;
   streetName: string;
   streetNumber: string;
-  approvalTimeStart?: Date;
-  approvalDeadLine?: Date;
+  approvalTimeStart?: string;
+  approvalDeadLine?: string;
   parkingTickets: ParkingTicket[];
 }
 
@@ -68,3 +69,9 @@ export interface ReservationQueryModel {
   sortBy?: SortBy;
   sortOrder?: SortOrder;
 }
+
+export const ReservationStatusTranslationKey = {
+  [ReservationStatus.DRAFT]: ReservationStatusKey.DRAFT,
+  [ReservationStatus.ACCEPTED]: ReservationStatusKey.ACCEPTED,
+  [ReservationStatus.CANCELLED]: ReservationStatusKey.CANCELLED,
+};

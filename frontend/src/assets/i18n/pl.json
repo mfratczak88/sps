@@ -67,6 +67,7 @@
     "DASHBOARD": "Panel",
     "PARKING": "Parkingi",
     "RESERVATIONS": "Rezerwacje",
+    "RESERVATION_DETAILS": "Szczegóły",
     "CREATE_RESERVATION": "Create reservation",
     "USERS": "Użytkownicy",
     "PARKING_DETAILS": "Szczegóły",
@@ -201,5 +202,10 @@
     "RESERVATION_DATE": "Data",
     "RESERVATION_STATUS": "Status",
     "PARKING_LOT_ADDRESS": "Parking"
+  },
+  "RESERVATION_STATUS": {
+    "DRAFT": "Draft",
+    "CANCELLED": "Anulowana",
+    "ACCEPTED": "Potwierdzona"
   }
 }

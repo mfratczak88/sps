@@ -1,1 +1,48 @@
-<p>details works!</p>
+<sps-loading-spinner *ngIf="(query.selectLoading() | async) else content"></sps-loading-spinner>
+<ng-template #content>
+  <sps-panel *ngIf="query.active$() | async as reservation"
+             [title]="translations.RESERVATION_DETAILS | translate">
+    <div class="section">
+      <p class="section__header">Data i miejsce</p>
+      <div class="section__attribute">
+        <mat-icon class="section__attribute--icon">schedule</mat-icon>
+        <div class="section__attribute--value">
+          {{reservation.startTime | date: 'HH:mm'}} - {{reservation.endTime | date: 'HH:mm'}}
+        </div>
+      </div>
+      <div class="section__attribute">
+        <mat-icon class="section__attribute--icon">calendar_month</mat-icon>
+        <div class="section__attribute--value">
+          {{reservation.date | date: 'dd.MM.yyyy'}}
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <p class="section__header">Parking</p>
+      <div class="section__attribute">
+        <mat-icon class="section__attribute--icon">home</mat-icon>
+        <div class="section__attribute--value">
+          {{reservation.city}}, {{reservation.streetName}} {{reservation.streetNumber}}
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <p class="section__header">Pojazd</p>
+      <div class="section__attribute">
+        <mat-icon class="section__attribute--icon">directions_car</mat-icon>
+        <div class="section__attribute--value">
+          {{reservation.licensePlate}}
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <p class="section__header">Status</p>
+      <sps-reservation-status-chip class="section__attribute" [reservation]="reservation"></sps-reservation-status-chip>
+    </div>
+    <div class="actions" *ngIf="reservationService.canBeChanged(reservation)">
+      <button mat-button color="primary" *ngIf="reservationService.canBeConfirmed(reservation)">Confirm</button>
+      <button mat-button>Change time</button>
+      <button mat-button color="warn" *ngIf="reservationService.canBeCancelled(reservation)">Cancel</button>
+    </div>
+  </sps-panel>
+</ng-template>
