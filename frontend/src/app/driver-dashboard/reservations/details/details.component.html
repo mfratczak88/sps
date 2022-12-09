@@ -39,10 +39,16 @@
       <p class="section__header">Status</p>
       <sps-reservation-status-chip class="section__attribute" [reservation]="reservation"></sps-reservation-status-chip>
     </div>
-    <div class="actions" *ngIf="reservationService.canBeChanged(reservation)">
-      <button mat-button color="primary" *ngIf="reservationService.canBeConfirmed(reservation)">Confirm</button>
-      <button mat-button>Change time</button>
-      <button mat-button color="warn" *ngIf="reservationService.canBeCancelled(reservation)">Cancel</button>
+    <div class="actions" *ngIf="reservationsService.canBeChanged(reservation)">
+      <button mat-button color="primary"
+              (click)="onConfirmReservation(reservation)"
+              *ngIf="reservationsService.canBeConfirmed(reservation)">{{translations.CONFIRM_RESERVATION | translate}}
+      </button>
+      <button mat-button>{{translations.CHANGE_TIME | translate}}</button>
+      <button mat-button color="warn"
+              (click)="onCancelReservation(reservation)"
+              *ngIf="reservationsService.canBeCancelled(reservation)">{{translations.CANCEL_RESERVATION | translate}}
+      </button>
     </div>
   </sps-panel>
 </ng-template>

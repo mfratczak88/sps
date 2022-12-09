@@ -1,3 +1,6 @@
-<span class="chip" [ngClass]="cssClass()">
+<span class="chip" [ngClass]="statusCssClass[reservation.status]">
+  <mat-icon>{{statusIcon[reservation.status]}}</mat-icon>
+  <span class="chip__text">
   {{translation() | translate}}
+  </span>
 </span>

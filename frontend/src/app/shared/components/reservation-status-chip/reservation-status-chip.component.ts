@@ -14,15 +14,19 @@ export class ReservationStatusChipComponent {
   @Input()
   reservation: Reservation;
 
-  cssClass() {
-    return this.reservation.status === ReservationStatus.DRAFT
-      ? 'color-grey'
-      : ReservationStatus.ACCEPTED
-      ? 'color-green'
-      : 'color-red';
-  }
-
   translation() {
     return ReservationStatusTranslationKey[this.reservation.status];
   }
+
+  readonly statusCssClass = {
+    [ReservationStatus.DRAFT]: 'color-grey',
+    [ReservationStatus.CANCELLED]: 'color-red',
+    [ReservationStatus.CONFIRMED]: 'color-green',
+  };
+
+  readonly statusIcon = {
+    [ReservationStatus.CONFIRMED]: 'check_circle',
+    [ReservationStatus.CANCELLED]: 'cancel',
+    [ReservationStatus.DRAFT]: 'draft',
+  };
 }

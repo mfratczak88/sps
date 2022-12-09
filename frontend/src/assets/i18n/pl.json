@@ -206,6 +206,6 @@
   "RESERVATION_STATUS": {
     "DRAFT": "Draft",
     "CANCELLED": "Anulowana",
-    "ACCEPTED": "Potwierdzona"
+    "CONFIRMED": "Potwierdzona"
   }
 }

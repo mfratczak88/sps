@@ -27,7 +27,7 @@ export interface Reservations {
 export enum ReservationStatus {
   DRAFT = 'Draft',
   CANCELLED = 'Cancelled',
-  ACCEPTED = 'Accepted',
+  CONFIRMED = 'Confirmed',
 }
 
 export interface ParkingTicket {
@@ -72,6 +72,6 @@ export interface ReservationQueryModel {
 
 export const ReservationStatusTranslationKey = {
   [ReservationStatus.DRAFT]: ReservationStatusKey.DRAFT,
-  [ReservationStatus.ACCEPTED]: ReservationStatusKey.ACCEPTED,
+  [ReservationStatus.CONFIRMED]: ReservationStatusKey.CONFIRMED,
   [ReservationStatus.CANCELLED]: ReservationStatusKey.CANCELLED,
 };

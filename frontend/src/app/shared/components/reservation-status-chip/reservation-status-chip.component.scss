@@ -1,18 +1,37 @@
 @use "../../../../variables" as vars;
-.color-red {
-  color: #4FFF70;
-  background: rgba(#4FFF70, 0.2);
+
+$color-green: #4FFF70;
+$color-red: #FE3C3C;
+$color-grey: #9B9B9B;
+$text-opacity: 0.8;
+$background-opacity: 0.1;
+
+@mixin chip-color($color) {
+  color: rgba($color, $text-opacity);
+  background: rgba($color, $background-opacity);
 }
-.color-red {
-  color: #FE3C3C;
-  background: rgba(#FE3C3C, 0.2);
+
+.color-green {
+  @include chip-color($color-green)
 }
+
+.color-red {
+  @include chip-color($color-red)
+}
+
 .color-grey {
-  color: #9B9B9B;
-  background: rgba(#9B9B9B, 0.2);
+  @include chip-color($color-grey)
 }
+
 .chip {
-  padding: 0.25rem 1.5rem;
+  font-weight: 600;
+  padding: 0.25rem 1rem;
   border-radius: 3px;
   @include vars.elevation();
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.chip__text {
+  color: black;
 }

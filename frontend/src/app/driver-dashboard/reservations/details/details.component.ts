@@ -1,38 +1,41 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ReservationsService } from '../../state/reservation/reservations.service';
-import { ReservationsQuery } from '../../state/reservation/reservations.query';
-import { DrawerKeys, DriverKeys } from '../../../core/translation-keys';
 import { RouterQuery } from '../../../core/state/router/router.query';
 import { concatMap } from 'rxjs/operators';
 import { takeWhile } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ReservationBaseComponent } from '../reservation.base.component';
+import { ReservationsQuery } from '../../state/reservation/reservations.query';
 
 @Component({
   selector: 'sps-reservation-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
-export class ReservationDetailsComponent implements OnInit, OnDestroy {
-  translations = { ...DriverKeys, ...DrawerKeys };
-
+export class ReservationDetailsComponent extends ReservationBaseComponent
+  implements OnInit, OnDestroy {
   alive = true;
 
   constructor(
-    readonly reservationService: ReservationsService,
-    readonly query: ReservationsQuery,
+    service: ReservationsService,
+    dialog: MatDialog,
     readonly routerQuery: RouterQuery,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.alive = false;
+    readonly query: ReservationsQuery,
+  ) {
+    super(service, dialog);
   }
 
   ngOnInit(): void {
     this.routerQuery
       .reservationId$()
       .pipe(
-        concatMap(id => this.reservationService.select(id)),
+        concatMap(id => this.reservationsService.select(id)),
         takeWhile(() => this.alive),
       )
       .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 }
