@@ -1,5 +1,5 @@
 import { Route, RouterModule } from '@angular/router';
-import { ReservationsListComponent } from './list/reservations-list.component';
+import { ReservationsListComponent } from './list/list.component';
 import { DrawerKeys } from '../../core/translation-keys';
 import { AdminPaths, TopLevelPaths } from '../../routes';
 

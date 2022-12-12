@@ -5438,6 +5438,13 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+ngx-countdown@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-countdown/-/ngx-countdown-14.0.0.tgz#f1b8bca696d70f678cc1788124a5f17a44d86202"
+  integrity sha512-XZyRQM7lT174phm15WiqnenYShZ9+RkaSYNsFvM5GREPgAnWE9Yl7tjC6aH4tijdnYPsbAqSIyqhzg/TERiKjQ==
+  dependencies:
+    tslib "^2.3.0"
+
 ngx-translate-testing@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/ngx-translate-testing/-/ngx-translate-testing-6.1.0.tgz#0e8f7b48592c47af46021c11ba4e9f837f79cfee"

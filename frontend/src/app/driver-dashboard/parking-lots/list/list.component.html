@@ -15,10 +15,10 @@
   <sps-card [title]="translations.REQUEST_ACCESS"
             [subTitle]="translations.REQUEST_ACCESS_INFO"
             [loading$]="query.selectLoading()"
-            *ngIf="driver.unAssignedLots?.length">
-    <sps-number-chip chip>{{driver.unAssignedLots.length}}</sps-number-chip>
+            *ngIf="query.unAssignedParkingLots$() | async as unAssignedLots">
+    <sps-number-chip chip>{{unAssignedLots.length}}</sps-number-chip>
     <div>
-      <div *ngFor="let lot of driver.unAssignedLots">
+      <div *ngFor="let lot of unAssignedLots">
         <sps-parking-lot-expansion-panel [parkingLot]="lot">
           <button mat-button color="primary">{{translations.REQUEST_ACCESS | translate}}</button>
         </sps-parking-lot-expansion-panel>

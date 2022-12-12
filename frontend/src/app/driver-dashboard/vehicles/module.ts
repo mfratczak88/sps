@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VehiclesComponent } from './vehicles.component';
+import { VehiclesComponent } from './component';
 import { VehiclesRoutingModule } from './routing';
 import { SharedModule } from '../../shared/shared.module';
 import { AddVehicleDialogComponent } from './add-vehicle-dialog/add-vehicle-dialog.component';

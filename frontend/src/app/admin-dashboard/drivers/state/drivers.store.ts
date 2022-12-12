@@ -1,8 +1,11 @@
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 import { Injectable } from '@angular/core';
-import { Driver } from '../../../core/model/admin.model';
+import { Driver } from '../../../core/model/driver.model';
 
-export type DriversState = EntityState<Driver, string>;
+export interface DriverState extends Driver {
+  parkingLotCount: number;
+}
+export type DriversState = EntityState<DriverState, string>;
 @Injectable({
   providedIn: 'root',
 })

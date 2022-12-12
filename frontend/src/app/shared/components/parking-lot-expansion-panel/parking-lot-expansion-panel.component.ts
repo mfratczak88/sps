@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ParkingLot } from '../../../core/model/driver.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-parking-lot-expansion-panel',

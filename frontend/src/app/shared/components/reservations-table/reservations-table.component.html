@@ -1,0 +1,31 @@
+<div class="content">
+  <sps-loading-spinner *ngIf="(loading$ | async) else content">
+  </sps-loading-spinner>
+  <ng-template #content>
+    <mat-table mat-table [dataSource]="data" class="table" matSort matSortDisableClear
+               [matSortDirection]="routerQuery.getSortingQueryParams().sortOrder || 'desc'"
+               [matSortActive]="routerQuery.getSortingQueryParams().sortBy || 'date'">
+      <ng-container [matColumnDef]="column.name" *ngFor="let column of tableColumns">
+        <ng-container *ngIf="column.sortable else nonSortable">
+          <mat-header-cell mat-header-cell mat-sort-header disableClear
+                           *matHeaderCellDef>{{column.translation | translate}}</mat-header-cell>
+        </ng-container>
+        <ng-template #nonSortable>
+          <mat-header-cell mat-header-cell *matHeaderCellDef>{{column.translation | translate}}</mat-header-cell>
+        </ng-template>
+        <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name] | translate}} </mat-cell>
+      </ng-container>
+      <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row class="table__row" (click)="reservationClicked.emit(row.id)" mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <tr *matNoDataRow>
+        <td colspan="4">No data</td>
+      </tr>
+    </mat-table>
+    <mat-paginator [pageSize]="routerQuery.getPageSizeQueryParam() || 5"
+                   [pageIndex]="routerQuery.getPageQueryParam() - 1"
+                   [length]="length$ | async" class="pagination"
+                   [pageSizeOptions]="[5, 10, 15, 20]">
+    </mat-paginator>
+  </ng-template>
+</div>
+

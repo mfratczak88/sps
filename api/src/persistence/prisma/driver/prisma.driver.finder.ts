@@ -1,86 +1,195 @@
 import { DriverFinder } from '../../../application/driver/driver.finder';
-import { DriverReadModel } from '../../../application/driver/driver.read-model';
+import {
+  DriverQuery,
+  DriverReadModel,
+  TimeHorizon,
+} from '../../../application/driver/driver.read-model';
 import { PrismaService } from '../prisma.service';
 import { Role } from '../../../infrastructure/security/authorization/role';
 import { Injectable } from '@nestjs/common';
-import { PrismaParkingLotFinder } from '../parking-lot/prisma.parking-lot.finder';
+import { ReservationStatus } from '../../../domain/reservation/reservation-status';
 import { Id } from '../../../domain/id';
+import { DateTime } from 'luxon';
+import {
+  PrismaReservation,
+  PrismaReservationFinder,
+} from '../reservation/prisma.reservation.finder';
 
 @Injectable()
 export class PrismaDriverFinder implements DriverFinder {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findById(id: Id): Promise<DriverReadModel> {
+  async findSingle(driverId: Id, query: DriverQuery): Promise<DriverReadModel> {
+    const { timeHorizon } = query;
     const prismaDriver = await this.prismaService.user.findFirst({
       where: {
-        id,
+        id: driverId,
+        role: Role.DRIVER,
       },
-      ...PrismaDriverFinder.prismaSelect(),
+      ...this.driverSelect,
     });
-    const unAssignedLots = await this.prismaService.parkingLot.findMany({
-      where: {
-        users: {
-          none: {
-            id,
-          },
-        },
-      },
-    });
+    const driverDto =
+      PrismaDriverFinder.mapPrismaDriverToReadModel(prismaDriver);
+
+    const withTimeHorizon = {
+      pendingAction: timeHorizon?.includes(TimeHorizon.PENDING_ACTION)
+        ? await this.loadPendingActionReservations(driverId)
+        : [],
+      ongoing: timeHorizon?.includes(TimeHorizon.ONGOING)
+        ? await this.loadOngoingReservations(driverId)
+        : [],
+      dueNext: timeHorizon?.includes(TimeHorizon.DUE_NEXT)
+        ? await this.loadDueNextReservations(driverId)
+        : [],
+    };
     return {
-      ...PrismaDriverFinder.mapUserToDto(prismaDriver),
-      unAssignedLots: unAssignedLots.map((lot) =>
-        PrismaDriverFinder.lotToDto(lot),
-      ),
+      ...driverDto,
+      timeHorizon: {
+        ...withTimeHorizon,
+      },
     };
   }
 
+  private async loadDueNextReservations(driverId: Id) {
+    const now = DateTime.now().toJSDate();
+    const reservations = await (this.prismaService.reservation.findMany({
+      select: {
+        ...PrismaReservationFinder.selectClause,
+      },
+      where: {
+        startTime: {
+          gt: now,
+        },
+        status: {
+          not: ReservationStatus.CANCELLED,
+        },
+        vehicle: {
+          user: {
+            id: driverId,
+          },
+        },
+      },
+    }) as Promise<PrismaReservation[]>);
+    return reservations.map((r) =>
+      PrismaReservationFinder.mapReservationToDto(r),
+    );
+  }
+  private async loadPendingActionReservations(driverId: Id) {
+    const now = DateTime.now();
+    const fourHoursFromNow = now.plus({ hour: 4 }).toJSDate();
+    const thirtyMinutesFromNow = now.plus({ minute: 30 }).toJSDate();
+    const reservations = await (this.prismaService.reservation.findMany({
+      select: {
+        ...PrismaReservationFinder.selectClause,
+      },
+      where: {
+        startTime: {
+          lt: fourHoursFromNow,
+          gt: thirtyMinutesFromNow,
+        },
+        status: ReservationStatus.DRAFT,
+        vehicle: {
+          user: {
+            id: driverId,
+          },
+        },
+      },
+    }) as Promise<PrismaReservation[]>);
+    return reservations.map((r) =>
+      PrismaReservationFinder.mapReservationToDto(r),
+    );
+  }
+  private async loadOngoingReservations(driverId: Id) {
+    const now = DateTime.now().toJSDate();
+    const reservations = await (this.prismaService.reservation.findMany({
+      select: {
+        ...PrismaReservationFinder.selectClause,
+      },
+      where: {
+        startTime: {
+          lt: now,
+        },
+        endTime: {
+          gt: now,
+        },
+        status: ReservationStatus.CONFIRMED,
+        vehicle: {
+          user: {
+            id: driverId,
+          },
+        },
+      },
+    }) as Promise<PrismaReservation[]>);
+    return reservations.map((r) =>
+      PrismaReservationFinder.mapReservationToDto(r),
+    );
+  }
   async findAll(): Promise<DriverReadModel[]> {
     return (
       await this.prismaService.user.findMany({
         where: {
           role: Role.DRIVER,
         },
-        ...PrismaDriverFinder.prismaSelect(),
+        ...this.driverSelect,
       })
-    ).map((user) => PrismaDriverFinder.mapUserToDto(user));
+    ).map((user: PrismaDriver) =>
+      PrismaDriverFinder.mapPrismaDriverToReadModel(user),
+    );
   }
 
-  private static mapUserToDto(user) {
+  private static mapPrismaDriverToReadModel(user: PrismaDriver) {
+    const { parkingLots, vehicles, ...rest } = user;
     return {
-      ...user,
-      parkingLots: user.parkingLots.map((lot) =>
-        PrismaDriverFinder.lotToDto(lot),
-      ),
+      ...rest,
+      vehicles: vehicles.map(({ licensePlate }) => ({ licensePlate })),
+      parkingLotIds: parkingLots.map(({ id }) => id),
     };
   }
-
-  private static lotToDto(lot) {
-    const { id, city, hourFrom, hourTo, streetName, streetNumber, days } =
-      PrismaParkingLotFinder.prismaLotToDto(lot);
-    return {
-      id,
-      city,
-      hourTo,
-      hourFrom,
-      streetName,
-      streetNumber,
-      days,
-    };
-  }
-
-  private static prismaSelect() {
-    return {
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        parkingLots: true,
-        vehicles: {
-          select: {
-            licensePlate: true,
-          },
+  readonly reservationSelect = {
+    select: {
+      id: true,
+      vehicle: {
+        select: {
+          licensePlate: true,
         },
       },
-    };
-  }
+      startTime: true,
+      endTime: true,
+      createdAt: true,
+      status: true,
+      parkingTickets: true,
+      parkingLot: {
+        select: {
+          id: true,
+          city: true,
+          streetNumber: true,
+          streetName: true,
+        },
+      },
+    },
+  };
+  readonly driverSelect = {
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      parkingLots: {
+        select: {
+          id: true,
+        },
+      },
+      vehicles: {
+        select: {
+          licensePlate: true,
+        },
+      },
+    },
+  };
+}
+interface PrismaDriver {
+  id: string;
+  email: string;
+  name: string;
+  parkingLots: { id: string }[];
+  vehicles: { licensePlate: string }[];
 }

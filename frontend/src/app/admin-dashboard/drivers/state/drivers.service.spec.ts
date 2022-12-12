@@ -1,7 +1,6 @@
 import SpyObj = jasmine.SpyObj;
 import { DriversStore } from './drivers.store';
 
-import { ParkingLotService } from '../../parking/state/parking-lot.service';
 import { ToastService } from '../../../core/service/toast.service';
 import { RouterService } from '../../../core/state/router/router.service';
 import { DriversService } from './drivers.service';
@@ -9,11 +8,12 @@ import { of } from 'rxjs';
 import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
 import { ToastKeys } from '../../../core/translation-keys';
 import { DriversApi } from '../../../core/api/drivers.api';
+import { ParkingLotQuery } from '../../parking/state/parking-lot.query';
 
 describe('Drivers service', () => {
   let storeSpy: SpyObj<DriversStore>;
   let api: SpyObj<DriversApi>;
-  let parkingLotServiceSpy: SpyObj<ParkingLotService>;
+  let parkingLotQuery: SpyObj<ParkingLotQuery>;
   let toastServiceSpy: SpyObj<ToastService>;
   let routerServiceSpy: SpyObj<RouterService>;
   let driverService: DriversService;
@@ -24,7 +24,7 @@ describe('Drivers service', () => {
       'removeParkingLotAssignment',
     ]);
     toastServiceSpy = jasmine.createSpyObj('ToastService', ['show']);
-    parkingLotServiceSpy = jasmine.createSpyObj('ParkingLotService', ['load']);
+    parkingLotQuery = jasmine.createSpyObj('ParkingLotService', ['selectAll']);
     storeSpy = jasmine.createSpyObj('Store', [
       'setLoading',
       'setActive',
@@ -35,7 +35,7 @@ describe('Drivers service', () => {
     driverService = new DriversService(
       storeSpy,
       api,
-      parkingLotServiceSpy,
+      parkingLotQuery,
       toastServiceSpy,
       routerServiceSpy,
     );
@@ -55,7 +55,7 @@ describe('Drivers service', () => {
     expect(storeSpy.set).toHaveBeenCalledWith([driverResp]);
   });
 
-  it('On select it loads parking lots and sets active entity from given id', async () => {
+  it('On select if driver is in store it sets active id', async () => {
     const { id } = mockDriver;
     const driverStatesIds = [id];
 
@@ -65,8 +65,8 @@ describe('Drivers service', () => {
 
     driverService.select(id);
 
-    expect(parkingLotServiceSpy.load).toHaveBeenCalled();
     expect(storeSpy.setActive).toHaveBeenCalledWith(id);
+    expect(api.getAll).not.toHaveBeenCalled();
   });
   it('On select if no driver is found it calls api', async () => {
     storeSpy.getValue.and.returnValue({

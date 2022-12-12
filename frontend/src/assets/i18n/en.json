@@ -32,7 +32,9 @@
     "MIN": "Min value - {{value}}",
     "MAX": "Max value - {{value}}",
     "HOUR_FROM_GREATER_THAN_HOUR_TO": "Invalid hours",
-    "NONE_CHECKBOX_SELECTED": "Select at least one"
+    "NONE_CHECKBOX_SELECTED": "Select at least one",
+    "VEHICLE_ALREADY_ADDED": "Vehicle already added",
+    "LOT_CLOSED_ON_THIS_DAY": "Parking lot is closed on this day"
   },
   "TOAST": {
     "CHECK_EMAIL": "Please check your email. Check your mailbox",
@@ -46,7 +48,10 @@
     "PARKING_LOT_ASSIGNED" : "Parking lot assigned",
     "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed",
     "VEHICLE_ADDED" : "Vehicle added",
-    "RESERVATION_CREATED": "Reservation created"
+    "RESERVATION_CREATED": "Reservation created",
+    "RESERVATION_CONFIRMED": "Reservation confirmed",
+    "RESERVATION_CANCELLED": "Reservation cancelled",
+    "RESERVATION_TIME_CHANGED": "Reservation time changed"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",
@@ -65,11 +70,13 @@
     "DASHBOARD": "Dashboard",
     "PARKING": "Parking",
     "RESERVATIONS": "Reservations",
+    "RESERVATION_DETAILS": "Details",
     "CREATE_RESERVATION": "Create reservation",
     "USERS": "Users",
     "PARKING_DETAILS": "Details",
     "DRIVERS": "Drivers",
     "VEHICLES": "Vehicles"
+
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Reservations",
@@ -134,7 +141,9 @@
     "PREVIOUS": "Previous",
     "RESET": "Reset",
     "NEXT": "Next",
-    "HOURS": "Hours"
+    "HOURS": "Hours",
+    "CONFIRM": "Proceeed",
+    "CREATE": "Create"
   },
   "PAGINATION": {
     "FIRST_PAGE_LABEL": "First page",
@@ -177,6 +186,33 @@
     "MAKE_RESERVATION_TITLE": "Make a reservation",
     "MAKE_RESERVATION_SUBTITLE": "Remember that you need to confirm it. Confirmation time starts 4 hours prior arrival, and ends 30 minutes before",
     "CHOOSE_VEHICLE": "Choose vehicle",
-    "VEHICLE": "License plate"
+    "VEHICLE": "License plate",
+    "DUE_NEXT": "Due next",
+    "DUE_NEXT_PROMPT": "You're incoming parking - please be on time",
+    "CONFIRM_PROMPT": "In order to enter the parking lot you need to first confirm reservation",
+    "CONFIRM_TITLE": "To be confirmed",
+    "TIME_TO_CONFIRM": "Time left to confirm",
+    "REJECT": "Reject",
+    "RESERVATIONS": "Reservations",
+    "CHANGE_TIME": "Change time",
+    "CANCEL_RESERVATION": "Cancel reservation",
+    "CANCEL_RESERVATION_QUESTION": "Would you like to cancel reservation ?",
+    "CONFIRM_RESERVATION": "Confirm",
+    "CONFIRM_RESERVATION_QUESTION": "Do you want to confirm reservation ?",
+    "RESERVATION_DETAILS": "Reservation details",
+    "DATE_AND_TIME" : "Date and time",
+    "STATUS" : "Status"
+  },
+  "TABLE_KEYS": {
+    "LICENSE_PLATE": "License plate",
+    "TIME": "Time",
+    "RESERVATION_DATE": "Date",
+    "RESERVATION_STATUS": "Status",
+    "PARKING_LOT_ADDRESS": "Parking lot"
+  },
+  "RESERVATION_STATUS": {
+    "DRAFT": "Draft",
+    "CANCELLED": "Cancelled",
+    "CONFIRMED": "Confirmed"
   }
 }

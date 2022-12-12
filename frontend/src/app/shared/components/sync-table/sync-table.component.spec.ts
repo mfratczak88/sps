@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReservationListComponent } from './list.component';
+import { SyncTableComponent } from './sync-table.component';
 
-describe('ReservationListComponent', () => {
-  let component: ReservationListComponent;
-  let fixture: ComponentFixture<ReservationListComponent>;
+describe('SyncTableComponent', () => {
+  let component: SyncTableComponent;
+  let fixture: ComponentFixture<SyncTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ReservationListComponent],
+      declarations: [SyncTableComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ReservationListComponent);
+    fixture = TestBed.createComponent(SyncTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

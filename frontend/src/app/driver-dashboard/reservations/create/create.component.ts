@@ -1,13 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
-import { DriverQuery } from '../../state/driver.query';
-import { DriverService } from '../../state/driver.service';
-import { ParkingLot } from '../../../core/model/driver.model';
+import { DriverQuery } from '../../state/driver/driver.query';
+import { DriverService } from '../../state/driver/driver.service';
+
 import { DateTime } from 'luxon';
 import { HoursFormComponent } from '../../../shared/components/hours-form/hours-form.component';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
-import { first } from 'rxjs';
+import { concatMap, first } from 'rxjs';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { RouterService } from '../../../core/state/router/router.service';
+import { ReservationsService } from '../../state/reservation/reservations.service';
 
 interface HoursForm {
   hours: FormControl<{ hourFrom: number; hourTo: number } | null>;
@@ -59,7 +62,8 @@ export class CreateReservationComponent {
   constructor(
     private readonly formBuilder: FormBuilder,
     readonly driverQuery: DriverQuery,
-    private readonly driverService: DriverService,
+    private readonly reservationService: ReservationsService,
+    private readonly routerService: RouterService,
   ) {
     this.parkingLotForm.valueChanges.subscribe(({ parkingLot }) => {
       if (!this.parkingLotForm.invalid && parkingLot) {
@@ -80,14 +84,17 @@ export class CreateReservationComponent {
     const { hours } = this.hoursForm.value;
     const { licensePlate } = this.vehicleForm.value;
     if (date && parkingLot && hours && licensePlate)
-      this.driverService
+      this.reservationService
         .makeReservation({
           hours,
           date,
           parkingLotId: parkingLot.id,
           licensePlate,
         })
-        .pipe(first())
+        .pipe(
+          first(),
+          concatMap(() => this.routerService.toDriverReservations()),
+        )
         .subscribe();
   }
 

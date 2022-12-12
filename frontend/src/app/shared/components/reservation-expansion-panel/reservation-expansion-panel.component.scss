@@ -1,0 +1,15 @@
+@use "../../../../variables" as vars;
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none;
+}
+.mat-action-row {
+  border-top: none;
+}
+.header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.header__time {
+  font-size: 1.1rem;
+}

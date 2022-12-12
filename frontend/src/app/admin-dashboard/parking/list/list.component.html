@@ -9,7 +9,7 @@
       </button>
       <sps-parking-lots-table class="parking-lots__table"
                  [loading$]="parkingLotQuery.selectLoading()"
-                 [tableButtons]="tableButtons"
+                 [buttons]="tableButtons"
                  [displayColumns]="['address', 'capacity', 'hours', 'days']"
                  [parkingLots$]="parkingLotQuery.selectAll()">
       </sps-parking-lots-table>

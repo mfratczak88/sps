@@ -4,11 +4,11 @@ import {
 } from '@angular/common/http/testing';
 import { ParkingLotApi } from './parking-lot.api';
 import { TestBed } from '@angular/core/testing';
+import { OperationTimeDays } from '../model/common.model';
 import {
   ChangeHoursOfOperations,
   CreateParkingLot,
-} from '../../../core/model/admin.model';
-import { OperationTimeDays } from '../../../core/model/common.model';
+} from '../model/parking-lot.model';
 
 describe('Parking lot api spec', () => {
   let httpTestingController: HttpTestingController;

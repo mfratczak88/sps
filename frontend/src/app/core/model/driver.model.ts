@@ -1,30 +1,26 @@
-import { OperationTimeDays } from './common.model';
+import { Id } from './common.model';
+import { Reservation } from './reservation.model';
 
 export interface Driver {
   id: string;
   name: string;
   email: string;
-  parkingLots: ParkingLot[];
+  parkingLotIds: Id[];
   vehicles: Vehicle[];
-  unAssignedLots: ParkingLot[];
+  timeHorizon?: {
+    dueNext?: Reservation[];
+    ongoing?: Reservation[];
+    pendingAction?: Reservation[];
+  };
 }
-
 export interface Vehicle {
   licensePlate: string;
 }
-
-export interface ParkingLot {
-  id: string;
-  city: string;
-  streetName: string;
-  streetNumber: string;
-  hourFrom: number;
-  hourTo: number;
-  days: OperationTimeDays[];
+export interface DriverQueryModel {
+  timeHorizon?: TimeHorizon[];
 }
-export interface MakeReservation {
-  licensePlate: string;
-  parkingLotId: string;
-  start: Date;
-  end: Date;
+export enum TimeHorizon {
+  ONGOING = 'ongoing',
+  DUE_NEXT = 'dueNext',
+  PENDING_ACTION = 'pendingAction',
 }

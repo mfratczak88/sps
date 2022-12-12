@@ -13,7 +13,7 @@ import { translateTestModule } from '../../../../test.utils';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import SpyObj = jasmine.SpyObj;
-import { ParkingLot } from '../../../core/model/admin.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 describe('ChangeHoursDialogComponent', () => {
   let fixture: ComponentFixture<ChangeHoursDialogComponent>;

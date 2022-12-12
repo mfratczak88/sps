@@ -3,7 +3,7 @@ import { QueryEntity } from '@datorama/akita';
 import { ParkingLotState, ParkingLotStore } from './parking-lot.store';
 
 import { Observable } from 'rxjs';
-import { ParkingLot } from '../../../core/model/admin.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Injectable({
   providedIn: 'root',

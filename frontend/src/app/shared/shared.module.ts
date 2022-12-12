@@ -29,6 +29,15 @@ import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { NumberChipComponent } from './components/number-chip/number-chip.component';
 import { ParkingLotExpansionPanelComponent } from './components/parking-lot-expansion-panel/parking-lot-expansion-panel.component';
+import { ChipComponent } from './components/chip/chip.component';
+import { TimeLeftComponent } from './components/time-left/time-left.component';
+import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
+import { ReservationsTableComponent } from './components/reservations-table/reservations-table.component';
+import { TimePipe } from './pipe/time.pipe';
+
+import { SyncTableComponent } from './components/sync-table/sync-table.component';
+import { ReservationStatusChipComponent } from './components/reservation-status-chip/reservation-status-chip.component';
+import { DatePipe } from './pipe/date.pipe';
 
 const components = [
   NavbarComponent,
@@ -52,6 +61,14 @@ const components = [
   LoadingSpinnerComponent,
   NumberChipComponent,
   ParkingLotExpansionPanelComponent,
+  ChipComponent,
+  TimeLeftComponent,
+  ConfirmActionDialogComponent,
+  ReservationsTableComponent,
+  SyncTableComponent,
+  ReservationStatusChipComponent,
+  TimePipe,
+  DatePipe,
 ];
 @NgModule({
   declarations: components,
@@ -66,6 +83,8 @@ const components = [
   providers: [
     { provide: ToastService, useClass: MaterialToastService },
     { provide: MatPaginatorIntl, useClass: PaginatorIntlService },
+    TimePipe,
+    DatePipe,
   ],
 })
 export class SharedModule {}

@@ -3,11 +3,12 @@ import { NavigationExtras, Router } from '@angular/router';
 import {
   AdminPaths,
   AuthPaths,
+  DriverPaths,
   ErrorPaths,
   TopLevelPaths,
 } from 'src/app/routes';
 
-import { QueryParamKeys } from './router.model';
+import { QueryParamKeys, QueryParams } from './router.model';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,12 @@ export class RouterService {
   toAdminParkingLotDetails(id: string) {
     return this.router.navigate([
       `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}/${id}`,
+    ]);
+  }
+
+  toCreateReservation() {
+    return this.router.navigate([
+      `/${TopLevelPaths.DRIVER_DASHBOARD}/${DriverPaths.RESERVATIONS}/${DriverPaths.CREATE_RESERVATION}`,
     ]);
   }
 
@@ -127,6 +134,16 @@ export class RouterService {
     ]);
   }
 
+  changeQueryParams(queryParams: Partial<QueryParams>) {
+    this.router.navigate([], {
+      relativeTo: this.router.routerState.root,
+      queryParams: {
+        ...queryParams,
+      },
+      queryParamsHandling: 'merge', // remove to replace all query params by provided
+    });
+  }
+
   private queryParamMapFromCurrentRoute() {
     return this.router.routerState.snapshot.root.queryParamMap;
   }
@@ -138,6 +155,18 @@ export class RouterService {
   toDriverDetails(id: string) {
     this.router.navigate([
       `/${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.DRIVERS}/${id}`,
+    ]);
+  }
+
+  toDriverReservationDetails(id: string) {
+    this.router.navigate([
+      `${TopLevelPaths.DRIVER_DASHBOARD}/${AdminPaths.RESERVATIONS}/${id}`,
+    ]);
+  }
+
+  toDriverReservations() {
+    return this.router.navigate([
+      `/${TopLevelPaths.DRIVER_DASHBOARD}/${DriverPaths.RESERVATIONS}`,
     ]);
   }
 }

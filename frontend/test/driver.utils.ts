@@ -1,7 +1,8 @@
 import { OperationTimeDays } from '../src/app/core/model/common.model';
-import { Driver } from '../src/app/core/model/admin.model';
+import { Driver } from '../src/app/core/model/driver.model';
+import { ParkingLot } from '../src/app/core/model/parking-lot.model';
 
-export const mockParkingLots = [
+export const mockParkingLots: ParkingLot[] = [
   {
     id: '3',
     streetName: 'Sobieskiego',
@@ -31,6 +32,6 @@ export const mockDriver: Driver = {
   id: '4',
   email: 'foo@gmail.com',
   name: 'Alex',
-  parkingLots: [],
-  parkingLotsCount: 0,
+  parkingLotIds: ['1', '2'],
+  vehicles: [{ licensePlate: 'WI747GG' }],
 };

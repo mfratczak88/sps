@@ -5,6 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CreateReservationComponent } from './create/create.component';
 import { ReservationsRoutingModule } from './routing';
 import { ReservationListComponent } from './list/list.component';
+import { ReservationExpansionPanelComponent } from '../../shared/components/reservation-expansion-panel/reservation-expansion-panel.component';
+import { ReservationDetailsComponent } from './details/details.component';
+import { EditTimeDialogComponent } from './edit-time-dialog/edit-time-dialog.component';
 
 @NgModule({
   imports: [
@@ -13,6 +16,12 @@ import { ReservationListComponent } from './list/list.component';
     ReactiveFormsModule,
     ReservationsRoutingModule,
   ],
-  declarations: [CreateReservationComponent, ReservationListComponent],
+  declarations: [
+    CreateReservationComponent,
+    ReservationListComponent,
+    ReservationExpansionPanelComponent,
+    ReservationDetailsComponent,
+    EditTimeDialogComponent,
+  ],
 })
 export class ReservationsModule {}

@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { ReservationListComponent } from './list/list.component';
 import { DASHBOARD_ROUTE } from '../routing';
+import { ReservationDetailsComponent } from './details/details.component';
 
 const RESERVATIONS_LIST_ROUTE = {
   path: '',
@@ -28,7 +29,22 @@ const CREATE_RESERVATION_ROUTE = {
     },
   },
 };
-const routes: Routes = [RESERVATIONS_LIST_ROUTE, CREATE_RESERVATION_ROUTE];
+const DETAILS_ROUTE = {
+  path: DriverPaths.RESERVATION_DETAILS,
+  component: ReservationDetailsComponent,
+  data: {
+    breadcrumbs: {
+      label: DrawerKeys.RESERVATION_DETAILS,
+      path: ':reservationId',
+      parent: RESERVATIONS_LIST_ROUTE,
+    },
+  },
+};
+const routes: Routes = [
+  RESERVATIONS_LIST_ROUTE,
+  CREATE_RESERVATION_ROUTE,
+  DETAILS_ROUTE,
+];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

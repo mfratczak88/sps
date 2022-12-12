@@ -13,7 +13,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { translateTestModule } from '../../../../test.utils';
 import { By } from '@angular/platform-browser';
 import SpyObj = jasmine.SpyObj;
-import { ParkingLot } from '../../../core/model/admin.model';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 describe('ChangeCapacityDialogComponent', () => {
   let fixture: ComponentFixture<ChangeCapacityDialogComponent>;

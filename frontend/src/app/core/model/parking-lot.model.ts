@@ -1,20 +1,15 @@
 import { OperationTimeDays } from './common.model';
 
-export interface Driver {
-  id: string;
-  name: string;
-  email: string;
-  parkingLots: ParkingLot[];
-  parkingLotsCount: number;
-}
 export interface AssignDriverToParkingLot {
   driverId: string;
   parkingLotId: string;
 }
+
 export interface RemoveParkingLotAssignment {
   driverId: string;
   parkingLotId: string;
 }
+
 export interface ParkingLot {
   id: string;
   city: string;

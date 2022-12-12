@@ -22,6 +22,8 @@ import { PrismaReservationRepository } from './prisma/reservation/prisma.reserva
 import { ParkingLotAvailability } from '../domain/parking-lot-availability';
 import { PrismaParkingLotAvailability } from './prisma/reservation/prisma.parking-lot-availability';
 import { PrismaParkingLotFinder } from './prisma/parking-lot/prisma.parking-lot.finder';
+import { ReservationFinder } from '../application/reservation/reservation.finder';
+import { PrismaReservationFinder } from './prisma/reservation/prisma.reservation.finder';
 
 const providers: Provider[] = [
   {
@@ -61,6 +63,10 @@ const providers: Provider[] = [
   {
     provide: ParkingLotAvailability,
     useClass: PrismaParkingLotAvailability,
+  },
+  {
+    provide: ReservationFinder,
+    useClass: PrismaReservationFinder,
   },
 ];
 

@@ -1,0 +1,11 @@
+@use "../../../../variables" as vars;
+.time-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  @include vars.typography-body-s();
+}
+.time-left__timer--part {
+  color: black;
+  font-weight: 600;
+}
