@@ -6,13 +6,19 @@ import {
   CreateReservationCommand,
 } from '../../../../../src/application/reservation/reservation.command';
 import { randomId } from '../../../../misc.util';
+import { ReservationFinder } from '../../../../../src/application/reservation/reservation.finder';
 
 describe('Reservation controller', () => {
   let reservationServiceMock: DeepMocked<ReservationService>;
+  let reservationsFinderMock: DeepMocked<ReservationFinder>;
   let reservationController: ReservationController;
   beforeEach(async () => {
     reservationServiceMock = createMock<ReservationService>();
-    reservationController = new ReservationController(reservationServiceMock);
+    reservationsFinderMock = createMock<ReservationFinder>();
+    reservationController = new ReservationController(
+      reservationServiceMock,
+      reservationsFinderMock,
+    );
   });
   it('Delegates make reservation command to service', async () => {
     const command = createMock<CreateReservationCommand>();
