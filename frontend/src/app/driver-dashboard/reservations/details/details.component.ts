@@ -4,7 +4,7 @@ import { RouterQuery } from '../../../core/state/router/router.query';
 import { concatMap } from 'rxjs/operators';
 import { takeWhile } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ReservationBaseComponent } from '../reservation.base.component';
+import { ReservationBaseComponent } from '../base.component';
 import { ReservationsQuery } from '../../state/reservation/reservations.query';
 import { RouterService } from '../../../core/state/router/router.service';
 

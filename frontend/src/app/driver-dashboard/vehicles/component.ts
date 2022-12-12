@@ -8,8 +8,8 @@ import { DriverKeys, MiscKeys } from '../../core/translation-keys';
 
 @Component({
   selector: 'sps-driver-vehicles',
-  templateUrl: './vehicles.component.html',
-  styleUrls: ['./vehicles.component.scss'],
+  templateUrl: './component.html',
+  styleUrls: ['./component.scss'],
 })
 export class VehiclesComponent {
   translations = { ...DriverKeys, ...MiscKeys };

@@ -3,7 +3,7 @@ import { DrawerKeys } from '../../core/translation-keys';
 import { DriverPaths } from '../../routes';
 import { DASHBOARD_ROUTE } from '../routing';
 import { NgModule } from '@angular/core';
-import { VehiclesComponent } from './vehicles.component';
+import { VehiclesComponent } from './component';
 
 const routes: Routes = [
   {

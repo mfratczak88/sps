@@ -4,7 +4,7 @@ import {
 } from '../src/app/core/model/reservation.model';
 import { DateTime } from 'luxon';
 
-export const reservations: Reservation[] = [
+export const mockReservations: Reservation[] = [
   {
     id: '88811d7b-677a-423c-a7d4-495a749e0997',
     parkingLotId: 'd4fa2b3c-84f7-4861-b1ef-db28a13f3a87',

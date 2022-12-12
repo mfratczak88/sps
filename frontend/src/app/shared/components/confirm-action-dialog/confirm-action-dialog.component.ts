@@ -10,14 +10,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ConfirmActionDialogComponent {
   translations = { ...MiscKeys };
 
-  props: ConfirmDialogProps;
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: ConfirmDialogProps,
+    @Inject(MAT_DIALOG_DATA) readonly props: ConfirmDialogProps,
     readonly dialogRef: MatDialogRef<ConfirmActionDialogComponent>,
-  ) {
-    this.props = data;
-  }
+  ) {}
 }
 export interface ConfirmDialogProps {
   title: string;

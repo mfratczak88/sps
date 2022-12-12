@@ -6,7 +6,7 @@ import {
 } from './edit-time-dialog.component';
 import {
   hoursFromReservations,
-  reservations,
+  mockReservations,
 } from '../../../../../test/reservation.util';
 import { translateTestModule } from '../../../../test.utils';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +20,7 @@ import SpyObj = jasmine.SpyObj;
 
 describe('EditTimeDialogComponent', () => {
   let fixture: ComponentFixture<EditTimeDialogComponent>;
-  const [reservation] = reservations;
+  const [reservation] = mockReservations;
   const dateValidatorSpy = () => true;
   let dialogRefSpy: SpyObj<MatDialogRef<EditTimeDialogComponent>>;
   let dialogData: DialogData;

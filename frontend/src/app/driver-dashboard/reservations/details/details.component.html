@@ -40,13 +40,18 @@
       <sps-reservation-status-chip class="section__attribute" [reservation]="reservation"></sps-reservation-status-chip>
     </div>
     <div class="actions" *ngIf="reservationsService.canBeChanged(reservation)">
-      <button mat-button color="primary"
+      <button class="actions__confirm-button"
+              mat-button
+              color="primary"
               (click)="onConfirmReservation(reservation); routerService.toDriverReservations()"
               *ngIf="reservationsService.canBeConfirmed(reservation)">{{translations.CONFIRM_RESERVATION | translate}}
       </button>
-      <button mat-button
+      <button class="actions__edit-button"
+              mat-button
               (click)="onEditReservation(reservation); routerService.toDriverReservations()">{{translations.CHANGE_TIME | translate}}</button>
-      <button mat-button color="warn"
+      <button class="actions__cancel-button"
+              mat-button
+              color="warn"
               (click)="onCancelReservation(reservation); routerService.toDriverReservations()"
               *ngIf="reservationsService.canBeCancelled(reservation)">{{translations.CANCEL_RESERVATION | translate}}
       </button>
