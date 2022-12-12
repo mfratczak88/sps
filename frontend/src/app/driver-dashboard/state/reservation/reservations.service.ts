@@ -55,20 +55,6 @@ export class ReservationsService {
     );
   }
 
-  private load(query?: ReservationQueryModel) {
-    return this.api
-      .getReservations(query)
-      .pipe(map(data => this.fillStoreWith(data)));
-  }
-
-  private fillStoreWith({ data, ...paging }: Reservations) {
-    this.store.set(data);
-    this.store.update(state => ({
-      ...state,
-      ...paging,
-    }));
-  }
-
   select(id: Id) {
     if (this.query.hasEntity(id)) {
       this.store.setActive(id);
@@ -83,33 +69,25 @@ export class ReservationsService {
   }
 
   canBeChanged(reservation: Reservation) {
+    const { approvalDeadLine } = reservation;
     return (
-      reservation.approvalDeadLine &&
-      DateTime.fromISO(reservation.approvalDeadLine)
-        .diffNow('seconds')
-        .as('seconds') > 0
+      approvalDeadLine && ReservationsService.isNowBefore(approvalDeadLine)
     );
   }
 
   canBeConfirmed(reservation: Reservation) {
+    const { approvalTimeStart, approvalDeadLine } = reservation;
     return (
-      reservation.approvalTimeStart &&
-      DateTime.fromISO(reservation.approvalTimeStart)
-        .diffNow('seconds')
-        .as('seconds') < 0 &&
-      reservation.approvalDeadLine &&
-      DateTime.fromISO(reservation.approvalDeadLine)
-        .diffNow('seconds')
-        .as('seconds') > 0
+      approvalTimeStart &&
+      ReservationsService.isNowAfter(approvalTimeStart) &&
+      approvalDeadLine &&
+      ReservationsService.isNowBefore(approvalDeadLine)
     );
   }
 
   canBeCancelled(reservation: Reservation) {
-    return (
-      DateTime.fromISO(reservation.startTime)
-        .diffNow()
-        .as('seconds') > 0
-    );
+    const { startTime } = reservation;
+    return ReservationsService.isNowBefore(startTime);
   }
 
   confirmReservation({ id }: Reservation) {
@@ -122,6 +100,32 @@ export class ReservationsService {
     return this.api
       .cancelReservation(id)
       .pipe(tap(() => this.toastService.show(ToastKeys.RESERVATION_CANCELLED)));
+  }
+
+  changeTime(data: {
+    reservation: Reservation;
+    hours: { hourFrom: number; hourTo: number };
+    date: Date;
+  }) {
+    const {
+      reservation: { id },
+      hours: { hourFrom, hourTo },
+      date,
+    } = data;
+    const newDate = DateTime.fromJSDate(date);
+    const start = ReservationsService.fullHour(newDate, hourFrom);
+    const end = ReservationsService.fullHour(newDate, hourTo);
+    this.store.setLoading(true);
+    return this.api
+      .changeTime({
+        reservationId: id,
+        start,
+        end,
+      })
+      .pipe(
+        tap(() => this.toastService.show(ToastKeys.RESERVATION_TIME_CHANGED)),
+        finalize(() => this.store.setLoading(false)),
+      );
   }
 
   makeReservation({
@@ -176,6 +180,20 @@ export class ReservationsService {
     };
   }
 
+  private load(query?: ReservationQueryModel) {
+    return this.api
+      .getReservations(query)
+      .pipe(map(data => this.fillStoreWith(data)));
+  }
+
+  private fillStoreWith({ data, ...paging }: Reservations) {
+    this.store.set(data);
+    this.store.update(state => ({
+      ...state,
+      ...paging,
+    }));
+  }
+
   static fullHour(dateTime: DateTime, hour: number) {
     return dateTime
       .set({
@@ -187,29 +205,19 @@ export class ReservationsService {
       .toJSDate();
   }
 
-  changeTime(data: {
-    reservation: Reservation;
-    hours: { hourFrom: number; hourTo: number };
-    date: Date;
-  }) {
-    const {
-      reservation: { id },
-      hours: { hourFrom, hourTo },
-      date,
-    } = data;
-    const newDate = DateTime.fromJSDate(date);
-    const start = ReservationsService.fullHour(newDate, hourFrom);
-    const end = ReservationsService.fullHour(newDate, hourTo);
-    this.store.setLoading(true);
-    return this.api
-      .changeTime({
-        reservationId: id,
-        start,
-        end,
-      })
-      .pipe(
-        tap(() => this.toastService.show(ToastKeys.RESERVATION_TIME_CHANGED)),
-        finalize(() => this.store.setLoading(false)),
-      );
+  static isNowBefore(date: string) {
+    return (
+      DateTime.fromISO(date)
+        .diffNow('seconds')
+        .as('seconds') > 0
+    );
+  }
+
+  static isNowAfter(date: string) {
+    return (
+      DateTime.fromISO(date)
+        .diffNow('seconds')
+        .as('seconds') < 0
+    );
   }
 }
