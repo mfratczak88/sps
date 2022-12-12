@@ -7,6 +7,7 @@ import { ReservationsRoutingModule } from './routing';
 import { ReservationListComponent } from './list/list.component';
 import { ReservationExpansionPanelComponent } from '../../shared/components/reservation-expansion-panel/reservation-expansion-panel.component';
 import { ReservationDetailsComponent } from './details/details.component';
+import { EditTimeDialogComponent } from './edit-time-dialog/edit-time-dialog.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ReservationDetailsComponent } from './details/details.component';
     ReservationListComponent,
     ReservationExpansionPanelComponent,
     ReservationDetailsComponent,
+    EditTimeDialogComponent,
   ],
 })
 export class ReservationsModule {}

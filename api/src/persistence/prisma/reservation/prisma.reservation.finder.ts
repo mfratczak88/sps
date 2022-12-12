@@ -86,8 +86,23 @@ export class PrismaReservationFinder implements ReservationFinder {
       status,
     };
   }
+
   whereClauseFrom(query: ReservationQuery) {
-    const { driverId, parkingLotId, status } = query;
+    const { driverId, parkingLotId, status, onlyHistory } = query;
+    const whereOnlyHistory = onlyHistory
+      ? {
+          OR: [
+            {
+              endTime: {
+                lt: DateTime.now().toJSDate(),
+              },
+            },
+            {
+              status: ReservationStatus.CANCELLED,
+            },
+          ],
+        }
+      : {};
     const whereDriver = driverId
       ? {
           vehicle: {
@@ -111,6 +126,7 @@ export class PrismaReservationFinder implements ReservationFinder {
       ...whereDriver,
       ...whereParkingLot,
       ...whereStatus,
+      ...whereOnlyHistory,
     };
   }
 
@@ -156,6 +172,7 @@ export class PrismaReservationFinder implements ReservationFinder {
     },
   };
 }
+
 export type PrismaReservation = {
   status: ReservationStatus;
   parkingLotId: string;

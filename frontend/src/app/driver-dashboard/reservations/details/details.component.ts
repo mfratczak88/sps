@@ -6,6 +6,7 @@ import { takeWhile } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationBaseComponent } from '../reservation.base.component';
 import { ReservationsQuery } from '../../state/reservation/reservations.query';
+import { RouterService } from '../../../core/state/router/router.service';
 
 @Component({
   selector: 'sps-reservation-details',
@@ -21,8 +22,9 @@ export class ReservationDetailsComponent extends ReservationBaseComponent
     dialog: MatDialog,
     readonly routerQuery: RouterQuery,
     readonly query: ReservationsQuery,
+    routerService: RouterService,
   ) {
-    super(service, dialog);
+    super(service, dialog, routerService);
   }
 
   ngOnInit(): void {

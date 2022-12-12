@@ -60,7 +60,9 @@ export class PrismaDriverFinder implements DriverFinder {
         startTime: {
           gt: now,
         },
-        status: ReservationStatus.CONFIRMED,
+        status: {
+          not: ReservationStatus.CANCELLED,
+        },
         vehicle: {
           user: {
             id: driverId,

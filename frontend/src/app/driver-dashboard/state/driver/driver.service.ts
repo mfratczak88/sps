@@ -1,7 +1,15 @@
 import { DriverStore } from './driver.store';
 import { AuthQuery } from '../../../core/state/auth/auth.query';
 import { DriversApi } from '../../../core/api/drivers.api';
-import { combineLatest, concatMap, filter, finalize, NEVER, tap } from 'rxjs';
+import {
+  combineLatest,
+  concatMap,
+  filter,
+  finalize,
+  forkJoin,
+  NEVER,
+  tap,
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Driver, TimeHorizon } from '../../../core/model/driver.model';
 import { ToastService } from '../../../core/service/toast.service';
@@ -22,6 +30,7 @@ export class DriverService {
     private readonly parkingLotQuery: ParkingLotQuery,
     private readonly authQuery: AuthQuery,
     private readonly toastService: ToastService,
+    private readonly driverQuery: DriverQuery,
   ) {}
 
   load() {
@@ -30,7 +39,6 @@ export class DriverService {
       .pipe(
         filter(auth => !!auth?.id),
         tap(() => this.store.setLoading(true)),
-        tap(auth => auth && this.reservationsService.loadForDriver(auth.id)),
         concatMap(auth =>
           auth
             ? combineLatest([
@@ -48,6 +56,19 @@ export class DriverService {
         finalize(() => this.store.setLoading(false)),
       )
       .subscribe(data => this.fillStoreWith(...data));
+  }
+
+  loadReservations$() {
+    return this.driverQuery.select('id').pipe(
+      filter(id => !!id),
+      tap(() => this.load()),
+      concatMap(id =>
+        forkJoin([
+          this.reservationsService.reloadOnPagingChange$(id),
+          this.reservationsService.loadForDriver(id),
+        ]),
+      ),
+    );
   }
 
   addVehicle(licensePlate: string, driverId: string) {

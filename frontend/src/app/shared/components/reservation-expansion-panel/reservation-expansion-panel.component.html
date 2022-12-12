@@ -3,9 +3,9 @@
     <mat-expansion-panel-header>
       <div class="header">
         <div class="header__time">
-          {{reservation.startTime | date:'hh:mm'}} - {{reservation.endTime | date: 'hh:mm'}}
+          {{reservation | time }}
         </div>
-        <div >
+        <div>
           <sps-chip>
             {{reservation.licensePlate}}
           </sps-chip>
@@ -18,7 +18,7 @@
       </sps-text>
     </div>
     <div>
-      <sps-text>{{reservation.startTime | date: 'EEEE, MMMM d'}}</sps-text>
+      <sps-text>{{reservation.date | spsDate }}</sps-text>
     </div>
     <mat-action-row>
       <ng-content select="[timer]">

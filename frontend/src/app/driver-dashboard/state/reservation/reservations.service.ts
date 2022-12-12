@@ -5,6 +5,7 @@ import { Id } from '../../../core/model/common.model';
 import { DateTime } from 'luxon';
 import {
   Reservation,
+  ReservationQueryModel,
   Reservations,
   SortBy,
   SortOrder,
@@ -12,10 +13,10 @@ import {
 import { concatMap, EMPTY, filter, finalize, tap, withLatestFrom } from 'rxjs';
 import { ToastKeys } from '../../../core/translation-keys';
 import { ToastService } from '../../../core/service/toast.service';
-import { DriverQuery } from '../driver/driver.query';
 import { RouterQuery } from '../../../core/state/router/router.query';
 import { map } from 'rxjs/operators';
 import { ReservationsQuery } from './reservations.query';
+import { ParkingLotQuery } from '../parking-lot/parking-lot.query';
 
 @Injectable({
   providedIn: 'root',
@@ -25,45 +26,39 @@ export class ReservationsService {
     private readonly store: ReservationsStore,
     private readonly api: ReservationApi,
     private readonly toastService: ToastService,
-    private readonly driverQuery: DriverQuery,
     private readonly query: ReservationsQuery,
     private readonly routerQuery: RouterQuery,
+    private readonly parkingLotQuery: ParkingLotQuery,
   ) {}
 
   loadForDriver(driverId: Id) {
-    this.api
-      .getReservations({
-        driverId,
-      })
-      .subscribe(data => this.fillStoreWith(data));
+    return this.load({ driverId, onlyHistory: true });
   }
 
-  reloadOnPagingChange$(filters?: { forDriver: boolean }) {
+  reloadOnPagingChange$(driverId?: Id) {
     return this.routerQuery.queryParams$().pipe(
-      withLatestFrom(
-        this.driverQuery.select(),
-        this.routerQuery.reservationId$(),
-      ),
-      filter(([queryParams, driver, reservationId]) => {
-        const { forDriver } = filters || {};
-        return (
-          !reservationId &&
-          !!Object.keys(queryParams).length &&
-          (forDriver ? !!driver.id : true)
-        );
+      withLatestFrom(this.routerQuery.reservationId$()),
+      filter(([queryParams, reservationId]) => {
+        return !reservationId && !!Object.keys(queryParams).length;
       }),
       tap(() => this.store.setLoading(true)),
-      concatMap(([{ page, pageSize, sortOrder, sortBy }, { id: driverId }]) =>
-        this.api.getReservations({
+      concatMap(([{ page, pageSize, sortOrder, sortBy }]) =>
+        this.load({
           driverId,
           page: +page,
           pageSize: +pageSize,
           sortOrder: sortOrder as SortOrder,
           sortBy: sortBy as SortBy,
+          onlyHistory: true,
         }),
       ),
-      map(data => this.fillStoreWith(data)),
     );
+  }
+
+  private load(query?: ReservationQueryModel) {
+    return this.api
+      .getReservations(query)
+      .pipe(map(data => this.fillStoreWith(data)));
   }
 
   private fillStoreWith({ data, ...paging }: Reservations) {
@@ -118,19 +113,15 @@ export class ReservationsService {
   }
 
   confirmReservation({ id }: Reservation) {
-    const { id: driverId } = this.driverQuery.getValue();
-    return this.api.confirmReservation(id).pipe(
-      tap(() => this.loadForDriver(driverId)),
-      tap(() => this.toastService.show(ToastKeys.RESERVATION_CONFIRMED)),
-    );
+    return this.api
+      .confirmReservation(id)
+      .pipe(tap(() => this.toastService.show(ToastKeys.RESERVATION_CONFIRMED)));
   }
 
   cancelReservation({ id }: Reservation) {
-    const { id: driverId } = this.driverQuery.getValue();
-    return this.api.cancelReservation(id).pipe(
-      tap(() => this.loadForDriver(driverId)),
-      tap(() => this.toastService.show(ToastKeys.RESERVATION_CANCELLED)),
-    );
+    return this.api
+      .cancelReservation(id)
+      .pipe(tap(() => this.toastService.show(ToastKeys.RESERVATION_CANCELLED)));
   }
 
   makeReservation({
@@ -164,6 +155,27 @@ export class ReservationsService {
       );
   }
 
+  hoursOf(reservation: Reservation) {
+    const { startTime, endTime } = reservation;
+    const hour = (h: string) => DateTime.fromISO(h).hour;
+    return {
+      hourFrom: hour(startTime),
+      hourTo: hour(endTime),
+    };
+  }
+
+  dateValidator(parkingLotId: Id) {
+    const parkingLot = this.parkingLotQuery.getEntity(parkingLotId);
+    return (date: Date | null): boolean => {
+      if (!date || !parkingLot) return false;
+      const dateTime = DateTime.fromJSDate(date);
+      return (
+        parkingLot.days.includes(dateTime.weekday - 1) &&
+        dateTime.diffNow('days').as('days') >= 1
+      );
+    };
+  }
+
   static fullHour(dateTime: DateTime, hour: number) {
     return dateTime
       .set({
@@ -173,5 +185,31 @@ export class ReservationsService {
         millisecond: 0,
       })
       .toJSDate();
+  }
+
+  changeTime(data: {
+    reservation: Reservation;
+    hours: { hourFrom: number; hourTo: number };
+    date: Date;
+  }) {
+    const {
+      reservation: { id },
+      hours: { hourFrom, hourTo },
+      date,
+    } = data;
+    const newDate = DateTime.fromJSDate(date);
+    const start = ReservationsService.fullHour(newDate, hourFrom);
+    const end = ReservationsService.fullHour(newDate, hourTo);
+    this.store.setLoading(true);
+    return this.api
+      .changeTime({
+        reservationId: id,
+        start,
+        end,
+      })
+      .pipe(
+        tap(() => this.toastService.show(ToastKeys.RESERVATION_TIME_CHANGED)),
+        finalize(() => this.store.setLoading(false)),
+      );
   }
 }

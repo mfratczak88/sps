@@ -37,6 +37,7 @@ import { TimePipe } from './pipe/time.pipe';
 
 import { SyncTableComponent } from './components/sync-table/sync-table.component';
 import { ReservationStatusChipComponent } from './components/reservation-status-chip/reservation-status-chip.component';
+import { DatePipe } from './pipe/date.pipe';
 
 const components = [
   NavbarComponent,
@@ -66,6 +67,8 @@ const components = [
   ReservationsTableComponent,
   SyncTableComponent,
   ReservationStatusChipComponent,
+  TimePipe,
+  DatePipe,
 ];
 @NgModule({
   declarations: components,
@@ -81,6 +84,7 @@ const components = [
     { provide: ToastService, useClass: MaterialToastService },
     { provide: MatPaginatorIntl, useClass: PaginatorIntlService },
     TimePipe,
+    DatePipe,
   ],
 })
 export class SharedModule {}

@@ -5,16 +5,32 @@ import {
   ConfirmDialogProps,
   ConfirmResult,
 } from '../../shared/components/confirm-action-dialog/confirm-action-dialog.component';
-import { concatMap, first, NEVER, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  concatMap,
+  first,
+  NEVER,
+  Observable,
+  tap,
+} from 'rxjs';
 import { Reservation } from '../../core/model/reservation.model';
 import { DrawerKeys, DriverKeys, MiscKeys } from '../../core/translation-keys';
+import { RouterService } from '../../core/state/router/router.service';
+import {
+  DialogData,
+  DialogOutput,
+  EditTimeDialogComponent,
+} from './edit-time-dialog/edit-time-dialog.component';
 
 export abstract class ReservationBaseComponent {
   readonly translations = { ...DriverKeys, ...MiscKeys, ...DrawerKeys };
 
+  protected readonly reload$ = new BehaviorSubject<boolean>(true);
+
   protected constructor(
     readonly reservationsService: ReservationsService,
     protected readonly dialog: MatDialog,
+    readonly routerService: RouterService,
   ) {}
 
   onConfirmReservation(reservation: Reservation) {
@@ -37,6 +53,38 @@ export abstract class ReservationBaseComponent {
     );
   }
 
+  onEditReservation(reservation: Reservation) {
+    const dialogRef = this.dialog.open<
+      EditTimeDialogComponent,
+      DialogData,
+      DialogOutput
+    >(EditTimeDialogComponent, {
+      data: {
+        hours: this.reservationsService.hoursOf(reservation),
+        date: reservation.date,
+        dateValidator: this.reservationsService
+          .dateValidator(reservation.parkingLotId)
+          .bind(this),
+      },
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        first(),
+        concatMap(data =>
+          data
+            ? this.reservationsService.changeTime({
+                reservation,
+                ...data,
+              })
+            : NEVER,
+        ),
+        tap(() => this.reload$.next(true)),
+      )
+      .subscribe();
+  }
+
   protected confirmWithDialog(
     data: ConfirmDialogProps,
     cb: () => Observable<void>,
@@ -50,11 +98,12 @@ export abstract class ReservationBaseComponent {
         ...data,
       },
     });
-    dialogRef
+    return dialogRef
       .afterClosed()
       .pipe(
         first(),
         concatMap(result => (result?.confirmed ? cb() : NEVER)),
+        tap(() => this.reload$.next(true)),
       )
       .subscribe();
   }

@@ -68,6 +68,7 @@ export interface ReservationQueryModel {
   pageSize?: number;
   sortBy?: SortBy;
   sortOrder?: SortOrder;
+  onlyHistory?: boolean;
 }
 
 export const ReservationStatusTranslationKey = {
@@ -75,3 +76,9 @@ export const ReservationStatusTranslationKey = {
   [ReservationStatus.CONFIRMED]: ReservationStatusKey.CONFIRMED,
   [ReservationStatus.CANCELLED]: ReservationStatusKey.CANCELLED,
 };
+
+export interface ChangeTime {
+  reservationId: Id;
+  start: Date;
+  end: Date;
+}

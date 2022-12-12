@@ -1,6 +1,14 @@
 import { Id } from '../../domain/id';
 import { ReservationStatus } from '../../domain/reservation/reservation-status';
-import { IsIn, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export interface ReservationsReadModel {
@@ -79,4 +87,9 @@ export class ReservationQuery {
   @IsOptional()
   @IsIn(enumValues(SortOrder))
   sortOrder?: SortOrder;
+
+  @IsOptional()
+  @IsBoolean()
+  @Type(() => Boolean)
+  onlyHistory: boolean;
 }

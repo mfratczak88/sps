@@ -18,6 +18,7 @@ import { MatSort } from '@angular/material/sort';
 import { RouterService } from '../../../core/state/router/router.service';
 import { RouterQuery } from '../../../core/state/router/router.query';
 import { Id } from '../../../core/model/common.model';
+import { DatePipe } from '../../pipe/date.pipe';
 
 @Component({
   selector: 'sps-reservations-table',
@@ -113,21 +114,20 @@ export class ReservationsTableComponent {
   constructor(
     private readonly addressPipe: AddressPipe,
     private readonly timePipe: TimePipe,
+    private readonly datePipe: DatePipe,
     readonly routerService: RouterService,
     readonly routerQuery: RouterQuery,
   ) {}
 
   private derivedData(reservation: Reservation) {
-    const { startTime, endTime, date } = reservation;
+    const { date } = reservation;
 
-    const time = `${this.timePipe.transformTime(
-      startTime,
-    )} - ${this.timePipe.transformTime(endTime)}`;
+    const time = this.timePipe.transform(reservation);
     const parkingLotAddress = this.addressPipe.transform(reservation);
 
     return {
       time,
-      date: this.timePipe.transformDate(date),
+      date: this.datePipe.transform(date),
       parkingLotAddress,
     };
   }

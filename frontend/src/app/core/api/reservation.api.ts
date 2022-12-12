@@ -6,10 +6,11 @@ import {
   Reservations,
   ReservationQueryModel,
   Reservation,
+  ChangeTime,
 } from '../model/reservation.model';
 import { environment } from '../../../environments/environment';
 import { Id } from '../model/common.model';
-import { shareReplay } from 'rxjs';
+import { of, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,13 @@ export class ReservationApi extends BaseApi {
   cancelReservation(id: Id) {
     return this.withCsrfToken(
       this.http.patch<void>(`${this.BASE_URL}/${id}/cancel`, null),
+    );
+  }
+
+  changeTime(data: ChangeTime) {
+    const { reservationId } = data;
+    return this.withCsrfToken(
+      this.http.patch<void>(`${this.BASE_URL}/${reservationId}/time`, data),
     );
   }
 }

@@ -7,13 +7,13 @@
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">schedule</mat-icon>
         <div class="section__attribute--value">
-          {{reservation.startTime | date: 'HH:mm'}} - {{reservation.endTime | date: 'HH:mm'}}
+          {{reservation | time}}
         </div>
       </div>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">calendar_month</mat-icon>
         <div class="section__attribute--value">
-          {{reservation.date | date: 'dd.MM.yyyy'}}
+          {{reservation.date | spsDate }}
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">home</mat-icon>
         <div class="section__attribute--value">
-          {{reservation.city}}, {{reservation.streetName}} {{reservation.streetNumber}}
+          {{reservation | address}}
         </div>
       </div>
     </div>
@@ -41,12 +41,13 @@
     </div>
     <div class="actions" *ngIf="reservationsService.canBeChanged(reservation)">
       <button mat-button color="primary"
-              (click)="onConfirmReservation(reservation)"
+              (click)="onConfirmReservation(reservation); routerService.toDriverReservations()"
               *ngIf="reservationsService.canBeConfirmed(reservation)">{{translations.CONFIRM_RESERVATION | translate}}
       </button>
-      <button mat-button>{{translations.CHANGE_TIME | translate}}</button>
+      <button mat-button
+              (click)="onEditReservation(reservation); routerService.toDriverReservations()">{{translations.CHANGE_TIME | translate}}</button>
       <button mat-button color="warn"
-              (click)="onCancelReservation(reservation)"
+              (click)="onCancelReservation(reservation); routerService.toDriverReservations()"
               *ngIf="reservationsService.canBeCancelled(reservation)">{{translations.CANCEL_RESERVATION | translate}}
       </button>
     </div>
