@@ -32,7 +32,9 @@
     "MIN": "Minimalna wartość - {{value}}",
     "MAX": "Maksymalna wartość - {{value}}",
     "HOUR_FROM_GREATER_THAN_HOUR_TO": "Błędne godziny",
-    "NONE_CHECKBOX_SELECTED": "Zaznacz przynajmniej jeden"
+    "NONE_CHECKBOX_SELECTED": "Zaznacz przynajmniej jeden",
+    "VEHICLE_ALREADY_ADDED": "Pojazd został już dodany",
+    "LOT_CLOSED_ON_THIS_DAY": "Parking jest zamknięty w ten dzień"
   },
   "TOAST": {
     "CHECK_EMAIL": "Sprawdź swój email",
@@ -48,7 +50,8 @@
     "VEHICLE_ADDED" : "Dodano pojazd",
     "RESERVATION_CREATED": "Złożono rezerwacje",
     "RESERVATION_CONFIRMED": "Potwierdzono rezerwacje",
-    "RESERVATION_CANCELLED": "Rezerwacja anulowana"
+    "RESERVATION_CANCELLED": "Rezerwacja anulowana",
+    "RESERVATION_TIME_CHANGED": "Czas rezerwacji zmieniony"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Błąd serwera",
@@ -67,12 +70,12 @@
     "DASHBOARD": "Panel",
     "PARKING": "Parkingi",
     "RESERVATIONS": "Rezerwacje",
-    "RESERVATION_DETAILS": "Szczegóły",
     "CREATE_RESERVATION": "Create reservation",
     "USERS": "Użytkownicy",
     "PARKING_DETAILS": "Szczegóły",
     "DRIVERS": "Kierowcy",
-    "VEHICLES" : "Pojazdy"
+    "VEHICLES" : "Pojazdy",
+    "RESERVATION_DETAILS": "Szczegóły"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Rezerwacje",
@@ -194,7 +197,10 @@
     "CANCEL_RESERVATION": "Anuluj rezerwację",
     "CANCEL_RESERVATION_QUESTION": "Czy chcesz anulować rezerwację ?",
     "CONFIRM_RESERVATION": "Potwierdź rezerwacje",
-    "CONFIRM_RESERVATION_QUESTION": "Czy chesz potwierdzić rezerwację ?"
+    "CONFIRM_RESERVATION_QUESTION": "Czy chesz potwierdzić rezerwację ?",
+    "RESERVATION_DETAILS": "Szczegóły rezerwacji",
+    "DATE_AND_TIME" : "Data i czas",
+    "STATUS" : "Status"
   },
   "TABLE_KEYS": {
     "LICENSE_PLATE": "Nr rejestracyjny",

@@ -3,7 +3,7 @@
   <sps-panel *ngIf="query.active$() | async as reservation"
              [title]="translations.RESERVATION_DETAILS | translate">
     <div class="section">
-      <p class="section__header">Data i miejsce</p>
+      <p class="section__header">{{translations.DATE_AND_TIME | translate}}</p>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">schedule</mat-icon>
         <div class="section__attribute--value">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="section">
-      <p class="section__header">Parking</p>
+      <p class="section__header">{{translations.PARKING_LOT | translate}}</p>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">home</mat-icon>
         <div class="section__attribute--value">
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="section">
-      <p class="section__header">Pojazd</p>
+      <p class="section__header">{{translations.VEHICLE | translate}}</p>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">directions_car</mat-icon>
         <div class="section__attribute--value">
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="section">
-      <p class="section__header">Status</p>
+      <p class="section__header">{{translations.STATUS}}</p>
       <sps-reservation-status-chip class="section__attribute" [reservation]="reservation"></sps-reservation-status-chip>
     </div>
     <div class="actions" *ngIf="reservationsService.canBeChanged(reservation)">

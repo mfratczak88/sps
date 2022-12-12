@@ -13,7 +13,7 @@
         <ng-template #nonSortable>
           <mat-header-cell mat-header-cell *matHeaderCellDef>{{column.translation | translate}}</mat-header-cell>
         </ng-template>
-        <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name]}} </mat-cell>
+        <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name] | translate}} </mat-cell>
       </ng-container>
       <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row class="table__row" (click)="reservationClicked.emit(row.id)" mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

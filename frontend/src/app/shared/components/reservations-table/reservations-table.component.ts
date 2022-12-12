@@ -6,7 +6,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Reservation } from '../../../core/model/reservation.model';
+import {
+  Reservation,
+  ReservationStatusTranslationKey,
+} from '../../../core/model/reservation.model';
 
 import { Column } from '../table/table.component';
 import { TableKeys } from '../../../core/translation-keys';
@@ -120,7 +123,7 @@ export class ReservationsTableComponent {
   ) {}
 
   private derivedData(reservation: Reservation) {
-    const { date } = reservation;
+    const { date, status } = reservation;
 
     const time = this.timePipe.transform(reservation);
     const parkingLotAddress = this.addressPipe.transform(reservation);
@@ -128,6 +131,7 @@ export class ReservationsTableComponent {
     return {
       time,
       date: this.datePipe.transform(date),
+      status: ReservationStatusTranslationKey[status],
       parkingLotAddress,
     };
   }

@@ -100,12 +100,6 @@ export const LocalizedErrors = {
   licensePlateAlreadyExist: () => ({
     errorMessage: FormErrorKeys.VEHICLE_ALREADY_ADDED,
   }),
-  hoursNotWithinOperationTime: () => ({
-    errorMessage: FormErrorKeys.HOURS_NOT_WITHIN_OPERATION_TIME,
-  }),
-  hoursNotWithinTimeRange: () => ({
-    errorMessage: FormErrorKeys.HOURS_NOT_WITHIN_TIME_RANGE,
-  }),
   lotClosedOnThisDate: () => ({
     errorMessage: FormErrorKeys.LOT_CLOSED_ON_THIS_DAY,
   }),
