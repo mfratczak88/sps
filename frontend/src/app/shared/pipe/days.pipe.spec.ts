@@ -4,11 +4,12 @@ import { translateTestModule } from '../../../test.utils';
 import { TranslateService } from '@ngx-translate/core';
 
 import { mockParkingLots } from '../../../../test/driver.utils';
-import { ParkingLot } from '../../core/model/driver.model';
+
 import {
   DayToShortTranslation,
   OperationTimeDays,
 } from '../../core/model/common.model';
+import { ParkingLot } from '../../core/model/parking-lot.model';
 
 describe('DaysPipe', () => {
   let daysPipe: DaysPipe;

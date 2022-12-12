@@ -20,9 +20,9 @@
   </button>
   <button mat-button
           color="primary"
-          class="assign-button"
+          class="edit-button"
           mat-raised-button
-          [disabled]="form.invalid || form.untouched"
+          [disabled]="form.invalid || form.untouched || hoursNotChanged()"
           (click)="onEdit()">
     {{translations.ASSIGN | translate}}
   </button>

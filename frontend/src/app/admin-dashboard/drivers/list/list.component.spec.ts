@@ -21,7 +21,9 @@ describe('Drivers list component', () => {
   let driverServiceSpy: SpyObj<DriversService>;
   let routerServiceSpy: SpyObj<RouterService>;
   let loader: HarnessLoader;
-  const driversList = [mockDriver];
+  const driversList = [
+    { ...mockDriver, parkingLotCount: mockDriver.parkingLotIds.length },
+  ];
 
   beforeEach(async () => {
     driverQuerySpy = jasmine.createSpyObj('DriversQuery', [

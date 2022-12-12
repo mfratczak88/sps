@@ -14,7 +14,7 @@ import {
   CreateParkingLot,
 } from '../../../core/model/parking-lot.model';
 
-describe('Parking lot service', () => {
+describe('Parking lots service', () => {
   let storeSpy: SpyObj<ParkingLotStore>;
   let api: SpyObj<ParkingLotApi>;
   let toastServiceSpy: SpyObj<ToastService>;

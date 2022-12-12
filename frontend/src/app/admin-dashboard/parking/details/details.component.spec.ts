@@ -15,7 +15,7 @@ import { By } from '@angular/platform-browser';
 import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-dialog.component';
 import { ChangeCapacityDialogComponent } from '../change-capacity-dialog/change-capacity-dialog.component';
 
-describe('Parking details spec', () => {
+describe('Parking lot details spec', () => {
   let fixture: ComponentFixture<DetailsComponent>;
   let parkingLotQuerySpy: SpyObj<ParkingLotQuery>;
   let parkingLotServiceSpy: SpyObj<ParkingLotService>;

@@ -17,9 +17,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
 import { buttonCells } from '../../../../../test/test.util';
-import SpyObj = jasmine.SpyObj;
 import { ParkingLot } from '../../../core/model/parking-lot.model';
-import { Driver } from '../../../core/model/driver.model';
+import SpyObj = jasmine.SpyObj;
 
 describe('Driver details component', () => {
   let fixture: ComponentFixture<DriverDetailsComponent>;
@@ -31,10 +30,10 @@ describe('Driver details component', () => {
   let loader: HarnessLoader;
 
   const parkingLots = mockParkingLots;
-  const driver: Driver = {
+  const driver = {
     ...mockDriver,
-    parkingLots: [parkingLots[0]],
-    parkingLotsCount: 1,
+    parkingLotIds: [parkingLots[0].id, parkingLots[1].id],
+    parkingLotsCount: 2,
   };
 
   const assignButton = () =>
@@ -45,6 +44,7 @@ describe('Driver details component', () => {
     driversQuerySpy = jasmine.createSpyObj('DriversQuery', [
       'active$',
       'driverUnAssignedParkingLots$',
+      'driverParkingLots$',
       'selectLoading',
     ]);
     dialogRefSpy = jasmine.createSpyObj('DialogRef', ['afterClosed']);
@@ -75,6 +75,7 @@ describe('Driver details component', () => {
     loader = TestbedHarnessEnvironment.loader(fixture);
   });
   it('Displays current driver details', async () => {
+    driversQuerySpy.driverParkingLots$.and.returnValue(of(parkingLots));
     fixture.detectChanges();
 
     const [email, name] = fixture.debugElement
@@ -85,6 +86,7 @@ describe('Driver details component', () => {
     expect(name.innerText).toEqual(driver.name);
   });
   it('Displays driver assigned parking lots', async () => {
+    driversQuerySpy.driverParkingLots$.and.returnValue(of(parkingLots));
     fixture.detectChanges();
 
     const parkingLotsTable = fixture.debugElement.query(
@@ -94,10 +96,11 @@ describe('Driver details component', () => {
       parkingLotsTable.parkingLots$,
     );
 
-    expect(displayedParkingLots).toEqual(driver.parkingLots);
+    expect(displayedParkingLots).toEqual([...parkingLots]);
   });
   it('Assign parking lot - opens up dialog on button click providing unassigned lots obs$', () => {
     // given
+    driversQuerySpy.driverParkingLots$.and.returnValue(of([parkingLots[0]]));
     driversQuerySpy.driverUnAssignedParkingLots$.and.returnValue(
       of([parkingLots[1]]),
     );
@@ -118,6 +121,7 @@ describe('Driver details component', () => {
   });
   it('Assign parking lot - hides button if all of the lots are assigned to driver', () => {
     driversQuerySpy.driverUnAssignedParkingLots$.and.returnValue(of([]));
+    driversQuerySpy.driverParkingLots$.and.returnValue(of(parkingLots));
     driversQuerySpy.active$.and.returnValue(
       of({
         ...driver,
@@ -132,6 +136,7 @@ describe('Driver details component', () => {
     // given
     const unAssignedParkingLot = parkingLots[1];
     dialogSpy.open.and.returnValue(dialogRefSpy);
+    driversQuerySpy.driverParkingLots$.and.returnValue(of([]));
     driversQuerySpy.driverUnAssignedParkingLots$.and.returnValue(
       of([unAssignedParkingLot]),
     );
@@ -150,8 +155,9 @@ describe('Driver details component', () => {
   });
   it('Assign parking lot - does not call service if lot has not been selected', async () => {
     // given
-    const unAssignedParkingLot = parkingLots[1];
+    const [assignedLot, unAssignedParkingLot] = parkingLots;
     dialogSpy.open.and.returnValue(dialogRefSpy);
+    driversQuerySpy.driverParkingLots$.and.returnValue(of([assignedLot]));
     driversQuerySpy.driverUnAssignedParkingLots$.and.returnValue(
       of([unAssignedParkingLot]),
     );
@@ -166,6 +172,7 @@ describe('Driver details component', () => {
   });
 
   it('Calls remove parking lot on clicking button in assigned lots table', async () => {
+    driversQuerySpy.driverParkingLots$.and.returnValue(of(parkingLots));
     const [removeAssignmentButtonCell] = await buttonCells(loader, 'remove');
     driversServiceSpy.removeParkingLotAssignment.and.returnValue(of(undefined));
     const button = await removeAssignmentButtonCell.getHarness(
@@ -174,7 +181,7 @@ describe('Driver details component', () => {
     await button.click();
     expect(driversServiceSpy.removeParkingLotAssignment).toHaveBeenCalledWith({
       driverId: driver.id,
-      parkingLotId: driver.parkingLots[0].id,
+      parkingLotId: driver.parkingLotIds[0],
     });
   });
 });

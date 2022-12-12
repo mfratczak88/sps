@@ -55,7 +55,7 @@ describe('Drivers service', () => {
     expect(storeSpy.set).toHaveBeenCalledWith([driverResp]);
   });
 
-  it('On select it loads parking lots and sets active entity from given id', async () => {
+  it('On select if driver is in store it sets active id', async () => {
     const { id } = mockDriver;
     const driverStatesIds = [id];
 
@@ -65,8 +65,8 @@ describe('Drivers service', () => {
 
     driverService.select(id);
 
-    expect(parkingLotQuery.selectAll).toHaveBeenCalled();
     expect(storeSpy.setActive).toHaveBeenCalledWith(id);
+    expect(api.getAll).not.toHaveBeenCalled();
   });
   it('On select if no driver is found it calls api', async () => {
     storeSpy.getValue.and.returnValue({

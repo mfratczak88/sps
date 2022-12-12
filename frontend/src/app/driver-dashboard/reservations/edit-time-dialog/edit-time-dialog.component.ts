@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { LocalizedValidators } from '../../../shared/validator';
 import { Hours } from '../../../shared/components/hours-form/hours-form.component';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
 import { DateTime } from 'luxon';
@@ -23,8 +22,8 @@ export class EditTimeDialogComponent {
   ) {
     const { hours, date } = data;
     this.form = formBuilder.nonNullable.group({
-      date: [DateTime.fromISO(date).toJSDate(), [LocalizedValidators.required]],
-      hours: [hours, [LocalizedValidators.required]],
+      date: [DateTime.fromISO(date).toJSDate()],
+      hours: [hours],
     });
   }
 
@@ -36,6 +35,15 @@ export class EditTimeDialogComponent {
         hours,
         date,
       });
+  }
+
+  hoursNotChanged() {
+    const { hours } = this.form.value;
+    const { hourFrom: hourFromInput, hourTo: hourToInput } = hours ?? {};
+    const {
+      hours: { hourFrom, hourTo },
+    } = this.data;
+    return hourFrom === hourFromInput && hourTo === hourToInput;
   }
 }
 
