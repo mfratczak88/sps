@@ -8,7 +8,7 @@ import {
   TopLevelPaths,
 } from 'src/app/routes';
 
-import { QueryParamKeys, QueryParams } from './router.model';
+import { QueryParamKeys, QueryParams } from '../../model/router.model';
 
 @Injectable({
   providedIn: 'root',

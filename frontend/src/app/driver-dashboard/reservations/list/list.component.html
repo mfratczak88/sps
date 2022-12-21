@@ -1,12 +1,12 @@
-<div class="reservations" *ngIf="(driverQuery.select() | async) as driver">
+<div class="reservations" *ngIf="(driver$ | async) as driver">
   <sps-card class="reservations__card"
             [title]="translations.CONFIRM_TITLE"
             [subTitle]="translations.CONFIRM_PROMPT"
-            [loading$]="driverQuery.selectLoading()"
-            *ngIf="driver.pendingAction.length">
-    <sps-number-chip chip>{{driver.pendingAction.length}}</sps-number-chip>
+            [loading$]="driverLoading$"
+            *ngIf="driver.timeHorizon?.pendingAction as pendingAction">
+    <sps-number-chip chip>{{pendingAction.length}}</sps-number-chip>
     <div>
-      <div *ngFor="let reservation of driver.pendingAction">
+      <div *ngFor="let reservation of pendingAction">
         <sps-reservation-expansion-panel [reservation]="reservation" [expanded]="true">
           <div class="reservations__card--timer" timer>
             <sps-time-left
@@ -26,18 +26,21 @@
   <sps-card class="reservations__card"
             [title]="translations.DUE_NEXT"
             [subTitle]="translations.DUE_NEXT_PROMPT"
-            [loading$]="driverQuery.selectLoading()"
-            *ngIf="driver.dueNext.length">
-    <sps-number-chip chip>{{driver.dueNext.length}}</sps-number-chip>
+            [loading$]="driverLoading$"
+            *ngIf="driver.timeHorizon?.dueNext as dueNext">
+    <sps-number-chip chip>{{dueNext.length}}</sps-number-chip>
     <div>
-      <div *ngFor="let reservation of driver.dueNext">
+      <div *ngFor="let reservation of dueNext">
         <sps-reservation-expansion-panel [reservation]="reservation">
           <div class="reservations__card--timer" timer>
           </div>
           <button mat-button color="warn"
                   (click)="onCancelReservation(reservation)">{{translations.CANCEL | translate}}</button>
-          <button (click)="onEditReservation(reservation)" mat-button
-                  color="primary">{{translations.CHANGE_TIME | translate}}</button>
+          <button mat-button
+
+                  color="primary"
+
+          >{{translations.CHANGE_TIME | translate}}</button>
         </sps-reservation-expansion-panel>
       </div>
     </div>
@@ -49,15 +52,15 @@
     <button btn
             mat-raised-button
             color="primary"
-            (click)="routerService.toCreateReservation()">
+            (click)="toCreateReservation()">
       <mat-icon>add</mat-icon>
       {{translations.CREATE | translate}}
     </button>
     <sps-reservations-table
-      [reservations$]="reservationsQuery.driverReservationHistory$()"
-      [loading$]="reservationsQuery.selectLoading()"
-      [length$]="reservationsQuery.count$()"
-      (reservationClicked)="routerService.toDriverReservationDetails($event)"
+      [reservations$]="reservations$"
+      [loading$]="reservationsLoading$"
+      [length$]="reservationsCount$"
+      (reservationClicked)="toDetails($event)"
       [displayColumns]="['licensePlate','time','date','status','parkingLotAddress']"
     ></sps-reservations-table>
   </sps-panel>

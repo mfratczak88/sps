@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { AddressPipe } from '../../../shared/pipe/address.pipe';
+import { AddressPipe } from '../../../shared/pipe/address/address.pipe';
 import { translateTestModule } from '../../../../test.utils';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';

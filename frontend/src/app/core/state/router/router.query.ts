@@ -1,19 +1,12 @@
 import { RouterQuery as AkitaRouterQuery } from '@datorama/akita-ng-router-store';
-import {
-  delay,
-  distinctUntilChanged,
-  filter,
-  map,
-  Observable,
-  tap,
-} from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import {
   BreadCrumbs,
   Fragment,
   ParamKeys,
   QueryParamKeys,
   QueryParams,
-} from './router.model';
+} from '../../model/router.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({

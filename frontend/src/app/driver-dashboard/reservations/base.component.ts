@@ -1,55 +1,48 @@
-import { ReservationsService } from '../state/reservation/reservations.service';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmActionDialogComponent,
   ConfirmDialogProps,
   ConfirmResult,
 } from '../../shared/components/confirm-action-dialog/confirm-action-dialog.component';
-import {
-  BehaviorSubject,
-  concatMap,
-  first,
-  NEVER,
-  Observable,
-  tap,
-} from 'rxjs';
+import { filter, first, Observable } from 'rxjs';
 import { Reservation } from '../../core/model/reservation.model';
 import { DrawerKeys, DriverKeys, MiscKeys } from '../../core/translation-keys';
-import { RouterService } from '../../core/state/router/router.service';
+import { Store } from '@ngxs/store';
+import { DriverActions } from '../../core/store/actions/driver.actions';
+import { ReservationValidator } from '../../core/validators/reservation.validator';
 import {
   DialogData,
   DialogOutput,
   EditTimeDialogComponent,
 } from './edit-time-dialog/edit-time-dialog.component';
+import { hoursOf } from '../../core/util';
 
 export abstract class ReservationBaseComponent {
   readonly translations = { ...DriverKeys, ...MiscKeys, ...DrawerKeys };
 
-  protected readonly reload$ = new BehaviorSubject<boolean>(true);
-
   protected constructor(
-    readonly reservationsService: ReservationsService,
+    protected readonly store: Store,
     protected readonly dialog: MatDialog,
-    readonly routerService: RouterService,
+    protected readonly validator: ReservationValidator,
   ) {}
 
-  onConfirmReservation(reservation: Reservation) {
+  onConfirmReservation({ id }: Reservation) {
     this.confirmWithDialog(
       {
         title: this.translations.CONFIRM_RESERVATION,
         subTitle: this.translations.CONFIRM_RESERVATION_QUESTION,
       },
-      () => this.reservationsService.confirmReservation(reservation),
+      () => this.store.dispatch(new DriverActions.ConfirmReservation(id)),
     );
   }
 
-  onCancelReservation(reservation: Reservation) {
+  onCancelReservation({ id }: Reservation) {
     this.confirmWithDialog(
       {
         title: this.translations.CANCEL_RESERVATION,
         subTitle: this.translations.CANCEL_RESERVATION_QUESTION,
       },
-      () => this.reservationsService.cancelReservation(reservation),
+      () => this.store.dispatch(new DriverActions.CancelReservation(id)),
     );
   }
 
@@ -60,29 +53,26 @@ export abstract class ReservationBaseComponent {
       DialogOutput
     >(EditTimeDialogComponent, {
       data: {
-        hours: this.reservationsService.hoursOf(reservation),
+        hours: hoursOf(reservation),
         date: reservation.date,
-        dateValidator: this.reservationsService
-          .dateValidator(reservation.parkingLotId)
+        dateValidator: this.validator
+          .dateFilterFn(reservation.parkingLotId)
           .bind(this),
       },
     });
-
+    const { id } = reservation;
     dialogRef
       .afterClosed()
       .pipe(
+        filter(d => !!d),
         first(),
-        concatMap(data =>
-          data
-            ? this.reservationsService.changeTime({
-                reservation,
-                ...data,
-              })
-            : NEVER,
-        ),
-        tap(() => this.reload$.next(true)),
       )
-      .subscribe();
+      .subscribe(dialogOutput => {
+        const { date, hours } = dialogOutput as DialogOutput;
+        this.store.dispatch(
+          new DriverActions.ChangeTimeOfReservation(id, hours, date),
+        );
+      });
   }
 
   protected confirmWithDialog(
@@ -102,9 +92,8 @@ export abstract class ReservationBaseComponent {
       .afterClosed()
       .pipe(
         first(),
-        concatMap(result => (result?.confirmed ? cb() : NEVER)),
-        tap(() => this.reload$.next(true)),
+        filter(result => !!result?.confirmed),
       )
-      .subscribe();
+      .subscribe(cb);
   }
 }

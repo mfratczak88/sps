@@ -82,3 +82,7 @@ export interface ChangeTime {
   start: Date;
   end: Date;
 }
+export interface Hours {
+  hourFrom: number;
+  hourTo: number;
+}

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { DriverQuery } from '../../state/driver/driver.query';
-import { DriverService } from '../../state/driver/driver.service';
 import { DriverKeys } from '../../../core/translation-keys';
+import { Select, Store } from '@ngxs/store';
+import { DriversState } from '../../../core/store/drivers.state';
+import { Observable } from 'rxjs';
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 @Component({
   selector: 'sps-driver-parking-lot-list',
@@ -11,5 +13,14 @@ import { DriverKeys } from '../../../core/translation-keys';
 export class ParkingLotsListComponent {
   translations = { ...DriverKeys };
 
-  constructor(readonly query: DriverQuery, readonly service: DriverService) {}
+  @Select(DriversState.assignedParkingLots)
+  driverParkingLots$: Observable<ParkingLot[]>;
+
+  @Select(DriversState.unAssignedParkingLots)
+  unAssignedParkingLots$: Observable<ParkingLot[]>;
+
+  @Select(DriversState.loading)
+  loading$: Observable<boolean>;
+
+  constructor(readonly store: Store) {}
 }

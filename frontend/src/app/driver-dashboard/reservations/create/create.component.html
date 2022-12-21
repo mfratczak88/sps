@@ -1,7 +1,7 @@
 <div class="create">
   <sps-heading size="m">{{translations.MAKE_RESERVATION_TITLE | translate}}</sps-heading>
   <sps-text size="m">{{translations.MAKE_RESERVATION_SUBTITLE | translate}}</sps-text>
-  <div class="stepper">
+  <div class="stepper" *ngIf="driver$ | async as driver">
     <mat-vertical-stepper [linear]="true" #stepper>
       <mat-step [stepControl]="parkingLotForm">
         <form [formGroup]="parkingLotForm" class="stepper__form">
@@ -9,7 +9,7 @@
           <mat-form-field appearance="fill">
             <mat-label>{{translations.PARKING_LOT | translate}}</mat-label>
             <mat-select formControlName="parkingLot" required>
-              <mat-option *ngFor="let lot of driverQuery.getValue().parkingLots"
+              <mat-option *ngFor="let lot of (parkingLots$ | async)"
                           [value]="lot">{{lot | address}}</mat-option>
             </mat-select>
             <sps-form-error [control]="parkingLotForm.controls.parkingLot"></sps-form-error>
@@ -53,7 +53,7 @@
           <mat-form-field appearance="fill">
             <mat-label>{{translations.VEHICLE | translate}}</mat-label>
             <mat-select formControlName="licensePlate" required>
-              <mat-option *ngFor="let vehicle of driverQuery.getValue().vehicles"
+              <mat-option *ngFor="let vehicle of driver.vehicles"
                           [value]="vehicle.licensePlate">{{vehicle.licensePlate}}</mat-option>
             </mat-select>
             <sps-form-error [control]="parkingLotForm.controls.parkingLot"></sps-form-error>

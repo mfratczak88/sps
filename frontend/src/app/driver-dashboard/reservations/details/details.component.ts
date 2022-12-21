@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ReservationsService } from '../../state/reservation/reservations.service';
-import { RouterQuery } from '../../../core/state/router/router.query';
-import { concatMap } from 'rxjs/operators';
-import { takeWhile } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { ReservationBaseComponent } from '../base.component';
-import { ReservationsQuery } from '../../state/reservation/reservations.query';
-import { RouterService } from '../../../core/state/router/router.service';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Reservation } from '../../../core/model/reservation.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DriverActions } from '../../../core/store/actions/driver.actions';
+import { RoutingState } from '../../../core/store/routing.state';
+import { ReservationsState } from '../../../core/store/reservations.state';
+import { ReservationValidator } from '../../../core/validators/reservation.validator';
 
 @Component({
   selector: 'sps-reservation-details',
@@ -14,30 +15,30 @@ import { RouterService } from '../../../core/state/router/router.service';
   styleUrls: ['./details.component.scss'],
 })
 export class ReservationDetailsComponent extends ReservationBaseComponent
-  implements OnInit, OnDestroy {
-  alive = true;
+  implements OnInit {
+  @Select(ReservationsState.active)
+  reservation$: Observable<Reservation | undefined>;
+
+  @Select(ReservationsState.loading)
+  loading$: Observable<boolean>;
 
   constructor(
-    service: ReservationsService,
+    store: Store,
     dialog: MatDialog,
-    readonly routerQuery: RouterQuery,
-    readonly query: ReservationsQuery,
-    routerService: RouterService,
+    validator: ReservationValidator,
   ) {
-    super(service, dialog, routerService);
+    super(store, dialog, validator);
   }
 
   ngOnInit(): void {
-    this.routerQuery
-      .reservationId$()
-      .pipe(
-        concatMap(id => this.reservationsService.select(id)),
-        takeWhile(() => this.alive),
-      )
-      .subscribe();
+    this.store.dispatch(
+      new DriverActions.GetReservationById(
+        this.store.selectSnapshot(RoutingState.reservationId),
+      ),
+    );
   }
 
-  ngOnDestroy(): void {
-    this.alive = false;
+  toReservationsList() {
+    this.store.dispatch(new DriverActions.NavigateToReservationList());
   }
 }

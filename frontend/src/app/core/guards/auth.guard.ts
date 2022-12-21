@@ -2,55 +2,54 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
-import { from, map, Observable } from 'rxjs';
-import { RouterService } from '../state/router/router.service';
-import { AuthQuery } from '../state/auth/auth.query';
-import { AuthService } from '../state/auth/auth.service';
+import { map } from 'rxjs';
 import { Role } from '../state/auth/auth.model';
+import { AuthPaths, TopLevelPaths } from '../../routes';
+import { Store } from '@ngxs/store';
+import { AuthState } from '../store/auth.state';
+import { AuthActions } from '../store/actions/auth.actions';
+import { QueryParamKeys } from '../model/router.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private readonly authQuery: AuthQuery,
-    private readonly authService: AuthService,
-    private readonly routerService: RouterService,
-  ) {}
+  constructor(private readonly router: Router, private readonly store: Store) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    if (this.authQuery.loggedIn()) {
-      return this.redirectBasedOnRole(state);
+    routerStateSnapshot: RouterStateSnapshot,
+  ) {
+    if (this.store.selectSnapshot(AuthState.loggedIn)) {
+      return this.redirectBasedOnRole(routerStateSnapshot);
     }
-    return from(this.authService.restoreAuth()).pipe(
-      map(user => {
-        if (!user) {
-          return this.routerService.urlTreeForLoginWithReturnUrl(state.url);
-        }
-        return this.redirectBasedOnRole(state);
-      }),
-    );
+    return this.store
+      .dispatch(new AuthActions.RestoreAuth())
+      .pipe(
+        map(() =>
+          this.store.selectSnapshot(AuthState.loggedIn)
+            ? this.redirectBasedOnRole(routerStateSnapshot)
+            : this.router.parseUrl(
+                `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${routerStateSnapshot.url}`,
+              ),
+        ),
+      );
   }
 
   redirectBasedOnRole(state: RouterStateSnapshot) {
     if (state.url !== '/') return true;
-    const role = this.authQuery.role();
-    if (role === Role.CLERK) {
-      return this.routerService.clerkDashboardUrlTree();
-    } else if (role === Role.ADMIN) {
-      return this.routerService.adminDashBoardUrlTree();
-    } else {
-      return this.routerService.driverDashboardUrlTree();
-    }
+    const role = this.store.selectSnapshot(AuthState.role);
+    return this.userRoleToUrlTree[role];
+  }
+
+  private get userRoleToUrlTree() {
+    return {
+      [Role.ADMIN]: this.router.parseUrl(TopLevelPaths.ADMIN_DASHBOARD),
+      [Role.DRIVER]: this.router.parseUrl(TopLevelPaths.DRIVER_DASHBOARD),
+      [Role.CLERK]: this.router.parseUrl(TopLevelPaths.CLERK_DASHBOARD),
+    };
   }
 }

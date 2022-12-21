@@ -6,8 +6,9 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { AuthService } from '../state/auth/auth.service';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { AuthActions } from '../store/actions/auth.actions';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -37,16 +38,16 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    const authService = this.injector.get(AuthService);
+    const store = this.injector.get(Store);
     if (!this.refreshingInProgress) {
       this.refreshingInProgress = true;
-      return authService.refreshToken().pipe(
+      return store.dispatch(new AuthActions.RefreshToken()).pipe(
         switchMap(() => {
           this.refreshingInProgress = false;
           return next.handle(req);
         }),
         catchError(err => {
-          authService.logout();
+          store.dispatch(new AuthActions.Logout());
           this.refreshingInProgress = false;
           return throwError(err);
         }),

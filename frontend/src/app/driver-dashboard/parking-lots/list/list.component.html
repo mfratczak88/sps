@@ -1,11 +1,11 @@
-<div class="vehicles" *ngIf="query.select() | async as driver">
+<div class="vehicles">
   <sps-card [title]="translations.AVAILABLE_LOTS"
             [subTitle]="translations.AVAILABLE_LOTS_INFO"
-            [loading$]="query.selectLoading()"
-            *ngIf="driver.parkingLots?.length">
-    <sps-number-chip chip>{{driver.parkingLots.length}}</sps-number-chip>
+            [loading$]="loading$"
+            *ngIf="(driverParkingLots$ | async) as parkingLots">
+    <sps-number-chip chip>{{parkingLots.length}}</sps-number-chip>
     <div>
-      <div *ngFor="let lot of driver.parkingLots">
+      <div *ngFor="let lot of parkingLots">
         <sps-parking-lot-expansion-panel [parkingLot]="lot">
           <button mat-button color="primary">{{translations.RESERVE | translate}}</button>
         </sps-parking-lot-expansion-panel>
@@ -14,8 +14,8 @@
   </sps-card>
   <sps-card [title]="translations.REQUEST_ACCESS"
             [subTitle]="translations.REQUEST_ACCESS_INFO"
-            [loading$]="query.selectLoading()"
-            *ngIf="query.unAssignedParkingLots$() | async as unAssignedLots">
+            [loading$]="loading$"
+            *ngIf="(unAssignedParkingLots$ | async) as unAssignedLots">
     <sps-number-chip chip>{{unAssignedLots.length}}</sps-number-chip>
     <div>
       <div *ngFor="let lot of unAssignedLots">
