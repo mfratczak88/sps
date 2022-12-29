@@ -5,7 +5,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { environment } from '../../../environments/environment';
-import { RegisterUserPayload, Role, User } from '../state/auth/auth.model';
+import { RegisterUserPayload, Role, User } from '../model/auth.model';
 
 describe('Auth api spec', () => {
   let api: AuthApi;

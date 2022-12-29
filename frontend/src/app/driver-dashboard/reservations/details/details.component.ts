@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservationBaseComponent } from '../base.component';
-import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
-import { Reservation } from '../../../core/model/reservation.model';
+import { Store } from '@ngxs/store';
 import { MatDialog } from '@angular/material/dialog';
 import { DriverActions } from '../../../core/store/actions/driver.actions';
-import { RoutingState } from '../../../core/store/routing.state';
-import { ReservationsState } from '../../../core/store/reservations.state';
 import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import {
+  active,
+  loading,
+} from '../../../core/store/reservations/reservations.selector';
+import { reservationId } from '../../../core/store/routing/routing.selector';
 
 @Component({
   selector: 'sps-reservation-details',
@@ -16,11 +17,9 @@ import { ReservationValidator } from '../../../core/validators/reservation.valid
 })
 export class ReservationDetailsComponent extends ReservationBaseComponent
   implements OnInit {
-  @Select(ReservationsState.active)
-  reservation$: Observable<Reservation | undefined>;
+  reservation$ = this.store.select(active);
 
-  @Select(ReservationsState.loading)
-  loading$: Observable<boolean>;
+  loading$ = this.store.select(loading);
 
   constructor(
     store: Store,
@@ -33,7 +32,7 @@ export class ReservationDetailsComponent extends ReservationBaseComponent
   ngOnInit(): void {
     this.store.dispatch(
       new DriverActions.GetReservationById(
-        this.store.selectSnapshot(RoutingState.reservationId),
+        this.store.selectSnapshot(reservationId),
       ),
     );
   }

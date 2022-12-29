@@ -16,22 +16,26 @@ import {
 } from '../../core/translation-keys';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { LinkComponent } from '../../shared/components/link/link.component';
-import { AuthService } from '../../core/state/auth/auth.service';
-import { RouterService } from '../../core/state/router/router.service';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { of } from 'rxjs';
+
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsModule, Store } from '@ngxs/store';
+import { AuthState } from '../../core/store/auth/auth.state';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { DispatchSpy, newDispatchSpy } from '../../../../test/spy.util';
+import { AuthActions } from '../../core/store/actions/auth.actions';
 import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
-} from '../../core/state/auth/auth.model';
-import { of } from 'rxjs';
-import SpyObj = jasmine.SpyObj;
+} from '../../core/model/auth.model';
 
 describe('SignUpComponent', () => {
   let fixture: ComponentFixture<SignUpComponent>;
   let loader: HarnessLoader;
   let translateService: TranslateService;
-  let authServiceSpy: SpyObj<AuthService>;
-  let routerServiceSpy: SpyObj<RouterService>;
+  let store: Store;
+  let dispatchSpy: DispatchSpy;
   const emailFormField = () =>
     loader.getHarness(
       MatFormFieldHarness.with({
@@ -60,26 +64,24 @@ describe('SignUpComponent', () => {
     fixture.debugElement.query(By.directive(LinkComponent));
 
   beforeEach(async () => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['register']);
-    routerServiceSpy = jasmine.createSpyObj('RouterService', ['toSignIn']);
     await TestBed.configureTestingModule({
       declarations: [SignUpComponent],
       imports: [
         await translateTestModule(),
         ReactiveFormsModule,
+        RouterTestingModule,
+        NgxsModule.forRoot([AuthState]),
+        NgxsRouterPluginModule.forRoot(),
         SharedModule,
         BrowserAnimationsModule,
-      ],
-      providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: RouterService, useValue: routerServiceSpy },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SignUpComponent);
-
     loader = TestbedHarnessEnvironment.loader(fixture);
     translateService = TestBed.inject(TranslateService);
+    store = TestBed.inject(Store);
+    dispatchSpy = newDispatchSpy(store);
     fixture.detectChanges();
   });
 
@@ -115,14 +117,19 @@ describe('SignUpComponent', () => {
   });
   it('displays translated link to sign in', () => {
     const { nativeElement } = toSignInLink();
+
     expect((nativeElement as HTMLElement).innerText).toEqual(
       translateService.instant(AuthTranslationKeys.ALREADY_HAVE_ACCOUNT),
     );
   });
   it('on already have an account navigates to sign in', () => {
     const { componentInstance } = toSignInLink();
+
     <LinkComponent>componentInstance.click.emit();
-    expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
+
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateToSignIn(),
+    );
   });
   it('disables sign up button if form is invalid', async () => {
     const emailFormEl = await emailFormField();
@@ -173,7 +180,7 @@ describe('SignUpComponent', () => {
     ]);
   });
   it('calls auth service on sign up and navigates to sign in page', async () => {
-    authServiceSpy.register.and.returnValue(of(void 0));
+    dispatchSpy.and.returnValues(of({}), of({}));
     const email = 'andrew@gmail.com';
     const name = 'Maciek';
     const password = 'someOkPasssword333';
@@ -195,11 +202,11 @@ describe('SignUpComponent', () => {
 
     signUpButton().click();
 
-    expect(authServiceSpy.register).toHaveBeenCalledWith({
-      name,
-      email,
-      password,
-    });
-    expect(routerServiceSpy.toSignIn).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.Register(name, email, password),
+    );
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateToSignIn(),
+    );
   });
 });

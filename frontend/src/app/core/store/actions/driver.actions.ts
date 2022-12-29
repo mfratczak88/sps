@@ -8,15 +8,16 @@ export namespace DriverActions {
     static readonly type = '[Driver Reservations] GetAll';
   }
 
-  export class TablePagingSortingChange {
-    static readonly type = '[Driver Reservations] TablePagingSortingChange';
+  export class SortingChange {
+    static readonly type = '[Driver Reservations] Sorting change';
 
-    constructor(
-      readonly page?: number,
-      readonly pageSize?: number,
-      readonly sortBy?: SortBy,
-      readonly sortOrder?: SortOrder,
-    ) {}
+    constructor(readonly sortBy?: SortBy, readonly sortOrder?: SortOrder) {}
+  }
+
+  export class PagingChange {
+    static readonly type = '[Driver Reservations] Paging change';
+
+    constructor(readonly page: number, readonly pageSize: number) {}
   }
   export class ReservationFiltersChange {
     static readonly type = '[Driver Reservations] FiltersChange';
@@ -101,6 +102,23 @@ export namespace DriverActions {
   export class NavigateToReservationList extends Navigate {
     constructor() {
       super([`/${TopLevelPaths.DRIVER_DASHBOARD}/${DriverPaths.RESERVATIONS}`]);
+    }
+  }
+
+  export class QueryParamsChange extends Navigate {
+    constructor(
+      page?: number,
+      pageSize?: number,
+      sortBy?: string,
+      sortOrder?: string,
+    ) {
+      super(
+        [],
+        { sortBy, sortOrder, page, pageSize },
+        {
+          queryParamsHandling: 'merge',
+        },
+      );
     }
   }
 }

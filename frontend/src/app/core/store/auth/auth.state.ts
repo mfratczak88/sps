@@ -1,17 +1,16 @@
-import { Role, User } from '../state/auth/auth.model';
-import { AuthApi } from '../api/auth.api';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { AuthApi } from '../../api/auth.api';
+import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { AuthActions } from './actions/auth.actions';
+import { AuthActions } from '../actions/auth.actions';
 import { mergeMap, tap } from 'rxjs/operators';
 import {
   GoogleLoginProvider,
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
 import { catchError, concatMap, EMPTY, first, from, lastValueFrom } from 'rxjs';
-import { UiActions } from './actions/ui.actions';
-import { ToastKeys } from '../translation-keys';
-import equal from 'fast-deep-equal';
+import { UiActions } from '../actions/ui.actions';
+import { ToastKeys } from '../../translation-keys';
+import { Role, User } from '../../model/auth.model';
 
 export interface AuthStateModel {
   id: string;
@@ -21,7 +20,7 @@ export interface AuthStateModel {
   authExpiresIn: string;
   role: Role | string;
 }
-const defaults: AuthStateModel = {
+export const defaults: AuthStateModel = {
   email: '',
   id: '',
   validToISO: '',
@@ -42,21 +41,6 @@ export class AuthState {
     private readonly api: AuthApi,
     private readonly socialAuthService: SocialAuthService,
   ) {}
-
-  @Selector()
-  static role({ role }: AuthStateModel) {
-    return role as Role;
-  }
-
-  @Selector()
-  static loggedIn(state: AuthStateModel) {
-    return !!state && !equal(state, defaults);
-  }
-
-  @Selector()
-  static id({ id }: AuthStateModel) {
-    return id;
-  }
 
   @Action(AuthActions.Login)
   login(
@@ -191,7 +175,7 @@ export class AuthState {
 
   private static userFromLocalStorage() {
     const userString = localStorage.getItem('user');
-    return userString && JSON.parse(userString);
+    return (userString && JSON.parse(userString)) || defaults;
   }
 
   private static removeUserInfoFromLocalStorage() {

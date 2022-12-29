@@ -66,8 +66,8 @@ export interface ReservationQueryModel {
   parkingLotId?: Id;
   page?: number;
   pageSize?: number;
-  sortBy?: SortBy;
-  sortOrder?: SortOrder;
+  sortBy?: SortBy | string;
+  sortOrder?: SortOrder | string;
   onlyHistory?: boolean;
 }
 

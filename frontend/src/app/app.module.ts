@@ -13,6 +13,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -36,6 +39,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BrowserAnimationsModule,
 
     NgxsReduxDevtoolsPluginModule.forRoot(),
+
+    StoreModule.forRoot({}, {}),
+
+    EffectsModule.forRoot([]),
+
+    StoreRouterConnectingModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [{ provide: ErrorHandler, useClass: ErrorHandlerService }],

@@ -1,35 +1,38 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReservationDetailsComponent } from './details.component';
-import SpyObj = jasmine.SpyObj;
-import { ReservationsService } from '../../state/reservation/reservations.service';
 import { MatDialog } from '@angular/material/dialog';
-import { RouterQuery } from '../../../core/state/router/router.query';
-import { RouterService } from '../../../core/state/router/router.service';
-import { ReservationsQuery } from '../../state/reservation/reservations.query';
 import { translateTestModule } from '../../../../test.utils';
 import { SharedModule } from '../../../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  newMatDialogSpy,
-  newReservationsQuerySpy,
-  newReservationsServiceSpy,
-  newRouterQuerySpy,
-  newRouterServiceSpy,
-} from '../../../../../test/spy.util';
+import { newMatDialogSpy } from '../../../../../test/spy.util';
 import { mockReservations } from '../../../../../test/reservation.util';
-import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { NgxsModule, Store } from '@ngxs/store';
+import { CanCancelReservationPipe } from '../../../shared/pipe/can/can-cancel-reservation.pipe';
+import { CanEditReservationPipe } from '../../../shared/pipe/can/can-edit-reservation.pipe';
+import { CanConfirmReservationPipe } from '../../../shared/pipe/can/can-confirm-reservation.pipe';
+import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import {
+  defaults,
+  ReservationsState,
+} from '../../../core/store/reservations/reservations.state';
+import { CoreModule } from '../../../core/core.module';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { RouterTestingModule } from '@angular/router/testing';
+import SpyObj = jasmine.SpyObj;
+import Spy = jasmine.Spy;
+import { Observable } from 'rxjs';
+import { DriverActions } from '../../../core/store/actions/driver.actions';
 
 describe('Reservation details', () => {
   let fixture: ComponentFixture<ReservationDetailsComponent>;
-  let reservationServiceSpy: SpyObj<ReservationsService>;
   let dialogSpy: SpyObj<MatDialog>;
-  let routerQuerySpy: SpyObj<RouterQuery>;
-  let routerServiceSpy: SpyObj<RouterService>;
-  let reservationsQuerySpy: SpyObj<ReservationsQuery>;
+  let store: Store;
+  let dispatchSpy: Spy<(actionOrActions: any) => Observable<any>>;
+  let reservationsValidatorSpy: SpyObj<ReservationValidator>;
   const [reservation] = mockReservations;
-
+  const { id: reservationId } = reservation;
   const cancelButton = () =>
     fixture.debugElement.query(By.css('.actions__cancel-button'))
       ?.nativeElement as HTMLButtonElement;
@@ -43,22 +46,20 @@ describe('Reservation details', () => {
       ?.nativeElement as HTMLButtonElement;
 
   beforeEach(async () => {
-    reservationServiceSpy = newReservationsServiceSpy();
     dialogSpy = newMatDialogSpy();
-    routerQuerySpy = newRouterQuerySpy();
-    routerServiceSpy = newRouterServiceSpy();
-    routerQuerySpy.reservationId$.and.returnValue(of(reservation.id));
-    reservationsQuerySpy = newReservationsQuerySpy();
-    reservationsQuerySpy.active$.and.returnValue(of(reservation));
-    reservationServiceSpy.select.and.returnValue(of(reservation));
-    reservationsQuerySpy.selectLoading.and.returnValue(of(false));
-    reservationServiceSpy.dateValidator.and.returnValue(() => false);
-
+    reservationsValidatorSpy = jasmine.createSpyObj('ReservationsValidator', [
+      'dateFilterFn',
+    ]);
+    reservationsValidatorSpy.dateFilterFn.and.returnValue(() => true);
     await TestBed.configureTestingModule({
       imports: [
         await translateTestModule(),
         SharedModule,
+        CoreModule,
         BrowserAnimationsModule,
+        RouterTestingModule,
+        NgxsModule.forRoot([ReservationsState]),
+        NgxsRouterPluginModule.forRoot(),
       ],
       declarations: [ReservationDetailsComponent],
       providers: [
@@ -67,51 +68,71 @@ describe('Reservation details', () => {
           useValue: dialogSpy,
         },
         {
-          provide: ReservationsService,
-          useValue: reservationServiceSpy,
-        },
-        {
-          provide: ReservationsQuery,
-          useValue: reservationsQuerySpy,
-        },
-        {
-          provide: RouterQuery,
-          useValue: routerQuerySpy,
-        },
-        {
-          provide: RouterService,
-          useValue: routerServiceSpy,
+          provide: ReservationValidator,
+          useValue: reservationsValidatorSpy,
         },
       ],
     }).compileComponents();
-
     fixture = TestBed.createComponent(ReservationDetailsComponent);
+    store = TestBed.inject(Store);
+    store.reset({
+      ...store.snapshot(),
+      reservations: {
+        ...defaults,
+        entities: {
+          [reservationId]: reservation,
+        },
+        selectedId: reservationId,
+        loading: false,
+      },
+      router: {
+        state: {
+          params: {
+            reservationId,
+          },
+        },
+      },
+    });
+    dispatchSpy = spyOn(store, 'dispatch');
   });
-
-  it('Hides action buttons when reservation cant be changed', () => {
-    reservationServiceSpy.canBeChanged.and.returnValue(false);
+  it('Triggers GetReservationById action on init', () => {
     fixture.detectChanges();
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new DriverActions.GetReservationById(reservationId),
+    );
+  });
+  it('Hides action buttons when reservation cant be changed', () => {
+    spyOn(CanEditReservationPipe.prototype, 'transform').and.returnValue(false);
+
+    fixture.detectChanges();
+
     expect(editButton()).toBeFalsy();
     expect(confirmButton()).toBeFalsy();
     expect(cancelButton()).toBeFalsy();
   });
   it('Hides cancel button when cannot be cancelled', () => {
-    reservationServiceSpy.canBeChanged.and.returnValue(true);
-    reservationServiceSpy.canBeCancelled.and.returnValue(false);
+    spyOn(CanEditReservationPipe.prototype, 'transform').and.returnValue(true);
+    spyOn(CanCancelReservationPipe.prototype, 'transform').and.returnValue(
+      false,
+    );
     fixture.detectChanges();
 
     expect(cancelButton()).toBeFalsy();
   });
   it('Hides confirm button when cannot be confirmed', () => {
-    reservationServiceSpy.canBeChanged.and.returnValue(true);
-    reservationServiceSpy.canBeCancelled.and.returnValue(false);
+    spyOn(CanEditReservationPipe.prototype, 'transform').and.returnValue(true);
+    spyOn(CanCancelReservationPipe.prototype, 'transform').and.returnValue(
+      false,
+    );
     fixture.detectChanges();
 
     expect(confirmButton()).toBeFalsy();
   });
   it('Calls modal to confirm on confirm button click', () => {
-    reservationServiceSpy.canBeChanged.and.returnValue(true);
-    reservationServiceSpy.canBeConfirmed.and.returnValue(true);
+    spyOn(CanEditReservationPipe.prototype, 'transform').and.returnValue(true);
+    spyOn(CanConfirmReservationPipe.prototype, 'transform').and.returnValue(
+      true,
+    );
     fixture.detectChanges();
 
     const button = confirmButton();
@@ -121,8 +142,10 @@ describe('Reservation details', () => {
     expect(dialogSpy.open).toHaveBeenCalled();
   });
   it('Calls modal to cancel on button click', () => {
-    reservationServiceSpy.canBeChanged.and.returnValue(true);
-    reservationServiceSpy.canBeCancelled.and.returnValue(true);
+    spyOn(CanEditReservationPipe.prototype, 'transform').and.returnValue(true);
+    spyOn(CanCancelReservationPipe.prototype, 'transform').and.returnValue(
+      true,
+    );
     fixture.detectChanges();
 
     const button = cancelButton();
@@ -132,7 +155,7 @@ describe('Reservation details', () => {
     expect(dialogSpy.open).toHaveBeenCalled();
   });
   it('Calls modal to edit on button click', () => {
-    reservationServiceSpy.canBeChanged.and.returnValue(true);
+    spyOn(CanEditReservationPipe.prototype, 'transform').and.returnValue(true);
     fixture.detectChanges();
     const button = editButton();
 

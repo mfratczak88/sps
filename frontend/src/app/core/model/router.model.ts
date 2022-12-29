@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { SortBy, SortOrder } from './reservation.model';
 
 export enum QueryParamKeys {
   RETURN_URL = 'returnUrl',
@@ -25,6 +26,6 @@ export interface BreadCrumbs {
 export interface QueryParams {
   [QueryParamKeys.PAGE]: string;
   [QueryParamKeys.PAGE_SIZE]: string;
-  [QueryParamKeys.SORT_BY]: string;
-  [QueryParamKeys.SORT_ORDER]: string;
+  [QueryParamKeys.SORT_BY]: SortBy;
+  [QueryParamKeys.SORT_ORDER]: SortOrder;
 }

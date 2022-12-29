@@ -11,17 +11,16 @@ import {
 import { GoogleAuthService } from './service/google.auth.service';
 import { environment } from '../../environments/environment';
 import { NgxsModule } from '@ngxs/store';
-import { ParkingLotsState } from './store/parking-lot.state';
-import { DriversState } from './store/drivers.state';
-import { ReservationsState } from './store/reservations.state';
+import { ParkingLotsState } from './store/parking-lot/parking-lot.state';
+import { DriversState } from './store/drivers/drivers.state';
+import { ReservationsState } from './store/reservations/reservations.state';
 import {
   NgxsRouterPluginModule,
   RouterStateSerializer,
 } from '@ngxs/router-plugin';
-import { AuthState } from './store/auth.state';
+import { AuthState } from './store/auth/auth.state';
 import { UiState } from './store/ui.state';
 import { RouteStateSerializer } from './service/route-state-serializer';
-import { RoutingState } from './store/routing.state';
 
 const socialLoginProviderConfig = {
   provide: 'SocialAuthServiceConfig',
@@ -46,7 +45,6 @@ const providers = [
     CommonModule,
     HttpClientModule,
     NgxsModule.forFeature([
-      RoutingState,
       AuthState,
       UiState,
       ParkingLotsState,

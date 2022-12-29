@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Id } from '../model/common.model';
-import { ParkingLotsState } from '../store/parking-lot.state';
+import { ParkingLotsState } from '../store/parking-lot/parking-lot.state';
 import { DateTime } from 'luxon';
+import { parkingLotById } from '../store/parking-lot/parking-lot.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,7 @@ export class ReservationValidator {
 
   dateFilterFn(parkingLotId?: Id) {
     const parkingLot =
-      parkingLotId &&
-      this.store.selectSnapshot(ParkingLotsState.parkingLotById)(parkingLotId);
+      parkingLotId && this.store.selectSnapshot(parkingLotById(parkingLotId));
     return (date: Date | null): boolean => {
       if (!date || !parkingLot) return false;
       const dateTime = DateTime.fromJSDate(date);

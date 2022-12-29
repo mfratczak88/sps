@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RegisterUserPayload, User } from '../state/auth/auth.model';
 import { BaseApi } from './base.api';
 import { environment } from '../../../environments/environment';
+import { RegisterUserPayload, User } from '../model/auth.model';
 
 @Injectable({
   providedIn: 'root',

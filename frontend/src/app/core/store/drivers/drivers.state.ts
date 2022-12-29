@@ -1,13 +1,11 @@
-import { Id } from '../model/common.model';
-import { TimeHorizon, Vehicle } from '../model/driver.model';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Id } from '../../model/common.model';
+import { TimeHorizon, Vehicle } from '../../model/driver.model';
+import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { DriversApi } from '../api/drivers.api';
-import { DriverActions } from './actions/driver.actions';
-import { concatMap, mergeMap, tap } from 'rxjs';
-import { Reservation } from '../model/reservation.model';
-import { ParkingLotsState, ParkingLotStateModel } from './parking-lot.state';
-import { ParkingLot } from '../model/parking-lot.model';
+import { DriversApi } from '../../api/drivers.api';
+import { DriverActions } from '../actions/driver.actions';
+import { concatMap, tap } from 'rxjs';
+import { Reservation } from '../../model/reservation.model';
 
 export interface DriversStateModel {
   entities: {
@@ -39,48 +37,6 @@ export const defaults: DriversStateModel = {
 })
 export class DriversState {
   constructor(private readonly api: DriversApi) {}
-
-  @Selector([ParkingLotsState])
-  static unAssignedParkingLots(
-    { selectedDriverId, entities }: DriversStateModel,
-    { entities: allParkingLots }: ParkingLotStateModel,
-  ): ParkingLot[] {
-    if (!selectedDriverId) return Object.values(allParkingLots);
-
-    const driver = entities[selectedDriverId];
-    return Object.keys(allParkingLots)
-      .filter(id => !driver.parkingLotIds.includes(id))
-      .map(id => allParkingLots[id]);
-  }
-
-  @Selector([ParkingLotsState])
-  static assignedParkingLots(
-    { selectedDriverId, entities }: DriversStateModel,
-    { entities: allParkingLots }: ParkingLotStateModel,
-  ): ParkingLot[] {
-    if (!selectedDriverId) return [];
-
-    const driver = entities[selectedDriverId];
-    return driver.parkingLotIds.map(id => allParkingLots[id]);
-  }
-
-  @Selector()
-  static vehicles({
-    entities,
-    selectedDriverId,
-  }: DriversStateModel): Vehicle[] {
-    return selectedDriverId ? entities[selectedDriverId].vehicles : [];
-  }
-
-  @Selector()
-  static currentDriver({ entities, selectedDriverId }: DriversStateModel) {
-    return selectedDriverId ? entities[selectedDriverId] : undefined;
-  }
-
-  @Selector()
-  static loading({ loading }: DriversStateModel): boolean {
-    return loading;
-  }
 
   @Action(DriverActions.GetDriverDetails)
   getDriverDetails(

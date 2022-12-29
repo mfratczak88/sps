@@ -1,6 +1,6 @@
 import { RouterStateSerializer } from '@ngxs/router-plugin';
 import { RouterStateSnapshot } from '@angular/router';
-import { RouterStateParams } from '../store/routing.state';
+import { RouterStateParams } from '../store/routing/routing.state.model';
 
 export class RouteStateSerializer
   implements RouterStateSerializer<RouterStateParams> {
@@ -15,8 +15,8 @@ export class RouteStateSerializer
       route = route.firstChild;
     }
 
-    const { params, data } = route;
+    const { params, data, fragment } = route;
 
-    return { url, params, queryParams, ...data };
+    return { url, params, queryParams, fragment, ...data };
   }
 }

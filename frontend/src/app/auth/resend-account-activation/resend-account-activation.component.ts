@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterQuery } from '../../core/state/router/router.query';
-import { AuthService } from '../../core/state/auth/auth.service';
-import { RouterService } from '../../core/state/router/router.service';
-import { first } from 'rxjs';
+
+import { concatMap, first } from 'rxjs';
 import { AuthTranslationKeys } from '../../core/translation-keys';
+import { Store } from '@ngxs/store';
+import { previousActivationGuidQueryParam } from '../../core/store/routing/routing.selector';
+import { AuthActions } from '../../core/store/actions/auth.actions';
 
 @Component({
   selector: 'sps-resend-account-activation',
@@ -15,23 +16,26 @@ export class ResendAccountActivationComponent implements OnInit {
 
   readonly translations = AuthTranslationKeys;
 
-  constructor(
-    private readonly routerQuery: RouterQuery,
-    private readonly authService: AuthService,
-    private readonly routerService: RouterService,
-  ) {}
+  constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
-    this.previousActivationGuid = this.routerQuery.previousActivationGuid();
+    this.previousActivationGuid = this.store.selectSnapshot(
+      previousActivationGuidQueryParam,
+    );
     if (!this.previousActivationGuid) {
-      this.routerService.to404();
+      this.store.dispatch(new AuthActions.NavigateToNotFound());
     }
   }
 
   resendActivationLink() {
-    this.authService
-      .resendActivationLink(this.previousActivationGuid)
-      .pipe(first())
-      .subscribe(() => this.routerService.toSignIn());
+    this.store
+      .dispatch(new AuthActions.ResendActionLink(this.previousActivationGuid))
+      .pipe(
+        first(),
+        concatMap(() =>
+          this.store.dispatch(new AuthActions.NavigateToSignIn()),
+        ),
+      )
+      .subscribe();
   }
 }

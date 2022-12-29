@@ -4,12 +4,15 @@ import { LocalizedValidators } from '../../../shared/validator';
 import { HoursFormComponent } from '../../../shared/components/hours-form/hours-form.component';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { DriverActions } from '../../../core/store/actions/driver.actions';
 import { ReservationValidator } from '../../../core/validators/reservation.validator';
-import { DriversState } from '../../../core/store/drivers.state';
 import { Observable } from 'rxjs';
 import { Driver } from '../../../core/model/driver.model';
+import {
+  assignedParkingLots,
+  currentDriver,
+} from '../../../core/store/drivers/drivers.selectors';
 
 interface HoursForm {
   hours: FormControl<{ hourFrom: number; hourTo: number } | null>;
@@ -33,16 +36,16 @@ interface LicensePlateForm {
   styleUrls: ['./create.component.scss'],
 })
 export class CreateReservationComponent {
-  translations = { ...DriverKeys, ...MiscKeys };
-
   @ViewChild('hoursFormComponent')
   hoursFormComponent: HoursFormComponent;
 
-  @Select(DriversState.currentDriver)
-  driver$: Observable<Driver>;
+  translations = { ...DriverKeys, ...MiscKeys };
 
-  @Select(DriversState.assignedParkingLots)
-  parkingLots$: Observable<ParkingLot[]>;
+  driver$: Observable<Driver | undefined> = this.store.select(currentDriver);
+
+  parkingLots$: Observable<ParkingLot[]> = this.store.select(
+    assignedParkingLots,
+  );
 
   hoursForm = this.formBuilder.group<HoursForm>({
     hours: new FormControl({ hourFrom: 6, hourTo: 22 }, [

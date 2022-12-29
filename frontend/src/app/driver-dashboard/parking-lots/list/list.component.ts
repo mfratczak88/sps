@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { DriverKeys } from '../../../core/translation-keys';
-import { Select, Store } from '@ngxs/store';
-import { DriversState } from '../../../core/store/drivers.state';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
+import {
+  assignedParkingLots,
+  loading,
+  unAssignedParkingLots,
+} from '../../../core/store/drivers/drivers.selectors';
 
 @Component({
   selector: 'sps-driver-parking-lot-list',
@@ -13,14 +17,15 @@ import { ParkingLot } from '../../../core/model/parking-lot.model';
 export class ParkingLotsListComponent {
   translations = { ...DriverKeys };
 
-  @Select(DriversState.assignedParkingLots)
-  driverParkingLots$: Observable<ParkingLot[]>;
+  driverParkingLots$: Observable<ParkingLot[]> = this.store.select(
+    assignedParkingLots,
+  );
 
-  @Select(DriversState.unAssignedParkingLots)
-  unAssignedParkingLots$: Observable<ParkingLot[]>;
+  unAssignedParkingLots$: Observable<ParkingLot[]> = this.store.select(
+    unAssignedParkingLots,
+  );
 
-  @Select(DriversState.loading)
-  loading$: Observable<boolean>;
+  loading$: Observable<boolean> = this.store.select(loading);
 
   constructor(readonly store: Store) {}
 }

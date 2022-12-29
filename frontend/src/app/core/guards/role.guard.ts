@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AuthQuery } from '../state/auth/auth.query';
-import { CanActivate, UrlTree } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Role } from '../state/auth/auth.model';
-import { RouterService } from '../state/router/router.service';
+import { Store } from '@ngxs/store';
+import { ErrorPaths, TopLevelPaths } from '../../routes';
+import { userRole } from '../store/auth/auth.selector';
+import { Role } from '../model/auth.model';
 
 export abstract class RoleGuard implements CanActivate {
   protected constructor(
-    protected readonly authQuery: AuthQuery,
-    protected readonly routerService: RouterService,
+    private readonly store: Store,
+    private readonly router: Router,
   ) {}
 
   canActivate():
@@ -16,21 +17,20 @@ export abstract class RoleGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.correctRole() || this.routerService.unAuthorizedUrlTree();
+    return (
+      this.correctRole(this.store.selectSnapshot(userRole)) ||
+      this.router.parseUrl(`${TopLevelPaths.ERROR}/${ErrorPaths.UNAUTHORIZED}`)
+    );
   }
-  abstract correctRole(): boolean;
+  abstract correctRole(role: Role): boolean;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminGuard extends RoleGuard implements CanActivate {
-  constructor(authQuery: AuthQuery, routerService: RouterService) {
-    super(authQuery, routerService);
-  }
-
-  correctRole(): boolean {
-    return this.authQuery.role() === Role.ADMIN;
+  correctRole(role: Role): boolean {
+    return role === Role.ADMIN;
   }
 }
 
@@ -38,12 +38,8 @@ export class AdminGuard extends RoleGuard implements CanActivate {
   providedIn: 'root',
 })
 export class ClerkGuard extends RoleGuard implements CanActivate {
-  constructor(authQuery: AuthQuery, routerService: RouterService) {
-    super(authQuery, routerService);
-  }
-
-  correctRole(): boolean {
-    return this.authQuery.role() === Role.CLERK;
+  correctRole(role: Role): boolean {
+    return role === Role.CLERK;
   }
 }
 
@@ -51,11 +47,7 @@ export class ClerkGuard extends RoleGuard implements CanActivate {
   providedIn: 'root',
 })
 export class DriverGuard extends RoleGuard implements CanActivate {
-  constructor(authQuery: AuthQuery, routerService: RouterService) {
-    super(authQuery, routerService);
-  }
-
-  correctRole(): boolean {
-    return this.authQuery.role() === Role.DRIVER;
+  correctRole(role: Role): boolean {
+    return role === Role.DRIVER;
   }
 }

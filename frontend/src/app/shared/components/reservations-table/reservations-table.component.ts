@@ -9,6 +9,8 @@ import { Observable, of } from 'rxjs';
 import {
   Reservation,
   ReservationStatusTranslationKey,
+  SortBy,
+  SortOrder,
 } from '../../../core/model/reservation.model';
 
 import { Column } from '../table/table.component';
@@ -18,10 +20,14 @@ import { AddressPipe } from '../../pipe/address/address.pipe';
 import { TimePipe } from '../../pipe/time/time.pipe';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { RouterService } from '../../../core/state/router/router.service';
-import { RouterQuery } from '../../../core/state/router/router.query';
 import { Id } from '../../../core/model/common.model';
 import { DatePipe } from '../../pipe/date/date.pipe';
+import { Store } from '@ngxs/store';
+import { DriverActions } from '../../../core/store/actions/driver.actions';
+import {
+  paging,
+  sorting,
+} from '../../../core/store/reservations/reservations.selector';
 
 @Component({
   selector: 'sps-reservations-table',
@@ -29,22 +35,23 @@ import { DatePipe } from '../../pipe/date/date.pipe';
   styleUrls: ['./reservations-table.component.scss'],
 })
 export class ReservationsTableComponent {
+  paging$ = this.store.select(paging);
+
+  sorting$ = this.store.select(sorting);
+
   @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
     paginator?.page.subscribe(({ pageIndex, pageSize }) => {
-      this.routerService.changeQueryParams({
-        page: `${pageIndex + 1}`,
-        pageSize: String(pageSize),
-      });
+      this.store.dispatch(
+        new DriverActions.PagingChange(pageIndex + 1, pageSize),
+      );
     });
   }
 
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     sort?.sortChange.subscribe(({ active, direction }) => {
-      this.routerService.changeQueryParams({
-        page: '1',
-        sortBy: direction ? active : '',
-        sortOrder: direction,
-      });
+      const sortBy = (direction ? active : undefined) as SortBy;
+      const sortOrder = direction as SortOrder;
+      this.store.dispatch(new DriverActions.SortingChange(sortBy, sortOrder));
     });
   }
 
@@ -118,8 +125,7 @@ export class ReservationsTableComponent {
     private readonly addressPipe: AddressPipe,
     private readonly timePipe: TimePipe,
     private readonly datePipe: DatePipe,
-    readonly routerService: RouterService,
-    readonly routerQuery: RouterQuery,
+    private readonly store: Store,
   ) {}
 
   private derivedData(reservation: Reservation) {

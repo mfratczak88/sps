@@ -1,19 +1,18 @@
-import { Id } from '../model/common.model';
+import { Id } from '../../model/common.model';
 import {
   Reservation,
   ReservationStatus,
   SortBy,
   SortOrder,
-} from '../model/reservation.model';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+} from '../../model/reservation.model';
+import { Action, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { ReservationApi } from '../api/reservation.api';
-import { DriverActions } from './actions/driver.actions';
-import { tap } from 'rxjs';
-import { RouterState } from '@ngxs/router-plugin';
+import { ReservationApi } from '../../api/reservation.api';
+import { DriverActions } from '../actions/driver.actions';
+import { concatMap, tap } from 'rxjs';
 import { DateTime } from 'luxon';
-import { fullHour } from '../util';
-
+import { fullHour } from '../../util';
+import { queryParams } from '../routing/routing.selector';
 export interface ReservationsStateModel {
   selectedId: Id | null;
   entities: {
@@ -32,6 +31,7 @@ export interface ReservationsStateModel {
     sortBy?: SortBy;
     sortOrder?: SortOrder;
   };
+  count: number;
 }
 
 export const defaults: ReservationsStateModel = {
@@ -41,6 +41,7 @@ export const defaults: ReservationsStateModel = {
   entities: {},
   selectedId: null,
   sorting: {},
+  count: 0,
 };
 
 @State<ReservationsStateModel>({
@@ -56,29 +57,6 @@ export class ReservationsState {
     private readonly store: Store,
   ) {}
 
-  @Selector()
-  static count({ entities }: ReservationsStateModel) {
-    return Object.entries(entities).length;
-  }
-
-  @Selector()
-  static reservations({ entities }: ReservationsStateModel): Reservation[] {
-    return Object.values(entities);
-  }
-
-  @Selector()
-  static loading({ loading }: ReservationsStateModel): boolean {
-    return loading;
-  }
-
-  @Selector()
-  static active({
-    selectedId,
-    entities,
-  }: ReservationsStateModel): Reservation | undefined {
-    return selectedId ? entities[selectedId] : undefined;
-  }
-
   @Action(DriverActions.ReservationFiltersChange)
   reservationsFilterChange(
     { patchState, dispatch }: StateContext<ReservationsStateModel>,
@@ -90,15 +68,42 @@ export class ReservationsState {
     return dispatch(new DriverActions.GetAllReservations());
   }
 
-  @Action(DriverActions.TablePagingSortingChange)
+  @Action(DriverActions.SortingChange)
   tablePagingSortingChange(
-    { dispatch, patchState }: StateContext<ReservationsStateModel>,
-    action: DriverActions.TablePagingSortingChange,
+    { dispatch, patchState, getState }: StateContext<ReservationsStateModel>,
+    { sortBy, sortOrder }: DriverActions.SortingChange,
   ) {
+    const queryParams = { sortBy, sortOrder, page: 1 };
+    const { page } = queryParams;
+    const {
+      paging: { pageSize },
+    } = getState();
     patchState({
-      sorting: action,
+      sorting: { sortBy, sortOrder },
+      paging: { page },
     });
-    return dispatch(new DriverActions.GetAllReservations());
+    return dispatch(
+      new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
+    ).pipe(concatMap(() => dispatch(new DriverActions.GetAllReservations())));
+  }
+
+  @Action(DriverActions.PagingChange)
+  pagingChange(
+    { dispatch, patchState, getState }: StateContext<ReservationsStateModel>,
+    { pageSize, page }: DriverActions.PagingChange,
+  ) {
+    const {
+      sorting: { sortBy, sortOrder },
+    } = getState();
+    patchState({
+      paging: {
+        page: page || 1,
+        pageSize: pageSize || 5,
+      },
+    });
+    return dispatch(
+      new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
+    ).pipe(concatMap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
   @Action(DriverActions.CancelReservation)
@@ -197,7 +202,6 @@ export class ReservationsState {
           const { entities } = getState();
           const reservation = entities[reservationId];
           if (reservation) {
-            reservation.status = ReservationStatus.CONFIRMED;
             patchState({
               entities: {
                 ...entities,
@@ -219,36 +223,33 @@ export class ReservationsState {
     if (entities[id]) {
       return patchState({ selectedId: id });
     }
+    patchState({
+      loading: true,
+    });
     return this.api.getReservation(id).pipe(
       tap(reservation => {
         patchState({
           entities: { ...entities, [id]: reservation },
           selectedId: id,
+          loading: false,
         });
       }),
     );
   }
 
   @Action(DriverActions.GetAllReservations)
-  getAllReservations({
-    getState,
-    patchState,
-  }: StateContext<ReservationsStateModel>) {
-    const { filters, paging, sorting } = getState();
-    const {
-      state: { root },
-    } = this.store.selectSnapshot(RouterState);
-    const { queryParams } = root || {};
+  getAllReservations(ctx: StateContext<ReservationsStateModel>) {
+    const { filters, paging, sorting } = this.apiCallQueryParamsFrom(ctx);
     return this.api
       .getReservations({
         ...filters,
         ...paging,
         ...sorting,
-        ...queryParams,
       })
       .pipe(
         tap(reservations => {
-          const { data, page, pageSize } = reservations;
+          const { patchState } = ctx;
+          const { data, page, pageSize, count } = reservations;
           const entities = data.reduce((entities, reservation) => {
             const { id } = reservation;
             return {
@@ -259,12 +260,32 @@ export class ReservationsState {
           patchState({
             loading: false,
             entities,
+            count,
             paging: {
               page,
               pageSize,
             },
+            ...sorting,
           });
         }),
       );
+  }
+
+  private apiCallQueryParamsFrom({
+    getState,
+  }: StateContext<ReservationsStateModel>) {
+    const { filters } = getState();
+    const qParams = this.store.selectSnapshot(queryParams);
+    const { sortBy, sortOrder } = qParams;
+    const { page, pageSize } = qParams;
+    const paging = {
+      page: page ? Number(page) : 1,
+      pageSize: pageSize ? Number(pageSize) : 5,
+    };
+    return {
+      filters,
+      sorting: { sortBy, sortOrder },
+      paging,
+    };
   }
 }

@@ -3,8 +3,8 @@ import { DrawerItem } from '../shared/components/drawer/drawer.component';
 import { DrawerKeys } from '../core/translation-keys';
 import { DriverPaths } from '../routes';
 import { Store } from '@ngxs/store';
-import { AuthState } from '../core/store/auth.state';
 import { DriverActions } from '../core/store/actions/driver.actions';
+import { userId } from '../core/store/auth/auth.selector';
 
 @Component({
   selector: 'sps-driver-dashboard',
@@ -31,7 +31,7 @@ export class DashboardComponent {
   ];
 
   constructor(private readonly store: Store) {
-    const driverId = store.selectSnapshot(AuthState.id);
+    const driverId = store.selectSnapshot(userId);
     store.dispatch([
       new DriverActions.GetParkingLots(),
       new DriverActions.GetDriverDetails(driverId),

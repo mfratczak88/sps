@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
 import { ReservationBaseComponent } from '../base.component';
-import { Select, Store } from '@ngxs/store';
-import { DriversState } from '../../../core/store/drivers.state';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Driver } from '../../../core/model/driver.model';
-import { ReservationsState } from '../../../core/store/reservations.state';
 import { Reservation } from '../../../core/model/reservation.model';
 import { DriverActions } from '../../../core/store/actions/driver.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import {
+  currentDriver,
+  loading as driverLoading,
+} from '../../../core/store/drivers/drivers.selectors';
+import {
+  count,
+  loading as reservationsLoading,
+  reservations,
+} from '../../../core/store/reservations/reservations.selector';
 
 @Component({
   selector: 'sps-driver-reservation-list',
@@ -16,20 +23,17 @@ import { ReservationValidator } from '../../../core/validators/reservation.valid
   styleUrls: ['./list.component.scss'],
 })
 export class ReservationListComponent extends ReservationBaseComponent {
-  @Select(DriversState.currentDriver)
-  driver$: Observable<Driver>;
+  driver$: Observable<Driver | undefined> = this.store.select(currentDriver);
 
-  @Select(ReservationsState.reservations)
-  reservations$: Observable<Reservation[]>;
+  reservations$: Observable<Reservation[]> = this.store.select(reservations);
 
-  @Select(DriversState.loading)
-  driverLoading$: Observable<boolean>;
+  driverLoading$: Observable<boolean> = this.store.select(driverLoading);
 
-  @Select(ReservationsState.loading)
-  reservationsLoading$: Observable<boolean>;
+  reservationsLoading$: Observable<boolean> = this.store.select(
+    reservationsLoading,
+  );
 
-  @Select(ReservationsState.count)
-  reservationsCount$: Observable<number>;
+  reservationsCount$: Observable<number> = this.store.select(count);
 
   constructor(
     store: Store,

@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AuthService } from '../../../core/state/auth/auth.service';
-import { User } from '../../../core/state/auth/auth.model';
-import { first, Observable } from 'rxjs';
-import { RouterService } from '../../../core/state/router/router.service';
-import { AuthQuery } from '../../../core/state/auth/auth.query';
+import { first } from 'rxjs';
 import { SharedKeys } from '../../../core/translation-keys';
+import { Store } from '@ngxs/store';
+import { isLoggedIn, user } from '../../../core/store/auth/auth.selector';
+import { AuthActions } from '../../../core/store/actions/auth.actions';
 
 @Component({
   selector: 'sps-navbar',
@@ -12,25 +11,21 @@ import { SharedKeys } from '../../../core/translation-keys';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  user$: Observable<User | null>;
+  user$ = this.store.select(user);
+
+  isLoggedIn$ = this.store.select(isLoggedIn);
 
   @Output()
   readonly hamburgerPressed = new EventEmitter<void>();
 
   readonly translations = SharedKeys;
 
-  constructor(
-    readonly authQuery: AuthQuery,
-    readonly authService: AuthService,
-    readonly navigationService: RouterService,
-  ) {
-    this.user$ = this.authQuery.select();
-  }
+  constructor(private readonly store: Store) {}
 
   onSignOut() {
-    this.authService
-      .logout()
+    this.store
+      .dispatch(new AuthActions.Logout())
       .pipe(first())
-      .subscribe(() => this.navigationService.reload());
+      .subscribe(() => window.location.reload());
   }
 }

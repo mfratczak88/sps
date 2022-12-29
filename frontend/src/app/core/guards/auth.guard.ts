@@ -6,12 +6,12 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { map } from 'rxjs';
-import { Role } from '../state/auth/auth.model';
 import { AuthPaths, TopLevelPaths } from '../../routes';
 import { Store } from '@ngxs/store';
-import { AuthState } from '../store/auth.state';
 import { AuthActions } from '../store/actions/auth.actions';
 import { QueryParamKeys } from '../model/router.model';
+import { isLoggedIn, userRole } from '../store/auth/auth.selector';
+import { Role } from '../model/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,14 +23,14 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     routerStateSnapshot: RouterStateSnapshot,
   ) {
-    if (this.store.selectSnapshot(AuthState.loggedIn)) {
+    if (this.store.selectSnapshot(isLoggedIn)) {
       return this.redirectBasedOnRole(routerStateSnapshot);
     }
     return this.store
       .dispatch(new AuthActions.RestoreAuth())
       .pipe(
         map(() =>
-          this.store.selectSnapshot(AuthState.loggedIn)
+          this.store.selectSnapshot(isLoggedIn)
             ? this.redirectBasedOnRole(routerStateSnapshot)
             : this.router.parseUrl(
                 `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${routerStateSnapshot.url}`,
@@ -41,7 +41,7 @@ export class AuthGuard implements CanActivate {
 
   redirectBasedOnRole(state: RouterStateSnapshot) {
     if (state.url !== '/') return true;
-    const role = this.store.selectSnapshot(AuthState.role);
+    const role = this.store.selectSnapshot(userRole);
     return this.userRoleToUrlTree[role];
   }
 

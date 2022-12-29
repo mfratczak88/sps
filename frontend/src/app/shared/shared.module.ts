@@ -91,6 +91,9 @@ const components = [
     { provide: MatPaginatorIntl, useClass: PaginatorIntlService },
     TimePipe,
     DatePipe,
+    CanConfirmReservationPipe,
+    CanCancelReservationPipe,
+    CanEditReservationPipe,
   ],
 })
 export class SharedModule {}

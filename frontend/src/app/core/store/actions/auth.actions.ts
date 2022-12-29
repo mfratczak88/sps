@@ -1,6 +1,6 @@
 import { Navigate } from '@ngxs/router-plugin';
 import { NavigationExtras } from '@angular/router';
-import { AuthPaths, TopLevelPaths } from '../../../routes';
+import { AuthPaths, ErrorPaths, TopLevelPaths } from '../../../routes';
 
 export namespace AuthActions {
   export class Login {
@@ -45,8 +45,16 @@ export namespace AuthActions {
     static readonly type = '[Auth] Restore auth';
   }
   export class NavigateToSameRoute extends Navigate {
-    constructor(extras?: NavigationExtras) {
-      super([], undefined, extras);
+    constructor(fragment?: string) {
+      super([], undefined, {
+        fragment,
+        queryParamsHandling: fragment && 'preserve',
+      });
+    }
+  }
+  export class NavigateToNotFound extends Navigate {
+    constructor() {
+      super([`/${TopLevelPaths.ERROR}/${ErrorPaths.NOT_FOUND}`]);
     }
   }
 
@@ -67,10 +75,14 @@ export namespace AuthActions {
   }
   export class NavigateToResendActivationLink extends Navigate {
     constructor(readonly activationGuid: string) {
-      super([
-        `/${TopLevelPaths.AUTH}/${AuthPaths.RESEND_ACTIVATION_LINK}`,
-        activationGuid,
-      ]);
+      super([`/${TopLevelPaths.AUTH}/${AuthPaths.RESEND_ACTIVATION_LINK}`], {
+        previousActivationGuid: activationGuid,
+      });
+    }
+  }
+  export class NavigateAfterLogin extends Navigate {
+    constructor(url: string) {
+      super([url], {}, { replaceUrl: true });
     }
   }
 }

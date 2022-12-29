@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DriverKeys, MiscKeys } from '../../core/translation-keys';
-import { Select, Store } from '@ngxs/store';
-import { DriversState } from '../../core/store/drivers.state';
+import { Store } from '@ngxs/store';
 import { concatMap, filter, Observable } from 'rxjs';
 import { Vehicle } from '../../core/model/driver.model';
 import { AddVehicleDialogComponent } from './add-vehicle-dialog/add-vehicle-dialog.component';
 import { DriverActions } from '../../core/store/actions/driver.actions';
+import {
+  currentDriver,
+  loading,
+  vehicles,
+} from '../../core/store/drivers/drivers.selectors';
 
 @Component({
   selector: 'sps-driver-vehicles',
@@ -16,16 +20,14 @@ import { DriverActions } from '../../core/store/actions/driver.actions';
 export class VehiclesComponent {
   translations = { ...DriverKeys, ...MiscKeys };
 
-  @Select(DriversState.vehicles)
-  vehicles$: Observable<Vehicle[]>;
+  vehicles$: Observable<Vehicle[]> = this.store.select(vehicles);
 
-  @Select(DriversState.loading)
-  loading$: Observable<boolean>;
+  loading$: Observable<boolean> = this.store.select(loading);
 
   constructor(readonly store: Store, private readonly matDialog: MatDialog) {}
 
   onAddNewVehicle() {
-    const driver = this.store.selectSnapshot(DriversState.currentDriver);
+    const driver = this.store.selectSnapshot(currentDriver);
     if (!driver) return;
 
     const dialogRef = this.matDialog.open(AddVehicleDialogComponent, {

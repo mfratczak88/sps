@@ -1,8 +1,8 @@
-import { Id } from '../model/common.model';
-import { ParkingLot } from '../model/parking-lot.model';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { ParkingLotApi } from '../api/parking-lot.api';
-import { DriverActions } from './actions/driver.actions';
+import { Id } from '../../model/common.model';
+import { ParkingLot } from '../../model/parking-lot.model';
+import { Action, State, StateContext } from '@ngxs/store';
+import { ParkingLotApi } from '../../api/parking-lot.api';
+import { DriverActions } from '../actions/driver.actions';
 import { tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -23,11 +23,6 @@ const defaults: ParkingLotStateModel = {
 })
 export class ParkingLotsState {
   constructor(private readonly api: ParkingLotApi) {}
-
-  @Selector()
-  static parkingLotById({ entities }: ParkingLotStateModel) {
-    return (id: Id) => entities[id];
-  }
 
   @Action(DriverActions.GetParkingLots)
   getParkingLots({ getState, setState }: StateContext<ParkingLotStateModel>) {
