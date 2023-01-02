@@ -30,7 +30,7 @@ export interface HoursOfOperation {
 
 export type ChangeHoursOfOperations = HoursOfOperation;
 
-export interface CreateParkingLot {
+export interface CreateParkingLotData {
   capacity: number;
   hoursOfOperation: {
     hourFrom: number;

@@ -4,8 +4,8 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { UserApi } from './user.api';
-import { Role } from './user.model';
-import { mockUsers } from '../../../../../test/users.util';
+import { mockUsers } from '../../../../test/users.util';
+import { Role } from '../model/auth.model';
 
 describe('User api', () => {
   let httpTestingController: HttpTestingController;

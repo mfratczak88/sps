@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignInComponent } from './sign-in.component';
 import { of } from 'rxjs';
-import { TranslateTestingModule } from 'ngx-translate-testing';
 import { SharedModule } from '../../shared/shared.module';
 import { EmailSignInFormComponent } from './email-sign-in-form/email-sign-in-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +18,8 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { AuthState } from '../../core/store/auth/auth.state';
 import { setFragment } from '../../../../test/store.util';
 import { AuthActions } from '../../core/store/actions/auth.actions';
+import { CoreModule } from '../../core/core.module';
+import { translateTestModule } from '../../../test.utils';
 
 describe('SignInComponent', () => {
   let fixture: ComponentFixture<SignInComponent>;
@@ -40,12 +41,10 @@ describe('SignInComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SignInComponent, EmailSignInFormComponent],
       imports: [
-        TranslateTestingModule.withTranslations(
-          'pl',
-          await import('../../../assets/i18n/pl.json'),
-        ).withTranslations('en', await import('../../../assets/i18n/en.json')),
+        await translateTestModule(),
         SharedModule,
         RouterTestingModule,
+        CoreModule,
         NgxsModule.forRoot([AuthState]),
         NgxsRouterPluginModule.forRoot(),
         NoopAnimationsModule,
@@ -84,15 +83,17 @@ describe('SignInComponent', () => {
     ).toBeTruthy();
   });
   it('Click on sign in with google calls auth service', () => {
+    dispatchSpy.and.returnValue(of({}));
     signInWithGoogleButton().click();
-    dispatchSpy.and.returnValues(of({}), of({}));
     fixture.detectChanges();
-    expect(dispatchSpy).toHaveBeenCalledWith(AuthActions.LoginWithGoogle);
-    expect(dispatchSpy).toHaveBeenCalledWith(AuthActions.NavigateAfterLogin);
+    expect(dispatchSpy).toHaveBeenCalledWith(new AuthActions.LoginWithGoogle());
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateAfterLogin('/'),
+    );
   });
   it('On successfully signed in with email navigates to root url', () => {
-    setFragment(store, 'email');
     dispatchSpy.and.returnValues(of({}), of({}));
+    setFragment(store, 'email');
     fixture.detectChanges();
     const form = emailForm();
 

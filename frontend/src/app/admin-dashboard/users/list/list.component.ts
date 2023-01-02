@@ -1,23 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminKeys } from '../../../core/translation-keys';
 import {
   Button,
   Column,
 } from '../../../shared/components/table/table.component';
-import { Role, User } from '../state/user.model';
-import { UserQuery } from '../state/user.query';
-import { UserService } from '../state/user.service';
+import { User } from '../../../core/model/user.model';
+
 import { MatDialog } from '@angular/material/dialog';
 import { EditRoleDialogComponent } from '../edit-role-dialog/edit-role-dialog.component';
 import { concatMap, filter } from 'rxjs';
+import { Role } from '../../../core/model/auth.model';
+import { Store } from '@ngxs/store';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { loading, users } from '../store/users.selector';
 
 @Component({
   selector: 'sps-users-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class UsersListComponent {
+export class UsersListComponent implements OnInit {
   readonly translations = AdminKeys;
+
+  readonly loading$ = this.store.select(loading);
+
+  readonly users$ = this.store.select(users);
 
   tableColumns: Column[] = [
     { name: 'email', translation: this.translations.COLUMN_EMAIL },
@@ -36,13 +43,14 @@ export class UsersListComponent {
     },
   ];
 
-  constructor(
-    readonly usersQuery: UserQuery,
-    private readonly usersService: UserService,
-    readonly dialog: MatDialog,
-  ) {}
+  constructor(readonly dialog: MatDialog, private readonly store: Store) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(new AdminActions.GetAllUsers());
+  }
 
   editDialogOpen(user: User) {
+    const { id } = user;
     const dialogRef = this.dialog.open<EditRoleDialogComponent, User, Role>(
       EditRoleDialogComponent,
       {
@@ -54,7 +62,9 @@ export class UsersListComponent {
       .pipe(
         filter(newRole => !!newRole),
         concatMap(newRole =>
-          this.usersService.changeRoleFor(user.id, newRole as Role),
+          this.store.dispatch(
+            new AdminActions.ChangeUserRole(id, newRole as Role),
+          ),
         ),
       )
       .subscribe();

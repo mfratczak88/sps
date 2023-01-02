@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseApi } from './base.api';
 import { environment } from '../../../environments/environment';
-import { RegisterUserPayload, User } from '../model/auth.model';
+import { RegisterUserPayload, AuthUser } from '../model/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +15,9 @@ export class AuthApi extends BaseApi {
     super(http);
   }
 
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<AuthUser> {
     return this.http
-      .post<User>(
+      .post<AuthUser>(
         `${environment.apiUrl}/auth/login`,
         {
           email,
@@ -30,9 +30,9 @@ export class AuthApi extends BaseApi {
       .pipe(map(loginRes => ({ ...loginRes })));
   }
 
-  loginWithGoogle(idToken: string, email: string): Observable<User> {
+  loginWithGoogle(idToken: string, email: string): Observable<AuthUser> {
     return this.http
-      .post<User>(
+      .post<AuthUser>(
         `${environment.apiUrl}/auth/loginWithGoogle`,
         {
           idToken,
@@ -62,9 +62,9 @@ export class AuthApi extends BaseApi {
     });
   }
 
-  refreshToken(): Observable<User> {
+  refreshToken(): Observable<AuthUser> {
     return this.http
-      .get<User>(environment.apiUrl + '/auth/refresh', {
+      .get<AuthUser>(environment.apiUrl + '/auth/refresh', {
         withCredentials: true,
       })
       .pipe(map(loginRes => ({ ...loginRes })));

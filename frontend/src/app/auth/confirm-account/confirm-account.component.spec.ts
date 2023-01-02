@@ -9,6 +9,11 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { AuthActions } from '../../core/store/actions/auth.actions';
 import Spy = jasmine.Spy;
 import { setRouterParams } from '../../../../test/store.util';
+import { CoreModule } from '../../core/core.module';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../shared/shared.module';
+import { translateTestModule } from '../../../test.utils';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ConfirmAccountComponent', () => {
   let component: ConfirmAccountComponent;
@@ -20,6 +25,10 @@ describe('ConfirmAccountComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ConfirmAccountComponent],
       imports: [
+        await translateTestModule(),
+        CoreModule,
+        SharedModule,
+        RouterTestingModule,
         NgxsModule.forRoot([AuthState]),
         NgxsRouterPluginModule.forRoot(),
       ],
@@ -47,9 +56,7 @@ describe('ConfirmAccountComponent', () => {
   it('Success -- Dispatches confirm registration action with activation guid from url params', () => {
     // given
     setRouterParams(store, { activationGuid: '1' });
-    dispatchSpy.and.callFake(action =>
-      action instanceof AuthActions.ConfirmRegistration ? of({}) : NEVER,
-    );
+    dispatchSpy.and.returnValue(of({}));
 
     // when
     component.ngOnInit();
@@ -77,7 +84,7 @@ describe('ConfirmAccountComponent', () => {
 
     // then
     expect(dispatchSpy).toHaveBeenCalledWith(
-      new AuthActions.NavigateToResendActivationLink('432'),
+      new AuthActions.NavigateToResendActivationLink('1'),
     );
   });
 });

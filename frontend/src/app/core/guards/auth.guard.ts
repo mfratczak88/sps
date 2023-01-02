@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { map } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { AuthPaths, TopLevelPaths } from '../../routes';
 import { Store } from '@ngxs/store';
 import { AuthActions } from '../store/actions/auth.actions';
@@ -26,17 +26,17 @@ export class AuthGuard implements CanActivate {
     if (this.store.selectSnapshot(isLoggedIn)) {
       return this.redirectBasedOnRole(routerStateSnapshot);
     }
-    return this.store
-      .dispatch(new AuthActions.RestoreAuth())
-      .pipe(
-        map(() =>
-          this.store.selectSnapshot(isLoggedIn)
-            ? this.redirectBasedOnRole(routerStateSnapshot)
-            : this.router.parseUrl(
-                `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${routerStateSnapshot.url}`,
-              ),
-        ),
-      );
+    const signInUrl = this.router.parseUrl(
+      `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${routerStateSnapshot.url}`,
+    );
+    return this.store.dispatch(new AuthActions.RestoreAuth()).pipe(
+      map(() =>
+        this.store.selectSnapshot(isLoggedIn)
+          ? this.redirectBasedOnRole(routerStateSnapshot)
+          : signInUrl,
+      ),
+      catchError(() => of(signInUrl)),
+    );
   }
 
   redirectBasedOnRole(state: RouterStateSnapshot) {

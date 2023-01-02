@@ -6,26 +6,32 @@ import { DriversApi } from '../../api/drivers.api';
 import { DriverActions } from '../actions/driver.actions';
 import { concatMap, tap } from 'rxjs';
 import { Reservation } from '../../model/reservation.model';
+import { AdminActions } from '../actions/admin.actions';
+import { mapToObjectWithIds } from '../../util';
+import { UiActions } from '../actions/ui.actions';
+import { ToastKeys } from '../../translation-keys';
+
+export interface DriversStateModelEntity {
+  id: string;
+  name: string;
+  email: string;
+  parkingLotIds: Id[];
+  vehicles: Vehicle[];
+  pendingAction?: Reservation[];
+  dueNext?: Reservation[];
+  ongoing?: Reservation[];
+}
 
 export interface DriversStateModel {
   entities: {
-    [id: Id]: {
-      id: string;
-      name: string;
-      email: string;
-      parkingLotIds: Id[];
-      vehicles: Vehicle[];
-      pendingAction: Reservation[];
-      dueNext: Reservation[];
-      ongoing: Reservation[];
-    };
+    [id: Id]: DriversStateModelEntity;
   };
-  selectedDriverId: Id | null;
+  selectedId: Id | null;
   loading: boolean;
 }
 export const defaults: DriversStateModel = {
   entities: {},
-  selectedDriverId: null,
+  selectedId: null,
   loading: false,
 };
 @State<DriversStateModel>({
@@ -41,12 +47,10 @@ export class DriversState {
   @Action(DriverActions.GetDriverDetails)
   getDriverDetails(
     { patchState, getState, dispatch }: StateContext<DriversStateModel>,
-    { id }: DriverActions.GetDriverDetails,
+    { id }: DriverActions.GetDriverDetails | AdminActions.GetDriverDetails,
   ) {
     const { entities } = getState();
-    patchState({
-      loading: true,
-    });
+    patchState({ loading: true });
     return this.api
       .getById(id, {
         timeHorizon: [
@@ -60,7 +64,7 @@ export class DriversState {
           const { timeHorizon, ...driverData } = driver;
           const { pendingAction, ongoing, dueNext } = timeHorizon ?? {};
           patchState({
-            selectedDriverId: id,
+            selectedId: id,
             loading: false,
             entities: {
               ...entities,
@@ -79,19 +83,82 @@ export class DriversState {
       );
   }
 
+  @Action(AdminActions.GetDriverDetails)
+  getAdminDriverDetails(
+    { patchState, getState }: StateContext<DriversStateModel>,
+    { id }: DriverActions.GetDriverDetails | AdminActions.GetDriverDetails,
+  ) {
+    const { entities } = getState();
+    patchState({ loading: true });
+    return this.api.getById(id).pipe(
+      tap(driver => {
+        patchState({
+          selectedId: id,
+          loading: false,
+          entities: {
+            ...entities,
+            [id]: driver,
+          },
+        });
+      }),
+    );
+  }
+
+  @Action(AdminActions.AssignParkingLot)
+  assignParkingLot(
+    { dispatch }: StateContext<DriversStateModel>,
+    { parkingLotId, driverId }: AdminActions.AssignParkingLot,
+  ) {
+    return this.api.assignParkingLot({ parkingLotId, driverId }).pipe(
+      tap(() => dispatch(new AdminActions.GetAllDrivers())),
+      tap(() =>
+        dispatch(new UiActions.ShowToast(ToastKeys.PARKING_LOT_ASSIGNED)),
+      ),
+    );
+  }
+
+  @Action(AdminActions.RemoveParkingLotAssignment)
+  removeParkingLotAssignment(
+    { dispatch }: StateContext<DriversStateModel>,
+    { parkingLotId, driverId }: AdminActions.RemoveParkingLotAssignment,
+  ) {
+    return this.api.removeParkingLotAssignment({ parkingLotId, driverId }).pipe(
+      tap(() => dispatch(new AdminActions.GetAllDrivers())),
+      tap(() =>
+        dispatch(
+          new UiActions.ShowToast(ToastKeys.PARKING_LOT_ASSIGNMENT_REMOVED),
+        ),
+      ),
+    );
+  }
+
+  @Action(AdminActions.GetAllDrivers)
+  getAllDrivers({ patchState }: StateContext<DriversStateModel>) {
+    patchState({ loading: true });
+    return this.api.getAll().pipe(
+      tap(drivers => {
+        patchState({
+          entities: mapToObjectWithIds(drivers),
+          loading: false,
+        });
+      }),
+    );
+  }
+
   @Action(DriverActions.CancelReservation)
   addVehicle(
-    { getState, patchState }: StateContext<DriversStateModel>,
+    { getState, patchState, dispatch }: StateContext<DriversStateModel>,
     { licensePlate }: DriverActions.AddVehicle,
   ) {
+    patchState({ loading: true });
     const state = getState();
-    const { selectedDriverId } = state;
+    const { selectedId } = state;
     return (
-      selectedDriverId &&
-      this.api.addVehicle(licensePlate, selectedDriverId).pipe(
+      selectedId &&
+      this.api.addVehicle(licensePlate, selectedId).pipe(
         tap(() => {
           const { entities } = state;
-          const driver = entities[selectedDriverId];
+          const driver = entities[selectedId];
           driver.vehicles.push({
             licensePlate,
           });
@@ -100,6 +167,7 @@ export class DriversState {
             entities: { ...entities, driver },
           });
         }),
+        tap(() => dispatch(new UiActions.ShowToast(ToastKeys.VEHICLE_ADDED))),
       )
     );
   }

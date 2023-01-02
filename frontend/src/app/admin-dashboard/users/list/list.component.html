@@ -3,8 +3,8 @@
     <sps-sync-table class="users__table"
                [buttons]="tableButtons"
                [columns]="tableColumns"
-               [loading$]="usersQuery.selectLoading()"
-               [data]="usersQuery.selectAll()">
+               [loading$]="loading$"
+               [data]="users$">
     </sps-sync-table>
   </sps-panel>
 </div>

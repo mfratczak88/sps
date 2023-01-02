@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { AuthInterceptor } from './interceptor/auth-token.interceptor';
 import {
   GoogleLoginProvider,
@@ -52,7 +51,6 @@ const providers = [
       ReservationsState,
     ]),
     NgxsRouterPluginModule.forRoot(), // core module is the actual root for router
-    AkitaNgRouterStoreModule,
   ],
   providers: [...providers],
 })

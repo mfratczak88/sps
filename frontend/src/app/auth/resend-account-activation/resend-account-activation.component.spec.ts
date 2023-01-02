@@ -12,6 +12,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DispatchSpy, newDispatchSpy } from '../../../../test/spy.util';
 import { setRouterQueryParams } from '../../../../test/store.util';
 import { AuthActions } from '../../core/store/actions/auth.actions';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../shared/shared.module';
+import { CoreModule } from '../../core/core.module';
 
 describe('ResendAccountActivationComponent', () => {
   let component: ResendAccountActivationComponent;
@@ -22,7 +25,9 @@ describe('ResendAccountActivationComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ResendAccountActivationComponent],
       imports: [
+        SharedModule,
         await translateTestModule(),
+        CoreModule,
         NgxsModule.forRoot([AuthState]),
         RouterTestingModule,
         NgxsRouterPluginModule.forRoot(),

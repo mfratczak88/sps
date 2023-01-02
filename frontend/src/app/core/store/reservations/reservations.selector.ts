@@ -3,23 +3,17 @@ import {
   ReservationsState,
   ReservationsStateModel,
 } from './reservations.state';
-import { SortBy, SortOrder } from '../../model/reservation.model';
+import { Reservation, SortBy, SortOrder } from '../../model/reservation.model';
+import { allEntities, loadingSelector, selectedEntity } from '../selectors';
 
-export const loading = createSelector(
-  [ReservationsState],
-  ({ loading }: ReservationsStateModel) => loading,
-);
+export const loading = loadingSelector([ReservationsState]);
+export const active = selectedEntity<Reservation, ReservationsStateModel>([
+  ReservationsState,
+]);
 
-export const active = createSelector(
-  [ReservationsState],
-  ({ selectedId, entities }: ReservationsStateModel) =>
-    selectedId ? entities[selectedId] : undefined,
-);
-
-export const reservations = createSelector(
-  [ReservationsState],
-  ({ entities }: ReservationsStateModel) => Object.values(entities),
-);
+export const reservations = allEntities<Reservation, ReservationsStateModel>([
+  ReservationsState,
+]);
 
 export const sorting = createSelector(
   [ReservationsState],

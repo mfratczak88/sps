@@ -1,5 +1,6 @@
 import { Reservation } from './model/reservation.model';
 import { DateTime } from 'luxon';
+import { Id } from './model/common.model';
 
 export const hoursOf = (reservation: Reservation) => {
   const { startTime, endTime } = reservation;
@@ -18,4 +19,14 @@ export const fullHour = (dateTime: DateTime, hour: number) => {
       millisecond: 0,
     })
     .toJSDate();
+};
+
+export const mapToObjectWithIds = <T extends { id: Id }>(collection: T[]) => {
+  return collection.reduce((acc, element) => {
+    const { id } = element;
+    return {
+      ...acc,
+      [id]: element,
+    };
+  }, {});
 };

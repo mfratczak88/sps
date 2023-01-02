@@ -12,13 +12,13 @@ import { AuthPaths, TopLevelPaths } from '../../routes';
 import { AuthActions } from '../store/actions/auth.actions';
 import { QueryParamKeys } from '../model/router.model';
 import { TestBed } from '@angular/core/testing';
-import { authStateWithDriver } from '../../../../test/state.util';
 import {
   newAuthApiSpy,
   newSocialAuthServiceSpy,
 } from '../../../../test/spy.util';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { AuthApi } from '../api/auth.api';
+import { authStateWithDriver } from '../../../../test/store.util';
 
 describe('Auth guard', () => {
   let routerSpy: SpyObj<Router>;

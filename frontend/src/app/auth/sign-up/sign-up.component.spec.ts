@@ -29,6 +29,8 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from '../../core/model/auth.model';
+import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from '../../core/core.module';
 
 describe('SignUpComponent', () => {
   let fixture: ComponentFixture<SignUpComponent>;
@@ -70,6 +72,7 @@ describe('SignUpComponent', () => {
         await translateTestModule(),
         ReactiveFormsModule,
         RouterTestingModule,
+        CoreModule,
         NgxsModule.forRoot([AuthState]),
         NgxsRouterPluginModule.forRoot(),
         SharedModule,

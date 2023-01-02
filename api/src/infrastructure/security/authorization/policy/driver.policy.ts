@@ -15,7 +15,10 @@ export class CanViewDriverDetails implements PolicyHandler {
     const { userId, moduleRef, params } = context;
     const userStore = await moduleRef.resolve(UserService);
     const user = await userStore.findById(userId);
-    return user.role === Role.DRIVER && params['id'] === userId;
+    return (
+      (user.role === Role.DRIVER && params['id'] === userId) ||
+      user.role === Role.ADMIN
+    );
   }
 }
 export class CanViewDriverReservations implements PolicyHandler {

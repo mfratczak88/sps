@@ -7,10 +7,19 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
-import { catchError, concatMap, EMPTY, first, from, lastValueFrom } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  EMPTY,
+  finalize,
+  first,
+  from,
+  lastValueFrom,
+  of,
+} from 'rxjs';
 import { UiActions } from '../actions/ui.actions';
 import { ToastKeys } from '../../translation-keys';
-import { Role, User } from '../../model/auth.model';
+import { Role, AuthUser } from '../../model/auth.model';
 
 export interface AuthStateModel {
   id: string;
@@ -19,6 +28,7 @@ export interface AuthStateModel {
   validToISO?: string;
   authExpiresIn: string;
   role: Role | string;
+  loading: boolean;
 }
 export const defaults: AuthStateModel = {
   email: '',
@@ -27,6 +37,7 @@ export const defaults: AuthStateModel = {
   name: '',
   authExpiresIn: '',
   role: '',
+  loading: false,
 };
 
 @State<AuthStateModel>({
@@ -44,13 +55,17 @@ export class AuthState {
 
   @Action(AuthActions.Login)
   login(
-    { setState }: StateContext<AuthStateModel>,
+    { setState, patchState }: StateContext<AuthStateModel>,
     { email, password }: AuthActions.Login,
   ) {
+    patchState({
+      loading: true,
+    });
     return this.api.login(email, password).pipe(
       tap(user => {
         setState({
           ...user,
+          loading: false,
         });
         AuthState.userToLocalStorage(user);
       }),
@@ -72,17 +87,19 @@ export class AuthState {
   }
 
   @Action(AuthActions.RefreshToken)
-  refreshToken({ setState }: StateContext<AuthStateModel>) {
+  refreshToken({ patchState }: StateContext<AuthStateModel>) {
+    patchState({ loading: true });
     return this.api.refreshToken().pipe(
       tap(result => {
-        setState({ ...result });
+        patchState({ ...result, loading: false });
         AuthState.userToLocalStorage(result);
       }),
     );
   }
 
   @Action(AuthActions.LoginWithGoogle)
-  loginWithGoogle({ setState }: StateContext<AuthStateModel>) {
+  loginWithGoogle({ patchState }: StateContext<AuthStateModel>) {
+    patchState({ loading: true });
     return from(
       this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID),
     ).pipe(
@@ -90,7 +107,7 @@ export class AuthState {
         this.api.loginWithGoogle(idToken, email),
       ),
       tap(user => {
-        setState({ ...user });
+        patchState({ ...user, loading: false });
         AuthState.userToLocalStorage(user);
       }),
     );
@@ -101,7 +118,10 @@ export class AuthState {
     AuthState.removeUserInfoFromLocalStorage();
     return this.api.logout().pipe(
       first(),
-      tap(() => setState(defaults)),
+      finalize(() => {
+        setState(defaults);
+        return of(undefined);
+      }),
     );
   }
 
@@ -148,28 +168,29 @@ export class AuthState {
   }
 
   @Action(AuthActions.RestoreAuth)
-  async restoreAuth({ setState }: StateContext<AuthStateModel>) {
+  async restoreAuth({ patchState }: StateContext<AuthStateModel>) {
+    patchState({ loading: true });
     let user = AuthState.userFromLocalStorage();
     if (user && AuthState.tokenExpired()) {
-      user = await lastValueFrom(
-        this.api.refreshToken().pipe(
-          catchError(() => {
-            AuthState.removeUserInfoFromLocalStorage();
-            return EMPTY;
-          }),
-        ),
-      );
+      try {
+        user = await lastValueFrom(this.api.refreshToken());
+      } catch (err) {
+        AuthState.removeUserInfoFromLocalStorage();
+        patchState(defaults);
+        return;
+      }
     }
-    setState(user);
+    patchState({ ...user, loading: false });
+    user && AuthState.userToLocalStorage(user);
   }
 
   private static tokenExpired() {
-    const { validToISO }: User = AuthState.userFromLocalStorage();
+    const { validToISO }: AuthUser = AuthState.userFromLocalStorage();
 
     return !validToISO || new Date() > new Date(validToISO);
   }
 
-  private static userToLocalStorage(user: User) {
+  private static userToLocalStorage(user: AuthUser) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 

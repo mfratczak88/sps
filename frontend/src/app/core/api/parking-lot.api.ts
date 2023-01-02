@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {
   ChangeHoursOfOperations,
-  CreateParkingLot,
+  CreateParkingLotData,
   ParkingLot,
 } from '../model/parking-lot.model';
 
@@ -38,7 +38,7 @@ export class ParkingLotApi extends BaseApi {
     );
   }
 
-  create(data: CreateParkingLot) {
+  create(data: CreateParkingLotData) {
     return this.withCsrfToken(this.http.post(`${this.BASE_URL}`, data));
   }
 

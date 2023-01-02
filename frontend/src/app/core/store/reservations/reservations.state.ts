@@ -11,8 +11,10 @@ import { ReservationApi } from '../../api/reservation.api';
 import { DriverActions } from '../actions/driver.actions';
 import { concatMap, tap } from 'rxjs';
 import { DateTime } from 'luxon';
-import { fullHour } from '../../util';
+import { fullHour, mapToObjectWithIds } from '../../util';
 import { queryParams } from '../routing/routing.selector';
+import { UiActions } from '../actions/ui.actions';
+import { ToastKeys } from '../../translation-keys';
 export interface ReservationsStateModel {
   selectedId: Id | null;
   entities: {
@@ -84,7 +86,7 @@ export class ReservationsState {
     });
     return dispatch(
       new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
-    ).pipe(concatMap(() => dispatch(new DriverActions.GetAllReservations())));
+    ).pipe(tap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
   @Action(DriverActions.PagingChange)
@@ -103,7 +105,7 @@ export class ReservationsState {
     });
     return dispatch(
       new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
-    ).pipe(concatMap(() => dispatch(new DriverActions.GetAllReservations())));
+    ).pipe(tap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
   @Action(DriverActions.CancelReservation)
@@ -126,6 +128,9 @@ export class ReservationsState {
         }
         dispatch(new DriverActions.ReservationChanged(id));
       }),
+      tap(() =>
+        dispatch(new UiActions.ShowToast(ToastKeys.RESERVATION_CANCELLED)),
+      ),
     );
   }
 
@@ -149,6 +154,9 @@ export class ReservationsState {
         }
         dispatch(new DriverActions.ReservationChanged(id));
       }),
+      tap(() =>
+        dispatch(new UiActions.ShowToast(ToastKeys.RESERVATION_CONFIRMED)),
+      ),
     );
   }
 
@@ -173,6 +181,9 @@ export class ReservationsState {
         parkingLotId,
       })
       .pipe(
+        tap(() =>
+          dispatch(new UiActions.ShowToast(ToastKeys.RESERVATION_CREATED)),
+        ),
         tap(() => {
           dispatch(new DriverActions.GetAllReservations());
         }),
@@ -211,6 +222,9 @@ export class ReservationsState {
           }
           dispatch(new DriverActions.ReservationChanged(reservationId));
         }),
+        tap(() =>
+          dispatch(new UiActions.ShowToast(ToastKeys.RESERVATION_TIME_CHANGED)),
+        ),
       );
   }
 
@@ -250,13 +264,7 @@ export class ReservationsState {
         tap(reservations => {
           const { patchState } = ctx;
           const { data, page, pageSize, count } = reservations;
-          const entities = data.reduce((entities, reservation) => {
-            const { id } = reservation;
-            return {
-              ...entities,
-              [id]: reservation,
-            };
-          }, {});
+          const entities = mapToObjectWithIds(data);
           patchState({
             loading: false,
             entities,

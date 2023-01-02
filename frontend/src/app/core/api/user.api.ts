@@ -1,8 +1,9 @@
-import { BaseApi } from '../../../core/api/base.api';
+import { BaseApi } from './base.api';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
-import { Role, UserResponse } from './user.model';
+import { environment } from '../../../environments/environment';
+import { Role } from '../model/auth.model';
+import { UserResponse } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root',

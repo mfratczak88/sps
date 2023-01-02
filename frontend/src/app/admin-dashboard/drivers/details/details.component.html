@@ -1,4 +1,4 @@
-<div class="page" *ngIf="driversQuery.active$() | async as driver">
+<div class="page" *ngIf="(driver$ | async) as driver">
   <sps-panel
     title="{{translations.DRIVER_DETAILS | translate}}">
     <div class="details-panel">
@@ -30,13 +30,13 @@
       color="primary"
       class="assign-button"
       (click)="onAssignParkingLot(driver.id)"
-      *ngIf="(driversQuery.driverUnAssignedParkingLots$() | async)?.length"
-    >
+      *ngIf="(unAssignedParkingLots$ | async)?.length">
       <mat-icon>assignment_add</mat-icon>
-      {{translations.ASSIGN | translate}}</button>
+      {{translations.ASSIGN | translate}}
+    </button>
     <sps-parking-lots-table
-      [loading$]="driversQuery.selectLoading()"
-      [parkingLots$]="driversQuery.driverParkingLots$()"
+      [loading$]="loading$"
+      [parkingLots$]="assignedParkingLots$"
       [buttons]="parkingLotsTableButtons"
       [displayColumns]="['address']"
     ></sps-parking-lots-table>

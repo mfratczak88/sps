@@ -7,7 +7,7 @@ import { TestBed } from '@angular/core/testing';
 import { OperationTimeDays } from '../model/common.model';
 import {
   ChangeHoursOfOperations,
-  CreateParkingLot,
+  CreateParkingLotData,
 } from '../model/parking-lot.model';
 
 describe('Parking lot api spec', () => {
@@ -59,7 +59,7 @@ describe('Parking lot api spec', () => {
     httpTestingController.verify();
   });
   it('Create sends post request with csrf token', () => {
-    const payload: CreateParkingLot = {
+    const payload: CreateParkingLotData = {
       hoursOfOperation: {
         hourFrom: 10,
         hourTo: 12,

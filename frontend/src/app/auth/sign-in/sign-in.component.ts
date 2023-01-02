@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { first } from 'rxjs';
+import { concatMap, first } from 'rxjs';
 import { AuthTranslationKeys } from '../../core/translation-keys';
 import { Store } from '@ngxs/store';
 import {
@@ -8,6 +8,7 @@ import {
 } from '../../core/store/routing/routing.selector';
 import { AuthActions } from '../../core/store/actions/auth.actions';
 import { LoginCredentials } from '../../core/model/auth.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sps-sign-in',
@@ -24,18 +25,19 @@ export class SignInComponent {
   onEmailSignIn({ email, password }: LoginCredentials) {
     this.store
       .dispatch(new AuthActions.Login(email, password))
-      .pipe(first())
-      .subscribe(() => this.onSuccessfulSignIn());
+      .pipe(concatMap(() => this.onSuccessfulSignIn()))
+      .subscribe();
   }
 
   onGoogleSignIn() {
     this.store
       .dispatch(new AuthActions.LoginWithGoogle())
-      .subscribe(() => this.onSuccessfulSignIn());
+      .pipe(concatMap(() => this.onSuccessfulSignIn()))
+      .subscribe();
   }
 
   onSuccessfulSignIn() {
-    this.store.dispatch(
+    return this.store.dispatch(
       new AuthActions.NavigateAfterLogin(
         this.store.selectSnapshot(afterLoginUrl),
       ),

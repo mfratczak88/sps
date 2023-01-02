@@ -3,8 +3,6 @@ import { UsersListComponent } from './list.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { translateTestModule } from '../../../../test.utils';
-import { UserQuery } from '../state/user.query';
-import { UserService } from '../state/user.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { mockUsers } from '../../../../../test/users.util';
 import { buttonCells } from '../../../../../test/test.util';
@@ -12,18 +10,26 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { EMPTY, of } from 'rxjs';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { EditRoleDialogComponent } from '../edit-role-dialog/edit-role-dialog.component';
-import { Role } from '../state/user.model';
-import SpyObj = jasmine.SpyObj;
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { NgxsModule, Store } from '@ngxs/store';
+import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
+import { UsersState } from '../store/users.state';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { RouterTestingModule } from '@angular/router/testing';
+import { setUsers } from '../../../../../test/store.util';
+import { Role } from '../../../core/model/auth.model';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { HttpClientModule } from '@angular/common/http';
+import SpyObj = jasmine.SpyObj;
 
 describe('Users list component', () => {
   let fixture: ComponentFixture<UsersListComponent>;
   let loader: HarnessLoader;
-  let usersQuerySpy: SpyObj<UserQuery>;
-  let usersServiceSpy: SpyObj<UserService>;
   let dialogSpy: SpyObj<MatDialog>;
   let dialogRefSpy: SpyObj<MatDialogRef<any>>;
   const users = mockUsers;
+  let store: Store;
+  let dispatchSpy: DispatchSpy;
   const editButtons = async () =>
     Promise.all(
       (await buttonCells(loader, 'edit')).map(cellHarness =>
@@ -32,11 +38,6 @@ describe('Users list component', () => {
     );
 
   beforeEach(async () => {
-    usersQuerySpy = jasmine.createSpyObj('UsersQuery', [
-      'selectLoading',
-      'selectAll',
-    ]);
-    usersServiceSpy = jasmine.createSpyObj('UserService', ['changeRoleFor']);
     dialogRefSpy = jasmine.createSpyObj('DialogRef', ['afterClosed']);
     dialogSpy = jasmine.createSpyObj('Dialog', ['open']);
     TestBed.configureTestingModule({
@@ -44,20 +45,21 @@ describe('Users list component', () => {
         SharedModule,
         await translateTestModule(),
         BrowserAnimationsModule,
+        HttpClientModule,
+        RouterTestingModule,
+        NgxsModule.forRoot([UsersState]),
+        NgxsRouterPluginModule.forRoot(),
       ],
       declarations: [UsersListComponent],
-      providers: [
-        { provide: UserService, useValue: usersServiceSpy },
-        { provide: UserQuery, useValue: usersQuerySpy },
-        { provide: MatDialog, useValue: dialogSpy },
-      ],
+      providers: [{ provide: MatDialog, useValue: dialogSpy }],
     });
 
     dialogSpy.open.and.returnValue(dialogRefSpy);
-    usersQuerySpy.selectLoading.and.returnValue(of(false));
-    usersQuerySpy.selectAll.and.returnValue(of(users));
     fixture = TestBed.createComponent(UsersListComponent);
     loader = TestbedHarnessEnvironment.loader(fixture);
+    store = TestBed.inject(Store);
+    dispatchSpy = newDispatchSpy(store);
+    setUsers(store, users);
   });
   it('On edit button click, it opens change role dialog', async () => {
     const [editButton] = await editButtons();
@@ -71,20 +73,19 @@ describe('Users list component', () => {
   it('When dialog is closed with falsy value it doesnt do anything', async () => {
     const [editButton] = await editButtons();
     dialogRefSpy.afterClosed.and.returnValue(of(undefined));
-
+    dispatchSpy.calls.reset();
     await editButton.click();
 
-    expect(usersServiceSpy.changeRoleFor).not.toHaveBeenCalled();
+    expect(dispatchSpy).not.toHaveBeenCalled();
   });
   it('When dialog is closed with new role to be set it calls service', async () => {
     const [editButton] = await editButtons();
     dialogRefSpy.afterClosed.and.returnValue(of(Role.DRIVER));
-    usersServiceSpy.changeRoleFor.and.returnValue(EMPTY);
+    dispatchSpy.and.returnValue(of({}));
     await editButton.click();
 
-    expect(usersServiceSpy.changeRoleFor).toHaveBeenCalledWith(
-      users[0].id,
-      Role.DRIVER,
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AdminActions.ChangeUserRole(users[0].id, Role.DRIVER),
     );
   });
 });

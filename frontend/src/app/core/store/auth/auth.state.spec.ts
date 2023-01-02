@@ -7,10 +7,11 @@ import { AuthApi } from '../../api/auth.api';
 import { AuthState, AuthStateModel, defaults } from './auth.state';
 import { StateContext } from '@ngxs/store';
 import { AuthActions } from '../actions/auth.actions';
-import { lastValueFrom, of } from 'rxjs';
+import { lastValueFrom, of, throwError } from 'rxjs';
 import { UiActions } from '../actions/ui.actions';
 import { ToastKeys } from '../../translation-keys';
-import { Role, User } from '../../model/auth.model';
+import { AuthUser, Role } from '../../model/auth.model';
+import { newContextSpy } from '../../../../../test/spy.util';
 import SpyObj = jasmine.SpyObj;
 
 describe('Auth state', () => {
@@ -22,7 +23,7 @@ describe('Auth state', () => {
     const stringifyUser = localStorage.getItem('user');
     return stringifyUser && JSON.parse(stringifyUser);
   };
-  const mockUser: User = {
+  const mockUser: AuthUser = {
     name: 'Maciek',
     email: 'mfratczak88@gmail.com',
     id: '3',
@@ -32,11 +33,7 @@ describe('Auth state', () => {
   };
   beforeEach(() => {
     socialAuthServiceMock = jasmine.createSpyObj('SocialAuthUser', ['signIn']);
-    contextMock = jasmine.createSpyObj('ContextMock', [
-      'setState',
-      'getState',
-      'dispatch',
-    ]);
+    contextMock = newContextSpy();
     authApi = jasmine.createSpyObj('AuthApi', [
       'login',
       'loginWithGoogle',
@@ -45,6 +42,8 @@ describe('Auth state', () => {
       'refreshToken',
       'logout',
       'resendActivationLink',
+      'changePassword',
+      'restoreAuth',
     ]);
     authState = new AuthState(authApi, socialAuthServiceMock);
     localStorage.clear();
@@ -57,13 +56,16 @@ describe('Auth state', () => {
     await lastValueFrom(authState.login(contextMock, action));
 
     expect(authApi.login).toHaveBeenCalledWith('email', 'pass');
-    expect(contextMock.setState).toHaveBeenCalledWith(mockUser);
+    expect(contextMock.setState).toHaveBeenCalledWith({
+      ...mockUser,
+      loading: false,
+    });
     expect(userFromLocalStorage()).toEqual(mockUser);
   });
   it('Calls api on register and shows toast', async () => {
     const action = new AuthActions.Register('Mike', 'email', 'pass');
     authApi.register.and.returnValue(of(undefined));
-
+    contextMock.dispatch.and.returnValue(of(undefined));
     await lastValueFrom(authState.register(contextMock, action));
 
     expect(authApi.register).toHaveBeenCalledWith(action);
@@ -78,7 +80,10 @@ describe('Auth state', () => {
     await lastValueFrom(authState.refreshToken(contextMock));
 
     expect(authApi.refreshToken).toHaveBeenCalled();
-    expect(contextMock.setState).toHaveBeenCalledWith(mockUser);
+    expect(contextMock.patchState).toHaveBeenCalledWith({
+      ...mockUser,
+      loading: false,
+    });
     expect(userFromLocalStorage()).toEqual(mockUser);
   });
   it('Calls api on login with google and sets state', async () => {
@@ -94,7 +99,10 @@ describe('Auth state', () => {
       GoogleLoginProvider.PROVIDER_ID,
     );
     expect(authApi.loginWithGoogle).toHaveBeenCalledWith('1', 'email');
-    expect(contextMock.setState).toHaveBeenCalledWith(mockUser);
+    expect(contextMock.patchState).toHaveBeenCalledWith({
+      ...mockUser,
+      loading: false,
+    });
     expect(userFromLocalStorage()).toEqual(mockUser);
   });
   it('Calls api on logout and sets state to defaults', async () => {
@@ -109,6 +117,7 @@ describe('Auth state', () => {
   it('Calls api on confirm registration and dispatches show toast', async () => {
     const action = new AuthActions.ConfirmRegistration('1');
     authApi.confirmRegistration.and.returnValue(of({}));
+    contextMock.dispatch.and.returnValue(of(undefined));
 
     await lastValueFrom(authState.confirmRegistration(contextMock, action));
 
@@ -120,6 +129,7 @@ describe('Auth state', () => {
   it('Calls api on resend activation link and dispatches show toast', async () => {
     const action = new AuthActions.ResendActionLink('1');
     authApi.resendActivationLink.and.returnValue(of(undefined));
+    contextMock.dispatch.and.returnValue(of(undefined));
 
     await lastValueFrom(authState.resendActivationLink(contextMock, action));
 
@@ -130,6 +140,7 @@ describe('Auth state', () => {
   });
   it('Calls api on change password and dispatches show toast', async () => {
     const action = new AuthActions.ChangePassword('old', 'new');
+    contextMock.dispatch.and.returnValue(of(undefined));
     authApi.changePassword.and.returnValue(of(undefined));
 
     await lastValueFrom(authState.changePassword(contextMock, action));
@@ -144,12 +155,16 @@ describe('Auth state', () => {
       const user = { ...mockUser, validToISO: '2028-12-12 10:00:00' };
       localStorage.setItem('user', JSON.stringify(user));
       await authState.restoreAuth(contextMock);
-      expect(contextMock.setState).toHaveBeenCalledWith(user);
+      expect(contextMock.patchState).toHaveBeenCalledWith({
+        ...user,
+        loading: false,
+      });
     });
     it('sets default value if user was not in local storage', async () => {
+      authApi.refreshToken.and.returnValue(throwError(() => new Error('foo')));
       localStorage.clear();
       await authState.restoreAuth(contextMock);
-      expect(contextMock.setState).toHaveBeenCalledWith(defaults);
+      expect(contextMock.patchState).toHaveBeenCalledWith(defaults);
     });
     it('if user token has expired sets state from response of api call', async () => {
       localStorage.setItem('user', JSON.stringify(mockUser));
@@ -157,7 +172,10 @@ describe('Auth state', () => {
 
       await authState.restoreAuth(contextMock);
 
-      expect(contextMock.setState).toHaveBeenCalledWith(mockUser);
+      expect(contextMock.patchState).toHaveBeenCalledWith({
+        ...mockUser,
+        loading: false,
+      });
     });
   });
 });

@@ -1,14 +1,10 @@
-import { RoleKeys } from '../../../core/translation-keys';
+import { RoleKeys } from '../translation-keys';
+import { Role } from './auth.model';
 
 export type User = UserResponse & {
   roleTranslation: string;
 };
 
-export enum Role {
-  ADMIN = 'admin',
-  DRIVER = 'driver',
-  CLERK = 'clerk',
-}
 export interface RoleWithTranslation {
   role: Role;
   translation: string;
