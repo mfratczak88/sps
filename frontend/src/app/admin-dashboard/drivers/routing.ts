@@ -1,5 +1,5 @@
 import { DriversListComponent } from './list/list.component';
-import { AdminDrawerKeys } from '../../core/translation-keys';
+import { DrawerKeys } from '../../core/translation-keys';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DASHBOARD_ROUTE } from '../routing';
@@ -11,7 +11,7 @@ const DRIVERS_LIST_ROUTE = {
   component: DriversListComponent,
   data: {
     breadcrumbs: {
-      label: AdminDrawerKeys.DRIVERS,
+      label: DrawerKeys.DRIVERS,
       path: AdminPaths.DRIVERS,
       parent: DASHBOARD_ROUTE,
     },
@@ -22,7 +22,7 @@ const DETAILS_ROUTE = {
   component: DriverDetailsComponent,
   data: {
     breadcrumbs: {
-      label: AdminDrawerKeys.PARKING_DETAILS,
+      label: DrawerKeys.PARKING_DETAILS,
       path: ':driverId',
       parent: DRIVERS_LIST_ROUTE,
     },

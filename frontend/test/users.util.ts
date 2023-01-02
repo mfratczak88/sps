@@ -1,4 +1,5 @@
-import { Role, User } from '../src/app/admin-dashboard/users/state/user.model';
+import { User } from '../src/app/core/model/user.model';
+import { Role } from '../src/app/core/model/auth.model';
 
 export const mockUsers: User[] = [
   {

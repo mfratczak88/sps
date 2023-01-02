@@ -2,7 +2,8 @@ import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { ToastService } from '../core/service/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from '../core/model/error.model';
-import { RouterService } from '../core/state/router/router.service';
+import { Store } from '@ngxs/store';
+import { ErrorActions } from '../core/store/actions/error.actions';
 
 @Injectable()
 export class ErrorHandlerService implements ErrorHandler {
@@ -16,7 +17,9 @@ export class ErrorHandlerService implements ErrorHandler {
       const body: ErrorResponse = error.error;
       console.log(body);
       return body.statusCode === 500
-        ? this.injector.get(RouterService)?.toInternalServerErrorPage()
+        ? this.injector
+            .get(Store)
+            ?.dispatch(new ErrorActions.NavigateToInternalServerErrorPage())
         : this.toastService.show(body.message);
     }
     return navigator.onLine

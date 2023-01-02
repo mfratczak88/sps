@@ -25,6 +25,7 @@ import { UsersController } from './web/controller/users.controller';
 import { ParkingLotController } from './web/controller/parking-lot.controller';
 import { DriverController } from './web/controller/driver.controller';
 import { ReservationController } from './web/controller/reservation.controller';
+import { ReservationAuthorizationService } from './security/authorization/reservation.authorization.service';
 
 const providers: Provider[] = [
   {
@@ -61,6 +62,7 @@ const providers: Provider[] = [
   CookieService,
   UserService,
   AuthenticationService,
+  ReservationAuthorizationService,
 ];
 
 @Module({

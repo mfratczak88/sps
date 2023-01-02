@@ -3,65 +3,64 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DriversListComponent } from './list.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { translateTestModule } from '../../../../test.utils';
-import { DriversQuery } from '../state/drivers.query';
-import { DriversService } from '../state/drivers.service';
-import { RouterService } from '../../../core/state/router/router.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { mockDriver } from '../../../../../test/driver.utils';
-import { of } from 'rxjs';
 import { buttonCells } from '../../../../../test/test.util';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import SpyObj = jasmine.SpyObj;
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsModule, Store } from '@ngxs/store';
+import { DriversState } from '../../../core/store/drivers/drivers.state';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('Drivers list component', () => {
   let fixture: ComponentFixture<DriversListComponent>;
-  let driverQuerySpy: SpyObj<DriversQuery>;
-  let driverServiceSpy: SpyObj<DriversService>;
-  let routerServiceSpy: SpyObj<RouterService>;
   let loader: HarnessLoader;
-  const driversList = [mockDriver];
-
+  let store: Store;
+  let dispatchSpy: DispatchSpy;
   beforeEach(async () => {
-    driverQuerySpy = jasmine.createSpyObj('DriversQuery', [
-      'selectLoading',
-      'selectAll',
-    ]);
-    driverServiceSpy = jasmine.createSpyObj('DriversService', ['load']);
-    routerServiceSpy = jasmine.createSpyObj('RouterService', [
-      'toDriverDetails',
-    ]);
     await TestBed.configureTestingModule({
       declarations: [DriversListComponent],
       imports: [
         SharedModule,
+        HttpClientModule,
         await translateTestModule(),
         NoopAnimationsModule,
-      ],
-      providers: [
-        { provide: DriversService, useValue: driverServiceSpy },
-        { provide: DriversQuery, useValue: driverQuerySpy },
-        { provide: RouterService, useValue: routerServiceSpy },
+        RouterTestingModule,
+        NgxsModule.forRoot([DriversState]),
+        NgxsRouterPluginModule.forRoot(),
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DriversListComponent);
     loader = TestbedHarnessEnvironment.loader(fixture);
-    driverQuerySpy.selectLoading.and.returnValue(of(false));
-    driverQuerySpy.selectAll.and.returnValue(of(driversList));
+    store = TestBed.inject(Store);
+    dispatchSpy = newDispatchSpy(store);
+    store.reset({
+      ...store.snapshot(),
+      drivers: {
+        entities: {
+          [mockDriver.id]: mockDriver,
+        },
+        loading: false,
+      },
+    });
   });
   it('Calls load on service on init', async () => {
-    fixture.detectChanges();
-    expect(driverServiceSpy.load).toHaveBeenCalled();
+    fixture.componentInstance.ngOnInit();
+    expect(dispatchSpy).toHaveBeenCalledWith(new AdminActions.GetAllDrivers());
   });
   it('Navigates to details page on drivers table details button click', async () => {
     fixture.detectChanges();
     const [detailsTableCell] = await buttonCells(loader, 'details');
     const detailsButton = await detailsTableCell.getHarness(MatButtonHarness);
     await detailsButton.click();
-    expect(routerServiceSpy.toDriverDetails).toHaveBeenCalledWith(
-      mockDriver.id,
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AdminActions.NavigateToDriverDetails(mockDriver.id),
     );
   });
 });

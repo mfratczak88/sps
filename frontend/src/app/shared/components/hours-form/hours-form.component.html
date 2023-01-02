@@ -1,14 +1,18 @@
 <div class="hours-form" [formGroup]="form">
   <mat-form-field appearance="fill" class="hours-form__field">
     <mat-label>{{translations.HOUR_FROM | translate}}</mat-label>
-    <mat-select formControlName="hourFrom" required >
-      <mat-option *ngFor="let h of hours" [value]="h">{{h | hour}}</mat-option>
+    <mat-select formControlName="hourFrom" required>
+      <ng-container *ngFor="let h of hoursRange">
+        <mat-option *ngIf="h >= _hourFrom && h < _hourTo" [value]="h">{{h | hour}}</mat-option>
+      </ng-container>
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill" class="hours-form__field">
     <mat-label>{{translations.HOUR_TO | translate}}</mat-label>
     <mat-select formControlName="hourTo" required>
-      <mat-option *ngFor="let h of hours" [value]="h">{{h | hour}}</mat-option>
+      <ng-container *ngFor="let h of hoursRange">
+        <mat-option *ngIf="h <= _hourTo && h > _hourFrom" [value]="h">{{h | hour}}</mat-option>
+      </ng-container>
     </mat-select>
   </mat-form-field>
   <ng-content></ng-content>

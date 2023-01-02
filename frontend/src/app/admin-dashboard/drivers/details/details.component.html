@@ -1,4 +1,4 @@
-<div class="page" *ngIf="driversQuery.active$() | async as driver">
+<div class="page" *ngIf="(driver$ | async) as driver">
   <sps-panel
     title="{{translations.DRIVER_DETAILS | translate}}">
     <div class="details-panel">
@@ -14,7 +14,7 @@
       </div>
       <mat-chip-list>
         <mat-chip>
-          {{translations.PARKING_TITLE | translate}}: {{driver.parkingLots.length}}
+          {{translations.PARKING_TITLE | translate}}: {{driver.parkingLotIds.length}}
         </mat-chip>
         <mat-chip>
           {{translations.RESERVATIONS_TITLE | translate}}: 4
@@ -30,14 +30,14 @@
       color="primary"
       class="assign-button"
       (click)="onAssignParkingLot(driver.id)"
-      *ngIf="(driversQuery.driverUnAssignedParkingLots$() | async)?.length"
-    >
+      *ngIf="(unAssignedParkingLots$ | async)?.length">
       <mat-icon>assignment_add</mat-icon>
-      {{translations.ASSIGN | translate}}</button>
+      {{translations.ASSIGN | translate}}
+    </button>
     <sps-parking-lots-table
-      [loading$]="driversQuery.selectLoading()"
-      [parkingLots$]="driverParkingLots$"
-      [tableButtons]="parkingLotsTableButtons"
+      [loading$]="loading$"
+      [parkingLots$]="assignedParkingLots$"
+      [buttons]="parkingLotsTableButtons"
       [displayColumns]="['address']"
     ></sps-parking-lots-table>
   </sps-panel>

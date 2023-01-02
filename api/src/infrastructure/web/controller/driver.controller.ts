@@ -6,6 +6,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { DriverService } from '../../../application/driver/driver.service';
@@ -21,7 +22,11 @@ import { JwtAuthGuard } from '../../security/authorization/jwt-auth.guard';
 import { DriverFinder } from '../../../application/driver/driver.finder';
 import { PoliciesGuard } from '../../security/authorization/policy/policies.guard';
 import { CheckPolicies } from '../../security/authorization/policy/check-policies.decorator';
-import { CanAddVehicle } from '../../security/authorization/policy/driver.policy';
+import {
+  CanAddVehicle,
+  CanViewDriverDetails,
+} from '../../security/authorization/policy/driver.policy';
+import { DriverQuery } from '../../../application/driver/driver.read-model';
 
 @Controller('drivers')
 export class DriverController {
@@ -34,6 +39,13 @@ export class DriverController {
   @UseGuards(RoleGuard(Role.ADMIN))
   getAllDrivers() {
     return this.finder.findAll();
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard, PoliciesGuard)
+  @CheckPolicies(new CanViewDriverDetails())
+  getDriver(@Param('id') id: Id, @Query() query: DriverQuery) {
+    return this.finder.findSingle(id, query);
   }
 
   @Post(':driverId/vehicles')

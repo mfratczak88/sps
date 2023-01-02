@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterService } from '../core/state/router/router.service';
+
 import { ErrorKeys } from '../core/translation-keys';
 
 @Component({
@@ -9,6 +9,4 @@ import { ErrorKeys } from '../core/translation-keys';
 })
 export class ErrorComponent {
   readonly translations = ErrorKeys;
-
-  constructor(readonly navigationService: RouterService) {}
 }

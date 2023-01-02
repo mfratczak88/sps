@@ -1,0 +1,29 @@
+<div class="vehicles">
+  <sps-card [title]="translations.AVAILABLE_LOTS"
+            [subTitle]="translations.AVAILABLE_LOTS_INFO"
+            [loading$]="loading$"
+            *ngIf="(driverParkingLots$ | async) as parkingLots">
+    <sps-number-chip chip>{{parkingLots.length}}</sps-number-chip>
+    <div>
+      <div *ngFor="let lot of parkingLots">
+        <sps-parking-lot-expansion-panel [parkingLot]="lot">
+          <button mat-button color="primary">{{translations.RESERVE | translate}}</button>
+        </sps-parking-lot-expansion-panel>
+      </div>
+    </div>
+  </sps-card>
+  <sps-card [title]="translations.REQUEST_ACCESS"
+            [subTitle]="translations.REQUEST_ACCESS_INFO"
+            [loading$]="loading$"
+            *ngIf="(unAssignedParkingLots$ | async) as unAssignedLots">
+    <sps-number-chip chip>{{unAssignedLots.length}}</sps-number-chip>
+    <div>
+      <div *ngFor="let lot of unAssignedLots">
+        <sps-parking-lot-expansion-panel [parkingLot]="lot">
+          <button mat-button color="primary">{{translations.REQUEST_ACCESS | translate}}</button>
+        </sps-parking-lot-expansion-panel>
+      </div>
+    </div>
+  </sps-card>
+</div>
+

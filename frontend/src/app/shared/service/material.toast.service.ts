@@ -12,16 +12,18 @@ export class MaterialToastService implements ToastService {
     private readonly ngZone: NgZone,
   ) {}
 
-  show(text: string): void {
-    const translatedText = this.translateService.instant(text);
-    this.ngZone.run(() =>
+  show(text: string | string[]): void {
+    this.ngZone.run(() => {
+      const translatedText = Array.isArray(text)
+        ? text.join(',')
+        : this.translateService.instant(text);
       this.snackBarRef.open(
         translatedText || text,
         this.translateService.instant(ToastKeys.DISMISS),
         {
           duration: 3000,
         },
-      ),
-    );
+      );
+    });
   }
 }

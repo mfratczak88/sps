@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { RoleWithTranslation, User } from '../state/user.model';
+import { RoleWithTranslation, User } from '../../../core/model/user.model';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
-import { UserQuery } from '../state/user.query';
 import { FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
+import { Store } from '@ngxs/store';
+import { roles } from '../store/users.selector';
 
 @Component({
   selector: 'sps-edit-role-dialog',
@@ -21,12 +22,12 @@ export class EditRoleDialogComponent implements OnInit {
   constructor(
     readonly dialogRef: MatDialogRef<EditRoleDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private readonly data: User,
-    readonly userQuery: UserQuery,
+    readonly store: Store,
   ) {}
 
   ngOnInit(): void {
-    this.rolesToChoose = this.userQuery
-      .roles()
+    this.rolesToChoose = this.store
+      .selectSnapshot(roles)
       .filter(({ role }) => role !== this.data.role);
   }
 

@@ -1,6 +1,6 @@
 import { Route, RouterModule } from '@angular/router';
-import { ReservationsListComponent } from './list/reservations-list.component';
-import { AdminDrawerKeys } from '../../core/translation-keys';
+import { ReservationsListComponent } from './list/list.component';
+import { DrawerKeys } from '../../core/translation-keys';
 import { AdminPaths, TopLevelPaths } from '../../routes';
 
 import { NgModule } from '@angular/core';
@@ -11,7 +11,7 @@ const LIST_ROUTE: Route = {
   component: ReservationsListComponent,
   data: {
     breadcrumbs: {
-      label: AdminDrawerKeys.RESERVATIONS,
+      label: DrawerKeys.RESERVATIONS,
       path: AdminPaths.RESERVATIONS,
       parent: DASHBOARD_ROUTE,
     },

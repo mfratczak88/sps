@@ -4,7 +4,7 @@ import { ChangeHoursDialogComponent } from './change-hours-dialog.component';
 import { By } from '@angular/platform-browser';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { mockParkingLots } from '../../../../../test/driver.utils';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +13,7 @@ import { translateTestModule } from '../../../../test.utils';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import SpyObj = jasmine.SpyObj;
+import { ParkingLot } from '../../../core/model/parking-lot.model';
 
 describe('ChangeHoursDialogComponent', () => {
   let fixture: ComponentFixture<ChangeHoursDialogComponent>;
@@ -74,14 +75,14 @@ describe('ChangeHoursDialogComponent', () => {
   it('Sends new hours on action button', async () => {
     const [hoursFrom, hourTo] = await selectHarnesses();
     await Promise.all([hoursFrom.open(), hourTo.open()]);
-    await (await hoursFrom.getOptions())[11].click();
-    await (await hourTo.getOptions())[13].click();
+    await (await hoursFrom.getOptions())[0].click();
+    await (await hourTo.getOptions())[1].click();
 
     actionButton().click();
 
     expect(dialogRefSpy.close).toHaveBeenCalledWith({
-      hourFrom: 11,
-      hourTo: 13,
+      hourFrom: 0,
+      hourTo: 2,
     });
   });
 });

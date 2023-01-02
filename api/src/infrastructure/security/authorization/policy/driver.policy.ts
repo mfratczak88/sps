@@ -10,3 +10,25 @@ export class CanAddVehicle implements PolicyHandler {
     return user.role === Role.DRIVER;
   }
 }
+export class CanViewDriverDetails implements PolicyHandler {
+  async handle(context: PolicyCheckContext): Promise<boolean> {
+    const { userId, moduleRef, params } = context;
+    const userStore = await moduleRef.resolve(UserService);
+    const user = await userStore.findById(userId);
+    return (
+      (user.role === Role.DRIVER && params['id'] === userId) ||
+      user.role === Role.ADMIN
+    );
+  }
+}
+export class CanViewDriverReservations implements PolicyHandler {
+  async handle(context: PolicyCheckContext): Promise<boolean> {
+    const { userId, moduleRef, params } = context;
+    const userStore = await moduleRef.resolve(UserService);
+    const user = await userStore.findById(userId);
+    return (
+      user.role === Role.ADMIN ||
+      (user.role === Role.DRIVER && params['id'] === userId)
+    );
+  }
+}

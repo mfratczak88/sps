@@ -21,5 +21,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/lines-between-class-members': 'error',
+    '@typescript-eslint/no-namespace': 'off',
   }
 };

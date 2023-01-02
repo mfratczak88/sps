@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{props.title | translate}}</h2>
+<mat-dialog-content>
+  <p>{{props.subTitle | translate}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button
+          class="close-button"
+          (click)="dialogRef.close({confirmed:false})">
+    {{translations.CANCEL | translate}}
+  </button>
+  <button mat-button
+          color="primary"
+          class="assign-button"
+          mat-raised-button
+          (click)="dialogRef.close({confirmed:true})">
+    {{translations.CONFIRM | translate}}
+  </button>
+</mat-dialog-actions>

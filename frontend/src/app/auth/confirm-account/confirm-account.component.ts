@@ -1,31 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterService } from '../../core/state/router/router.service';
-import { AuthService } from '../../core/state/auth/auth.service';
-import { RouterQuery } from '../../core/state/router/router.query';
 import { catchError, first, NEVER } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse, MessageCode } from '../../core/model/error.model';
+import { Store } from '@ngxs/store';
+import { activationGuid } from '../../core/store/routing/routing.selector';
+import { AuthActions } from '../../core/store/actions/auth.actions';
 
 @Component({
   selector: 'sps-confirm-account',
   template: '',
 })
 export class ConfirmAccountComponent implements OnInit {
-  constructor(
-    private readonly routerQuery: RouterQuery,
-    private readonly routerService: RouterService,
-
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
-    const activationGuid = this.routerQuery.activationGuid();
-    if (!activationGuid) {
-      this.routerService.to404();
+    const guid = this.store.selectSnapshot(activationGuid);
+    if (!guid) {
+      this.store.dispatch(new AuthActions.NavigateToNotFound());
       return;
     }
-    this.authService
-      .confirmRegistration(activationGuid)
+    this.store
+      .dispatch(new AuthActions.ConfirmRegistration(guid))
       .pipe(
         first(),
         catchError((err: HttpErrorResponse) => {
@@ -33,14 +28,14 @@ export class ConfirmAccountComponent implements OnInit {
             (err.error as ErrorResponse)?.messageCode ===
             MessageCode.URL_NO_LONGER_VALID
           ) {
-            this.routerService.toResendActivationLink(activationGuid);
+            this.store.dispatch(
+              new AuthActions.NavigateToResendActivationLink(guid),
+            );
             return NEVER;
           }
           throw err;
         }),
       )
-      .subscribe(() => {
-        this.routerService.toSignIn();
-      });
+      .subscribe(() => this.store.dispatch(new AuthActions.NavigateToSignIn()));
   }
 }

@@ -19,6 +19,7 @@ import { CsrfGuard } from '../../security/csrf/csrf.guard';
 import RoleGuard from '../../security/authorization/role.guard';
 import { Role } from '../../security/authorization/role';
 import { ParkingLotFinder } from '../../../application/parking-lot/parking-lot.finder';
+import { JwtAuthGuard } from '../../security/authorization/jwt-auth.guard';
 
 @Controller('parking-lots')
 export class ParkingLotController {
@@ -58,8 +59,9 @@ export class ParkingLotController {
       parkingLotId,
     });
   }
-  @UseGuards(RoleGuard(Role.ADMIN))
+
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.finder.findAll();
   }

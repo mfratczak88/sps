@@ -32,7 +32,9 @@
     "MIN": "Min value - {{value}}",
     "MAX": "Max value - {{value}}",
     "HOUR_FROM_GREATER_THAN_HOUR_TO": "Invalid hours",
-    "NONE_CHECKBOX_SELECTED": "Select at least one"
+    "NONE_CHECKBOX_SELECTED": "Select at least one",
+    "VEHICLE_ALREADY_ADDED": "Vehicle already added",
+    "LOT_CLOSED_ON_THIS_DAY": "Parking lot is closed on this day"
   },
   "TOAST": {
     "CHECK_EMAIL": "Please check your email. Check your mailbox",
@@ -44,7 +46,12 @@
     "HOURS_CHANGED": "Operation hours has been changed",
     "PARKING_LOT_CREATED": "Parking lot has been created",
     "PARKING_LOT_ASSIGNED" : "Parking lot assigned",
-    "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed"
+    "PARKING_LOT_ASSIGNMENT_REMOVED" : "Parking lot assignment removed",
+    "VEHICLE_ADDED" : "Vehicle added",
+    "RESERVATION_CREATED": "Reservation created",
+    "RESERVATION_CONFIRMED": "Reservation confirmed",
+    "RESERVATION_CANCELLED": "Reservation cancelled",
+    "RESERVATION_TIME_CHANGED": "Reservation time changed"
   },
   "ERROR": {
     "INTERNAL_SERVER_ERROR": "Internal error",
@@ -59,13 +66,17 @@
     "HEY_USER": "Hey",
     "SIGN_OUT": "Sign out"
   },
-  "ADMIN_DRAWER": {
+  "DRAWER": {
     "DASHBOARD": "Dashboard",
     "PARKING": "Parking",
     "RESERVATIONS": "Reservations",
+    "RESERVATION_DETAILS": "Details",
+    "CREATE_RESERVATION": "Create reservation",
     "USERS": "Users",
     "PARKING_DETAILS": "Details",
-    "DRIVERS": "Drivers"
+    "DRIVERS": "Drivers",
+    "VEHICLES": "Vehicles"
+
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Reservations",
@@ -84,7 +95,6 @@
     "COLUMN_EDIT": "Edit",
     "COLUMN_DETAILS": "Details",
     "COLUMN_ADDRESS": "Address",
-    "COLUMN_HOURS": "Hours",
     "COLUMN_CAPACITY": "Capacity",
     "PARKING_LOTS_TABLE_HEADER": "Parking lots",
     "USERS_TABLE_HEADER": "Users",
@@ -99,13 +109,9 @@
     "CITY": "City",
     "STREET_NAME": "Street name",
     "STREET_NUMBER": "Street number",
-    "NEXT": "Next",
     "FILL_OUT_OPERATION_HOURS": "Fill out operation hours",
     "PREVIOUS": "Previous",
     "FILL_OUT_CAPACITY": "Fill out capacity",
-    "SAVE": "Save",
-    "BACK": "Back",
-    "RESET": "Reset",
     "DRIVERS": "Drivers",
     "NAME": "Name",
     "EMAIL": "Email",
@@ -129,7 +135,15 @@
     "SELECT": "Select",
     "SEARCH": "Search",
     "ADD": "Add",
-    "CHANGE": "Change"
+    "CHANGE": "Change",
+    "SAVE": "Save",
+    "BACK": "Back",
+    "PREVIOUS": "Previous",
+    "RESET": "Reset",
+    "NEXT": "Next",
+    "HOURS": "Hours",
+    "CONFIRM": "Proceeed",
+    "CREATE": "Create"
   },
   "PAGINATION": {
     "FIRST_PAGE_LABEL": "First page",
@@ -154,5 +168,51 @@
     "FRIDAY_SHORT" : "Fri",
     "SATURDAY_SHORT" : "Sat",
     "SUNDAY_SHORT": "Sun"
+  },
+  "DRIVER": {
+    "ADD_VEHICLE_DIALOG_TITLE": "Add vehicle",
+    "LICENSE_PLATE": "License plate",
+    "VEHICLES": "Vehicles",
+    "VEHICLES_ADD_PROMPT": "Add vehicles to be able to make parking reservations",
+    "AVAILABLE_LOTS" : "Available parking lots",
+    "AVAILABLE_LOTS_INFO" : "You can reserve parking spot on those parking lots",
+    "REQUEST_ACCESS": "Request access",
+    "REQUEST_ACCESS_INFO": "In order to park here you need to request access",
+    "RESERVE": "Reserve",
+    "SELECT_PARKING_LOT": "Select parking lot",
+    "PARKING_LOT": "Parking lot",
+    "CHOSE_A_DATE": "Choose a date",
+    "DATE": "Date",
+    "MAKE_RESERVATION_TITLE": "Make a reservation",
+    "MAKE_RESERVATION_SUBTITLE": "Remember that you need to confirm it. Confirmation time starts 4 hours prior arrival, and ends 30 minutes before",
+    "CHOOSE_VEHICLE": "Choose vehicle",
+    "VEHICLE": "License plate",
+    "DUE_NEXT": "Due next",
+    "DUE_NEXT_PROMPT": "You're incoming parking - please be on time",
+    "CONFIRM_PROMPT": "In order to enter the parking lot you need to first confirm reservation",
+    "CONFIRM_TITLE": "To be confirmed",
+    "TIME_TO_CONFIRM": "Time left to confirm",
+    "REJECT": "Reject",
+    "RESERVATIONS": "Reservations",
+    "CHANGE_TIME": "Change time",
+    "CANCEL_RESERVATION": "Cancel reservation",
+    "CANCEL_RESERVATION_QUESTION": "Would you like to cancel reservation ?",
+    "CONFIRM_RESERVATION": "Confirm",
+    "CONFIRM_RESERVATION_QUESTION": "Do you want to confirm reservation ?",
+    "RESERVATION_DETAILS": "Reservation details",
+    "DATE_AND_TIME" : "Date and time",
+    "STATUS" : "Status"
+  },
+  "TABLE_KEYS": {
+    "LICENSE_PLATE": "License plate",
+    "TIME": "Time",
+    "RESERVATION_DATE": "Date",
+    "RESERVATION_STATUS": "Status",
+    "PARKING_LOT_ADDRESS": "Parking lot"
+  },
+  "RESERVATION_STATUS": {
+    "DRAFT": "Draft",
+    "CANCELLED": "Cancelled",
+    "CONFIRMED": "Confirmed"
   }
 }

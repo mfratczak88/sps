@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterQuery } from '../../../core/state/router/router.query';
+import { Store } from '@ngxs/store';
+import {
+  breadCrumbs as routerBreadcrumbs,
+  paramByName,
+} from '../../../core/store/routing/routing.selector';
 
 @Component({
   selector: 'sps-breadcrumbs',
@@ -9,17 +13,19 @@ import { RouterQuery } from '../../../core/state/router/router.query';
 export class BreadcrumbsComponent {
   breadCrumbs: BreadCrumb[] = [];
 
-  constructor(readonly routerQuery: RouterQuery) {
-    this.routerQuery.breadCrumbs$().subscribe(breadCrumb => {
+  constructor(readonly store: Store) {
+    this.store.select(routerBreadcrumbs).subscribe(breadCrumb => {
       this.breadCrumbs = [];
       let next = breadCrumb;
       while (next) {
         const { label, parent } = next;
         let { path } = next;
         if (path.includes(':')) {
-          const queryParam = this.routerQuery.getParam(path.split(':')[1]);
-          path = queryParam
-            ? parent?.data?.['breadcrumbs'].path + '/' + queryParam
+          const param = this.store.selectSnapshot(
+            paramByName(path.split(':')[1]),
+          );
+          path = param
+            ? parent?.data?.['breadcrumbs'].path + '/' + param
             : path;
         }
         this.breadCrumbs.push({

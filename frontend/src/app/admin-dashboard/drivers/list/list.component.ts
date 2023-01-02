@@ -4,10 +4,13 @@ import {
   Button,
   Column,
 } from '../../../shared/components/table/table.component';
-import { RouterService } from '../../../core/state/router/router.service';
-import { DriversQuery } from '../state/drivers.query';
-import { Driver } from '../state/drivers.model';
-import { DriversService } from '../state/drivers.service';
+import { Driver } from '../../../core/model/driver.model';
+import { Store } from '@ngxs/store';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
+import {
+  driversWithParkingLotCount,
+  loading,
+} from '../../../core/store/drivers/drivers.selectors';
 
 @Component({
   selector: 'sps-drivers-list',
@@ -17,14 +20,14 @@ import { DriversService } from '../state/drivers.service';
 export class DriversListComponent implements OnInit {
   readonly translations = { ...AdminKeys, ...MiscKeys };
 
-  constructor(
-    private readonly routerService: RouterService,
-    readonly driversQuery: DriversQuery,
-    readonly driversService: DriversService,
-  ) {}
+  loading$ = this.store.select(loading);
+
+  drivers$ = this.store.select(driversWithParkingLotCount);
+
+  constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
-    this.driversService.load();
+    this.store.dispatch(new AdminActions.GetAllDrivers());
   }
 
   tableColumns: Column[] = [
@@ -41,9 +44,8 @@ export class DriversListComponent implements OnInit {
       name: 'details',
       translation: this.translations.COLUMN_DETAILS,
       icon: 'visibility',
-      onClick: ({ id }: Driver) => {
-        this.routerService.toDriverDetails(id);
-      },
+      onClick: ({ id }: Driver) =>
+        this.store.dispatch(new AdminActions.NavigateToDriverDetails(id)),
     },
   ];
 }

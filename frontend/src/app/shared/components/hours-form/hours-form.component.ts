@@ -1,8 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
-  FormGroup,
+  FormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   Validator,
@@ -14,6 +14,7 @@ import {
   LocalizedValidators,
 } from '../../validator';
 import { Subscription } from 'rxjs';
+import { Hours } from '../../../core/model/reservation.model';
 
 @Component({
   selector: 'sps-hours-form',
@@ -34,24 +35,38 @@ import { Subscription } from 'rxjs';
 })
 export class HoursFormComponent
   implements ControlValueAccessor, Validator, OnDestroy {
+  @Input()
+  set hourFrom(hour: number) {
+    this._hourFrom = hour;
+    this.reloadValidatorsOnControl();
+  }
+
+  @Input()
+  set hourTo(hour: number) {
+    this._hourTo = hour;
+    this.reloadValidatorsOnControl();
+  }
+
+  hoursRange = [...Array(24).keys()];
+
   translations = { ...AdminKeys };
 
-  hours = [...Array(24).keys()];
+  private onTouched: () => void;
 
-  onTouched: () => void;
+  private disabled = false;
 
-  touched = false;
+  readonly form;
 
-  disabled = false;
+  private valueChangesSub$: Subscription;
 
-  form: FormGroup;
+  _hourFrom = 0;
 
-  valueChangesSub$: Subscription;
+  _hourTo = 23;
 
   constructor(private readonly formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
-      hourFrom: [6, [LocalizedValidators.min(0), LocalizedValidators.max(23)]],
-      hourTo: [23, [LocalizedValidators.min(1), LocalizedValidators.max(24)]],
+    this.form = this.formBuilder.nonNullable.group({
+      hourFrom: new FormControl<number>(6, this.hourFromValidators()),
+      hourTo: new FormControl(23, this.hourToValidators()),
     });
   }
 
@@ -91,9 +106,24 @@ export class HoursFormComponent
     }
     return null;
   }
-}
 
-export interface Hours {
-  hourFrom: number;
-  hourTo: number;
+  private hourToValidators() {
+    return [
+      LocalizedValidators.min(this._hourFrom + 1),
+      LocalizedValidators.max(this._hourTo),
+    ];
+  }
+
+  private hourFromValidators() {
+    return [
+      LocalizedValidators.min(this._hourFrom),
+      LocalizedValidators.max(this._hourTo - 1),
+    ];
+  }
+
+  private reloadValidatorsOnControl() {
+    this.form.controls.hourFrom.setValidators(this.hourFromValidators());
+    this.form.controls.hourTo.setValidators(this.hourToValidators());
+    this.form.updateValueAndValidity();
+  }
 }

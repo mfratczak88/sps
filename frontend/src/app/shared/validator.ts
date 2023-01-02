@@ -97,4 +97,10 @@ export const LocalizedErrors = {
   noCheckboxSelected: () => ({
     errorMessage: FormErrorKeys.NONE_CHECKBOX_SELECTED,
   }),
+  licensePlateAlreadyExist: () => ({
+    errorMessage: FormErrorKeys.VEHICLE_ALREADY_ADDED,
+  }),
+  lotClosedOnThisDate: () => ({
+    errorMessage: FormErrorKeys.LOT_CLOSED_ON_THIS_DAY,
+  }),
 };

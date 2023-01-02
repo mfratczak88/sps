@@ -4,7 +4,7 @@
   </button>
   <img class="toolbar__logo" src="assets/logo.svg" alt="">
   <span class="toolbar__title"></span>
-  <ng-container *ngIf="!!(authQuery.isLoggedIn$ | async)">
+  <ng-container *ngIf="(isLoggedIn$ | async)">
     <ng-container *ngIf="user$ | async as user">
       <span class="toolbar__hello-message" *ngIf="user.name">{{translations.HEY_USER | translate}}, {{user.name}}</span>
     </ng-container>

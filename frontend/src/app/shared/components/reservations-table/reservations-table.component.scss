@@ -1,0 +1,6 @@
+@use "../../../../variables" as vars;
+
+mat-row:hover {
+  cursor: pointer;
+  background: rgba(vars.$color-primary, 0.05);
+}

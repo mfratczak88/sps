@@ -4,11 +4,10 @@ import { AssignParkingLotDialogComponent } from './assign-parking-lot-dialog.com
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { of } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { AddressPipe } from '../../../shared/pipe/address.pipe';
+import { AddressPipe } from '../../../shared/pipe/address/address.pipe';
 import { translateTestModule } from '../../../../test.utils';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -46,7 +45,7 @@ describe('AssignParkingLotDialogComponent', () => {
         },
         {
           provide: MAT_DIALOG_DATA,
-          useValue: of(parkingLots),
+          useValue: parkingLots,
         },
       ],
     }).compileComponents();

@@ -1,0 +1,81 @@
+<div class="create">
+  <sps-heading size="m">{{translations.MAKE_RESERVATION_TITLE | translate}}</sps-heading>
+  <sps-text size="m">{{translations.MAKE_RESERVATION_SUBTITLE | translate}}</sps-text>
+  <div class="stepper" *ngIf="driver$ | async as driver">
+    <mat-vertical-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="parkingLotForm">
+        <form [formGroup]="parkingLotForm" class="stepper__form">
+          <ng-template matStepLabel>{{translations.SELECT_PARKING_LOT | translate}}</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.PARKING_LOT | translate}}</mat-label>
+            <mat-select formControlName="parkingLot" required>
+              <mat-option *ngFor="let lot of (parkingLots$ | async)"
+                          [value]="lot">{{lot | address}}</mat-option>
+            </mat-select>
+            <sps-form-error [control]="parkingLotForm.controls.parkingLot"></sps-form-error>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="dateForm">
+        <form [formGroup]="dateForm" class="stepper__form">
+          <ng-template matStepLabel>{{translations.CHOSE_A_DATE | translate}}</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.DATE | translate}}</mat-label>
+            <input matInput formControlName="date" [matDatepicker]="dp" [matDatepickerFilter]="dateFilter">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+            <sps-form-error [control]="dateForm.controls.date"></sps-form-error>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>{{translations.BACK | translate}}</button>
+            <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="hoursForm">
+        <form [formGroup]="hoursForm" class="stepper__form">
+          <ng-template matStepLabel>{{translations.HOURS | translate}}</ng-template>
+          <sps-hours-form #hoursFormComponent formControlName="hours">
+            <sps-form-error [control]="hoursForm.controls.hours"></sps-form-error>
+          </sps-hours-form>
+          <div>
+            <button mat-button matStepperPrevious>{{translations.BACK | translate}}</button>
+            <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="vehicleForm">
+        <form [formGroup]="vehicleForm" class="stepper__form">
+          <ng-template matStepLabel>{{translations.CHOOSE_VEHICLE | translate}}</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>{{translations.VEHICLE | translate}}</mat-label>
+            <mat-select formControlName="licensePlate" required>
+              <mat-option *ngFor="let vehicle of driver.vehicles"
+                          [value]="vehicle.licensePlate">{{vehicle.licensePlate}}</mat-option>
+            </mat-select>
+            <sps-form-error [control]="parkingLotForm.controls.parkingLot"></sps-form-error>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>{{translations.BACK | translate}}</button>
+            <button mat-button matStepperNext>{{translations.NEXT | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{translations.RESERVE | translate}}</ng-template>
+        <div>
+          <button mat-raised-button
+                  color="primary"
+                  *ngIf="dateForm.valid && parkingLotForm.valid && hoursForm.valid"
+                  (click)="onCreate()">{{translations.SAVE | translate}}
+          </button>
+          <button mat-button matStepperPrevious>{{translations.BACK | translate}}</button>
+          <button mat-button (click)="stepper.reset()">{{translations.RESET | translate}}</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </div>
+</div>
