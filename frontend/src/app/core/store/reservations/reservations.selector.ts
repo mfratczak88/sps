@@ -20,8 +20,8 @@ export const sorting = createSelector(
   ({ sorting }: ReservationsStateModel) => {
     const { sortBy, sortOrder } = sorting;
     return {
-      sortOrder: (sortOrder || 'desc') as SortOrder,
-      sortBy: (sortBy || 'date') as SortBy,
+      sortOrder: sortOrder || SortOrder.DESCENDING,
+      sortBy: sortBy || SortBy.CREATED_AT,
     };
   },
 );

@@ -4,6 +4,11 @@ import { ParkingLot } from '../src/app/core/model/parking-lot.model';
 import { User } from '../src/app/core/model/user.model';
 import { mapToObjectWithIds } from '../src/app/core/util';
 import { Role } from '../src/app/core/model/auth.model';
+import { ParkingLotStateModel } from '../src/app/core/store/parking-lot/parking-lot.state';
+import { Reservation } from '../src/app/core/model/reservation.model';
+import { ReservationsStateModel } from '../src/app/core/store/reservations/reservations.state';
+import { RouterStateModel } from '@ngxs/router-plugin';
+import { RouterStateParams } from '../src/app/core/store/routing/routing.state.model';
 
 export const setRouterParams = (store: Store, params: any) =>
   store.reset({
@@ -79,3 +84,37 @@ export const setUsers = (store: Store, users: User[]) =>
       loading: false,
     },
   });
+export const stateModelForParkingLots = (
+  lots: ParkingLot[],
+): ParkingLotStateModel => ({
+  entities: mapToObjectWithIds(lots),
+  loading: false,
+  selectedId: null,
+});
+
+export const stateModelFroReservations = (
+  reservations: Reservation[],
+): ReservationsStateModel => ({
+  entities: mapToObjectWithIds(reservations),
+  count: reservations.length,
+  loading: false,
+  sorting: {},
+  paging: {},
+  filters: {},
+  selectedId: null,
+});
+
+export const routerStateModel = (
+  params?: any,
+  queryParams?: any,
+  fragment?: any,
+  url?: string,
+): RouterStateModel<RouterStateParams> => ({
+  trigger: 'none',
+  state: {
+    params,
+    queryParams,
+    fragment,
+    url: url || 'foo',
+  },
+});
