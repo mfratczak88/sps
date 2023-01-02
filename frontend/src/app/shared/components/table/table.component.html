@@ -15,7 +15,7 @@
       <ng-container [matColumnDef]="column.name" *ngFor="let column of columns">
         <mat-header-cell mat-header-cell *matHeaderCellDef
                          mat-sort-header>{{column.translation | translate}}</mat-header-cell>
-        <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name]}} </mat-cell>
+        <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name] | translate}} </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="button.name" *ngFor="let button of buttons">
         <mat-header-cell mat-header-cell *matHeaderCellDef>{{button.translation | translate}}</mat-header-cell>

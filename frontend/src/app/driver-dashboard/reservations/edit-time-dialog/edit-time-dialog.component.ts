@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Hours } from '../../../shared/components/hours-form/hours-form.component';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
 import { DateTime } from 'luxon';
+import { Hours } from '../../../core/model/reservation.model';
 
 @Component({
   selector: 'sps-edit-time-dialog',

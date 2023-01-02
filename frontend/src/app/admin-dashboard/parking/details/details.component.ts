@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ParkingLotQuery } from '../state/parking-lot.query';
-import { ParkingLotService } from '../state/parking-lot.service';
-import { RouterQuery } from '../../../core/state/router/router.query';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -9,6 +6,13 @@ import { concatMap, filter, first } from 'rxjs';
 import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-dialog.component';
 import { ChangeCapacityDialogComponent } from '../change-capacity-dialog/change-capacity-dialog.component';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { Store } from '@ngxs/store';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { parkingLotId } from '../../../core/store/routing/routing.selector';
+import {
+  active,
+  loading,
+} from '../../../core/store/parking-lot/parking-lot.selectors';
 
 @Component({
   selector: 'sps-parking-lot-details',
@@ -16,17 +20,18 @@ import { ParkingLot } from '../../../core/model/parking-lot.model';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-  constructor(
-    readonly parkingLotQuery: ParkingLotQuery,
-    private readonly parkingLotService: ParkingLotService,
-    private readonly routerQuery: RouterQuery,
-    readonly dialog: MatDialog,
-  ) {}
+  constructor(readonly store: Store, readonly dialog: MatDialog) {}
 
   translations = { ...AdminKeys, ...MiscKeys };
 
+  loading$ = this.store.select(loading);
+
+  parkingLot$ = this.store.select(active);
+
   ngOnInit(): void {
-    this.parkingLotService.select(this.routerQuery.parkingLotId());
+    this.store.dispatch(
+      new AdminActions.GetParkingLot(this.store.selectSnapshot(parkingLotId)),
+    );
   }
 
   onChangeHours(lot: ParkingLot) {
@@ -38,8 +43,10 @@ export class DetailsComponent implements OnInit {
       .pipe(
         filter(val => !!val),
         first(),
-        concatMap(hours =>
-          this.parkingLotService.changeOperationHours(hours, lot.id),
+        concatMap(({ hourFrom, hourTo }) =>
+          this.store.dispatch(
+            new AdminActions.ChangeOperationHours(hourFrom, hourTo, lot.id),
+          ),
         ),
       )
       .subscribe();
@@ -54,7 +61,9 @@ export class DetailsComponent implements OnInit {
       .pipe(
         filter(val => !!val),
         concatMap(capacity =>
-          this.parkingLotService.changeCapacity(capacity, lot.id),
+          this.store.dispatch(
+            new AdminActions.ChangeCapacity(capacity, lot.id),
+          ),
         ),
         first(),
       )

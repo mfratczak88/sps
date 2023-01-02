@@ -32,6 +32,6 @@ export const mockDriver: Driver = {
   id: '4',
   email: 'foo@gmail.com',
   name: 'Alex',
-  parkingLotIds: ['1', '2'],
+  parkingLotIds: ['3', '4'],
   vehicles: [{ licensePlate: 'WI747GG' }],
 };

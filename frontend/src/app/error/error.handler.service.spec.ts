@@ -1,24 +1,23 @@
 import { ToastService } from '../core/service/toast.service';
 import SpyObj = jasmine.SpyObj;
 import { Injector } from '@angular/core';
-import { RouterService } from '../core/state/router/router.service';
 import { ErrorResponse } from '../core/model/error.model';
 import { ErrorHandlerService } from './error.handler.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Store } from '@ngxs/store';
+import { ErrorActions } from '../core/store/actions/error.actions';
 
 describe('Error handler service', () => {
   let toastServiceSpy: SpyObj<ToastService>;
+  let storeSpy: SpyObj<Store>;
   const injectorSpy: Injector = {
     get() {
-      return routerServiceSpy;
+      return storeSpy;
     },
   };
-  let routerServiceSpy: SpyObj<RouterService>;
   beforeEach(() => {
     toastServiceSpy = jasmine.createSpyObj('ToastService', ['show']);
-    routerServiceSpy = jasmine.createSpyObj('RouterService', [
-      'toInternalServerErrorPage',
-    ]);
+    storeSpy = jasmine.createSpyObj('Store', ['dispatch']);
   });
   it('Displays message from http error', () => {
     const error: ErrorResponse = {
@@ -56,6 +55,8 @@ describe('Error handler service', () => {
       }),
     );
     expect(toastServiceSpy.show).toHaveBeenCalledTimes(0);
-    expect(routerServiceSpy.toInternalServerErrorPage).toHaveBeenCalledTimes(1);
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(
+      new ErrorActions.NavigateToInternalServerErrorPage(),
+    );
   });
 });

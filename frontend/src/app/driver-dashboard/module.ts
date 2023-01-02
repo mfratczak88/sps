@@ -11,7 +11,6 @@ import { DriverDashboardRoutingModule } from './routing';
   imports: [
     DriverDashboardRoutingModule,
     CommonModule,
-    CommonModule,
     ReactiveFormsModule,
     CoreModule,
     SharedModule,

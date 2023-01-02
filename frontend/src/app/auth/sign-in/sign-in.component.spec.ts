@@ -1,10 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignInComponent } from './sign-in.component';
-import { RouterService } from '../../core/state/router/router.service';
-import { AuthService } from '../../core/state/auth/auth.service';
-import { of, Subject } from 'rxjs';
-import { TranslateTestingModule } from 'ngx-translate-testing';
+import { of } from 'rxjs';
 import { SharedModule } from '../../shared/shared.module';
 import { EmailSignInFormComponent } from './email-sign-in-form/email-sign-in-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,18 +11,21 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AuthTranslationKeys } from '../../core/translation-keys';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterQuery } from '../../core/state/router/router.query';
-import SpyObj = jasmine.SpyObj;
-import { User } from '../../core/state/auth/auth.model';
+import { DispatchSpy, newDispatchSpy } from '../../../../test/spy.util';
+import { NgxsModule, Store } from '@ngxs/store';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { AuthState } from '../../core/store/auth/auth.state';
+import { setFragment } from '../../../../test/store.util';
+import { AuthActions } from '../../core/store/actions/auth.actions';
+import { CoreModule } from '../../core/core.module';
+import { translateTestModule } from '../../../test.utils';
 
 describe('SignInComponent', () => {
   let fixture: ComponentFixture<SignInComponent>;
-  let routerServiceSpy: SpyObj<RouterService>;
-  let authServiceSpy: SpyObj<AuthService>;
   let translateService: TranslateService;
-  let emailFragment$: Subject<boolean>;
-  let routerQuerySpy: SpyObj<RouterQuery>;
-
+  let store: Store;
+  let dispatchSpy: DispatchSpy;
   const emailForm = () =>
     fixture.debugElement.query(By.directive(EmailSignInFormComponent))
       .componentInstance as EmailSignInFormComponent;
@@ -38,32 +38,15 @@ describe('SignInComponent', () => {
       .nativeElement as HTMLButtonElement;
 
   beforeEach(async () => {
-    emailFragment$ = new Subject<boolean>();
-    routerQuerySpy = jasmine.createSpyObj('RouterQuery', ['emailFragment$']);
-    routerServiceSpy = jasmine.createSpyObj('RouterService', [
-      'toSameRoute',
-      'toSignUp',
-      'toPasswordReset',
-      'navigateAfterLogin',
-    ]);
-    authServiceSpy = jasmine.createSpyObj('AuthService', [
-      'loginWithGoogle',
-      'login',
-    ]);
-    routerQuerySpy.emailFragment$.and.returnValue(emailFragment$);
     await TestBed.configureTestingModule({
       declarations: [SignInComponent, EmailSignInFormComponent],
-      providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: RouterService, useValue: routerServiceSpy },
-        { provide: RouterQuery, useValue: routerQuerySpy },
-      ],
       imports: [
-        TranslateTestingModule.withTranslations(
-          'pl',
-          await import('../../../assets/i18n/pl.json'),
-        ).withTranslations('en', await import('../../../assets/i18n/en.json')),
+        await translateTestModule(),
         SharedModule,
+        RouterTestingModule,
+        CoreModule,
+        NgxsModule.forRoot([AuthState]),
+        NgxsRouterPluginModule.forRoot(),
         NoopAnimationsModule,
         ReactiveFormsModule,
       ],
@@ -72,6 +55,8 @@ describe('SignInComponent', () => {
     fixture = TestBed.createComponent(SignInComponent);
     translateService = TestBed.inject(TranslateService);
     fixture.detectChanges();
+    store = TestBed.inject(Store);
+    dispatchSpy = newDispatchSpy(store);
   });
   it('Shows AUTH.SIGN_IN_TITLE translated text as heading', () => {
     const heading = fixture.debugElement.query(By.directive(HeadingComponent))
@@ -90,7 +75,7 @@ describe('SignInComponent', () => {
     );
   });
   it('Shows sign in form when email url fragment is active', () => {
-    emailFragment$.next(true);
+    setFragment(store, 'email');
     fixture.detectChanges();
     expect(
       fixture.debugElement.query(By.css('.sign-in__form--component'))
@@ -98,52 +83,54 @@ describe('SignInComponent', () => {
     ).toBeTruthy();
   });
   it('Click on sign in with google calls auth service', () => {
-    authServiceSpy.loginWithGoogle.and.returnValue(of({} as User));
+    dispatchSpy.and.returnValue(of({}));
     signInWithGoogleButton().click();
     fixture.detectChanges();
-    expect(authServiceSpy.loginWithGoogle).toHaveBeenCalled();
-    expect(routerServiceSpy.navigateAfterLogin).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledWith(new AuthActions.LoginWithGoogle());
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateAfterLogin('/'),
+    );
   });
   it('On successfully signed in with email navigates to root url', () => {
-    authServiceSpy.login.and.returnValue(of({} as User));
-    emailFragment$.next(true);
-    fixture.detectChanges();
-    const email = 'maciek@gmail.com';
-    const password = 'foo@bar@baz';
-    const form = emailForm();
-    form.submitted.emit({ email, password });
-    fixture.detectChanges();
-    expect(authServiceSpy.login).toHaveBeenCalledWith(email, password);
-    expect(routerServiceSpy.navigateAfterLogin).toHaveBeenCalled();
-  });
-  it('On forgot password navigates to password reset', () => {
-    emailFragment$.next(true);
+    dispatchSpy.and.returnValues(of({}), of({}));
+    setFragment(store, 'email');
     fixture.detectChanges();
     const form = emailForm();
-    form.forgotPassword.emit();
-    expect(routerServiceSpy.toPasswordReset).toHaveBeenCalled();
+
+    form.submitted.emit({ email: 'email', password: 'pass' });
+    fixture.detectChanges();
+
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.Login('email', 'pass'),
+    );
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateAfterLogin('/'),
+    );
   });
   it('On no account navigates to sign up', () => {
-    emailFragment$.next(true);
+    setFragment(store, 'email');
     fixture.detectChanges();
     const form = emailForm();
     form.noAccount.emit();
-    expect(routerServiceSpy.toSignUp).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateToSignUp(),
+    );
   });
   it('On back from form navigates to sign in type options', () => {
-    emailFragment$.next(true);
+    setFragment(store, 'email');
     fixture.detectChanges();
     const form = emailForm();
     form.back.emit();
-    expect(routerServiceSpy.toSameRoute).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateToSameRoute(),
+    );
   });
   it('On Sign in with email calls navigation to same route with email fragment', () => {
     fixture.detectChanges();
     const button = signInWithEmailButton();
     button.click();
-    expect(routerServiceSpy.toSameRoute).toHaveBeenCalledWith({
-      fragment: 'email',
-      queryParamsHandling: 'preserve',
-    });
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      new AuthActions.NavigateToSameRoute('email'),
+    );
   });
 });

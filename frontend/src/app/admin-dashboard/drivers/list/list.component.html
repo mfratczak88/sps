@@ -1,10 +1,10 @@
 <div class="drivers">
   <sps-panel title="{{translations.DRIVERS | translate}}">
     <sps-sync-table class="drivers__table"
-               [loading$]="driversQuery.selectLoading()"
+               [loading$]="loading$"
                [buttons]="tableButtons"
                [columns]="tableColumns"
-               [data]="driversQuery.selectAll()">
+               [data]="drivers$">
     </sps-sync-table>
   </sps-panel>
 </div>

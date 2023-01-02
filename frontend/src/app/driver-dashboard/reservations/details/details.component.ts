@@ -1,12 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ReservationsService } from '../../state/reservation/reservations.service';
-import { RouterQuery } from '../../../core/state/router/router.query';
-import { concatMap } from 'rxjs/operators';
-import { takeWhile } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { ReservationBaseComponent } from '../base.component';
-import { ReservationsQuery } from '../../state/reservation/reservations.query';
-import { RouterService } from '../../../core/state/router/router.service';
+import { Store } from '@ngxs/store';
+import { MatDialog } from '@angular/material/dialog';
+import { DriverActions } from '../../../core/store/actions/driver.actions';
+import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import {
+  active,
+  loading,
+} from '../../../core/store/reservations/reservations.selector';
+import { reservationId } from '../../../core/store/routing/routing.selector';
 
 @Component({
   selector: 'sps-reservation-details',
@@ -14,30 +16,28 @@ import { RouterService } from '../../../core/state/router/router.service';
   styleUrls: ['./details.component.scss'],
 })
 export class ReservationDetailsComponent extends ReservationBaseComponent
-  implements OnInit, OnDestroy {
-  alive = true;
+  implements OnInit {
+  reservation$ = this.store.select(active);
+
+  loading$ = this.store.select(loading);
 
   constructor(
-    service: ReservationsService,
+    store: Store,
     dialog: MatDialog,
-    readonly routerQuery: RouterQuery,
-    readonly query: ReservationsQuery,
-    routerService: RouterService,
+    validator: ReservationValidator,
   ) {
-    super(service, dialog, routerService);
+    super(store, dialog, validator);
   }
 
   ngOnInit(): void {
-    this.routerQuery
-      .reservationId$()
-      .pipe(
-        concatMap(id => this.reservationsService.select(id)),
-        takeWhile(() => this.alive),
-      )
-      .subscribe();
+    this.store.dispatch(
+      new DriverActions.GetReservationById(
+        this.store.selectSnapshot(reservationId),
+      ),
+    );
   }
 
-  ngOnDestroy(): void {
-    this.alive = false;
+  toReservationsList() {
+    this.store.dispatch(new DriverActions.NavigateToReservationList());
   }
 }

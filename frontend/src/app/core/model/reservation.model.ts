@@ -66,8 +66,8 @@ export interface ReservationQueryModel {
   parkingLotId?: Id;
   page?: number;
   pageSize?: number;
-  sortBy?: SortBy;
-  sortOrder?: SortOrder;
+  sortBy?: SortBy | string;
+  sortOrder?: SortOrder | string;
   onlyHistory?: boolean;
 }
 
@@ -81,4 +81,8 @@ export interface ChangeTime {
   reservationId: Id;
   start: Date;
   end: Date;
+}
+export interface Hours {
+  hourFrom: number;
+  hourTo: number;
 }

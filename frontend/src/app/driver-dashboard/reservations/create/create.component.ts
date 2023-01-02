@@ -1,16 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
-import { DriverQuery } from '../../state/driver/driver.query';
-import { DriverService } from '../../state/driver/driver.service';
-
-import { DateTime } from 'luxon';
 import { HoursFormComponent } from '../../../shared/components/hours-form/hours-form.component';
 import { DriverKeys, MiscKeys } from '../../../core/translation-keys';
-import { concatMap, first } from 'rxjs';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
-import { RouterService } from '../../../core/state/router/router.service';
-import { ReservationsService } from '../../state/reservation/reservations.service';
+import { Store } from '@ngxs/store';
+import { DriverActions } from '../../../core/store/actions/driver.actions';
+import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import { Observable } from 'rxjs';
+import { Driver } from '../../../core/model/driver.model';
+import {
+  assignedParkingLots,
+  currentDriver,
+} from '../../../core/store/drivers/drivers.selectors';
 
 interface HoursForm {
   hours: FormControl<{ hourFrom: number; hourTo: number } | null>;
@@ -34,10 +36,16 @@ interface LicensePlateForm {
   styleUrls: ['./create.component.scss'],
 })
 export class CreateReservationComponent {
-  translations = { ...DriverKeys, ...MiscKeys };
-
   @ViewChild('hoursFormComponent')
   hoursFormComponent: HoursFormComponent;
+
+  translations = { ...DriverKeys, ...MiscKeys };
+
+  driver$: Observable<Driver | undefined> = this.store.select(currentDriver);
+
+  parkingLots$: Observable<ParkingLot[]> = this.store.select(
+    assignedParkingLots,
+  );
 
   hoursForm = this.formBuilder.group<HoursForm>({
     hours: new FormControl({ hourFrom: 6, hourTo: 22 }, [
@@ -57,13 +65,12 @@ export class CreateReservationComponent {
     licensePlate: new FormControl('', [LocalizedValidators.required]),
   });
 
-  dateFilter = this.validReservationDate.bind(this);
+  dateFilter = this.validReservationDate().bind(this);
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    readonly driverQuery: DriverQuery,
-    private readonly reservationService: ReservationsService,
-    private readonly routerService: RouterService,
+    private readonly store: Store,
+    private readonly reservationValidator: ReservationValidator,
   ) {
     this.parkingLotForm.valueChanges.subscribe(({ parkingLot }) => {
       if (!this.parkingLotForm.invalid && parkingLot) {
@@ -84,23 +91,22 @@ export class CreateReservationComponent {
     const { hours } = this.hoursForm.value;
     const { licensePlate } = this.vehicleForm.value;
     if (date && parkingLot && hours && licensePlate)
-      this.reservationService
-        .makeReservation({
-          hours,
-          date,
-          parkingLotId: parkingLot.id,
-          licensePlate,
-        })
-        .pipe(
-          first(),
-          concatMap(() => this.routerService.toDriverReservations()),
+      this.store
+        .dispatch(
+          new DriverActions.CreateReservation(
+            licensePlate,
+            parkingLot.id,
+            hours,
+            date,
+          ),
         )
-        .subscribe();
+        .subscribe(() =>
+          this.store.dispatch(new DriverActions.NavigateToReservationList()),
+        );
   }
 
-  private validReservationDate(date: Date | null) {
+  private validReservationDate() {
     const parkingLot = this.parkingLotForm.controls.parkingLot.value;
-    if (!parkingLot || !date) return true;
-    return parkingLot.days.includes(DateTime.fromJSDate(date).weekday - 1);
+    return this.reservationValidator.dateFilterFn(parkingLot?.id).bind(this);
   }
 }

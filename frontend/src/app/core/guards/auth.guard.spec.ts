@@ -1,72 +1,115 @@
 import SpyObj = jasmine.SpyObj;
-import { AuthService } from '../state/auth/auth.service';
-import { RouterService } from '../state/router/router.service';
 import { AuthGuard } from './auth.guard';
-import { AuthQuery } from '../state/auth/auth.query';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { NgxsModule, Store } from '@ngxs/store';
+import { AuthState, defaults } from '../store/auth/auth.state';
+import { AuthPaths, TopLevelPaths } from '../../routes';
+import { AuthActions } from '../store/actions/auth.actions';
+import { QueryParamKeys } from '../model/router.model';
+import { TestBed } from '@angular/core/testing';
+import {
+  newAuthApiSpy,
+  newSocialAuthServiceSpy,
+} from '../../../../test/spy.util';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { AuthApi } from '../api/auth.api';
+import { authStateWithDriver } from '../../../../test/store.util';
 
 describe('Auth guard', () => {
-  let authServiceSpy: SpyObj<AuthService>;
-  let authQuerySpy: SpyObj<AuthQuery>;
-  let routerServiceSpy: SpyObj<RouterService>;
+  let routerSpy: SpyObj<Router>;
+  let store: Store;
   let authGuard: AuthGuard;
   const route: Partial<ActivatedRouteSnapshot> = {};
+  const setStoreWithInitialData = () =>
+    store.reset({
+      ...store.snapshot(),
+      auth: {
+        ...defaults,
+      },
+    });
+  const setStoreWithDriverData = () =>
+    store.reset({
+      ...store.snapshot(),
+      auth: {
+        ...authStateWithDriver,
+      },
+    });
   const state: Partial<RouterStateSnapshot> = {
     url: '/foo',
   };
   beforeEach(async () => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['restoreAuth']);
-    routerServiceSpy = jasmine.createSpyObj('RouterService', [
-      'urlTreeForLoginWithReturnUrl',
-    ]);
-    authQuerySpy = jasmine.createSpyObj('AuthQuery', ['loggedIn']);
-    authGuard = new AuthGuard(authQuerySpy, authServiceSpy, routerServiceSpy);
+    routerSpy = jasmine.createSpyObj('Router', ['parseUrl']);
+    TestBed.configureTestingModule({
+      imports: [NgxsModule.forRoot([AuthState])],
+      providers: [
+        {
+          provide: AuthApi,
+          useValue: newAuthApiSpy(),
+        },
+        {
+          provide: SocialAuthService,
+          useValue: newSocialAuthServiceSpy(),
+        },
+      ],
+    });
+    store = TestBed.inject(Store);
+    authGuard = new AuthGuard(routerSpy, store);
   });
 
-  it('returns true if user is logged in', () => {
-    authQuerySpy.loggedIn.and.returnValue(true);
+  it('returns true if user is logged in', async () => {
+    store.reset({
+      ...store.snapshot(),
+      auth: {
+        ...authStateWithDriver,
+      },
+    });
+
     const canActivate = authGuard.canActivate(
       route as ActivatedRouteSnapshot,
       state as RouterStateSnapshot,
     );
     expect(canActivate).toEqual(true);
   });
-  it('calls restore auth on auth service when user is not logged in', () => {
-    authQuerySpy.loggedIn.and.returnValue(false);
-    authServiceSpy.restoreAuth.and.resolveTo(false);
-
+  it('dispatches restore auth on auth service when user is not logged in', () => {
+    setStoreWithInitialData();
+    spyOn(store, 'dispatch').and.returnValue(of(null));
     authGuard.canActivate(
       route as ActivatedRouteSnapshot,
       state as RouterStateSnapshot,
     );
 
-    expect(authServiceSpy.restoreAuth).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalledWith(new AuthActions.RestoreAuth());
   });
   it('calls router service for redirect to login on auth failed', () => {
-    authQuerySpy.loggedIn.and.returnValue(false);
-    authServiceSpy.restoreAuth.and.resolveTo(null);
+    setStoreWithInitialData();
+    spyOn(store, 'dispatch').and.returnValue(of(null));
 
     (authGuard.canActivate(
       route as ActivatedRouteSnapshot,
       state as RouterStateSnapshot,
     ) as Observable<any>).subscribe(() => {
-      expect(
-        routerServiceSpy.urlTreeForLoginWithReturnUrl,
-      ).toHaveBeenCalledWith('/foo');
+      expect(routerSpy.parseUrl).toHaveBeenCalledWith(
+        `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${state.url}`,
+      );
     });
   });
-  it('returns true if auth can be restored', () => {
-    authQuerySpy.loggedIn.and.returnValue(false);
-    authServiceSpy.restoreAuth.and.resolveTo({
-      id: '31',
-    });
-
+  it('returns parsedUrl based on role if auth can be restored', () => {
+    setStoreWithInitialData();
+    spyOn(store, 'dispatch').and.callFake(() => of(setStoreWithDriverData()));
     (<Observable<any>>(
       authGuard.canActivate(
         route as ActivatedRouteSnapshot,
-        state as RouterStateSnapshot,
+        { url: '/' } as RouterStateSnapshot,
       )
-    )).subscribe(res => expect(res).toEqual(true));
+    )).subscribe(() =>
+      expect(routerSpy.parseUrl).toHaveBeenCalledWith(
+        TopLevelPaths.ADMIN_DASHBOARD,
+      ),
+    );
   });
 });

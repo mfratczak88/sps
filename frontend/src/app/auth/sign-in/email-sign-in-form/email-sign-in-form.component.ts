@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { LocalizedValidators } from '../../../shared/validator';
+import { AuthTranslationKeys } from '../../../core/translation-keys';
 import {
   LoginCredentials,
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
-} from '../../../core/state/auth/auth.model';
-import { LocalizedValidators } from '../../../shared/validator';
-import { AuthTranslationKeys } from '../../../core/translation-keys';
+} from '../../../core/model/auth.model';
 
 @Component({
   selector: 'sps-email-sign-in-form',

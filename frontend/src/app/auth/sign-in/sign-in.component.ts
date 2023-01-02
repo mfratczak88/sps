@@ -1,53 +1,58 @@
-import { Component, OnDestroy } from '@angular/core';
-import { AuthService } from '../../core/state/auth/auth.service';
-import { first, Subscription } from 'rxjs';
-import { RouterService } from '../../core/state/router/router.service';
-import { LoginCredentials } from '../../core/state/auth/auth.model';
+import { Component } from '@angular/core';
+import { concatMap, first } from 'rxjs';
 import { AuthTranslationKeys } from '../../core/translation-keys';
-import { RouterQuery } from '../../core/state/router/router.query';
+import { Store } from '@ngxs/store';
+import {
+  afterLoginUrl,
+  emailFragment,
+} from '../../core/store/routing/routing.selector';
+import { AuthActions } from '../../core/store/actions/auth.actions';
+import { LoginCredentials } from '../../core/model/auth.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sps-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss'],
 })
-export class SignInComponent implements OnDestroy {
-  showEmailSignUp = false;
-
+export class SignInComponent {
   readonly translations = AuthTranslationKeys;
 
-  private readonly routeFragmentSub$: Subscription;
+  readonly emailFragment$ = this.store.select(emailFragment);
 
-  constructor(
-    readonly routerService: RouterService,
-    readonly routerQuery: RouterQuery,
-    readonly authService: AuthService,
-  ) {
-    this.routeFragmentSub$ = this.routerQuery
-      .emailFragment$()
-      .subscribe(emailFragment => {
-        this.showEmailSignUp = emailFragment;
-      });
-  }
+  constructor(readonly store: Store) {}
 
   onEmailSignIn({ email, password }: LoginCredentials) {
-    this.authService
-      .login(email, password)
-      .pipe(first())
-      .subscribe(() => this.onSuccessfulSignIn());
+    this.store
+      .dispatch(new AuthActions.Login(email, password))
+      .pipe(concatMap(() => this.onSuccessfulSignIn()))
+      .subscribe();
   }
 
   onGoogleSignIn() {
-    this.authService
-      .loginWithGoogle()
-      .subscribe(() => this.onSuccessfulSignIn());
+    this.store
+      .dispatch(new AuthActions.LoginWithGoogle())
+      .pipe(concatMap(() => this.onSuccessfulSignIn()))
+      .subscribe();
   }
 
   onSuccessfulSignIn() {
-    this.routerService.navigateAfterLogin();
+    return this.store.dispatch(
+      new AuthActions.NavigateAfterLogin(
+        this.store.selectSnapshot(afterLoginUrl),
+      ),
+    );
   }
 
-  ngOnDestroy(): void {
-    this.routeFragmentSub$.unsubscribe();
+  onBack() {
+    this.store.dispatch(new AuthActions.NavigateToSameRoute());
+  }
+
+  onShowEmailForm() {
+    this.store.dispatch(new AuthActions.NavigateToSameRoute('email'));
+  }
+
+  toSignUp() {
+    this.store.dispatch(new AuthActions.NavigateToSignUp());
   }
 }

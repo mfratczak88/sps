@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LocalizedValidators } from '../../../shared/validator';
-import { ParkingLotService } from '../state/parking-lot.service';
-import { RouterService } from '../../../core/state/router/router.service';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
+import { Store } from '@ngxs/store';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'sps-create',
@@ -21,8 +22,7 @@ export class CreateComponent {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly parkingService: ParkingLotService,
-    private readonly routerService: RouterService,
+    private readonly store: Store,
   ) {
     this.addressForm = this.formBuilder.nonNullable.group({
       city: [null, [LocalizedValidators.required]],
@@ -50,21 +50,17 @@ export class CreateComponent {
       validFrom,
       days,
     } = this.hoursForm.value;
-    this.parkingService
-      .createParkingLot({
-        capacity: Number(capacity),
-        address: {
-          streetName,
-          streetNumber,
-          city,
-        },
-        hoursOfOperation: {
-          hourFrom,
-          hourTo,
-          validFrom,
-          days,
-        },
-      })
-      .subscribe(() => this.routerService.toAdminParkingLot());
+    this.store
+      .dispatch(
+        new AdminActions.CreateParkingLot(
+          Number(capacity),
+          { hourFrom, hourTo, validFrom, days },
+          { city, streetName, streetNumber },
+        ),
+      )
+      .pipe(first())
+      .subscribe(() =>
+        this.store.dispatch(new AdminActions.NavigateToParkingLots()),
+      );
   }
 }

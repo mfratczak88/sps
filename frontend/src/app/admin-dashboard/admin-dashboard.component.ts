@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { DrawerItem } from '../shared/components/drawer/drawer.component';
 import { DrawerKeys } from '../core/translation-keys';
 import { AdminPaths } from '../routes';
+import { Store } from '@ngxs/store';
+import { AdminActions } from '../core/store/actions/admin.actions';
 
 @Component({
   selector: 'sps-admin-dashboard',
@@ -36,4 +38,8 @@ export class AdminDashboardComponent {
       link: AdminPaths.USERS,
     },
   ];
+
+  constructor(private readonly store: Store) {
+    this.store.dispatch(new AdminActions.GetAllParkingLots());
+  }
 }

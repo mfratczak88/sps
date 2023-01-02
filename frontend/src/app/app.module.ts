@@ -11,6 +11,9 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { environment } from '../environments/environment';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -18,6 +21,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    NgxsModule.forRoot([]),
     BrowserModule,
     AppRoutingModule,
     CoreModule,
@@ -31,6 +35,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       defaultLanguage: 'pl',
     }),
     BrowserAnimationsModule,
+
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
   ],
   bootstrap: [AppComponent],
   providers: [{ provide: ErrorHandler, useClass: ErrorHandlerService }],

@@ -9,8 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared.module';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { LocalizedErrors } from '../../validator';
-import { HoursPipe } from '../../pipe/hours.pipe';
-import { HourPipe } from '../../pipe/hour.pipe';
+import { HoursPipe } from '../../pipe/time/hours.pipe';
+import { HourPipe } from '../../pipe/time/hour.pipe';
 
 describe('HoursFormComponent', () => {
   let component: HoursFormComponent;

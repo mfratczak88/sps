@@ -1,11 +1,11 @@
-<sps-card class="vehicles" *ngIf="driverQuery.select() | async as driver"
+<sps-card class="vehicles" *ngIf="vehicles$ | async as vehicles"
           [title]="translations.VEHICLES"
           [subTitle]="translations.VEHICLES_ADD_PROMPT">
-  <sps-number-chip chip>{{driver.vehicles.length}}</sps-number-chip>
+  <sps-number-chip chip>{{vehicles.length}}</sps-number-chip>
   <div class="vehicles__list" content>
-    <sps-loading-spinner *ngIf="(driverQuery.selectLoading() | async) else vehiclesList"></sps-loading-spinner>
+    <sps-loading-spinner *ngIf="(loading$ | async) else vehiclesList"></sps-loading-spinner>
     <ng-template #vehiclesList>
-    <span class="vehicles__list--vehicle" *ngFor="let vehicle of driver.vehicles">
+    <span class="vehicles__list--vehicle" *ngFor="let vehicle of vehicles">
         {{vehicle.licensePlate}}
       </span>
     </ng-template>

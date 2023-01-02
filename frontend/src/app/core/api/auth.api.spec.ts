@@ -5,7 +5,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { environment } from '../../../environments/environment';
-import { RegisterUserPayload, Role, User } from '../state/auth/auth.model';
+import { RegisterUserPayload, Role, AuthUser } from '../model/auth.model';
 
 describe('Auth api spec', () => {
   let api: AuthApi;
@@ -23,7 +23,7 @@ describe('Auth api spec', () => {
   it('Sends login request with credentials', () => {
     const email = 'mfratczak88@gmail.com';
     const password = 'ssd3313escz$$$';
-    const userResponse: User = {
+    const userResponse: AuthUser = {
       id: '3',
       email,
       name: 'Maciek',
@@ -46,7 +46,7 @@ describe('Auth api spec', () => {
   it('Sends to the API resp from google auth', () => {
     const idToken = '4';
     const email = 'mfratczak88@gmail.com';
-    const user: User = {
+    const user: AuthUser = {
       id: '4',
       email,
       name: 'Alex',
@@ -108,7 +108,7 @@ describe('Auth api spec', () => {
   });
 
   it('Sends refresh token req to the api', () => {
-    const user: User = {
+    const user: AuthUser = {
       id: '3',
       email: 'alex33@gmail.com',
       name: 'Alex Sanchez',

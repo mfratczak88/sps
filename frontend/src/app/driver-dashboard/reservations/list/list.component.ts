@@ -1,41 +1,53 @@
-import { Component, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { switchMap, takeWhile } from 'rxjs';
-import { ReservationsService } from '../../state/reservation/reservations.service';
+import { Component } from '@angular/core';
 import { ReservationBaseComponent } from '../base.component';
-import { RouterService } from '../../../core/state/router/router.service';
-import { DriverQuery } from '../../state/driver/driver.query';
-import { ReservationsQuery } from '../../state/reservation/reservations.query';
-import { DriverService } from '../../state/driver/driver.service';
+import { Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Driver } from '../../../core/model/driver.model';
+import { Reservation } from '../../../core/model/reservation.model';
+import { DriverActions } from '../../../core/store/actions/driver.actions';
+import { MatDialog } from '@angular/material/dialog';
+import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import {
+  currentDriver,
+  loading as driverLoading,
+} from '../../../core/store/drivers/drivers.selectors';
+import {
+  count,
+  loading as reservationsLoading,
+  reservations,
+} from '../../../core/store/reservations/reservations.selector';
 
 @Component({
   selector: 'sps-driver-reservation-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ReservationListComponent extends ReservationBaseComponent
-  implements OnDestroy {
-  alive = true;
+export class ReservationListComponent extends ReservationBaseComponent {
+  driver$: Observable<Driver | undefined> = this.store.select(currentDriver);
+
+  reservations$: Observable<Reservation[]> = this.store.select(reservations);
+
+  driverLoading$: Observable<boolean> = this.store.select(driverLoading);
+
+  reservationsLoading$: Observable<boolean> = this.store.select(
+    reservationsLoading,
+  );
+
+  reservationsCount$: Observable<number> = this.store.select(count);
 
   constructor(
-    reservationsService: ReservationsService,
+    store: Store,
     dialog: MatDialog,
-    routerService: RouterService,
-    readonly driverQuery: DriverQuery,
-    readonly reservationsQuery: ReservationsQuery,
-    readonly driverService: DriverService,
+    validator: ReservationValidator,
   ) {
-    super(reservationsService, dialog, routerService);
-
-    this.reload$
-      .pipe(
-        switchMap(() => this.driverService.loadReservations$()),
-        takeWhile(() => this.alive),
-      )
-      .subscribe();
+    super(store, dialog, validator);
   }
 
-  ngOnDestroy(): void {
-    this.alive = false;
+  toDetails(id: any) {
+    this.store.dispatch(new DriverActions.NavigateToReservationDetails(id));
+  }
+
+  toCreateReservation() {
+    this.store.dispatch(new DriverActions.NavigateToCreateReservation());
   }
 }

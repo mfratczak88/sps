@@ -14,6 +14,7 @@ import {
   LocalizedValidators,
 } from '../../validator';
 import { Subscription } from 'rxjs';
+import { Hours } from '../../../core/model/reservation.model';
 
 @Component({
   selector: 'sps-hours-form',
@@ -125,9 +126,4 @@ export class HoursFormComponent
     this.form.controls.hourTo.setValidators(this.hourToValidators());
     this.form.updateValueAndValidity();
   }
-}
-
-export interface Hours {
-  hourFrom: number;
-  hourTo: number;
 }

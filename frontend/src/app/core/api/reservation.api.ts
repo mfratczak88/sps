@@ -10,7 +10,6 @@ import {
 } from '../model/reservation.model';
 import { environment } from '../../../environments/environment';
 import { Id } from '../model/common.model';
-import { of, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +36,7 @@ export class ReservationApi extends BaseApi {
     let httpParams = new HttpParams();
     query &&
       Object.entries(query)
-        .filter(([key, val]) => !!val)
+        .filter(([, val]) => !!val)
         .forEach(([key, value]) => {
           httpParams = httpParams.set(key, value);
         });

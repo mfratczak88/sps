@@ -4,7 +4,6 @@ import { AuthComponent } from './auth.component';
 import { By } from '@angular/platform-browser';
 
 describe('AuthComponent', () => {
-  let component: AuthComponent;
   let fixture: ComponentFixture<AuthComponent>;
 
   beforeEach(async () => {
@@ -15,7 +14,6 @@ describe('AuthComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 

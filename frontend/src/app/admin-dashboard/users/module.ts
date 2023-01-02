@@ -5,12 +5,15 @@ import { EditRoleDialogComponent } from './edit-role-dialog/edit-role-dialog.com
 import { SharedModule } from '../../shared/shared.module';
 import { UsersRoutingModule } from './routing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { UsersState } from './store/users.state';
 
 @NgModule({
   declarations: [UsersListComponent, EditRoleDialogComponent],
   imports: [
     CommonModule,
     SharedModule,
+    NgxsModule.forFeature([UsersState]),
     ReactiveFormsModule,
     UsersRoutingModule,
   ],
