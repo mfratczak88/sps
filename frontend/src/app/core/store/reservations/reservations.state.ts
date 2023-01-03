@@ -9,12 +9,14 @@ import { Action, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { ReservationApi } from '../../api/reservation.api';
 import { DriverActions } from '../actions/driver.actions';
-import { concatMap, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { DateTime } from 'luxon';
-import { fullHour, mapToObjectWithIds } from '../../util';
+import { fullHour, mapToObjectWithIds, today } from '../../util';
 import { queryParams } from '../routing/routing.selector';
 import { UiActions } from '../actions/ui.actions';
 import { ToastKeys } from '../../translation-keys';
+import { ClerkActions } from '../actions/clerk.actions';
+
 export interface ReservationsStateModel {
   selectedId: Id | null;
   entities: {
@@ -24,6 +26,8 @@ export interface ReservationsStateModel {
   filters: {
     driverId?: Id;
     onlyHistory?: boolean;
+    licensePlate?: string;
+    startTime?: Date;
   };
   paging: {
     pageSize?: number;
@@ -251,7 +255,7 @@ export class ReservationsState {
     );
   }
 
-  @Action(DriverActions.GetAllReservations)
+  @Action([DriverActions.GetAllReservations, ClerkActions.FindReservations])
   getAllReservations(ctx: StateContext<ReservationsStateModel>) {
     const { filters, paging, sorting } = this.apiCallQueryParamsFrom(ctx);
     return this.api
@@ -277,6 +281,16 @@ export class ReservationsState {
           });
         }),
       );
+  }
+
+  @Action(ClerkActions.ApplyLicensePlateFilter)
+  applyLicensePlateFilter(
+    { dispatch, patchState }: StateContext<ReservationsStateModel>,
+    { licensePlate }: ClerkActions.ApplyLicensePlateFilter,
+  ) {
+    if (!licensePlate) return patchState({ ...defaults, loading: false });
+    patchState({ filters: { startTime: today(), licensePlate } });
+    return dispatch(new ClerkActions.FindReservations());
   }
 
   private apiCallQueryParamsFrom({

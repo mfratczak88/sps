@@ -41,6 +41,7 @@ import { DatePipe } from './pipe/date/date.pipe';
 import { CanCancelReservationPipe } from './pipe/can/can-cancel-reservation.pipe';
 import { CanEditReservationPipe } from './pipe/can/can-edit-reservation.pipe';
 import { CanConfirmReservationPipe } from './pipe/can/can-confirm-reservation.pipe';
+import { ReservationExpansionPanelComponent } from './components/reservation-expansion-panel/reservation-expansion-panel.component';
 
 const components = [
   NavbarComponent,
@@ -70,6 +71,7 @@ const components = [
   ReservationsTableComponent,
   SyncTableComponent,
   ReservationStatusChipComponent,
+  ReservationExpansionPanelComponent,
   TimePipe,
   DatePipe,
   CanConfirmReservationPipe,

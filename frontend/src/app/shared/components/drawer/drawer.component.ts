@@ -38,4 +38,5 @@ export type DrawerIcon =
   | 'person'
   | 'emoji_transportation'
   | 'camera_front'
-  | 'directions_car';
+  | 'directions_car'
+  | 'swap_horizontal_circle';

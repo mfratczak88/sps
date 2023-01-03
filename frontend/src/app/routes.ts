@@ -32,6 +32,7 @@ export enum AdminPaths {
 }
 export enum ClerkPaths {
   DASHBOARD = 'dashboard',
+  OPERATIONS = 'operations',
 }
 export enum DriverPaths {
   DASHBOARD = 'dashboard',

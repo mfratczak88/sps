@@ -30,3 +30,4 @@ export const mapToObjectWithIds = <T extends { id: Id }>(collection: T[]) => {
     };
   }, {});
 };
+export const today = () => fullHour(DateTime.now(), 0);

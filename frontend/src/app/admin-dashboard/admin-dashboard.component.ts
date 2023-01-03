@@ -5,6 +5,7 @@ import { AdminPaths } from '../routes';
 import { Store } from '@ngxs/store';
 import { AdminActions } from '../core/store/actions/admin.actions';
 
+// todo: put those dashboards components into single one
 @Component({
   selector: 'sps-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
