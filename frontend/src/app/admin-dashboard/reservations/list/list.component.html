@@ -1,0 +1,13 @@
+<sps-panel
+  [title]="translations.RESERVATIONS | translate">
+  <sps-reservations-table
+    [reservations$]="listState.reservations$"
+    [loading$]="listState.loading$"
+    [length$]="listState.count$"
+    [paging$]="listState.paging$"
+    [sorting$]="listState.sorting$"
+    (pagingChange)="onPagingChange($event)"
+    (sortingChange)="onSortingChange($event)"
+    [displayColumns]="['licensePlate','time','date','status','parkingLotAddress']"
+  ></sps-reservations-table>
+</sps-panel>

@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClerkKeys, DrawerKeys } from '../../core/translation-keys';
 import { FormControl } from '@angular/forms';
 import { LocalizedValidators } from '../../shared/validator';
-import {
-  count,
-  loading as reservationsLoading,
-  paging,
-  reservations,
-} from '../../core/store/reservations/reservations.selector';
+import { reservationsListState } from '../../core/store/reservations/reservations.selector';
 import {
   licensePlateFound,
   loading as licensePlatesLoading,
@@ -31,17 +26,11 @@ export class OperationsComponent extends HasDialogComponent implements OnInit {
 
   inputFormElement = new FormControl('', [LocalizedValidators.required]);
 
-  reservations$ = this.store.select(reservations);
-
-  reservationsLoading$ = this.store.select(reservationsLoading);
-
   licensePlatesLoading$ = this.store.select(licensePlatesLoading);
 
   searchResults$ = this.store.select(licensePlateFound);
 
-  reservationsCount$ = this.store.select(count);
-
-  reservationsPaging$ = this.store.select(paging);
+  reservationsList = reservationsListState(this.store);
 
   constructor(dialog: MatDialog, private readonly store: Store) {
     super(dialog);

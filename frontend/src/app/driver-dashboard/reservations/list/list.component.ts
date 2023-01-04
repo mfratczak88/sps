@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ReservationBaseComponent } from '../base.component';
 import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
 import {
   Paging,
   SortBy,
@@ -14,13 +13,7 @@ import {
   currentDriver,
   loading as driverLoading,
 } from '../../../core/store/drivers/drivers.selectors';
-import {
-  count,
-  loading as reservationsLoading,
-  paging,
-  reservations,
-  sorting,
-} from '../../../core/store/reservations/reservations.selector';
+import { reservationsListState } from '../../../core/store/reservations/reservations.selector';
 
 @Component({
   selector: 'sps-driver-reservation-list',
@@ -30,17 +23,9 @@ import {
 export class ReservationListComponent extends ReservationBaseComponent {
   driver$ = this.store.select(currentDriver);
 
-  reservations$ = this.store.select(reservations);
-
   driverLoading$ = this.store.select(driverLoading);
 
-  reservationsLoading$ = this.store.select(reservationsLoading);
-
-  reservationsCount$: Observable<number> = this.store.select(count);
-
-  reservationsSorting$ = this.store.select(sorting);
-
-  reservationsPaging$ = this.store.select(paging);
+  reservationsList = reservationsListState(this.store);
 
   constructor(
     store: Store,

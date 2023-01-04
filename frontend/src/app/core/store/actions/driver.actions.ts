@@ -1,45 +1,36 @@
 import { Id } from '../../model/common.model';
-import { Hours, SortBy, SortOrder } from '../../model/reservation.model';
+import { Hours } from '../../model/reservation.model';
 import { Navigate } from '@ngxs/router-plugin';
 import { DriverPaths, TopLevelPaths } from '../../../routes';
+import { GetById, MutationById, PageChange, SortChange } from './base.actions';
 
 export namespace DriverActions {
   export class GetAllReservations {
     static readonly type = '[Driver Reservations] GetAll';
   }
 
-  export class SortingChange {
+  export class SortingChange extends SortChange {
     static readonly type = '[Driver Reservations] Sorting change';
-
-    constructor(readonly sortBy?: SortBy, readonly sortOrder?: SortOrder) {}
   }
 
-  export class PagingChange {
+  export class PagingChange extends PageChange {
     static readonly type = '[Driver Reservations] Paging change';
-
-    constructor(readonly page: number, readonly pageSize: number) {}
   }
   export class ReservationFiltersChange {
     static readonly type = '[Driver Reservations] FiltersChange';
 
     constructor(readonly driverId?: Id, readonly onlyHistory?: boolean) {}
   }
-  export class GetReservationById {
+  export class GetReservationById extends GetById {
     static readonly type = '[Driver Reservations] GetById';
-
-    constructor(readonly id: Id) {}
   }
 
-  export class CancelReservation {
+  export class CancelReservation extends MutationById {
     static readonly type = '[Driver Reservations] Cancel';
-
-    constructor(readonly id: Id) {}
   }
 
-  export class ConfirmReservation {
+  export class ConfirmReservation extends MutationById {
     static readonly type = '[Driver Reservations] Confirm';
-
-    constructor(readonly id: Id) {}
   }
 
   export class ChangeTimeOfReservation {
@@ -62,20 +53,16 @@ export namespace DriverActions {
       readonly date: Date,
     ) {}
   }
-  export class ReservationChanged {
+  export class ReservationChanged extends MutationById {
     static readonly type = '[Reservations] Change';
-
-    constructor(readonly id: Id) {}
   }
 
   export class GetParkingLots {
     static readonly type = '[Driver Parking Lots] GetAll';
   }
 
-  export class GetDriverDetails {
+  export class GetDriverDetails extends GetById {
     static readonly type = '[Driver Dashboard] GetDriverDetails';
-
-    constructor(readonly id: Id) {}
   }
 
   export class AddVehicle {
@@ -102,23 +89,6 @@ export namespace DriverActions {
   export class NavigateToReservationList extends Navigate {
     constructor() {
       super([`/${TopLevelPaths.DRIVER_DASHBOARD}/${DriverPaths.RESERVATIONS}`]);
-    }
-  }
-
-  export class QueryParamsChange extends Navigate {
-    constructor(
-      page?: number,
-      pageSize?: number,
-      sortBy?: string,
-      sortOrder?: string,
-    ) {
-      super(
-        [],
-        { sortBy, sortOrder, page, pageSize },
-        {
-          queryParamsHandling: 'merge',
-        },
-      );
     }
   }
 }

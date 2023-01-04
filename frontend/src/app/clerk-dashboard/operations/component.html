@@ -25,7 +25,7 @@
   </div>
 
 </sps-card>
-<div class="reservations" *ngIf="reservations$ | async as reservations">
+<div class="reservations" *ngIf="reservationsList.reservations$ | async as reservations">
   <sps-card class="reservations__card"
             [title]="translations.RESERVATIONS" *ngIf="reservations.length">
     <sps-number-chip chip>{{reservations.length}}</sps-number-chip>
@@ -40,8 +40,8 @@
       </sps-reservation-expansion-panel>
     </div>
     <sps-paginator
-      [paging$]="reservationsPaging$"
-      [count$]="reservationsCount$"
+      [paging$]="reservationsList.paging$"
+      [count$]="reservationsList.count$"
       (pagingChanged)="onPageChanged($event.page)"
     ></sps-paginator>
   </sps-card>

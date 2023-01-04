@@ -1,5 +1,6 @@
 import { Id } from '../../model/common.model';
 import { today } from '../../util';
+import { PageChange } from './base.actions';
 
 export namespace ClerkActions {
   export class LoadLicensePlates {
@@ -54,10 +55,8 @@ export namespace ClerkActions {
     constructor(readonly reservationId: Id) {}
   }
 
-  export class ReservationPageChanged {
+  export class ReservationPageChanged extends PageChange {
     static readonly type =
       '[Clerk Dashboard Reservations] ReservationPageChange';
-
-    constructor(readonly page: number) {}
   }
 }
