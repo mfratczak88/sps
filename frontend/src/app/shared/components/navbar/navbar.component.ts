@@ -23,9 +23,6 @@ export class NavbarComponent {
   constructor(private readonly store: Store) {}
 
   onSignOut() {
-    this.store
-      .dispatch(new AuthActions.Logout())
-      .pipe(first())
-      .subscribe(() => window.location.reload());
+    this.store.dispatch(new AuthActions.Logout());
   }
 }

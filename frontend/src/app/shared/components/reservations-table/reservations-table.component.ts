@@ -1,15 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {
+  Paging,
   Reservation,
   ReservationStatusTranslationKey,
   SortBy,
+  Sorting,
   SortOrder,
 } from '../../../core/model/reservation.model';
 
@@ -18,47 +14,23 @@ import { TableKeys } from '../../../core/translation-keys';
 import { map } from 'rxjs/operators';
 import { AddressPipe } from '../../../core/pipe/address/address.pipe';
 import { TimePipe } from '../../../core/pipe/time/time.pipe';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
 import { Id } from '../../../core/model/common.model';
 import { DatePipe } from '../../../core/pipe/date/date.pipe';
-import { Store } from '@ngxs/store';
-import { DriverActions } from '../../../core/store/actions/driver.actions';
-import {
-  paging,
-  sorting,
-} from '../../../core/store/reservations/reservations.selector';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'sps-reservations-table',
   templateUrl: './reservations-table.component.html',
   styleUrls: ['./reservations-table.component.scss'],
 })
 export class ReservationsTableComponent {
-  paging$ = this.store.select(paging);
-
-  sorting$ = this.store.select(sorting);
-
-  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
-    paginator?.page.subscribe(({ pageIndex, pageSize }) => {
-      this.store.dispatch(
-        new DriverActions.PagingChange(pageIndex + 1, pageSize),
-      );
-    });
-  }
-
-  @ViewChild(MatSort) set matSort(sort: MatSort) {
-    sort?.sortChange.subscribe(({ active, direction }) => {
-      const sortBy = (direction ? active : undefined) as SortBy;
-      const sortOrder = direction as SortOrder;
-      this.store.dispatch(new DriverActions.SortingChange(sortBy, sortOrder));
-    });
-  }
-
   @Input()
   set reservations$(reservations: Observable<Reservation[]>) {
     reservations
       .pipe(
+        untilDestroyed(this),
         map(reservations =>
           reservations.map(reservation => {
             return {
@@ -85,8 +57,23 @@ export class ReservationsTableComponent {
   @Input()
   length$: Observable<number> = of(0);
 
+  @Input()
+  sorting$: Observable<Sorting>;
+
+  @Input()
+  paging$: Observable<Paging>;
+
   @Output()
   reservationClicked = new EventEmitter<Id>();
+
+  @Output()
+  sortingChange = new EventEmitter<{
+    sortBy?: SortBy;
+    sortOrder?: SortOrder;
+  }>();
+
+  @Output()
+  pagingChange = new EventEmitter<{ page: number; pageSize: number }>();
 
   reservationsTranslations = { ...TableKeys };
 
@@ -125,8 +112,13 @@ export class ReservationsTableComponent {
     private readonly addressPipe: AddressPipe,
     private readonly timePipe: TimePipe,
     private readonly datePipe: DatePipe,
-    private readonly store: Store,
   ) {}
+
+  sortChange({ active, direction }: Sort) {
+    const sortBy = (direction ? active : undefined) as SortBy;
+    const sortOrder = direction as SortOrder;
+    this.sortingChange.emit({ sortBy, sortOrder });
+  }
 
   private derivedData(reservation: Reservation) {
     const { date, status } = reservation;

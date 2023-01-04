@@ -43,13 +43,6 @@ export interface MakeReservation {
   end: Date;
 }
 
-export type ReservationWithParkingLot = Reservation & {
-  parkingLot: {
-    city: string;
-    streetName: string;
-    streetNumber: string;
-  };
-};
 export enum SortBy {
   STATUS = 'status',
   PARKING_LOT = 'parkingLot',
@@ -87,4 +80,12 @@ export interface ChangeTime {
 export interface Hours {
   hourFrom: number;
   hourTo: number;
+}
+export interface Paging {
+  page: number;
+  pageSize: number;
+}
+export interface Sorting {
+  sortBy: SortBy;
+  sortOrder: SortOrder;
 }

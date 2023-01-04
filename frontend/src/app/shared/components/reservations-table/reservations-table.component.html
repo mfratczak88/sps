@@ -8,7 +8,8 @@
                matSort
                matSortDisableClear
                [matSortDirection]="(sorting$ | async)?.sortOrder || 'desc'"
-               [matSortActive]="(sorting$ | async)?.sortBy || 'date'">
+               [matSortActive]="(sorting$ | async)?.sortBy || 'date'"
+                (matSortChange)="sortChange($event)">
       <ng-container [matColumnDef]="column.name" *ngFor="let column of tableColumns">
         <ng-container *ngIf="column.sortable else nonSortable">
           <mat-header-cell mat-header-cell mat-sort-header disableClear
@@ -17,20 +18,22 @@
         <ng-template #nonSortable>
           <mat-header-cell mat-header-cell *matHeaderCellDef>{{column.translation | translate}}</mat-header-cell>
         </ng-template>
-        <mat-cell mat-cell class="table__cell" *matCellDef="let element"> {{element[column.name] | translate}} </mat-cell>
+        <mat-cell mat-cell class="table__cell"
+                  *matCellDef="let element"> {{element[column.name] | translate}} </mat-cell>
       </ng-container>
       <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row class="table__row" (click)="reservationClicked.emit(row.id)" mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-row class="table__row" (click)="reservationClicked.emit(row.id)" mat-row
+               *matRowDef="let row; columns: displayedColumns"></mat-row>
       <tr *matNoDataRow>
         <td colspan="4">No data</td>
       </tr>
     </mat-table>
-    <mat-paginator *ngIf="paging$ | async as paging"
-                   [pageSize]="paging.pageSize || 5"
-                   [pageIndex]="paging.page - 1"
-                   [length]="length$ | async" class="pagination"
-                   [pageSizeOptions]="[5, 10, 15, 20]">
-    </mat-paginator>
+    <sps-paginator *ngIf="paging$"
+      [paging$]="paging$"
+      [count$]="length$"
+      [pageSize]="[5, 10, 15, 20]"
+      (pagingChanged)="pagingChange.emit($event)">
+    </sps-paginator>
   </ng-template>
 </div>
 

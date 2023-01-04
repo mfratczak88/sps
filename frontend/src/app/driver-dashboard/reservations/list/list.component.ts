@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import { ReservationBaseComponent } from '../base.component';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Driver } from '../../../core/model/driver.model';
-import { Reservation } from '../../../core/model/reservation.model';
+import {
+  Paging,
+  SortBy,
+  SortOrder,
+} from '../../../core/model/reservation.model';
 import { DriverActions } from '../../../core/store/actions/driver.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationValidator } from '../../../core/validators/reservation.validator';
@@ -14,7 +17,9 @@ import {
 import {
   count,
   loading as reservationsLoading,
+  paging,
   reservations,
+  sorting,
 } from '../../../core/store/reservations/reservations.selector';
 
 @Component({
@@ -23,17 +28,19 @@ import {
   styleUrls: ['./list.component.scss'],
 })
 export class ReservationListComponent extends ReservationBaseComponent {
-  driver$: Observable<Driver | undefined> = this.store.select(currentDriver);
+  driver$ = this.store.select(currentDriver);
 
-  reservations$: Observable<Reservation[]> = this.store.select(reservations);
+  reservations$ = this.store.select(reservations);
 
-  driverLoading$: Observable<boolean> = this.store.select(driverLoading);
+  driverLoading$ = this.store.select(driverLoading);
 
-  reservationsLoading$: Observable<boolean> = this.store.select(
-    reservationsLoading,
-  );
+  reservationsLoading$ = this.store.select(reservationsLoading);
 
   reservationsCount$: Observable<number> = this.store.select(count);
+
+  reservationsSorting$ = this.store.select(sorting);
+
+  reservationsPaging$ = this.store.select(paging);
 
   constructor(
     store: Store,
@@ -49,5 +56,19 @@ export class ReservationListComponent extends ReservationBaseComponent {
 
   toCreateReservation() {
     this.store.dispatch(new DriverActions.NavigateToCreateReservation());
+  }
+
+  onPagingChange({ page, pageSize }: Paging) {
+    this.store.dispatch(new DriverActions.PagingChange(page, pageSize));
+  }
+
+  onSortingChange({
+    sortBy,
+    sortOrder,
+  }: {
+    sortBy?: SortBy;
+    sortOrder?: SortOrder;
+  }) {
+    this.store.dispatch(new DriverActions.SortingChange(sortBy, sortOrder));
   }
 }
