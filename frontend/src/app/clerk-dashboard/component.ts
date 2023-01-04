@@ -7,8 +7,8 @@ import { ClerkActions } from '../core/store/actions/clerk.actions';
 
 @Component({
   selector: 'sps-clerk-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  templateUrl: './component.html',
+  styleUrls: ['./component.scss'],
 })
 export class DashboardComponent {
   readonly drawerItems: DrawerItem[] = [

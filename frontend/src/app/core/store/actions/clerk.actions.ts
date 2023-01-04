@@ -47,4 +47,17 @@ export namespace ClerkActions {
 
     constructor(readonly reservationId: Id) {}
   }
+
+  export class ReloadReservation {
+    static readonly type = '[Clerk Dashboard Reservations] ReloadReservation';
+
+    constructor(readonly reservationId: Id) {}
+  }
+
+  export class ReservationPageChanged {
+    static readonly type =
+      '[Clerk Dashboard Reservations] ReservationPageChange';
+
+    constructor(readonly page: number) {}
+  }
 }

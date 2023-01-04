@@ -16,12 +16,12 @@ import {
 import { Column } from '../table/table.component';
 import { TableKeys } from '../../../core/translation-keys';
 import { map } from 'rxjs/operators';
-import { AddressPipe } from '../../pipe/address/address.pipe';
-import { TimePipe } from '../../pipe/time/time.pipe';
+import { AddressPipe } from '../../../core/pipe/address/address.pipe';
+import { TimePipe } from '../../../core/pipe/time/time.pipe';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Id } from '../../../core/model/common.model';
-import { DatePipe } from '../../pipe/date/date.pipe';
+import { DatePipe } from '../../../core/pipe/date/date.pipe';
 import { Store } from '@ngxs/store';
 import { DriverActions } from '../../../core/store/actions/driver.actions';
 import {

@@ -93,7 +93,7 @@ export class ReservationsState {
     ).pipe(tap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
-  @Action(DriverActions.PagingChange)
+  @Action([DriverActions.PagingChange, ClerkActions.ReservationPageChanged])
   pagingChange(
     { dispatch, patchState, getState }: StateContext<ReservationsStateModel>,
     { pageSize, page }: DriverActions.PagingChange,
@@ -232,7 +232,7 @@ export class ReservationsState {
       );
   }
 
-  @Action(DriverActions.GetReservationById)
+  @Action([DriverActions.GetReservationById, ClerkActions.ReloadReservation])
   getReservation(
     { getState, patchState }: StateContext<ReservationsStateModel>,
     { id }: DriverActions.GetReservationById,
@@ -280,6 +280,30 @@ export class ReservationsState {
             ...sorting,
           });
         }),
+      );
+  }
+
+  @Action(ClerkActions.IssueParkingTicket)
+  issueParkingTicket(
+    { dispatch }: StateContext<ReservationsStateModel>,
+    { reservationId }: ClerkActions.IssueParkingTicket,
+  ) {
+    return this.api
+      .issueParkingTicket(reservationId)
+      .pipe(
+        tap(() => dispatch(new ClerkActions.ReloadReservation(reservationId))),
+      );
+  }
+
+  @Action(ClerkActions.ReturnParkingTicket)
+  returnParkingTicket(
+    { dispatch }: StateContext<ReservationsStateModel>,
+    { reservationId }: ClerkActions.ReturnParkingTicket,
+  ) {
+    return this.api
+      .returnParkingTicket(reservationId)
+      .pipe(
+        tap(() => dispatch(new ClerkActions.ReloadReservation(reservationId))),
       );
   }
 

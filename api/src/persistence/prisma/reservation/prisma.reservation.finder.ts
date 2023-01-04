@@ -131,7 +131,11 @@ export class PrismaReservationFinder implements ReservationFinder {
       ? {
           AND: [
             { startTime: { gt: startTime } },
-            { endTime: { lt: startTime } },
+            {
+              endTime: {
+                lt: DateTime.fromJSDate(startTime).set({ hour: 23 }).toJSDate(),
+              },
+            },
           ],
         }
       : {};

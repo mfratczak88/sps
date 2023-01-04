@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard.component';
+import { DashboardComponent } from './component';
 import { ClerkPaths, TopLevelPaths } from '../routes';
 import { AuthGuard } from '../core/guards/auth.guard';
 import { ClerkGuard } from '../core/guards/role.guard';

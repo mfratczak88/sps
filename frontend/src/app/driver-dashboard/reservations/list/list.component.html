@@ -37,9 +37,8 @@
           <button mat-button color="warn"
                   (click)="onCancelReservation(reservation)">{{translations.CANCEL | translate}}</button>
           <button mat-button
-
                   color="primary"
-
+                  (click)="onEditReservation(reservation)"
           >{{translations.CHANGE_TIME | translate}}</button>
         </sps-reservation-expansion-panel>
       </div>
