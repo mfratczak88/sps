@@ -10,6 +10,22 @@ export const hoursOf = (reservation: Reservation) => {
     hourTo: hour(endTime),
   };
 };
+export const isNowBefore = (date: string) => {
+  return (
+    DateTime.fromISO(date)
+      .diffNow('seconds')
+      .as('seconds') > 0
+  );
+};
+
+export const isNowAfter = (date: string) => {
+  return (
+    DateTime.fromISO(date)
+      .diffNow('seconds')
+      .as('seconds') < 0
+  );
+};
+
 export const fullHour = (dateTime: DateTime, hour: number) => {
   return dateTime
     .set({
@@ -30,3 +46,4 @@ export const mapToObjectWithIds = <T extends { id: Id }>(collection: T[]) => {
     };
   }, {});
 };
+export const today = () => fullHour(DateTime.now(), 0);

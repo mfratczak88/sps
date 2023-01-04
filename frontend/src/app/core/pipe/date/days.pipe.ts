@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   DayToShortTranslation,
   OperationTimeDays,
-} from '../../../core/model/common.model';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+} from '../../model/common.model';
+import { ParkingLot } from '../../model/parking-lot.model';
 
 @Pipe({
   name: 'days',

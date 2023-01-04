@@ -1,0 +1,14 @@
+@use "../../../variables" as vars;
+.search-card, .reservations {
+  display: block;
+  max-width: 768px;
+  margin: 1rem auto;
+
+}
+.search-card__search-bar {
+  display: block;
+  width: 100%;
+}
+.search-card__instructions {
+  @include vars.typography-body-m();
+}

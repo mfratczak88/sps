@@ -1,3 +1,5 @@
+import { ComponentType } from '@angular/cdk/portal';
+
 export namespace UiActions {
   export class ShowToast {
     static readonly type = '[Toast] Show';

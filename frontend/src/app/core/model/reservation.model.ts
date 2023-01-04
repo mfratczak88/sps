@@ -69,6 +69,8 @@ export interface ReservationQueryModel {
   sortBy?: SortBy | string;
   sortOrder?: SortOrder | string;
   onlyHistory?: boolean;
+  licensePlate?: string;
+  startsAt?: Date;
 }
 
 export const ReservationStatusTranslationKey = {

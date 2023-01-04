@@ -87,8 +87,14 @@ export class PrismaReservationFinder implements ReservationFinder {
     };
   }
 
-  whereClauseFrom(query: ReservationQuery) {
-    const { driverId, parkingLotId, status, onlyHistory } = query;
+  whereClauseFrom({
+    driverId,
+    parkingLotId,
+    status,
+    onlyHistory,
+    licensePlate,
+    startTime,
+  }: ReservationQuery) {
     const whereOnlyHistory = onlyHistory
       ? {
           OR: [
@@ -112,14 +118,25 @@ export class PrismaReservationFinder implements ReservationFinder {
           },
         }
       : {};
-    const whereParkingLot = parkingLotId
+    const whereParkingLot = parkingLotId ? { parkingLotId } : {};
+    const whereStatus = status ? { status } : {};
+    const whereLicensePlate = licensePlate
       ? {
-          parkingLotId,
+          vehicle: {
+            licensePlate,
+          },
         }
       : {};
-    const whereStatus = status
+    const whereStartTime = startTime
       ? {
-          status,
+          AND: [
+            { startTime: { gt: startTime } },
+            {
+              endTime: {
+                lt: DateTime.fromJSDate(startTime).set({ hour: 23 }).toJSDate(),
+              },
+            },
+          ],
         }
       : {};
     return {
@@ -127,11 +144,12 @@ export class PrismaReservationFinder implements ReservationFinder {
       ...whereParkingLot,
       ...whereStatus,
       ...whereOnlyHistory,
+      ...whereLicensePlate,
+      ...whereStartTime,
     };
   }
 
-  orderByClauseFrom(query: ReservationQuery) {
-    const { sortOrder, sortBy } = query;
+  orderByClauseFrom({ sortOrder, sortBy }: ReservationQuery) {
     const byParkingLotId = sortBy === SortBy.PARKING_LOT && {
       parkingLotId: sortOrder,
     };
