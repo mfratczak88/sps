@@ -16,6 +16,8 @@ import { queryParams } from '../routing/routing.selector';
 import { UiActions } from '../actions/ui.actions';
 import { ToastKeys } from '../../translation-keys';
 import { ClerkActions } from '../actions/clerk.actions';
+import { RoutingActions } from '../actions/routing.actions';
+import { AdminActions } from '../actions/admin.actions';
 
 export interface ReservationsStateModel {
   selectedId: Id | null;
@@ -74,7 +76,7 @@ export class ReservationsState {
     return dispatch(new DriverActions.GetAllReservations());
   }
 
-  @Action(DriverActions.SortingChange)
+  @Action([DriverActions.SortingChange, AdminActions.ReservationsSortingChange])
   tablePagingSortingChange(
     { dispatch, patchState, getState }: StateContext<ReservationsStateModel>,
     { sortBy, sortOrder }: DriverActions.SortingChange,
@@ -89,11 +91,15 @@ export class ReservationsState {
       paging: { page },
     });
     return dispatch(
-      new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
+      new RoutingActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
     ).pipe(tap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
-  @Action([DriverActions.PagingChange, ClerkActions.ReservationPageChanged])
+  @Action([
+    DriverActions.PagingChange,
+    ClerkActions.ReservationPageChanged,
+    AdminActions.ReservationsPageChange,
+  ])
   pagingChange(
     { dispatch, patchState, getState }: StateContext<ReservationsStateModel>,
     { pageSize, page }: DriverActions.PagingChange,
@@ -108,7 +114,7 @@ export class ReservationsState {
       },
     });
     return dispatch(
-      new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
+      new RoutingActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
     ).pipe(tap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
@@ -255,7 +261,11 @@ export class ReservationsState {
     );
   }
 
-  @Action([DriverActions.GetAllReservations, ClerkActions.FindReservations])
+  @Action([
+    DriverActions.GetAllReservations,
+    ClerkActions.FindReservations,
+    AdminActions.GetAllReservations,
+  ])
   getAllReservations(ctx: StateContext<ReservationsStateModel>) {
     const { filters, paging, sorting } = this.apiCallQueryParamsFrom(ctx);
     return this.api

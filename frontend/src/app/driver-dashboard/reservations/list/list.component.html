@@ -56,11 +56,11 @@
       {{translations.CREATE | translate}}
     </button>
     <sps-reservations-table
-      [reservations$]="reservations$"
-      [loading$]="reservationsLoading$"
-      [length$]="reservationsCount$"
-      [paging$]="reservationsPaging$"
-      [sorting$]="reservationsSorting$"
+      [reservations$]="reservationsList.reservations$"
+      [loading$]="reservationsList.loading$"
+      [length$]="reservationsList.count$"
+      [paging$]="reservationsList.paging$"
+      [sorting$]="reservationsList.sorting$"
       (reservationClicked)="toDetails($event)"
       (pagingChange)="onPagingChange($event)"
       (sortingChange)="onSortingChange($event)"
