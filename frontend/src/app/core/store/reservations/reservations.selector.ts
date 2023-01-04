@@ -40,3 +40,12 @@ export const count = createSelector(
   [ReservationsState],
   ({ count }: ReservationsStateModel) => count,
 );
+
+export const sortingPagingCount = createSelector(
+  [ReservationsState],
+  (state: ReservationsStateModel) => ({
+    count: count(state),
+    sorting: sorting(state),
+    paging: paging(state),
+  }),
+);

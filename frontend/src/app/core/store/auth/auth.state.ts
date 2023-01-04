@@ -7,19 +7,11 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
-import {
-  catchError,
-  concatMap,
-  EMPTY,
-  finalize,
-  first,
-  from,
-  lastValueFrom,
-  of,
-} from 'rxjs';
+import { concatMap, finalize, first, from, lastValueFrom, of } from 'rxjs';
 import { UiActions } from '../actions/ui.actions';
 import { ToastKeys } from '../../translation-keys';
-import { Role, AuthUser } from '../../model/auth.model';
+import { AuthUser, Role } from '../../model/auth.model';
+import { Navigate } from '@ngxs/router-plugin';
 
 export interface AuthStateModel {
   id: string;
@@ -114,13 +106,13 @@ export class AuthState {
   }
 
   @Action(AuthActions.Logout)
-  logout({ setState }: StateContext<AuthStateModel>) {
+  logout({ setState, dispatch }: StateContext<AuthStateModel>) {
     AuthState.removeUserInfoFromLocalStorage();
     return this.api.logout().pipe(
       first(),
       finalize(() => {
         setState(defaults);
-        return of(undefined);
+        return dispatch(new Navigate(['/']));
       }),
     );
   }
