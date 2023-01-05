@@ -4,4 +4,10 @@ export namespace UiActions {
 
     constructor(readonly textKey: string) {}
   }
+
+  export class LangChanged {
+    static readonly type = '[Navbar] Language changed';
+
+    constructor(readonly lang: string) {}
+  }
 }
