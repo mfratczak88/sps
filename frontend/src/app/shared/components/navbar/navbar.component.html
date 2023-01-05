@@ -8,11 +8,20 @@
     <ng-container *ngIf="user$ | async as user">
       <span class="toolbar__hello-message" *ngIf="user.name">{{translations.HEY_USER | translate}}, {{user.name}}</span>
     </ng-container>
-    <div class="toolbar__tools">
+    <div>
+      <button mat-button [matMenuTriggerFor]="langMenu">
+        <mat-icon>translate</mat-icon>
+      </button>
+      <mat-menu #langMenu>
+        <button class="toolbar__languages" mat-menu-item *ngFor="let language of (languages$ | async)" (click)="onChangeLanguage(language.code)">
+          <img class="toolbar__languages--flag" [src]="'assets/' + language.icon + '.svg'" alt="Language flag">
+          <span class="toolbar__languages--text">{{language.text}}</span>
+        </button>
+      </mat-menu>
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Hamburger">
         <mat-icon>more_vert</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
+      <mat-menu #menu>
         <button mat-menu-item (click)="onSignOut()">
           <mat-icon>logout</mat-icon>
           <span>{{translations.SIGN_OUT | translate}}</span>
