@@ -44,7 +44,7 @@ export namespace DriverActions {
   }
 
   export class CreateReservation {
-    static readonly type = '[Driver Reservations] ChangeTime';
+    static readonly type = '[Driver Reservations] CreateReservation';
 
     constructor(
       readonly licensePlate: string,
@@ -54,7 +54,7 @@ export namespace DriverActions {
     ) {}
   }
   export class ReservationChanged extends MutationById {
-    static readonly type = '[Reservations] Change';
+    static readonly type = '[Reservations] Changed';
   }
 
   export class GetParkingLots {
