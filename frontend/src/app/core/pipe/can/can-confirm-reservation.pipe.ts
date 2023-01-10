@@ -1,6 +1,6 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { Reservation } from '../../../core/model/reservation.model';
-import { isNowAfter, isNowBefore } from './time.util';
+import { Reservation } from '../../model/reservation.model';
+import { isNowAfter, isNowBefore } from '../../util';
 
 @Pipe({
   name: 'canConfirmReservation',

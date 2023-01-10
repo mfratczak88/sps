@@ -14,6 +14,7 @@ import {
   PrismaReservation,
   PrismaReservationFinder,
 } from '../reservation/prisma.reservation.finder';
+import { Vehicle } from 'src/domain/driver/vehicle';
 
 @Injectable()
 export class PrismaDriverFinder implements DriverFinder {
@@ -135,6 +136,10 @@ export class PrismaDriverFinder implements DriverFinder {
     ).map((user: PrismaDriver) =>
       PrismaDriverFinder.mapPrismaDriverToReadModel(user),
     );
+  }
+
+  findAllVehicles(): Promise<Vehicle[]> {
+    return this.prismaService.vehicle.findMany({});
   }
 
   private static mapPrismaDriverToReadModel(user: PrismaDriver) {

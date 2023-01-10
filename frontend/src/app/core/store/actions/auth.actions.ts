@@ -1,5 +1,4 @@
 import { Navigate } from '@ngxs/router-plugin';
-import { NavigationExtras } from '@angular/router';
 import { AuthPaths, ErrorPaths, TopLevelPaths } from '../../../routes';
 
 export namespace AuthActions {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { Button } from '../../../shared/components/table/table.component';
 import { ParkingLot } from '../../../core/model/parking-lot.model';

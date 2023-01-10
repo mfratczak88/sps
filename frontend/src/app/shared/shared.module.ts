@@ -19,10 +19,10 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './service/paginator.intl.service';
 import { PanelComponent } from './components/panel/panel.component';
 import { ParkingLotsTableComponent } from './components/parking-lots-table/parking-lots-table.component';
-import { AddressPipe } from './pipe/address/address.pipe';
-import { HoursPipe } from './pipe/time/hours.pipe';
-import { DaysPipe } from './pipe/date/days.pipe';
-import { HourPipe } from './pipe/time/hour.pipe';
+import { AddressPipe } from '../core/pipe/address/address.pipe';
+import { HoursPipe } from '../core/pipe/time/hours.pipe';
+import { DaysPipe } from '../core/pipe/date/days.pipe';
+import { HourPipe } from '../core/pipe/time/hour.pipe';
 import { HoursFormComponent } from './components/hours-form/hours-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.component';
@@ -33,14 +33,18 @@ import { ChipComponent } from './components/chip/chip.component';
 import { TimeLeftComponent } from './components/time-left/time-left.component';
 import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
 import { ReservationsTableComponent } from './components/reservations-table/reservations-table.component';
-import { TimePipe } from './pipe/time/time.pipe';
+import { TimePipe } from '../core/pipe/time/time.pipe';
 
 import { SyncTableComponent } from './components/sync-table/sync-table.component';
 import { ReservationStatusChipComponent } from './components/reservation-status-chip/reservation-status-chip.component';
-import { DatePipe } from './pipe/date/date.pipe';
-import { CanCancelReservationPipe } from './pipe/can/can-cancel-reservation.pipe';
-import { CanEditReservationPipe } from './pipe/can/can-edit-reservation.pipe';
-import { CanConfirmReservationPipe } from './pipe/can/can-confirm-reservation.pipe';
+import { DatePipe } from '../core/pipe/date/date.pipe';
+import { CanCancelReservationPipe } from '../core/pipe/can/can-cancel-reservation.pipe';
+import { CanEditReservationPipe } from '../core/pipe/can/can-edit-reservation.pipe';
+import { CanConfirmReservationPipe } from '../core/pipe/can/can-confirm-reservation.pipe';
+import { ReservationExpansionPanelComponent } from './components/reservation-expansion-panel/reservation-expansion-panel.component';
+import { AbstractDialog } from '../core/abstract.dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 const components = [
   NavbarComponent,
@@ -70,11 +74,13 @@ const components = [
   ReservationsTableComponent,
   SyncTableComponent,
   ReservationStatusChipComponent,
+  ReservationExpansionPanelComponent,
   TimePipe,
   DatePipe,
   CanConfirmReservationPipe,
   CanCancelReservationPipe,
   CanEditReservationPipe,
+  PaginatorComponent,
 ];
 @NgModule({
   declarations: components,
@@ -88,6 +94,7 @@ const components = [
   exports: [MaterialModule, TranslateModule, ...components],
   providers: [
     { provide: ToastService, useClass: MaterialToastService },
+    { provide: AbstractDialog, useClass: MatDialog },
     { provide: MatPaginatorIntl, useClass: PaginatorIntlService },
     TimePipe,
     DatePipe,

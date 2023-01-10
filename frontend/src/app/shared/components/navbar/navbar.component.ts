@@ -4,6 +4,8 @@ import { SharedKeys } from '../../../core/translation-keys';
 import { Store } from '@ngxs/store';
 import { isLoggedIn, user } from '../../../core/store/auth/auth.selector';
 import { AuthActions } from '../../../core/store/actions/auth.actions';
+import { availableLanguages, lang } from '../../../core/store/ui/ui.selector';
+import { UiActions } from '../../../core/store/actions/ui.actions';
 
 @Component({
   selector: 'sps-navbar',
@@ -15,6 +17,8 @@ export class NavbarComponent {
 
   isLoggedIn$ = this.store.select(isLoggedIn);
 
+  languages$ = this.store.select(availableLanguages);
+
   @Output()
   readonly hamburgerPressed = new EventEmitter<void>();
 
@@ -23,9 +27,10 @@ export class NavbarComponent {
   constructor(private readonly store: Store) {}
 
   onSignOut() {
-    this.store
-      .dispatch(new AuthActions.Logout())
-      .pipe(first())
-      .subscribe(() => window.location.reload());
+    this.store.dispatch(new AuthActions.Logout());
+  }
+
+  onChangeLanguage(lang: string) {
+    this.store.dispatch(new UiActions.LangChanged(lang));
   }
 }

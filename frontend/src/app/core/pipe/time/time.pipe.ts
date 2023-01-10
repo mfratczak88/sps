@@ -1,6 +1,6 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { DateTime } from 'luxon';
-import { Reservation } from '../../../core/model/reservation.model';
+import { Reservation } from '../../model/reservation.model';
 
 @Pipe({
   name: 'time',

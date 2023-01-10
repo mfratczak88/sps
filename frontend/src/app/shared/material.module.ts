@@ -56,6 +56,7 @@ const modules = [
   MatCheckboxModule,
   MatNativeDateModule,
   MatDatepickerModule,
+  MatAutocompleteModule,
 ];
 @NgModule({
   imports: [...modules],

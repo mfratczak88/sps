@@ -9,12 +9,16 @@ import { Action, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { ReservationApi } from '../../api/reservation.api';
 import { DriverActions } from '../actions/driver.actions';
-import { concatMap, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { DateTime } from 'luxon';
-import { fullHour, mapToObjectWithIds } from '../../util';
+import { fullHour, mapToObjectWithIds, today } from '../../util';
 import { queryParams } from '../routing/routing.selector';
 import { UiActions } from '../actions/ui.actions';
 import { ToastKeys } from '../../translation-keys';
+import { ClerkActions } from '../actions/clerk.actions';
+import { RoutingActions } from '../actions/routing.actions';
+import { AdminActions } from '../actions/admin.actions';
+
 export interface ReservationsStateModel {
   selectedId: Id | null;
   entities: {
@@ -24,6 +28,8 @@ export interface ReservationsStateModel {
   filters: {
     driverId?: Id;
     onlyHistory?: boolean;
+    licensePlate?: string;
+    startTime?: Date;
   };
   paging: {
     pageSize?: number;
@@ -70,7 +76,7 @@ export class ReservationsState {
     return dispatch(new DriverActions.GetAllReservations());
   }
 
-  @Action(DriverActions.SortingChange)
+  @Action([DriverActions.SortingChange, AdminActions.ReservationsSortingChange])
   tablePagingSortingChange(
     { dispatch, patchState, getState }: StateContext<ReservationsStateModel>,
     { sortBy, sortOrder }: DriverActions.SortingChange,
@@ -85,11 +91,15 @@ export class ReservationsState {
       paging: { page },
     });
     return dispatch(
-      new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
+      new RoutingActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
     ).pipe(tap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
-  @Action(DriverActions.PagingChange)
+  @Action([
+    DriverActions.PagingChange,
+    ClerkActions.ReservationPageChanged,
+    AdminActions.ReservationsPageChange,
+  ])
   pagingChange(
     { dispatch, patchState, getState }: StateContext<ReservationsStateModel>,
     { pageSize, page }: DriverActions.PagingChange,
@@ -104,7 +114,7 @@ export class ReservationsState {
       },
     });
     return dispatch(
-      new DriverActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
+      new RoutingActions.QueryParamsChange(page, pageSize, sortBy, sortOrder),
     ).pipe(tap(() => dispatch(new DriverActions.GetAllReservations())));
   }
 
@@ -228,7 +238,7 @@ export class ReservationsState {
       );
   }
 
-  @Action(DriverActions.GetReservationById)
+  @Action([DriverActions.GetReservationById, ClerkActions.ReloadReservation])
   getReservation(
     { getState, patchState }: StateContext<ReservationsStateModel>,
     { id }: DriverActions.GetReservationById,
@@ -251,7 +261,11 @@ export class ReservationsState {
     );
   }
 
-  @Action(DriverActions.GetAllReservations)
+  @Action([
+    DriverActions.GetAllReservations,
+    ClerkActions.FindReservations,
+    AdminActions.GetAllReservations,
+  ])
   getAllReservations(ctx: StateContext<ReservationsStateModel>) {
     const { filters, paging, sorting } = this.apiCallQueryParamsFrom(ctx);
     return this.api
@@ -277,6 +291,40 @@ export class ReservationsState {
           });
         }),
       );
+  }
+
+  @Action(ClerkActions.IssueParkingTicket)
+  issueParkingTicket(
+    { dispatch }: StateContext<ReservationsStateModel>,
+    { reservationId }: ClerkActions.IssueParkingTicket,
+  ) {
+    return this.api
+      .issueParkingTicket(reservationId)
+      .pipe(
+        tap(() => dispatch(new ClerkActions.ReloadReservation(reservationId))),
+      );
+  }
+
+  @Action(ClerkActions.ReturnParkingTicket)
+  returnParkingTicket(
+    { dispatch }: StateContext<ReservationsStateModel>,
+    { reservationId }: ClerkActions.ReturnParkingTicket,
+  ) {
+    return this.api
+      .returnParkingTicket(reservationId)
+      .pipe(
+        tap(() => dispatch(new ClerkActions.ReloadReservation(reservationId))),
+      );
+  }
+
+  @Action(ClerkActions.ApplyLicensePlateFilter)
+  applyLicensePlateFilter(
+    { dispatch, patchState }: StateContext<ReservationsStateModel>,
+    { licensePlate }: ClerkActions.ApplyLicensePlateFilter,
+  ) {
+    if (!licensePlate) return patchState({ ...defaults, loading: false });
+    patchState({ filters: { startTime: today(), licensePlate } });
+    return dispatch(new ClerkActions.FindReservations());
   }
 
   private apiCallQueryParamsFrom({

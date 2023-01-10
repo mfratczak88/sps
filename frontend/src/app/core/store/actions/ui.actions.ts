@@ -4,14 +4,10 @@ export namespace UiActions {
 
     constructor(readonly textKey: string) {}
   }
-  export class ReservationTableSortChange {
-    static readonly type = '[Reservations Table] Sort Change';
 
-    constructor(readonly sortBy: string, readonly sortOrder: 'asc' | 'desc') {}
-  }
-  export class ReservationTablePagingChange {
-    static readonly type = '[Reservations Table] Paging Change';
+  export class LangChanged {
+    static readonly type = '[Navbar] Language changed';
 
-    constructor(readonly page: number, readonly pageSize: number) {}
+    constructor(readonly lang: string) {}
   }
 }

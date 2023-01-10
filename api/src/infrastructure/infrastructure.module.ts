@@ -26,6 +26,7 @@ import { ParkingLotController } from './web/controller/parking-lot.controller';
 import { DriverController } from './web/controller/driver.controller';
 import { ReservationController } from './web/controller/reservation.controller';
 import { ReservationAuthorizationService } from './security/authorization/reservation.authorization.service';
+import { VehiclesController } from './web/controller/vehicles.controller';
 
 const providers: Provider[] = [
   {
@@ -73,6 +74,7 @@ const providers: Provider[] = [
     ParkingLotController,
     DriverController,
     ReservationController,
+    VehiclesController,
   ],
   imports: [
     ConfigurationModule,

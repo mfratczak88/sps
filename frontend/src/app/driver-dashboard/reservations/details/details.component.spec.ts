@@ -9,9 +9,9 @@ import { newMatDialogSpy } from '../../../../../test/spy.util';
 import { mockReservations } from '../../../../../test/reservation.util';
 import { By } from '@angular/platform-browser';
 import { NgxsModule, Store } from '@ngxs/store';
-import { CanCancelReservationPipe } from '../../../shared/pipe/can/can-cancel-reservation.pipe';
-import { CanEditReservationPipe } from '../../../shared/pipe/can/can-edit-reservation.pipe';
-import { CanConfirmReservationPipe } from '../../../shared/pipe/can/can-confirm-reservation.pipe';
+import { CanCancelReservationPipe } from '../../../core/pipe/can/can-cancel-reservation.pipe';
+import { CanEditReservationPipe } from '../../../core/pipe/can/can-edit-reservation.pipe';
+import { CanConfirmReservationPipe } from '../../../core/pipe/can/can-confirm-reservation.pipe';
 import { ReservationValidator } from '../../../core/validators/reservation.validator';
 import {
   defaults,

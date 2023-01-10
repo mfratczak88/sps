@@ -92,4 +92,12 @@ export class ReservationQuery {
   @IsBoolean()
   @Type(() => Boolean)
   onlyHistory: boolean;
+
+  @IsOptional()
+  @IsString()
+  licensePlate?: string;
+
+  @IsOptional()
+  @Type(() => Date)
+  startTime: Date;
 }

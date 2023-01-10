@@ -18,8 +18,9 @@ import {
   RouterStateSerializer,
 } from '@ngxs/router-plugin';
 import { AuthState } from './store/auth/auth.state';
-import { UiState } from './store/ui.state';
+import { UiState } from './store/ui/ui.state';
 import { RouteStateSerializer } from './service/route-state-serializer';
+import { LangInterceptor } from './interceptor/lang.interceptor';
 
 const socialLoginProviderConfig = {
   provide: 'SocialAuthServiceConfig',
@@ -35,6 +36,7 @@ const socialLoginProviderConfig = {
 };
 const providers = [
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true },
   socialLoginProviderConfig,
   { provide: RouterStateSerializer, useClass: RouteStateSerializer },
 ];

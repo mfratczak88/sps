@@ -1,4 +1,4 @@
-import { createSelector } from '@ngxs/store';
+import { createSelector, Store } from '@ngxs/store';
 import {
   ReservationsState,
   ReservationsStateModel,
@@ -40,3 +40,20 @@ export const count = createSelector(
   [ReservationsState],
   ({ count }: ReservationsStateModel) => count,
 );
+
+export const sortingPagingCount = createSelector(
+  [ReservationsState],
+  (state: ReservationsStateModel) => ({
+    count: count(state),
+    sorting: sorting(state),
+    paging: paging(state),
+  }),
+);
+
+export const reservationsListState = (store: Store) => ({
+  count$: store.select(count),
+  sorting$: store.select(sorting),
+  paging$: store.select(paging),
+  reservations$: store.select(reservations),
+  loading$: store.select(loading),
+});

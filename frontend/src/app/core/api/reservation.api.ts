@@ -65,4 +65,22 @@ export class ReservationApi extends BaseApi {
       this.http.patch<void>(`${this.BASE_URL}/${reservationId}/time`, data),
     );
   }
+
+  issueParkingTicket(reservationId: Id) {
+    return this.withCsrfToken(
+      this.http.post<void>(
+        `${this.BASE_URL}/${reservationId}/issueParkingTicket`,
+        {},
+      ),
+    );
+  }
+
+  returnParkingTicket(reservationId: Id) {
+    return this.withCsrfToken(
+      this.http.post<void>(
+        `${this.BASE_URL}/${reservationId}/returnParkingTicket`,
+        {},
+      ),
+    );
+  }
 }

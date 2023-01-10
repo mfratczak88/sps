@@ -8,8 +8,8 @@ import { mockParkingLots } from '../../../../../test/driver.utils';
 import {
   DayToShortTranslation,
   OperationTimeDays,
-} from '../../../core/model/common.model';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+} from '../../model/common.model';
+import { ParkingLot } from '../../model/parking-lot.model';
 
 describe('DaysPipe', () => {
   let daysPipe: DaysPipe;

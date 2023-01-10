@@ -4,9 +4,9 @@ import { Column } from '../table/table.component';
 
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AddressPipe } from '../../pipe/address/address.pipe';
-import { HoursPipe } from '../../pipe/time/hours.pipe';
-import { DaysPipe } from '../../pipe/date/days.pipe';
+import { AddressPipe } from '../../../core/pipe/address/address.pipe';
+import { HoursPipe } from '../../../core/pipe/time/hours.pipe';
+import { DaysPipe } from '../../../core/pipe/date/days.pipe';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
 import { SyncTableComponent } from '../sync-table/sync-table.component';
 

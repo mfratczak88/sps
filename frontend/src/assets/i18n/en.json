@@ -75,8 +75,8 @@
     "USERS": "Users",
     "PARKING_DETAILS": "Details",
     "DRIVERS": "Drivers",
-    "VEHICLES": "Vehicles"
-
+    "VEHICLES": "Vehicles",
+    "OPERATIONS": "Operations"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Reservations",
@@ -214,5 +214,15 @@
     "DRAFT": "Draft",
     "CANCELLED": "Cancelled",
     "CONFIRMED": "Confirmed"
+  },
+  "CLERK": {
+    "ISSUE_PARKING_TICKET": "Issue ticket",
+    "RETURN_PARKING_TICKET": "Return ticket",
+    "FIND_CAR_BY_LICENSE_PLATE": "Find the car by license plate",
+    "ENTERING_INSTRUCTION": "If the driver is entering, check if is allowed to enter and confirm that he showed up",
+    "LEAVING_INSTRUCTION": "If the driver is leaving, select leaving option",
+    "LICENSE_PLATE": "License plate",
+    "SEARCH_RESERVATIONS": "Search reservations",
+    "ENTER_LICENSE_PLATE_NUMBER": "Enter license plate number"
   }
 }

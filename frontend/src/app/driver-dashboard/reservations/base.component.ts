@@ -1,10 +1,5 @@
 import { MatDialog } from '@angular/material/dialog';
-import {
-  ConfirmActionDialogComponent,
-  ConfirmDialogProps,
-  ConfirmResult,
-} from '../../shared/components/confirm-action-dialog/confirm-action-dialog.component';
-import { filter, first, Observable } from 'rxjs';
+import { filter, first } from 'rxjs';
 import { Reservation } from '../../core/model/reservation.model';
 import { DrawerKeys, DriverKeys, MiscKeys } from '../../core/translation-keys';
 import { Store } from '@ngxs/store';
@@ -16,15 +11,18 @@ import {
   EditTimeDialogComponent,
 } from './edit-time-dialog/edit-time-dialog.component';
 import { hoursOf } from '../../core/util';
+import { HasDialogComponent } from '../../shared/components/has-dialog.component';
 
-export abstract class ReservationBaseComponent {
+export abstract class ReservationBaseComponent extends HasDialogComponent {
   readonly translations = { ...DriverKeys, ...MiscKeys, ...DrawerKeys };
 
   protected constructor(
     protected readonly store: Store,
-    protected readonly dialog: MatDialog,
+    dialog: MatDialog,
     protected readonly validator: ReservationValidator,
-  ) {}
+  ) {
+    super(dialog);
+  }
 
   onConfirmReservation({ id }: Reservation) {
     this.confirmWithDialog(
@@ -73,27 +71,5 @@ export abstract class ReservationBaseComponent {
           new DriverActions.ChangeTimeOfReservation(id, hours, date),
         );
       });
-  }
-
-  protected confirmWithDialog(
-    data: ConfirmDialogProps,
-    cb: () => Observable<void>,
-  ) {
-    const dialogRef = this.dialog.open<
-      ConfirmActionDialogComponent,
-      ConfirmDialogProps,
-      ConfirmResult
-    >(ConfirmActionDialogComponent, {
-      data: {
-        ...data,
-      },
-    });
-    return dialogRef
-      .afterClosed()
-      .pipe(
-        first(),
-        filter(result => !!result?.confirmed),
-      )
-      .subscribe(cb);
   }
 }

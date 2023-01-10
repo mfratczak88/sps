@@ -3,10 +3,10 @@
             [title]="translations.CONFIRM_TITLE"
             [subTitle]="translations.CONFIRM_PROMPT"
             [loading$]="driverLoading$"
-            *ngIf="driver.timeHorizon?.pendingAction as pendingAction">
-    <sps-number-chip chip>{{pendingAction.length}}</sps-number-chip>
+            *ngIf="driver.pendingAction?.length">
+    <sps-number-chip chip>{{driver.pendingAction?.length}}</sps-number-chip>
     <div>
-      <div *ngFor="let reservation of pendingAction">
+      <div *ngFor="let reservation of driver.pendingAction">
         <sps-reservation-expansion-panel [reservation]="reservation" [expanded]="true">
           <div class="reservations__card--timer" timer>
             <sps-time-left
@@ -27,19 +27,18 @@
             [title]="translations.DUE_NEXT"
             [subTitle]="translations.DUE_NEXT_PROMPT"
             [loading$]="driverLoading$"
-            *ngIf="driver.timeHorizon?.dueNext as dueNext">
-    <sps-number-chip chip>{{dueNext.length}}</sps-number-chip>
+            *ngIf="driver.dueNext?.length">
+    <sps-number-chip chip>{{driver.dueNext?.length}}</sps-number-chip>
     <div>
-      <div *ngFor="let reservation of dueNext">
+      <div *ngFor="let reservation of driver.dueNext">
         <sps-reservation-expansion-panel [reservation]="reservation">
           <div class="reservations__card--timer" timer>
           </div>
           <button mat-button color="warn"
                   (click)="onCancelReservation(reservation)">{{translations.CANCEL | translate}}</button>
           <button mat-button
-
                   color="primary"
-
+                  (click)="onEditReservation(reservation)"
           >{{translations.CHANGE_TIME | translate}}</button>
         </sps-reservation-expansion-panel>
       </div>
@@ -57,10 +56,14 @@
       {{translations.CREATE | translate}}
     </button>
     <sps-reservations-table
-      [reservations$]="reservations$"
-      [loading$]="reservationsLoading$"
-      [length$]="reservationsCount$"
+      [reservations$]="reservationsList.reservations$"
+      [loading$]="reservationsList.loading$"
+      [length$]="reservationsList.count$"
+      [paging$]="reservationsList.paging$"
+      [sorting$]="reservationsList.sorting$"
       (reservationClicked)="toDetails($event)"
+      (pagingChange)="onPagingChange($event)"
+      (sortingChange)="onSortingChange($event)"
       [displayColumns]="['licensePlate','time','date','status','parkingLotAddress']"
     ></sps-reservations-table>
   </sps-panel>

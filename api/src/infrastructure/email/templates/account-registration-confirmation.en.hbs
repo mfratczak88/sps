@@ -13,6 +13,7 @@
       -ms-text-size-adjust: 100%; /* 1 */
       -webkit-text-size-adjust: 100%; /* 2 */
     }
+
     /**
      * Remove blue links for iOS devices.
      */
@@ -24,6 +25,7 @@
       color: inherit !important;
       text-decoration: none !important;
     }
+
     html {
       font-size: 16px;
       line-height: 23px;
@@ -44,11 +46,6 @@
       line-height: 23px;
     }
 
-    .logo {
-      text-align: center;
-      padding: 2rem;
-    }
-
     .email-content {
       max-width: 560px;
       width: 90%;
@@ -56,7 +53,7 @@
       background: white;
       border-radius: 10px;
       border: 0.4px solid black;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
       padding: 4rem;
     }
 
@@ -104,7 +101,7 @@
 <div class='email-content'>
   <p class='email-content__title'>Verify your email address</p>
   <p class='email-content__prompt'>{{name}}, to finish up creating your account please confirm that you want to use this
-    email address as your Vappy account email address by clicking the button below</p>
+    email address as your SPS account email address by clicking the button below</p>
   <a href="{{ url }}">
     <button>
       Confirm

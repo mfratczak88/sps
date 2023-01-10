@@ -75,7 +75,8 @@
     "PARKING_DETAILS": "Szczegóły",
     "DRIVERS": "Kierowcy",
     "VEHICLES" : "Pojazdy",
-    "RESERVATION_DETAILS": "Szczegóły"
+    "RESERVATION_DETAILS": "Szczegóły",
+    "OPERATIONS": "Operacje"
   },
   "ADMIN": {
     "RESERVATIONS_TITLE": "Rezerwacje",
@@ -213,5 +214,15 @@
     "DRAFT": "Draft",
     "CANCELLED": "Anulowana",
     "CONFIRMED": "Potwierdzona"
+  },
+  "CLERK": {
+    "ISSUE_PARKING_TICKET": "Wydaj bilet",
+    "RETURN_PARKING_TICKET": "Zwróć bilet",
+    "FIND_CAR_BY_LICENSE_PLATE": "Znajdź rezerwację po numerze rejestracyjnym",
+    "ENTERING_INSTRUCTION": "Jezeli kierowca wjeżdza, sprawdź czy może wjechać i wydaj bilet",
+    "LEAVING_INSTRUCTION": "Jeżeli kierowca wyjeżdza, wybierz zwrot biletu",
+    "LICENSE_PLATE": "Tablica rejestracyjna",
+    "SEARCH_RESERVATIONS": "Znajdź rezerwacje",
+    "ENTER_LICENSE_PLATE_NUMBER": "Podaj numer rejestracyjny"
   }
 }

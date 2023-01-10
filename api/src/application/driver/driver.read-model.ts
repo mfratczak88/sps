@@ -1,16 +1,7 @@
 import { Id } from '../../domain/id';
-import {
-  ArrayMinSize,
-  ArrayUnique,
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { ArrayMinSize, IsArray, IsOptional } from 'class-validator';
 import { ReservationReadModel } from '../reservation/reservation.read-model';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 
 export enum TimeHorizon {
   ONGOING = 'ongoing',

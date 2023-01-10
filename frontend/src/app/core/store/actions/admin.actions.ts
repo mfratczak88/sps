@@ -2,12 +2,11 @@ import { Id, OperationTimeDays } from '../../model/common.model';
 import { Navigate } from '@ngxs/router-plugin';
 import { AdminPaths, TopLevelPaths } from '../../../routes';
 import { Role } from '../../model/auth.model';
+import { GetById, PageChange, SortChange } from './base.actions';
 
 export namespace AdminActions {
-  export class GetDriverDetails {
+  export class GetDriverDetails extends GetById {
     static readonly type = '[Admin Dashboard Drivers] GetDriverDetails';
-
-    constructor(readonly id: Id) {}
   }
   export class GetAllDrivers {
     static readonly type = '[Admin Dashboard Drivers] GetAll';
@@ -66,10 +65,8 @@ export namespace AdminActions {
   export class GetAllParkingLots {
     static readonly type = '[Admin Dashboard Parking Lots] GetAll';
   }
-  export class GetParkingLot {
+  export class GetParkingLot extends GetById {
     static readonly type = '[Admin Dashboard Parking Lots] GetParkingLot';
-
-    constructor(readonly id: Id) {}
   }
 
   export class GetAllUsers {
@@ -97,5 +94,15 @@ export namespace AdminActions {
     constructor() {
       super([`${TopLevelPaths.ADMIN_DASHBOARD}/${AdminPaths.PARKING}`]);
     }
+  }
+
+  export class GetAllReservations {
+    static readonly type = '[Admin Dashboard Reservations] GetAll';
+  }
+  export class ReservationsPageChange extends PageChange {
+    static readonly type = '[Admin Dashboard Reservations] PageChanged';
+  }
+  export class ReservationsSortingChange extends SortChange {
+    static readonly type = '[Admin Dashboard Reservations] SortingChanged';
   }
 }

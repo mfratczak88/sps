@@ -1,7 +1,7 @@
 import { Route, RouterModule } from '@angular/router';
 import { ReservationsListComponent } from './list/list.component';
 import { DrawerKeys } from '../../core/translation-keys';
-import { AdminPaths, TopLevelPaths } from '../../routes';
+import { AdminPaths } from '../../routes';
 
 import { NgModule } from '@angular/core';
 import { DASHBOARD_ROUTE } from '../routing';

@@ -65,7 +65,7 @@ export class CreateReservationComponent {
     licensePlate: new FormControl('', [LocalizedValidators.required]),
   });
 
-  dateFilter = this.validReservationDate().bind(this);
+  dateFilter: (date: Date | null) => boolean;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -74,7 +74,8 @@ export class CreateReservationComponent {
   ) {
     this.parkingLotForm.valueChanges.subscribe(({ parkingLot }) => {
       if (!this.parkingLotForm.invalid && parkingLot) {
-        const { hourFrom, hourTo } = parkingLot;
+        const { hourFrom, hourTo, id } = parkingLot;
+        this.dateFilter = this.reservationValidator.dateFilterFn(id).bind(this);
         this.hoursFormComponent.hourFrom = hourFrom;
         this.hoursFormComponent.hourTo = hourTo;
         this.hoursForm.controls.hours.setValue({
@@ -86,10 +87,12 @@ export class CreateReservationComponent {
   }
 
   onCreate() {
-    const { date } = this.dateForm.value;
-    const { parkingLot } = this.parkingLotForm.value;
-    const { hours } = this.hoursForm.value;
-    const { licensePlate } = this.vehicleForm.value;
+    const { date, parkingLot, hours, licensePlate } = {
+      ...this.dateForm.value,
+      ...this.parkingLotForm.value,
+      ...this.hoursForm.value,
+      ...this.vehicleForm.value,
+    };
     if (date && parkingLot && hours && licensePlate)
       this.store
         .dispatch(
@@ -103,10 +106,5 @@ export class CreateReservationComponent {
         .subscribe(() =>
           this.store.dispatch(new DriverActions.NavigateToReservationList()),
         );
-  }
-
-  private validReservationDate() {
-    const parkingLot = this.parkingLotForm.controls.parkingLot.value;
-    return this.reservationValidator.dateFilterFn(parkingLot?.id).bind(this);
   }
 }

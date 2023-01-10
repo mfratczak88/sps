@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MiscKeys } from '../../../core/translation-keys';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmDialogProps } from '../../../core/abstract.dialog';
 
 @Component({
   selector: 'sps-confirm-action-dialog',
@@ -14,11 +15,4 @@ export class ConfirmActionDialogComponent {
     @Inject(MAT_DIALOG_DATA) readonly props: ConfirmDialogProps,
     readonly dialogRef: MatDialogRef<ConfirmActionDialogComponent>,
   ) {}
-}
-export interface ConfirmDialogProps {
-  title: string;
-  subTitle: string;
-}
-export interface ConfirmResult {
-  confirmed: boolean;
 }
