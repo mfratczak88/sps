@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Id } from '../model/common.model';
-import { ParkingLotsState } from '../store/parking-lot/parking-lot.state';
 import { DateTime } from 'luxon';
 import { parkingLotById } from '../store/parking-lot/parking-lot.selectors';
 
