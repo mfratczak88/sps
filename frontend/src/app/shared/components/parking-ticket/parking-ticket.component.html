@@ -1,0 +1,14 @@
+<div class="ticket">
+  <div class="ticket__text">
+    <span class="ticket__text--key">{{translations.TIME_OF_ENTRY | translate}}: </span>
+    <span class="ticket__text--value">{{ticket.timeOfEntry | time}}</span>
+  </div>
+  <div class="ticket__text">
+    <span class="ticket__text--key">{{translations.VALID_TO | translate}}: </span>
+    <span class="ticket__text--value">{{ticket.validTo | time}}</span>
+  </div>
+  <div class="ticket__text" *ngIf="ticket.timeOfLeave">
+    <span class="ticket__text--key">{{translations.TIME_OF_LEAVE | translate}}: </span>
+    <span class="ticket__text--value">{{ticket.timeOfLeave | time}}</span>
+  </div>
+</div>

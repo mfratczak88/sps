@@ -201,7 +201,14 @@
     "CONFIRM_RESERVATION_QUESTION": "Do you want to confirm reservation ?",
     "RESERVATION_DETAILS": "Reservation details",
     "DATE_AND_TIME" : "Date and time",
-    "STATUS" : "Status"
+    "STATUS" : "Status",
+    "ONGOING": "Ongoing",
+    "ONGOING_PROMPT": "Your ongoing reservations together with parking tickets",
+    "PARKING_TICKETS": "Parking tickets",
+    "TIME_OF_ENTRY": "Time of entry",
+    "TIME_OF_LEAVE": "Time of leave",
+    "VALID_TO": "Valid to",
+    "RETURNED": "Returned"
   },
   "TABLE_KEYS": {
     "LICENSE_PLATE": "License plate",
@@ -223,6 +230,10 @@
     "LEAVING_INSTRUCTION": "If the driver is leaving, select leaving option",
     "LICENSE_PLATE": "License plate",
     "SEARCH_RESERVATIONS": "Search reservations",
-    "ENTER_LICENSE_PLATE_NUMBER": "Enter license plate number"
+    "ENTER_LICENSE_PLATE_NUMBER": "Enter license plate number",
+    "CONFIRM_TICKET_ISSUE": "Parking ticket issue",
+    "CONFIRM_TICKET_ISSUE_QUESTION": "Are you sure you want to issue parking ticket ?",
+    "CONFIRM_TICKET_RETURN": "Parking ticket return",
+    "CONFIRM_TICKET_RETURN_QUESTION": "Are you sure you want to return parking ticket ?"
   }
 }

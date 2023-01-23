@@ -5,11 +5,17 @@ import {
   SortBy,
   SortOrder,
 } from '../../model/reservation.model';
-import { Action, State, StateContext, Store } from '@ngxs/store';
+import {
+  Action,
+  getActionTypeFromInstance,
+  State,
+  StateContext,
+  Store,
+} from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { ReservationApi } from '../../api/reservation.api';
 import { DriverActions } from '../actions/driver.actions';
-import { tap } from 'rxjs';
+import { concatMap, tap } from 'rxjs';
 import { DateTime } from 'luxon';
 import { fullHour, mapToObjectWithIds, today } from '../../util';
 import { queryParams } from '../routing/routing.selector';
@@ -241,10 +247,15 @@ export class ReservationsState {
   @Action([DriverActions.GetReservationById, ClerkActions.ReloadReservation])
   getReservation(
     { getState, patchState }: StateContext<ReservationsStateModel>,
-    { id }: DriverActions.GetReservationById,
+    action: DriverActions.GetReservationById | ClerkActions.ReloadReservation,
   ) {
+    const { id } = action;
     const { entities } = getState();
-    if (entities[id]) {
+    if (
+      entities[id] &&
+      getActionTypeFromInstance(action) ===
+        DriverActions.GetReservationById.type
+    ) {
       return patchState({ selectedId: id });
     }
     patchState({
@@ -276,12 +287,16 @@ export class ReservationsState {
       })
       .pipe(
         tap(reservations => {
-          const { patchState } = ctx;
+          const { patchState, getState } = ctx;
+          const { entities: existing } = getState();
           const { data, page, pageSize, count } = reservations;
           const entities = mapToObjectWithIds(data);
           patchState({
             loading: false,
-            entities,
+            entities: {
+              ...existing,
+              ...entities,
+            },
             count,
             paging: {
               page,
@@ -313,7 +328,9 @@ export class ReservationsState {
     return this.api
       .returnParkingTicket(reservationId)
       .pipe(
-        tap(() => dispatch(new ClerkActions.ReloadReservation(reservationId))),
+        concatMap(() =>
+          dispatch(new ClerkActions.ReloadReservation(reservationId)),
+        ),
       );
   }
 

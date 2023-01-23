@@ -44,10 +44,10 @@ export const defaults: DriversStateModel = {
 export class DriversState {
   constructor(private readonly api: DriversApi) {}
 
-  @Action(DriverActions.GetDriverDetails)
+  @Action([DriverActions.GetDriverDetails])
   getDriverDetails(
     { patchState, getState, dispatch }: StateContext<DriversStateModel>,
-    { id }: DriverActions.GetDriverDetails | AdminActions.GetDriverDetails,
+    { id }: DriverActions.GetDriverDetails,
   ) {
     const { entities } = getState();
     patchState({ loading: true });
@@ -86,7 +86,7 @@ export class DriversState {
   @Action(AdminActions.GetDriverDetails)
   getAdminDriverDetails(
     { patchState, getState }: StateContext<DriversStateModel>,
-    { id }: DriverActions.GetDriverDetails | AdminActions.GetDriverDetails,
+    { id }: AdminActions.GetDriverDetails,
   ) {
     const { entities } = getState();
     patchState({ loading: true });
@@ -145,7 +145,7 @@ export class DriversState {
     );
   }
 
-  @Action(DriverActions.CancelReservation)
+  @Action(DriverActions.AddVehicle)
   addVehicle(
     { getState, patchState, dispatch }: StateContext<DriversStateModel>,
     { licensePlate }: DriverActions.AddVehicle,

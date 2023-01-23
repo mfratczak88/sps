@@ -15,6 +15,10 @@ import {
   PrismaReservationFinder,
 } from '../reservation/prisma.reservation.finder';
 import { Vehicle } from 'src/domain/driver/vehicle';
+import {
+  CONFIRMATION_TIME_END_IN_MINUTES,
+  CONFIRMATION_TIME_START_IN_MINUTES,
+} from '../../../domain/reservation/reservation';
 
 @Injectable()
 export class PrismaDriverFinder implements DriverFinder {
@@ -29,6 +33,7 @@ export class PrismaDriverFinder implements DriverFinder {
       },
       ...this.driverSelect,
     });
+    if (!prismaDriver) return null;
     const driverDto =
       PrismaDriverFinder.mapPrismaDriverToReadModel(prismaDriver);
 
@@ -77,16 +82,20 @@ export class PrismaDriverFinder implements DriverFinder {
   }
   private async loadPendingActionReservations(driverId: Id) {
     const now = DateTime.now();
-    const fourHoursFromNow = now.plus({ hour: 4 }).toJSDate();
-    const thirtyMinutesFromNow = now.plus({ minute: 30 }).toJSDate();
+    const confirmationTimeStart = now
+      .plus({ minute: CONFIRMATION_TIME_START_IN_MINUTES })
+      .toJSDate();
+    const confirmationTimeEnd = now
+      .plus({ minute: CONFIRMATION_TIME_END_IN_MINUTES })
+      .toJSDate();
     const reservations = await (this.prismaService.reservation.findMany({
       select: {
         ...PrismaReservationFinder.selectClause,
       },
       where: {
         startTime: {
-          lt: fourHoursFromNow,
-          gt: thirtyMinutesFromNow,
+          lt: confirmationTimeStart,
+          gt: confirmationTimeEnd,
         },
         status: ReservationStatus.DRAFT,
         vehicle: {
@@ -191,7 +200,7 @@ export class PrismaDriverFinder implements DriverFinder {
     },
   };
 }
-interface PrismaDriver {
+export interface PrismaDriver {
   id: string;
   email: string;
   name: string;

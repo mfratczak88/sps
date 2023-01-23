@@ -33,7 +33,7 @@ export interface UiStateModel {
   };
 }
 
-const defaults: UiStateModel = {
+export const defaults: UiStateModel = {
   drawerOpened: true,
   language: availableLanguages['pl'],
   languages: availableLanguages,

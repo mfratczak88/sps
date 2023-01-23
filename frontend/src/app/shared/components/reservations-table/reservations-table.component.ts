@@ -13,7 +13,7 @@ import { Column } from '../table/table.component';
 import { TableKeys } from '../../../core/translation-keys';
 import { map } from 'rxjs/operators';
 import { AddressPipe } from '../../../core/pipe/address/address.pipe';
-import { TimePipe } from '../../../core/pipe/time/time.pipe';
+import { SpsReservationTimePipe } from '../../../core/pipe/time/reservation-time';
 import { Sort } from '@angular/material/sort';
 import { Id } from '../../../core/model/common.model';
 import { DatePipe } from '../../../core/pipe/date/date.pipe';
@@ -110,7 +110,7 @@ export class ReservationsTableComponent {
 
   constructor(
     private readonly addressPipe: AddressPipe,
-    private readonly timePipe: TimePipe,
+    private readonly timePipe: SpsReservationTimePipe,
     private readonly datePipe: DatePipe,
   ) {}
 

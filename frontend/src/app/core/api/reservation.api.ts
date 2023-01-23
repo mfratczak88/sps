@@ -77,7 +77,7 @@ export class ReservationApi extends BaseApi {
 
   returnParkingTicket(reservationId: Id) {
     return this.withCsrfToken(
-      this.http.post<void>(
+      this.http.patch<void>(
         `${this.BASE_URL}/${reservationId}/returnParkingTicket`,
         {},
       ),

@@ -18,7 +18,7 @@ export interface ParkingLotStateModel {
   selectedId: Id | null;
   loading: boolean;
 }
-const defaults: ParkingLotStateModel = {
+export const defaults: ParkingLotStateModel = {
   entities: {},
   selectedId: null,
   loading: false,

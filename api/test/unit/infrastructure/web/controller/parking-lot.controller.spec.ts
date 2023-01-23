@@ -51,4 +51,8 @@ describe('Parking lot controller', () => {
       parkingLotId,
     });
   });
+  it('Delegates call for find all to finder', async () => {
+    await parkingLotController.findAll();
+    expect(parkingLotFinder.findAll).toHaveBeenCalled();
+  });
 });

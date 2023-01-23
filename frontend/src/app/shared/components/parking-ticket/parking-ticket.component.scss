@@ -1,0 +1,13 @@
+.ticket{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.ticket__text {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+.ticket__text--key {
+  font-weight: 700;
+}

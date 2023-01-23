@@ -47,7 +47,6 @@ export class AuthInterceptor implements HttpInterceptor {
           return next.handle(req);
         }),
         catchError(err => {
-          store.dispatch(new AuthActions.Logout());
           this.refreshingInProgress = false;
           return throwError(err);
         }),
