@@ -7,6 +7,7 @@ import {
   AssignParkingLotCommand,
 } from '../../../../../src/application/driver/driver.command';
 import { randomId } from '../../../../misc.util';
+import { DriverQuery } from '../../../../../src/application/driver/driver.read-model';
 
 describe('Driver controller', () => {
   let driverServiceMock: DeepMocked<DriverService>;
@@ -53,5 +54,11 @@ describe('Driver controller', () => {
       parkingLotId,
       driverId,
     });
+  });
+  it('Delegates find single to finder', async () => {
+    const queryMock = createMock<DriverQuery>();
+    const id = randomId();
+    await driverController.getDriver(id, queryMock);
+    expect(finderMock.findSingle).toHaveBeenCalledWith(id, queryMock);
   });
 });

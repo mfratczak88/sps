@@ -13,6 +13,7 @@ import { AuthController } from '../../../../../src/infrastructure/web/controller
 import { Request, Response } from 'express';
 import { RequestWithUser } from '../../../../../src/infrastructure/security/authorization/jwt.strategy';
 import { Role } from '../../../../../src/infrastructure/security/authorization/role';
+import { User } from '../../../../../src/infrastructure/security/user/user';
 describe('Auth controller', () => {
   let authServiceMock: DeepMocked<AuthenticationService>;
   let tokenServiceMock: DeepMocked<TokenService>;
@@ -66,7 +67,7 @@ describe('Auth controller', () => {
   it('Delegates register call to auth service', async () => {
     const command = createMock<RegisterUserCommand>();
 
-    await authServiceMock.register(command);
+    await authController.register(command);
 
     expect(authServiceMock.register).toHaveBeenCalledWith(command);
   });
@@ -94,5 +95,15 @@ describe('Auth controller', () => {
     expect(authServiceMock.resendAccountConfirmationLink).toHaveBeenCalledWith(
       command,
     );
+  });
+  it('Delegates refresh token to auth service', async () => {
+    const req = createMock<RequestWithUser>();
+    const res = createMock<Response>();
+    const user = createMock<User>();
+    req.user = user;
+
+    await authController.refreshToken(req, res);
+
+    expect(authServiceMock.onRefreshToken).toHaveBeenCalledWith(res, user);
   });
 });

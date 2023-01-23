@@ -33,7 +33,7 @@ import { ChipComponent } from './components/chip/chip.component';
 import { TimeLeftComponent } from './components/time-left/time-left.component';
 import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
 import { ReservationsTableComponent } from './components/reservations-table/reservations-table.component';
-import { TimePipe } from '../core/pipe/time/time.pipe';
+import { SpsReservationTimePipe } from '../core/pipe/time/reservation-time';
 
 import { SyncTableComponent } from './components/sync-table/sync-table.component';
 import { ReservationStatusChipComponent } from './components/reservation-status-chip/reservation-status-chip.component';
@@ -45,6 +45,11 @@ import { ReservationExpansionPanelComponent } from './components/reservation-exp
 import { AbstractDialog } from '../core/abstract.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { ParkingTicketComponent } from './components/parking-ticket/parking-ticket.component';
+import { TimePipe } from '../core/pipe/time/time.pipe';
+import { CanIssueParkingTicketPipe } from '../core/pipe/can/can-issue-parking-ticket.pipe';
+import { CanReturnParkingTicketPipe } from '../core/pipe/can/can-return-parking-ticket.pipe';
+import { ParkingTicketsComponent } from './components/parking-tickets/parking-tickets.component';
 
 const components = [
   NavbarComponent,
@@ -75,12 +80,17 @@ const components = [
   SyncTableComponent,
   ReservationStatusChipComponent,
   ReservationExpansionPanelComponent,
-  TimePipe,
+  SpsReservationTimePipe,
   DatePipe,
+  TimePipe,
+  CanIssueParkingTicketPipe,
+  CanReturnParkingTicketPipe,
   CanConfirmReservationPipe,
   CanCancelReservationPipe,
   CanEditReservationPipe,
   PaginatorComponent,
+  ParkingTicketComponent,
+  ParkingTicketsComponent,
 ];
 @NgModule({
   declarations: components,
@@ -96,7 +106,7 @@ const components = [
     { provide: ToastService, useClass: MaterialToastService },
     { provide: AbstractDialog, useClass: MatDialog },
     { provide: MatPaginatorIntl, useClass: PaginatorIntlService },
-    TimePipe,
+    SpsReservationTimePipe,
     DatePipe,
     CanConfirmReservationPipe,
     CanCancelReservationPipe,

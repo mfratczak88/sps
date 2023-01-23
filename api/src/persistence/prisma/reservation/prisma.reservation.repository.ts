@@ -69,16 +69,16 @@ export class PrismaReservationRepository implements ReservationRepository {
       parkingTickets.map(async (ticket) => {
         const existing = existingTickets.find(
           (existing) =>
-            existing.timeOfEntry === ticket.timeOfEntry &&
-            existing.validTo === ticket.validTo,
+            PrismaReservationRepository.twoTicketsEqual(existing, ticket) &&
+            existing,
         );
         if (existing) {
-          existing.validTo = ticket.validTo;
-          return existing;
+          existing.timeOfLeave = ticket.timeOfLeave;
+          const { id, validTo, timeOfLeave, timeOfEntry } = existing;
+          return { id, validTo, timeOfLeave, timeOfEntry };
         }
         return {
           id: await this.idGenerator.generate(),
-          reservationId,
           timeOfEntry: ticket.timeOfEntry,
           validTo: ticket.validTo,
           timeOfLeave: ticket.timeOfLeave,
@@ -91,24 +91,40 @@ export class PrismaReservationRepository implements ReservationRepository {
       startTime: start,
       endTime: end,
       licensePlate,
-      parkingTickets: {
-        set: parkingTicketsToSet,
-      },
     };
     await this.prismaService.reservation.upsert({
       where: {
         id: reservationId,
       },
-      update: prismaFields,
+      update: {
+        ...prismaFields,
+        parkingTickets: {
+          upsert: parkingTicketsToSet.map((ticket) => ({
+            update: { ...ticket },
+            create: { ...ticket },
+            where: { id: ticket.id },
+          })),
+        },
+      },
       create: {
         id: reservationId,
         ...prismaFields,
-        parkingTickets: {
-          createMany: {
-            data: parkingTicketsToSet,
-          },
-        },
       },
     });
   }
+
+  private static twoTicketsEqual(
+    first: WithTimeOfEntryAndValidTo,
+    second: WithTimeOfEntryAndValidTo,
+  ) {
+    return (
+      first.timeOfEntry.toISOString() === second.timeOfEntry.toISOString() &&
+      first.validTo.toISOString() === second.validTo.toISOString()
+    );
+  }
+}
+
+interface WithTimeOfEntryAndValidTo {
+  timeOfEntry: Date;
+  validTo: Date;
 }

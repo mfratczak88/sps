@@ -1,0 +1,27 @@
+@use "../../../../variables" as vars;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__text {
+  @include vars.typography-heading-xs;
+}
+.parking-tickets-list {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.parking-tickets-list__number {
+  font-weight: vars.$font-weight-bold;
+}
+.parking-tickets-list__ticket {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+.spacer {
+  display: block;
+  border-bottom: 2px solid vars.$body-text-color;
+}

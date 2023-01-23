@@ -64,3 +64,12 @@ export class CanReturnParkingTicket implements PolicyHandler {
 }
 const reservationAuthServiceFromModuleRef = (moduleRef: ModuleRef) =>
   moduleRef.get(ReservationAuthorizationService);
+
+export class CanQueryReservations implements PolicyHandler {
+  handle(context: PolicyCheckContext): Promise<boolean> {
+    const { userId, moduleRef } = context;
+    return reservationAuthServiceFromModuleRef(
+      moduleRef,
+    ).canReturnParkingTicket(userId);
+  }
+}

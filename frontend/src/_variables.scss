@@ -86,6 +86,12 @@ $font-weight-normal: 400;
   line-height: 36px;
 }
 
+@mixin typography-heading-xs {
+  @include heading-font-weight;
+  font-size: 16px;
+  line-height: 20px;
+}
+
 @mixin typography-heading-s {
   @include heading-font-weight;
   font-size: 24px;

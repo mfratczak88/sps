@@ -26,7 +26,10 @@ describe('Auth selector', () => {
   });
   describe('User', () => {
     it('Passes over state', () => {
-      expect(user({ ...defaults, id: '3' })).toEqual({ ...defaults, id: '3' });
+      expect(user({ ...defaults, id: '3' })).toEqual({
+        ...defaults,
+        id: '3',
+      });
     });
   });
   describe('Loading', () => {

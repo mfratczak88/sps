@@ -7,7 +7,7 @@
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">schedule</mat-icon>
         <div class="section__attribute--value">
-          {{reservation | time}}
+          {{reservation | spsReservationTime}}
         </div>
       </div>
       <div class="section__attribute">
@@ -36,9 +36,10 @@
       </div>
     </div>
     <div class="section">
-      <p class="section__header">{{translations.STATUS}}</p>
+      <p class="section__header">{{translations.STATUS | translate}}</p>
       <sps-reservation-status-chip class="section__attribute" [reservation]="reservation"></sps-reservation-status-chip>
     </div>
+    <sps-parking-tickets [editable]="false" [reservation]="reservation"></sps-parking-tickets>
     <div class="actions" *ngIf="reservation | canEditReservation">
       <button class="actions__confirm-button"
               mat-button

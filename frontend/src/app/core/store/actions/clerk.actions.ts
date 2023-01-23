@@ -52,7 +52,7 @@ export namespace ClerkActions {
   export class ReloadReservation {
     static readonly type = '[Clerk Dashboard Reservations] ReloadReservation';
 
-    constructor(readonly reservationId: Id) {}
+    constructor(readonly id: Id) {}
   }
 
   export class ReservationPageChanged extends PageChange {
