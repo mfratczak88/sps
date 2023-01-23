@@ -23,9 +23,9 @@
     <div class="tickets">
       <ng-content select="[parkingTickets]"></ng-content>
     </div>
+    <ng-content select="[timer]">
+    </ng-content>
     <mat-action-row>
-      <ng-content select="[timer]">
-      </ng-content>
       <ng-content></ng-content>
     </mat-action-row>
   </mat-expansion-panel>

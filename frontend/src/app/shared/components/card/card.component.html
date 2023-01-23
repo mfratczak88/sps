@@ -1,5 +1,5 @@
-<div [class.hoverable]="clickable">
-  <mat-card class="card" (click)="clickable && clicked.emit()">
+<div [class.hoverable]="clickable" [class.grow]="growHeight">
+  <mat-card class="card" (click)="clickable && clicked.emit()" [class.grow]="growHeight">
     <div class="card__header">
       <div class="card__header--title">
         <mat-card-title>{{title | translate}}</mat-card-title>
