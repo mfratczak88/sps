@@ -40,7 +40,7 @@ describe('Driver policy', () => {
       const can = await canAddVehiclePolicyHandler.handle({
         userId,
         moduleRef: moduleRefMock,
-        params: { id: userId },
+        params: { driverId: userId },
       });
       expect(can).toEqual(true);
     });
