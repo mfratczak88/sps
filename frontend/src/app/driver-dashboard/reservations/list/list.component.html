@@ -3,6 +3,7 @@
             [title]="translations.CONFIRM_TITLE"
             [subTitle]="translations.CONFIRM_PROMPT"
             [loading$]="driverLoading$"
+            [growHeight]="true"
             *ngIf="driver.pendingAction?.length">
     <sps-number-chip chip>{{driver.pendingAction?.length}}</sps-number-chip>
     <div>
@@ -27,6 +28,7 @@
             [title]="translations.DUE_NEXT"
             [subTitle]="translations.DUE_NEXT_PROMPT"
             [loading$]="driverLoading$"
+            [growHeight]="true"
             *ngIf="driver.dueNext?.length">
     <sps-number-chip chip>{{driver.dueNext?.length}}</sps-number-chip>
     <div>
@@ -48,6 +50,7 @@
             [title]="translations.ONGOING"
             [subTitle]="translations.ONGOING_PROMPT"
             [loading$]="driverLoading$"
+            [growHeight]="true"
             *ngIf="driver.ongoing?.length">
     <sps-number-chip chip>{{driver.ongoing?.length}}</sps-number-chip>
     <div>
