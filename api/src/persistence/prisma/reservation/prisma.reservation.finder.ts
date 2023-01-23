@@ -11,6 +11,10 @@ import {
 import { ReservationStatus } from '../../../domain/reservation/reservation-status';
 import { DateTime } from 'luxon';
 import { Id } from '../../../domain/id';
+import {
+  CONFIRMATION_TIME_END_IN_MINUTES,
+  CONFIRMATION_TIME_START_IN_MINUTES,
+} from '../../../domain/reservation/reservation';
 
 @Injectable()
 export class PrismaReservationFinder implements ReservationFinder {
@@ -66,14 +70,14 @@ export class PrismaReservationFinder implements ReservationFinder {
       status === ReservationStatus.DRAFT &&
       DateTime.fromJSDate(startTime)
         .minus({
-          hour: 4,
+          minute: CONFIRMATION_TIME_START_IN_MINUTES,
         })
         .toJSDate();
     const approvalDeadLine =
       approvalTimeStart &&
       DateTime.fromJSDate(startTime)
         .minus({
-          minute: 30,
+          minute: CONFIRMATION_TIME_END_IN_MINUTES,
         })
         .toJSDate();
     return {

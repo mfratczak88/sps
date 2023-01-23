@@ -5,6 +5,11 @@ import { ParkingTicket } from './parking-ticket';
 import { PeriodOfTime } from '../time/period';
 import { MomentInTime } from '../time/moment';
 
+/*
+ *  Driver can show up no earlier than 5 minutes before parking starts
+ * **/
+export const ISSUE_TICKET_EARLIER_UP_TO_MINUTES = 5;
+
 export class ScheduledParkingTime {
   private readonly parkingTime: PeriodOfTime;
 
@@ -32,7 +37,7 @@ export class ScheduledParkingTime {
   }
 
   parkingTicket() {
-    if (this.minutesToStart() > 5) {
+    if (this.minutesToStart() > ISSUE_TICKET_EARLIER_UP_TO_MINUTES) {
       throw new DomainException({
         message: MessageCode.TOO_EARLY_TO_ISSUE_PARKING_TICKET,
       });

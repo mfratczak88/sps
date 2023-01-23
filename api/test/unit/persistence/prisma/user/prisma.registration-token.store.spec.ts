@@ -1,8 +1,8 @@
 import { createMock } from '@golevelup/ts-jest';
-import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
+import { PrismaService } from '../../../../../src/persistence/prisma/prisma.service';
 import { Test, TestingModule } from '@nestjs/testing';
-import { RegistrationToken } from '../../../src/infrastructure/security/user/user';
-import { PrismaRegistrationTokenStore } from '../../../src/persistence/prisma/user/prisma.registration-token.store';
+import { RegistrationToken } from '../../../../../src/infrastructure/security/user/user';
+import { PrismaRegistrationTokenStore } from '../../../../../src/persistence/prisma/user/prisma.registration-token.store';
 import clearAllMocks = jest.clearAllMocks;
 
 describe('Prisma user store', () => {

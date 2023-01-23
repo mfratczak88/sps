@@ -25,18 +25,21 @@
   </div>
 
 </sps-card>
-<div class="reservations" *ngIf="reservationsList.reservations$ | async as reservations">
+<div class="reservations"
+     *ngIf="reservationsList.reservations$ | async as reservations">
   <sps-card class="reservations__card"
-            [title]="translations.RESERVATIONS" *ngIf="reservations.length">
+            [title]="translations.RESERVATIONS"
+            *ngIf="reservations.length">
     <sps-number-chip chip>{{reservations.length}}</sps-number-chip>
     <div content *ngFor="let reservation of reservations">
-      <sps-reservation-expansion-panel [reservation]="reservation" [expanded]="false">
-        <button mat-button
-                color="warn"
-                (click)="onReturnTicket(reservation.id)">{{translations.RETURN_PARKING_TICKET | translate}}</button>
-        <button mat-button
-                color="primary"
-                (click)="onIssueTicket(reservation.id)">{{translations.ISSUE_PARKING_TICKET | translate}}</button>
+      <sps-reservation-expansion-panel [reservation]="reservation" [expanded]="true">
+        <sps-parking-tickets
+          parkingTickets
+          (issueTicket)="onIssueTicket(reservation.id)"
+          (returnTicket)="onReturnTicket(reservation.id)"
+          [reservation]="reservation"
+          [editable]="true">
+        </sps-parking-tickets>
       </sps-reservation-expansion-panel>
     </div>
     <sps-paginator

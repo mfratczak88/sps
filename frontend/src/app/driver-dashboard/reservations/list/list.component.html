@@ -44,6 +44,20 @@
       </div>
     </div>
   </sps-card>
+  <sps-card class="reservations__card"
+            [title]="translations.ONGOING"
+            [subTitle]="translations.ONGOING_PROMPT"
+            [loading$]="driverLoading$"
+            *ngIf="driver.ongoing?.length">
+    <sps-number-chip chip>{{driver.ongoing?.length}}</sps-number-chip>
+    <div>
+      <div *ngFor="let reservation of driver.ongoing">
+        <sps-reservation-expansion-panel [reservation]="reservation">
+          <sps-parking-tickets parkingTickets [reservation]="reservation"></sps-parking-tickets>
+        </sps-reservation-expansion-panel>
+      </div>
+    </div>
+  </sps-card>
 </div>
 <div>
   <sps-panel

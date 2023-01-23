@@ -84,4 +84,8 @@ export namespace AuthActions {
       super([url], {}, { replaceUrl: true });
     }
   }
+
+  export class LogoutFinished {
+    static readonly type = '[Auth] Logout finished';
+  }
 }

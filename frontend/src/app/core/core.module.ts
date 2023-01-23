@@ -9,7 +9,7 @@ import {
 } from '@abacritt/angularx-social-login';
 import { GoogleAuthService } from './service/google.auth.service';
 import { environment } from '../../environments/environment';
-import { NgxsModule } from '@ngxs/store';
+import { NGXS_PLUGINS, NgxsModule } from '@ngxs/store';
 import { ParkingLotsState } from './store/parking-lot/parking-lot.state';
 import { DriversState } from './store/drivers/drivers.state';
 import { ReservationsState } from './store/reservations/reservations.state';
@@ -21,6 +21,7 @@ import { AuthState } from './store/auth/auth.state';
 import { UiState } from './store/ui/ui.state';
 import { RouteStateSerializer } from './service/route-state-serializer';
 import { LangInterceptor } from './interceptor/lang.interceptor';
+import { logoutPlugin } from './store/logout.plugin';
 
 const socialLoginProviderConfig = {
   provide: 'SocialAuthServiceConfig',
@@ -39,6 +40,7 @@ const providers = [
   { provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true },
   socialLoginProviderConfig,
   { provide: RouterStateSerializer, useClass: RouteStateSerializer },
+  { provide: NGXS_PLUGINS, useValue: logoutPlugin, multi: true },
 ];
 @NgModule({
   declarations: [],

@@ -7,7 +7,7 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
-import { concatMap, finalize, first, from, lastValueFrom, of } from 'rxjs';
+import { concatMap, finalize, first, from, lastValueFrom } from 'rxjs';
 import { UiActions } from '../actions/ui.actions';
 import { ToastKeys } from '../../translation-keys';
 import { AuthUser, Role } from '../../model/auth.model';
@@ -34,7 +34,7 @@ export const defaults: AuthStateModel = {
 
 @State<AuthStateModel>({
   name: 'auth',
-  defaults,
+  defaults: defaults,
 })
 @Injectable({
   providedIn: 'root',
@@ -112,7 +112,10 @@ export class AuthState {
       first(),
       finalize(() => {
         setState(defaults);
-        return dispatch(new Navigate(['/']));
+        return dispatch([
+          new AuthActions.LogoutFinished(),
+          new Navigate(['/']),
+        ]);
       }),
     );
   }

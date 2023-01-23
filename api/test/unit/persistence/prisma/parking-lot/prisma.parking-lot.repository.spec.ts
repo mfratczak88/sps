@@ -1,15 +1,15 @@
-import { PrismaParkingLotRepository } from '../../../src/persistence/prisma/parking-lot/prisma.parking-lot.repository';
+import { PrismaParkingLotRepository } from '../../../../../src/persistence/prisma/parking-lot/prisma.parking-lot.repository';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { PrismaService } from '../../../src/persistence/prisma/prisma.service';
-import { randomId } from '../../misc.util';
-import { DomainException } from '../../../src/domain/domain.exception';
-import { MessageCode } from '../../../src/message';
-import { ParkingLot } from '../../../src/domain/parking-lot/parking-lot';
-import { Address } from '../../../src/domain/parking-lot/address';
+import { PrismaService } from '../../../../../src/persistence/prisma/prisma.service';
+import { randomId } from '../../../../misc.util';
+import { DomainException } from '../../../../../src/domain/domain.exception';
+import { MessageCode } from '../../../../../src/message';
+import { ParkingLot } from '../../../../../src/domain/parking-lot/parking-lot';
+import { Address } from '../../../../../src/domain/parking-lot/address';
 import {
   OperationTime,
   OperationTimeDays,
-} from '../../../src/domain/parking-lot/operation-time';
+} from '../../../../../src/domain/parking-lot/operation-time';
 import Mock = jest.Mock;
 
 describe('Parking lot repository', () => {

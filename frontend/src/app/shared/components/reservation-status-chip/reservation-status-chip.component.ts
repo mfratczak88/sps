@@ -27,6 +27,6 @@ export class ReservationStatusChipComponent {
   readonly statusIcon = {
     [ReservationStatus.CONFIRMED]: 'check_circle',
     [ReservationStatus.CANCELLED]: 'cancel',
-    [ReservationStatus.DRAFT]: 'draft',
+    [ReservationStatus.DRAFT]: 'edit',
   };
 }

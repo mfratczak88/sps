@@ -7,6 +7,7 @@ import {
 } from '../../../../../src/application/reservation/reservation.command';
 import { randomId } from '../../../../misc.util';
 import { ReservationFinder } from '../../../../../src/application/reservation/reservation.finder';
+import { ReservationQuery } from '../../../../../src/application/reservation/reservation.read-model';
 
 describe('Reservation controller', () => {
   let reservationServiceMock: DeepMocked<ReservationService>;
@@ -65,5 +66,19 @@ describe('Reservation controller', () => {
     await reservationController.returnParkingTicket(id);
 
     expect(reservationServiceMock.returnParkingTicket).toHaveBeenCalledWith(id);
+  });
+
+  it('Delegates call for find all to finder', async () => {
+    const query = createMock<ReservationQuery>();
+    await reservationController.getAll(query);
+
+    expect(reservationsFinderMock.findAll).toHaveBeenCalledWith(query);
+  });
+  it('Delegates call for find by id to finder', async () => {
+    const id = randomId();
+
+    await reservationController.getById(id);
+
+    expect(reservationsFinderMock.findById).toHaveBeenCalledWith(id);
   });
 });

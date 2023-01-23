@@ -6,19 +6,14 @@ import { ScheduledParkingTime } from './scheduled-parking-time';
 import { ParkingTicket } from './parking-ticket';
 import { ParkingLotAvailability } from '../parking-lot-availability';
 
-/* Rules
- * 1. Driver can create reservation if parking lot has free space (to be checked in parking lot)
- * 2. After reservation is created it has DRAFT status
- * 3. Driver needs to confirm reservation between 4 hours and 30 minutes before scheduled arrival
- * 4. Not confirmed reservations is cancelled by the system
- * 5. Driver can cancel reservation at any time, parking admin can also do that in case there's some emergency
- * 6. Reservation once cancelled cannot be reused
- * 7. On parking lot entry, parking lot clerk issues a parking ticket checking reservation status & time
- * 8. On parking lot leave, driver returns a parking ticket
- * 9. Multiple parking tickets can be issued for a single reservation,
- *    provided previous was returned and next to be issued is within reservation hours
- * 10. Parking time can be changed if reservation is in draft state
- * **/
+/*
+ *  Reservation can be confirmed if time left is less than that
+ *  **/
+export const CONFIRMATION_TIME_START_IN_MINUTES = 240;
+/*
+ *  Reservation can be confirmed if time left is no more than that
+ *  **/
+export const CONFIRMATION_TIME_END_IN_MINUTES = 30;
 
 export class Reservation {
   private readonly id: Id;
@@ -140,12 +135,12 @@ export class Reservation {
 
   private validateConfirmationTime() {
     const minutesToStart = this.scheduledParkingTime.minutesToStart();
-    if (minutesToStart > 240) {
+    if (minutesToStart > CONFIRMATION_TIME_START_IN_MINUTES) {
       throw new DomainException({
         message: MessageCode.RESERVATION_CANNOT_BE_CONFIRMED_YET,
       });
     }
-    if (minutesToStart < 30) {
+    if (minutesToStart < CONFIRMATION_TIME_END_IN_MINUTES) {
       throw new DomainException({
         message: MessageCode.RESERVATION_CANNOT_BE_CONFIRMED_ANYMORE,
       });
