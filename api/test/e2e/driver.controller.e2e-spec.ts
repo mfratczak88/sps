@@ -103,7 +103,7 @@ describe('Driver e2e', () => {
         })
         .expect(400);
     });
-    it('Returns 400 if driver does not exist', async () => {
+    it('Returns 403 if driver does not exist', async () => {
       await request(app.getHttpServer())
         .post(`${baseUrl}/${randomId()}/${vehiclesURI}`)
         .set(...authCookie(loginCookies, csrfTokenCookie))
@@ -112,7 +112,7 @@ describe('Driver e2e', () => {
           driverId: randomId(),
           licensePlate: 'CTXX3ZV',
         })
-        .expect(400);
+        .expect(403);
     });
     it('Returns 401 if user is not authenticated', async () => {
       await request(app.getHttpServer())

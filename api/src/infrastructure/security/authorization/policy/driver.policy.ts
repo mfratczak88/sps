@@ -10,7 +10,7 @@ export class CanAddVehicle implements PolicyHandler {
   }: PolicyCheckContext): Promise<boolean> {
     const userStore = await moduleRef.resolve(UserService);
     const { role } = await userStore.findById(userId);
-    return role === Role.DRIVER && params['id'] === userId;
+    return role === Role.DRIVER && params['driverId'] === userId;
   }
 }
 export class CanViewDriverDetails implements PolicyHandler {
