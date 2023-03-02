@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { first } from 'rxjs';
-import { SharedKeys } from '../../../core/translation-keys';
 import { Store } from '@ngxs/store';
-import { isLoggedIn, user } from '../../../core/store/auth/auth.selector';
 import { AuthActions } from '../../../core/store/actions/auth.actions';
-import { availableLanguages, lang } from '../../../core/store/ui/ui.selector';
 import { UiActions } from '../../../core/store/actions/ui.actions';
+import { isLoggedIn, user } from '../../../core/store/auth/auth.selector';
+import { availableLanguages } from '../../../core/store/ui/ui.selector';
+import { SharedKeys } from '../../../core/translation-keys';
 
 @Component({
   selector: 'sps-navbar',

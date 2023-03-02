@@ -19,7 +19,7 @@
           color="primary"
           class="action-button"
           mat-raised-button
-          [disabled]="capacity.invalid || capacity.value == data.capacity"
+          [disabled]="capacity.invalid || capacity.value === data.capacity"
           (click)="onChange()">
     {{translations.CHANGE | translate}}
   </button>

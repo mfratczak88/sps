@@ -6,14 +6,14 @@ import {
   Observable,
   shareReplay,
 } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { CsrfToken } from '../model/auth.model';
-import { tap } from 'rxjs/operators';
 
 export class BaseApi {
   readonly CSRF_TOKEN_URL = `${environment.apiUrl}/auth/csrfToken`;
 
-  private pendingReqs = new Map<string, Observable<any>>();
+  private pendingReqs = new Map<string, Observable<unknown>>();
 
   constructor(protected readonly http: HttpClient) {}
 

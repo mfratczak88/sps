@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
-import { ReservationBaseComponent } from '../base.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngxs/store';
+import { Id } from 'src/app/core/model/common.model';
 import {
   Paging,
   SortBy,
   SortOrder,
 } from '../../../core/model/reservation.model';
 import { DriverActions } from '../../../core/store/actions/driver.actions';
-import { MatDialog } from '@angular/material/dialog';
-import { ReservationValidator } from '../../../core/validators/reservation.validator';
 import {
   currentDriver,
   loading as driverLoading,
 } from '../../../core/store/drivers/drivers.selectors';
 import { reservationsListState } from '../../../core/store/reservations/reservations.selector';
+import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import { ReservationBaseComponent } from '../base.component';
 
 @Component({
   selector: 'sps-driver-reservation-list',
@@ -35,7 +36,7 @@ export class ReservationListComponent extends ReservationBaseComponent {
     super(store, dialog, validator);
   }
 
-  toDetails(id: any) {
+  toDetails(id: Id) {
     this.store.dispatch(new DriverActions.NavigateToReservationDetails(id));
   }
 

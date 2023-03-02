@@ -7,5 +7,5 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class LinkComponent {
   @Output()
-  click = new EventEmitter<void>();
+  clicked = new EventEmitter<void>();
 }

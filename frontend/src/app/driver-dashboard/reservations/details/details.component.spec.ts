@@ -1,34 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReservationDetailsComponent } from './details.component';
 import { MatDialog } from '@angular/material/dialog';
-import { translateTestModule } from '../../../../test.utils';
-import { SharedModule } from '../../../shared/shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { newMatDialogSpy } from '../../../../../test/spy.util';
-import { mockReservations } from '../../../../../test/reservation.util';
 import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { mockReservations } from '../../../../../test/reservation.util';
+import { newMatDialogSpy } from '../../../../../test/spy.util';
+import { translateTestModule } from '../../../../test.utils';
+import { CoreModule } from '../../../core/core.module';
 import { CanCancelReservationPipe } from '../../../core/pipe/can/can-cancel-reservation.pipe';
-import { CanEditReservationPipe } from '../../../core/pipe/can/can-edit-reservation.pipe';
 import { CanConfirmReservationPipe } from '../../../core/pipe/can/can-confirm-reservation.pipe';
-import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import { CanEditReservationPipe } from '../../../core/pipe/can/can-edit-reservation.pipe';
+import { DriverActions } from '../../../core/store/actions/driver.actions';
 import {
   defaults,
   ReservationsState,
 } from '../../../core/store/reservations/reservations.state';
-import { CoreModule } from '../../../core/core.module';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ReservationValidator } from '../../../core/validators/reservation.validator';
+import { SharedModule } from '../../../shared/shared.module';
+import { ReservationDetailsComponent } from './details.component';
 import SpyObj = jasmine.SpyObj;
 import Spy = jasmine.Spy;
-import { Observable } from 'rxjs';
-import { DriverActions } from '../../../core/store/actions/driver.actions';
 
 describe('Reservation details', () => {
   let fixture: ComponentFixture<ReservationDetailsComponent>;
   let dialogSpy: SpyObj<MatDialog>;
   let store: Store;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   let dispatchSpy: Spy<(actionOrActions: any) => Observable<any>>;
   let reservationsValidatorSpy: SpyObj<ReservationValidator>;
   const [reservation] = mockReservations;

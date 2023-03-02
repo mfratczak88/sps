@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 import { MiscKeys } from '../../../core/translation-keys';
 
 @Component({
@@ -8,11 +8,11 @@ import { MiscKeys } from '../../../core/translation-keys';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit {
+export class TableComponent<T> implements OnInit {
   readonly translations = MiscKeys;
 
   @Input()
-  data: Observable<any>;
+  data: Observable<T[]>;
 
   @Input()
   loading$: Observable<boolean>;
@@ -26,7 +26,7 @@ export class TableComponent implements OnInit {
   @Input()
   withSearch = false;
 
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>();
 
   ngOnInit(): void {
     this.data?.subscribe(data => {
@@ -48,5 +48,5 @@ export type Column = {
 };
 export type Button = {
   icon: 'edit' | 'arrow_forward' | 'visibility' | 'delete';
-  onClick: (row: any) => void;
+  onClick: (row: unknown) => void;
 } & Column;

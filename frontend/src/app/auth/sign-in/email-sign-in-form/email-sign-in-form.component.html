@@ -18,11 +18,11 @@
   <div class="form__footer">
     <sps-link
       class="form__footer--dont-have-account"
-      (click)="noAccount.emit()"
+      (clicked)="noAccount.emit()"
     >{{translations.DONT_HAVE_AN_ACCOUNT | translate}}</sps-link>
     <sps-link
       class="form__footer--forgot-password"
-      (click)="forgotPassword.emit()"
+      (clicked)="forgotPassword.emit()"
     >{{translations.FORGOT_PASSWORD | translate}}</sps-link>
   </div>
 </div>

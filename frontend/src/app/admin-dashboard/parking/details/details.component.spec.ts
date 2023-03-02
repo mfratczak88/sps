@@ -1,28 +1,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailsComponent } from './details.component';
-import { SharedModule } from '../../../shared/shared.module';
-import { translateTestModule } from '../../../../test.utils';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { EMPTY, NEVER, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-dialog.component';
-import { ChangeCapacityDialogComponent } from '../change-capacity-dialog/change-capacity-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxsModule, Store } from '@ngxs/store';
-import { ParkingLotsState } from '../../../core/store/parking-lot/parking-lot.state';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsModule, Store } from '@ngxs/store';
+import { EMPTY, NEVER, of } from 'rxjs';
+import { mockParkingLots } from '../../../../../test/driver.utils';
 import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
 import { setParkingLot } from '../../../../../test/store.util';
-import { mockParkingLots } from '../../../../../test/driver.utils';
-import { AdminActions } from '../../../core/store/actions/admin.actions';
-import SpyObj = jasmine.SpyObj;
+import { translateTestModule } from '../../../../test.utils';
 import { CoreModule } from '../../../core/core.module';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { ParkingLotsState } from '../../../core/store/parking-lot/parking-lot.state';
+import { SharedModule } from '../../../shared/shared.module';
+import { ChangeCapacityDialogComponent } from '../change-capacity-dialog/change-capacity-dialog.component';
+import { ChangeHoursDialogComponent } from '../change-hours-dialog/change-hours-dialog.component';
+import { DetailsComponent } from './details.component';
+import SpyObj = jasmine.SpyObj;
 
 describe('Parking lot details spec', () => {
   let fixture: ComponentFixture<DetailsComponent>;
   let dialogSpy: SpyObj<MatDialog>;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // Just a spy
   let dialogRefSpy: SpyObj<MatDialogRef<any>>;
   let store: Store;
   let dispatchSpy: DispatchSpy;

@@ -1,8 +1,8 @@
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
-import { ToastService } from '../core/service/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse } from '../core/model/error.model';
+import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { Store } from '@ngxs/store';
+import { ErrorResponse } from '../core/model/error.model';
+import { ToastService } from '../core/service/toast.service';
 import { ErrorActions } from '../core/store/actions/error.actions';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class ErrorHandlerService implements ErrorHandler {
     private readonly injector: Injector,
   ) {}
 
-  handleError(error: any) {
+  handleError(error: HttpErrorResponse | Error) {
     if (error instanceof HttpErrorResponse) {
       const body: ErrorResponse = error.error;
       console.log(body);
