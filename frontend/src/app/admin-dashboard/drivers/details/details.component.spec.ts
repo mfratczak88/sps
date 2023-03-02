@@ -1,31 +1,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DriverDetailsComponent } from './details.component';
-import { SharedModule } from '../../../shared/shared.module';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { translateTestModule } from '../../../../test.utils';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SharedModule } from '../../../shared/shared.module';
+import { DriverDetailsComponent } from './details.component';
 
-import { lastValueFrom, NEVER, Observable, of } from 'rxjs';
-import { By } from '@angular/platform-browser';
-import { ParkingLotsTableComponent } from '../../../shared/components/parking-lots-table/parking-lots-table.component';
-import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
-import { buttonCells } from '../../../../../test/test.util';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule, Store } from '@ngxs/store';
+import { NEVER, of } from 'rxjs';
+import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
+import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
+import { setDriver } from '../../../../../test/store.util';
+import { buttonCells } from '../../../../../test/test.util';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
 import { DriversState } from '../../../core/store/drivers/drivers.state';
 import { ParkingLotsState } from '../../../core/store/parking-lot/parking-lot.state';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
 import { mapToObjectWithIds } from '../../../core/util';
-import { setDriver } from '../../../../../test/store.util';
-import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { ParkingLotsTableComponent } from '../../../shared/components/parking-lots-table/parking-lots-table.component';
+import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
 import SpyObj = jasmine.SpyObj;
-import { HttpClientModule } from '@angular/common/http';
 
 describe('Driver details component', () => {
   let fixture: ComponentFixture<DriverDetailsComponent>;

@@ -3,28 +3,27 @@
     <mat-expansion-panel-header>
       <div class="header">
         <div class="header__time">
-          {{reservation | spsReservationTime }}
+          {{ reservation | spsReservationTime }}
         </div>
         <div>
           <sps-chip>
-            {{reservation.licensePlate}}
+            {{ reservation.licensePlate }}
           </sps-chip>
         </div>
       </div>
     </mat-expansion-panel-header>
     <div>
       <sps-text>
-        {{reservation | address}}
+        {{ reservation | address }}
       </sps-text>
     </div>
     <div>
-      <sps-text>{{reservation.date | spsDate }}</sps-text>
+      <sps-text>{{ reservation.date | spsDate }}</sps-text>
     </div>
     <div class="tickets">
       <ng-content select="[parkingTickets]"></ng-content>
     </div>
-    <ng-content select="[timer]">
-    </ng-content>
+    <ng-content select="[timer]"> </ng-content>
     <mat-action-row>
       <ng-content></ng-content>
     </mat-action-row>

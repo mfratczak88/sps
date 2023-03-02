@@ -1,7 +1,7 @@
 import { createSelector } from '@ngxs/store';
 import { Id } from '../model/common.model';
 
-export type Selectors = any[] | undefined;
+export type Selectors = unknown[] | undefined;
 export const loadingSelector = <T extends { loading: boolean }>(
   selectors: Selectors,
 ) => createSelector(selectors, ({ loading }: T): boolean => loading);

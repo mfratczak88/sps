@@ -1,36 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignUpComponent } from './sign-up.component';
-import { translateTestModule } from '../../../test.utils';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { TranslateService } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 import { By } from '@angular/platform-browser';
-import { HeadingComponent } from '../../shared/components/heading/heading.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { translateTestModule } from '../../../test.utils';
 import {
   AuthTranslationKeys,
   FormErrorKeys,
 } from '../../core/translation-keys';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { HeadingComponent } from '../../shared/components/heading/heading.component';
 import { LinkComponent } from '../../shared/components/link/link.component';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { of } from 'rxjs';
+import { SharedModule } from '../../shared/shared.module';
+import { SignUpComponent } from './sign-up.component';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxsModule, Store } from '@ngxs/store';
-import { AuthState } from '../../core/store/auth/auth.state';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsModule, Store } from '@ngxs/store';
 import { DispatchSpy, newDispatchSpy } from '../../../../test/spy.util';
-import { AuthActions } from '../../core/store/actions/auth.actions';
+import { CoreModule } from '../../core/core.module';
 import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from '../../core/model/auth.model';
-import { HttpClientModule } from '@angular/common/http';
-import { CoreModule } from '../../core/core.module';
+import { AuthActions } from '../../core/store/actions/auth.actions';
+import { AuthState } from '../../core/store/auth/auth.state';
 
 describe('SignUpComponent', () => {
   let fixture: ComponentFixture<SignUpComponent>;
@@ -128,7 +127,7 @@ describe('SignUpComponent', () => {
   it('on already have an account navigates to sign in', () => {
     const { componentInstance } = toSignInLink();
 
-    <LinkComponent>componentInstance.click.emit();
+    <LinkComponent>componentInstance.clicked.emit();
 
     expect(dispatchSpy).toHaveBeenCalledWith(
       new AuthActions.NavigateToSignIn(),

@@ -4,9 +4,10 @@
       class="drawer__item"
       *ngFor="let item of items"
       [routerLink]="item.link"
-      routerLinkActive="selected">
-      <mat-icon>{{item.icon}}</mat-icon>
-      <p class="drawer__item--name">{{item.name | translate}}</p>
+      routerLinkActive="selected"
+    >
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <p class="drawer__item--name">{{ item.name | translate }}</p>
     </div>
   </mat-drawer>
 </mat-drawer-container>

@@ -1,28 +1,36 @@
 <div class="header">
-  <span class="header__text">{{translations.PARKING_TICKETS | translate}}</span>
-  <button *ngIf="editable && (reservation | canIssueParkingTicket)"
-          mat-button
-          color="primary"
-          (click)="issueTicket.emit()">
+  <span class="header__text">{{
+    translations.PARKING_TICKETS | translate
+  }}</span>
+  <button
+    *ngIf="editable && (reservation | canIssueParkingTicket)"
+    mat-button
+    color="primary"
+    (click)="issueTicket.emit()"
+  >
     <mat-icon>add</mat-icon>
-    {{translations.ISSUE_PARKING_TICKET | translate}}
+    {{ translations.ISSUE_PARKING_TICKET | translate }}
   </button>
 </div>
 <span class="spacer"></span>
-<div class="parking-tickets-list" *ngFor="let parkingTicket of reservation.parkingTickets; index as i">
-  <span class="parking-tickets-list__number">{{i + 1}}.</span>
+<div
+  class="parking-tickets-list"
+  *ngFor="let parkingTicket of reservation.parkingTickets; index as i"
+>
+  <span class="parking-tickets-list__number">{{ i + 1 }}.</span>
   <div class="parking-tickets-list__ticket">
     <sps-parking-ticket [ticket]="parkingTicket"></sps-parking-ticket>
     <button
       *ngIf="editable && (parkingTicket | canReturnParkingTicket)"
       mat-button
-      (click)="returnTicket.emit(parkingTicket)">
+      (click)="returnTicket.emit(parkingTicket)"
+    >
       <mat-icon>assignment_return</mat-icon>
-      {{translations.RETURN_PARKING_TICKET | translate}}
+      {{ translations.RETURN_PARKING_TICKET | translate }}
     </button>
     <sps-chip *ngIf="!(parkingTicket | canReturnParkingTicket)">
       <mat-icon>done</mat-icon>
-      <span>{{translations.RETURNED | translate}}</span>
+      <span>{{ translations.RETURNED | translate }}</span>
     </sps-chip>
   </div>
 </div>

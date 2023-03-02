@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { concatMap, first } from 'rxjs';
-import { AuthTranslationKeys } from '../../core/translation-keys';
 import { Store } from '@ngxs/store';
+import { concatMap } from 'rxjs';
+import { LoginCredentials } from '../../core/model/auth.model';
+import { AuthActions } from '../../core/store/actions/auth.actions';
 import {
   afterLoginUrl,
   emailFragment,
 } from '../../core/store/routing/routing.selector';
-import { AuthActions } from '../../core/store/actions/auth.actions';
-import { LoginCredentials } from '../../core/model/auth.model';
-import { map } from 'rxjs/operators';
+import { AuthTranslationKeys } from '../../core/translation-keys';
 
 @Component({
   selector: 'sps-sign-in',

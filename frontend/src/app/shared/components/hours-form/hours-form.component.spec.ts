@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HoursFormComponent } from './hours-form.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { translateTestModule } from '../../../../test.utils';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from '../../shared.module';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { LocalizedErrors } from '../../validator';
-import { HoursPipe } from '../../../core/pipe/time/hours.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { translateTestModule } from '../../../../test.utils';
 import { HourPipe } from '../../../core/pipe/time/hour.pipe';
+import { SharedModule } from '../../shared.module';
+import { LocalizedErrors } from '../../validator';
+import { HoursFormComponent } from './hours-form.component';
 
 describe('HoursFormComponent', () => {
   let component: HoursFormComponent;

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 import { MiscKeys } from '../../../core/translation-keys';
 
 @Component({
@@ -46,7 +46,8 @@ export type Column = {
   translation: string;
   sortable?: boolean;
 };
+export type OnButtonClick = (data: any) => void;
 export type Button = {
   icon: 'edit' | 'arrow_forward' | 'visibility' | 'delete';
-  onClick: (row: any) => void;
+  onClick: OnButtonClick;
 } & Column;

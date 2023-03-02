@@ -1,34 +1,40 @@
-<sps-loading-spinner class="loading" *ngIf="(loading$ | async); else details">
+<sps-loading-spinner class="loading" *ngIf="loading$ | async; else details">
 </sps-loading-spinner>
 <ng-template #details>
   <ng-container *ngIf="parkingLot$ | async as parkingLot">
     <sps-panel [title]="parkingLot | address">
       <div class="attribute">
         <div class="attribute__heading">
-          <p class="attribute__heading--text">{{translations.CAPACITY | translate}}</p>
+          <p class="attribute__heading--text">
+            {{ translations.CAPACITY | translate }}
+          </p>
           <mat-icon>reduce_capacity</mat-icon>
         </div>
         <div class="attribute__value">
-          <span class="attribute__value--text">{{parkingLot.capacity}}</span>
+          <span class="attribute__value--text">{{ parkingLot.capacity }}</span>
           <button
             mat-icon-button
             class="edit-capacity-button"
-            (click)="onChangeCapacity(parkingLot)">
+            (click)="onChangeCapacity(parkingLot)"
+          >
             <mat-icon class="attribute__value--icon">edit</mat-icon>
           </button>
         </div>
       </div>
       <div class="attribute">
         <div class="attribute__heading">
-          <p class="attribute__heading--text">{{translations.HOURS | translate}}</p>
+          <p class="attribute__heading--text">
+            {{ translations.HOURS | translate }}
+          </p>
           <mat-icon>schedule</mat-icon>
         </div>
         <div class="attribute__value">
-          <span class="attribute__value--text">{{parkingLot | hours}}</span>
+          <span class="attribute__value--text">{{ parkingLot | hours }}</span>
           <button
             mat-icon-button
             class="change-hours-button"
-            (click)="onChangeHours(parkingLot)">
+            (click)="onChangeHours(parkingLot)"
+          >
             <mat-icon class="attribute__value--icon">edit</mat-icon>
           </button>
         </div>
@@ -36,4 +42,3 @@
     </sps-panel>
   </ng-container>
 </ng-template>
-

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BaseApi } from './base.api';
 import { environment } from '../../../environments/environment';
-import { RegisterUserPayload, AuthUser } from '../model/auth.model';
+import { AuthUser, RegisterUserPayload } from '../model/auth.model';
+import { BaseApi } from './base.api';
 
 @Injectable({
   providedIn: 'root',
@@ -45,18 +45,18 @@ export class AuthApi extends BaseApi {
       .pipe(map(loginRes => ({ ...loginRes })));
   }
 
-  register(command: RegisterUserPayload): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/register`, command);
+  register(command: RegisterUserPayload) {
+    return this.http.post<void>(`${environment.apiUrl}/auth/register`, command);
   }
 
-  confirmRegistration(id: string): Observable<any> {
+  confirmRegistration(id: string) {
     return this.http.post(`${environment.apiUrl}/auth/confirmRegistration`, {
       activationGuid: id,
     });
   }
 
-  changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/changePassword`, {
+  changePassword(oldPassword: string, newPassword: string) {
+    return this.http.post<void>(`${environment.apiUrl}/auth/changePassword`, {
       oldPassword: oldPassword,
       newPassword: newPassword,
     });

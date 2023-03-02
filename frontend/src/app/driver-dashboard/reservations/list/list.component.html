@@ -1,14 +1,19 @@
-<div class="reservations" *ngIf="(driver$ | async) as driver">
-  <sps-card class="reservations__card"
-            [title]="translations.CONFIRM_TITLE"
-            [subTitle]="translations.CONFIRM_PROMPT"
-            [loading$]="driverLoading$"
-            [growHeight]="true"
-            *ngIf="driver.pendingAction?.length">
-    <sps-number-chip chip>{{driver.pendingAction?.length}}</sps-number-chip>
+<div class="reservations" *ngIf="driver$ | async as driver">
+  <sps-card
+    class="reservations__card"
+    [title]="translations.CONFIRM_TITLE"
+    [subTitle]="translations.CONFIRM_PROMPT"
+    [loading$]="driverLoading$"
+    [growHeight]="true"
+    *ngIf="driver.pendingAction?.length"
+  >
+    <sps-number-chip chip>{{ driver.pendingAction?.length }}</sps-number-chip>
     <div>
       <div *ngFor="let reservation of driver.pendingAction">
-        <sps-reservation-expansion-panel [reservation]="reservation" [expanded]="true">
+        <sps-reservation-expansion-panel
+          [reservation]="reservation"
+          [expanded]="true"
+        >
           <div class="reservations__card--timer" timer>
             <sps-time-left
               [deadLine]="reservation.startTime"
@@ -16,61 +21,86 @@
             >
             </sps-time-left>
           </div>
-          <button mat-button color="warn"
-                  (click)="onCancelReservation(reservation)">{{translations.CANCEL | translate}}</button>
-          <button mat-button color="primary"
-                  (click)="onConfirmReservation(reservation)">{{translations.CONFIRM_RESERVATION | translate}}</button>
+          <button
+            mat-button
+            color="warn"
+            (click)="onCancelReservation(reservation)"
+          >
+            {{ translations.CANCEL | translate }}
+          </button>
+          <button
+            mat-button
+            color="primary"
+            (click)="onConfirmReservation(reservation)"
+          >
+            {{ translations.CONFIRM_RESERVATION | translate }}
+          </button>
         </sps-reservation-expansion-panel>
       </div>
     </div>
   </sps-card>
-  <sps-card class="reservations__card"
-            [title]="translations.DUE_NEXT"
-            [subTitle]="translations.DUE_NEXT_PROMPT"
-            [loading$]="driverLoading$"
-            [growHeight]="true"
-            *ngIf="driver.dueNext?.length">
-    <sps-number-chip chip>{{driver.dueNext?.length}}</sps-number-chip>
+  <sps-card
+    class="reservations__card"
+    [title]="translations.DUE_NEXT"
+    [subTitle]="translations.DUE_NEXT_PROMPT"
+    [loading$]="driverLoading$"
+    [growHeight]="true"
+    *ngIf="driver.dueNext?.length"
+  >
+    <sps-number-chip chip>{{ driver.dueNext?.length }}</sps-number-chip>
     <div>
       <div *ngFor="let reservation of driver.dueNext">
         <sps-reservation-expansion-panel [reservation]="reservation">
-          <div class="reservations__card--timer" timer>
-          </div>
-          <button mat-button color="warn"
-                  (click)="onCancelReservation(reservation)">{{translations.CANCEL | translate}}</button>
-          <button mat-button
-                  color="primary"
-                  (click)="onEditReservation(reservation)"
-          >{{translations.CHANGE_TIME | translate}}</button>
+          <div class="reservations__card--timer" timer></div>
+          <button
+            mat-button
+            color="warn"
+            (click)="onCancelReservation(reservation)"
+          >
+            {{ translations.CANCEL | translate }}
+          </button>
+          <button
+            mat-button
+            color="primary"
+            (click)="onEditReservation(reservation)"
+          >
+            {{ translations.CHANGE_TIME | translate }}
+          </button>
         </sps-reservation-expansion-panel>
       </div>
     </div>
   </sps-card>
-  <sps-card class="reservations__card"
-            [title]="translations.ONGOING"
-            [subTitle]="translations.ONGOING_PROMPT"
-            [loading$]="driverLoading$"
-            [growHeight]="true"
-            *ngIf="driver.ongoing?.length">
-    <sps-number-chip chip>{{driver.ongoing?.length}}</sps-number-chip>
+  <sps-card
+    class="reservations__card"
+    [title]="translations.ONGOING"
+    [subTitle]="translations.ONGOING_PROMPT"
+    [loading$]="driverLoading$"
+    [growHeight]="true"
+    *ngIf="driver.ongoing?.length"
+  >
+    <sps-number-chip chip>{{ driver.ongoing?.length }}</sps-number-chip>
     <div>
       <div *ngFor="let reservation of driver.ongoing">
         <sps-reservation-expansion-panel [reservation]="reservation">
-          <sps-parking-tickets parkingTickets [reservation]="reservation"></sps-parking-tickets>
+          <sps-parking-tickets
+            parkingTickets
+            [reservation]="reservation"
+          ></sps-parking-tickets>
         </sps-reservation-expansion-panel>
       </div>
     </div>
   </sps-card>
 </div>
 <div>
-  <sps-panel
-    [title]="translations.RESERVATIONS | translate">
-    <button btn
-            mat-raised-button
-            color="primary"
-            (click)="toCreateReservation()">
+  <sps-panel [title]="translations.RESERVATIONS | translate">
+    <button
+      btn
+      mat-raised-button
+      color="primary"
+      (click)="toCreateReservation()"
+    >
       <mat-icon>add</mat-icon>
-      {{translations.CREATE | translate}}
+      {{ translations.CREATE | translate }}
     </button>
     <sps-reservations-table
       [reservations$]="reservationsList.reservations$"
@@ -81,8 +111,13 @@
       (reservationClicked)="toDetails($event)"
       (pagingChange)="onPagingChange($event)"
       (sortingChange)="onSortingChange($event)"
-      [displayColumns]="['licensePlate','time','date','status','parkingLotAddress']"
+      [displayColumns]="[
+        'licensePlate',
+        'time',
+        'date',
+        'status',
+        'parkingLotAddress'
+      ]"
     ></sps-reservations-table>
   </sps-panel>
-
 </div>

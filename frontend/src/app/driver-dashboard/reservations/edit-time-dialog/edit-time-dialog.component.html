@@ -1,9 +1,14 @@
-<h2 mat-dialog-title>{{translations.CHANGE_TIME | translate}}</h2>
+<h2 mat-dialog-title>{{ translations.CHANGE_TIME | translate }}</h2>
 <mat-dialog-content>
   <div class="form" [formGroup]="form">
     <mat-form-field appearance="fill">
-      <mat-label>{{translations.DATE | translate}}</mat-label>
-      <input matInput formControlName="date" [matDatepicker]="dp" [matDatepickerFilter]="data.dateValidator">
+      <mat-label>{{ translations.DATE | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="date"
+        [matDatepicker]="dp"
+        [matDatepickerFilter]="data.dateValidator"
+      />
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
       <mat-datepicker #dp></mat-datepicker>
     </mat-form-field>
@@ -13,17 +18,17 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button
-          class="close-button"
-          (click)="dialogRef.close()">
-    {{translations.CANCEL | translate}}
+  <button mat-button class="close-button" (click)="dialogRef.close()">
+    {{ translations.CANCEL | translate }}
   </button>
-  <button mat-button
-          color="primary"
-          class="edit-button"
-          mat-raised-button
-          [disabled]="form.invalid || form.untouched || hoursNotChanged()"
-          (click)="onEdit()">
-    {{translations.ASSIGN | translate}}
+  <button
+    mat-button
+    color="primary"
+    class="edit-button"
+    mat-raised-button
+    [disabled]="form.invalid || form.untouched || hoursNotChanged()"
+    (click)="onEdit()"
+  >
+    {{ translations.ASSIGN | translate }}
   </button>
 </mat-dialog-actions>

@@ -1,49 +1,48 @@
-<div
-  class="sign-up-form"
-  [formGroup]="form">
-  <sps-heading [centered]="true" size="l">{{translations.SIGN_UP_TITLE | translate}}</sps-heading>
+<div class="sign-up-form" [formGroup]="form">
+  <sps-heading [centered]="true" size="l">{{
+    translations.SIGN_UP_TITLE | translate
+  }}</sps-heading>
   <div class="sign-up-form__fields">
     <mat-form-field appearance="outline" class="sign-up-form__fields--name">
-      <mat-label>{{translations.ENTER_YOUR_NAME | translate}}</mat-label>
+      <mat-label>{{ translations.ENTER_YOUR_NAME | translate }}</mat-label>
       <mat-icon matSuffix>face</mat-icon>
-      <input
-        matInput
-        required
-        formControlName="name">
+      <input matInput required formControlName="name" />
       <sps-form-error [control]="form.get('name')!"></sps-form-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="sign-up-form__fields--email">
-      <mat-label>{{translations.ENTER_YOUR_EMAIL | translate}}</mat-label>
+      <mat-label>{{ translations.ENTER_YOUR_EMAIL | translate }}</mat-label>
       <mat-icon matSuffix>email</mat-icon>
-      <input
-        matInput
-        required
-        formControlName="email">
+      <input matInput required formControlName="email" />
       <sps-form-error [control]="form.get('email')!"></sps-form-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="sign-up-form__fields--password">
-      <mat-label>{{translations.ENTER_YOUR_PASSWORD | translate}}</mat-label>
+      <mat-label>{{ translations.ENTER_YOUR_PASSWORD | translate }}</mat-label>
       <mat-icon matSuffix>password</mat-icon>
-      <input
-        matInput
-        type="password"
-        required
-        formControlName="password">
+      <input matInput type="password" required formControlName="password" />
       <sps-form-error [control]="form.get('password')!"></sps-form-error>
     </mat-form-field>
   </div>
-  <button [disabled]="!form.valid"
-          (click)="onSubmit()"
-          class="sign-up-form__button"
-          mat-raised-button
-          color="primary">
-    {{translations.SIGN_UP | translate}}
+  <button
+    [disabled]="!form.valid"
+    (click)="onSubmit()"
+    class="sign-up-form__button"
+    mat-raised-button
+    color="primary"
+  >
+    {{ translations.SIGN_UP | translate }}
   </button>
   <div class="sign-up-form__footer">
-    <sps-link (click)="toSignIn()">{{translations.ALREADY_HAVE_ACCOUNT | translate}}</sps-link>
+    <sps-link (clicked)="toSignIn()">{{
+      translations.ALREADY_HAVE_ACCOUNT | translate
+    }}</sps-link>
   </div>
   <div class="sign-up-form__disclaimer">
-    <p>{{translations.SIGN_UP_DISCLAIMER | translate}}<span
-      class="sign-up-form__disclaimer--terms">{{translations.TERMS_AND_CONDITIONS | translate}}</span>.</p>
+    <p>
+      {{ translations.SIGN_UP_DISCLAIMER | translate
+      }}<span class="sign-up-form__disclaimer--terms">{{
+        translations.TERMS_AND_CONDITIONS | translate
+      }}</span
+      >.
+    </p>
   </div>
 </div>

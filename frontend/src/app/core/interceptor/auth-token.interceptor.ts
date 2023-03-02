@@ -6,8 +6,8 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { Store } from '@ngxs/store';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthActions } from '../store/actions/auth.actions';
 
 @Injectable()
@@ -16,6 +16,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private readonly injector: Injector) {}
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // Any declared in Angular type
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const authReq = req.clone({
       withCredentials: true,

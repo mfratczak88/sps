@@ -1,7 +1,11 @@
 <div class="weekdays-form" [formGroup]="form">
-  <ng-container *ngFor="let control of weekDaysControls; let i=index">
-    <mat-checkbox [formControl]="control" [value]="days[i].number" class="weekdays-form__checkbox">
-      {{days[i].translationKey | translate}}
+  <ng-container *ngFor="let control of weekDaysControls; let i = index">
+    <mat-checkbox
+      [formControl]="control"
+      [value]="days[i].number"
+      class="weekdays-form__checkbox"
+    >
+      {{ days[i].translationKey | translate }}
     </mat-checkbox>
   </ng-container>
   <ng-content></ng-content>

@@ -1,6 +1,6 @@
 import { ComponentType } from '@angular/cdk/portal';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface DialogRef<ResultType> {
   afterClosed(): Observable<ResultType>;
@@ -8,7 +8,7 @@ export interface DialogRef<ResultType> {
 
 @Injectable()
 export abstract class AbstractDialog {
-  abstract open<CompType, Data = any, Result = any>(
+  abstract open<CompType, Data = unknown, Result = unknown>(
     component: ComponentType<CompType>,
     data: Data,
   ): DialogRef<Result>;
