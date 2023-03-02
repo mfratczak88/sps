@@ -15,11 +15,12 @@
           class="cancel-button">
     {{translations.CANCEL | translate}}
   </button>
+
   <button mat-button
           color="primary"
           class="action-button"
           mat-raised-button
-          [disabled]="capacity.invalid || capacity.value === data.capacity"
+          [disabled]="capacity.invalid || capacityNotChanged()"
           (click)="onChange()">
     {{translations.CHANGE | translate}}
   </button>

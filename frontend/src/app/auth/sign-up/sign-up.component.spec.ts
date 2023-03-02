@@ -127,7 +127,7 @@ describe('SignUpComponent', () => {
   it('on already have an account navigates to sign in', () => {
     const { componentInstance } = toSignInLink();
 
-    <LinkComponent>componentInstance.click.emit();
+    <LinkComponent>componentInstance.clicked.emit();
 
     expect(dispatchSpy).toHaveBeenCalledWith(
       new AuthActions.NavigateToSignIn(),

@@ -8,11 +8,11 @@ import { MiscKeys } from '../../../core/translation-keys';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent<T> implements OnInit {
+export class TableComponent implements OnInit {
   readonly translations = MiscKeys;
 
   @Input()
-  data: Observable<T[]>;
+  data: Observable<any>;
 
   @Input()
   loading$: Observable<boolean>;
@@ -26,7 +26,7 @@ export class TableComponent<T> implements OnInit {
   @Input()
   withSearch = false;
 
-  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>();
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   ngOnInit(): void {
     this.data?.subscribe(data => {
@@ -46,7 +46,8 @@ export type Column = {
   translation: string;
   sortable?: boolean;
 };
+export type OnButtonClick = (data: any) => void;
 export type Button = {
   icon: 'edit' | 'arrow_forward' | 'visibility' | 'delete';
-  onClick: (row: unknown) => void;
+  onClick: OnButtonClick;
 } & Column;

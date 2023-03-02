@@ -46,7 +46,7 @@ export class AuthApi extends BaseApi {
   }
 
   register(command: RegisterUserPayload) {
-    return this.http.post(`${environment.apiUrl}/auth/register`, command);
+    return this.http.post<void>(`${environment.apiUrl}/auth/register`, command);
   }
 
   confirmRegistration(id: string) {
@@ -56,7 +56,7 @@ export class AuthApi extends BaseApi {
   }
 
   changePassword(oldPassword: string, newPassword: string) {
-    return this.http.post(`${environment.apiUrl}/auth/changePassword`, {
+    return this.http.post<void>(`${environment.apiUrl}/auth/changePassword`, {
       oldPassword: oldPassword,
       newPassword: newPassword,
     });

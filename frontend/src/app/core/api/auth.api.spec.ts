@@ -1,11 +1,11 @@
-import { AuthApi } from './auth.api';
-import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
-import { RegisterUserPayload, Role, AuthUser } from '../model/auth.model';
+import { AuthUser, RegisterUserPayload, Role } from '../model/auth.model';
+import { AuthApi } from './auth.api';
 
 describe('Auth api spec', () => {
   let api: AuthApi;
@@ -78,7 +78,7 @@ describe('Auth api spec', () => {
       password: 'dsad9321dszxcx1!!',
     };
 
-    api.register(payload).subscribe(res => expect(res).toBe(null));
+    api.register(payload).subscribe();
 
     const req = httpTestingController.expectOne(baseUrl + '/auth/register');
 
@@ -86,7 +86,7 @@ describe('Auth api spec', () => {
     expect(req.request.withCredentials).toBe(false);
     expect(req.request.body).toEqual(payload);
 
-    req.flush(null);
+    req.flush({});
 
     httpTestingController.verify();
   });
