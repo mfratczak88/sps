@@ -1,44 +1,67 @@
-<sps-card class="search-card"
-          [title]="translations.SEARCH_RESERVATIONS">
+<sps-card class="search-card" [title]="translations.SEARCH_RESERVATIONS">
   <div content>
     <div>
       <ol class="search-card__instructions">
-        <li><p>{{translations.FIND_CAR_BY_LICENSE_PLATE | translate}}</p></li>
-        <li><p>{{translations.ENTERING_INSTRUCTION | translate}}</p></li>
-        <li><p>{{translations.LEAVING_INSTRUCTION | translate}}</p></li>
+        <li>
+          <p>{{ translations.FIND_CAR_BY_LICENSE_PLATE | translate }}</p>
+        </li>
+        <li>
+          <p>{{ translations.ENTERING_INSTRUCTION | translate }}</p>
+        </li>
+        <li>
+          <p>{{ translations.LEAVING_INSTRUCTION | translate }}</p>
+        </li>
       </ol>
     </div>
-    <mat-form-field class="search-card__search-bar" appearance="fill" *ngIf="(licensePlatesLoading$ | async) === false">
-      <mat-label>{{translations.LICENSE_PLATE | translate}}</mat-label>
+    <mat-form-field
+      class="search-card__search-bar"
+      appearance="fill"
+      *ngIf="(licensePlatesLoading$ | async) === false"
+    >
+      <mat-label>{{ translations.LICENSE_PLATE | translate }}</mat-label>
       <mat-icon matPrefix>search</mat-icon>
-      <input type="text" matInput [formControl]="inputFormElement"
-             [placeholder]="translations.ENTER_LICENSE_PLATE_NUMBER | translate"
-             [matAutocomplete]="auto">
+      <input
+        type="text"
+        matInput
+        [formControl]="inputFormElement"
+        [placeholder]="translations.ENTER_LICENSE_PLATE_NUMBER | translate"
+        [matAutocomplete]="auto"
+      />
       <sps-form-error [control]="inputFormElement"></sps-form-error>
       <mat-autocomplete #auto>
-        <mat-option *ngFor="let licensePlate of (searchResults$ | async)" [value]="licensePlate"
-                    (click)="onLicensePlateSelected(licensePlate)">
-          {{licensePlate}}
+        <mat-option
+          *ngFor="let licensePlate of searchResults$ | async"
+          [value]="licensePlate"
+          (click)="onLicensePlateSelected(licensePlate)"
+        >
+          {{ licensePlate }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </div>
-
 </sps-card>
-<div class="reservations"
-     *ngIf="reservationsList.reservations$ | async as reservations">
-  <sps-card class="reservations__card"
-            [title]="translations.RESERVATIONS"
-            *ngIf="reservations.length">
-    <sps-number-chip chip>{{reservations.length}}</sps-number-chip>
+<div
+  class="reservations"
+  *ngIf="reservationsList.reservations$ | async as reservations"
+>
+  <sps-card
+    class="reservations__card"
+    [title]="translations.RESERVATIONS"
+    *ngIf="reservations.length"
+  >
+    <sps-number-chip chip>{{ reservations.length }}</sps-number-chip>
     <div content *ngFor="let reservation of reservations">
-      <sps-reservation-expansion-panel [reservation]="reservation" [expanded]="true">
+      <sps-reservation-expansion-panel
+        [reservation]="reservation"
+        [expanded]="true"
+      >
         <sps-parking-tickets
           parkingTickets
           (issueTicket)="onIssueTicket(reservation.id)"
           (returnTicket)="onReturnTicket(reservation.id)"
           [reservation]="reservation"
-          [editable]="true">
+          [editable]="true"
+        >
         </sps-parking-tickets>
       </sps-reservation-expansion-panel>
     </div>

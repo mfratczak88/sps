@@ -1,12 +1,18 @@
 <ng-container *ngIf="paging$ | async as paging">
   <ng-container *ngIf="count$ | async as count">
-    <mat-paginator *ngIf="count > paging.pageSize"
-                   [pageSize]="paging.pageSize || 5"
-                   [pageIndex]="paging.page - 1"
-                   [length]="count"
-                   [pageSizeOptions]="pageSize"
-                   (page)="pagingChanged.emit({page: $event.pageIndex + 1, pageSize:$event.pageSize})">
+    <mat-paginator
+      *ngIf="count > paging.pageSize"
+      [pageSize]="paging.pageSize || 5"
+      [pageIndex]="paging.page - 1"
+      [length]="count"
+      [pageSizeOptions]="pageSize"
+      (page)="
+        pagingChanged.emit({
+          page: $event.pageIndex + 1,
+          pageSize: $event.pageSize
+        })
+      "
+    >
     </mat-paginator>
   </ng-container>
 </ng-container>
-

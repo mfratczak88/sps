@@ -1,60 +1,82 @@
-<sps-loading-spinner *ngIf="(loading$ | async) else content"></sps-loading-spinner>
+<sps-loading-spinner
+  *ngIf="loading$ | async; else content"
+></sps-loading-spinner>
 <ng-template #content>
-  <sps-panel *ngIf="reservation$ | async as reservation"
-             [title]="translations.RESERVATION_DETAILS | translate">
+  <sps-panel
+    *ngIf="reservation$ | async as reservation"
+    [title]="translations.RESERVATION_DETAILS | translate"
+  >
     <div class="section">
-      <p class="section__header">{{translations.DATE_AND_TIME | translate}}</p>
+      <p class="section__header">
+        {{ translations.DATE_AND_TIME | translate }}
+      </p>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">schedule</mat-icon>
         <div class="section__attribute--value">
-          {{reservation | spsReservationTime}}
+          {{ reservation | spsReservationTime }}
         </div>
       </div>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">calendar_month</mat-icon>
         <div class="section__attribute--value">
-          {{reservation.date | spsDate }}
+          {{ reservation.date | spsDate }}
         </div>
       </div>
     </div>
     <div class="section">
-      <p class="section__header">{{translations.PARKING_LOT | translate}}</p>
+      <p class="section__header">{{ translations.PARKING_LOT | translate }}</p>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">home</mat-icon>
         <div class="section__attribute--value">
-          {{reservation | address}}
+          {{ reservation | address }}
         </div>
       </div>
     </div>
     <div class="section">
-      <p class="section__header">{{translations.VEHICLE | translate}}</p>
+      <p class="section__header">{{ translations.VEHICLE | translate }}</p>
       <div class="section__attribute">
         <mat-icon class="section__attribute--icon">directions_car</mat-icon>
         <div class="section__attribute--value">
-          {{reservation.licensePlate}}
+          {{ reservation.licensePlate }}
         </div>
       </div>
     </div>
     <div class="section">
-      <p class="section__header">{{translations.STATUS | translate}}</p>
-      <sps-reservation-status-chip class="section__attribute" [reservation]="reservation"></sps-reservation-status-chip>
+      <p class="section__header">{{ translations.STATUS | translate }}</p>
+      <sps-reservation-status-chip
+        class="section__attribute"
+        [reservation]="reservation"
+      ></sps-reservation-status-chip>
     </div>
-    <sps-parking-tickets [editable]="false" [reservation]="reservation"></sps-parking-tickets>
+    <sps-parking-tickets
+      [editable]="false"
+      [reservation]="reservation"
+    ></sps-parking-tickets>
     <div class="actions" *ngIf="reservation | canEditReservation">
-      <button class="actions__confirm-button"
-              mat-button
-              color="primary"
-              (click)="onConfirmReservation(reservation); toReservationsList()"
-              *ngIf="reservation | canConfirmReservation">{{translations.CONFIRM_RESERVATION | translate}}
+      <button
+        class="actions__confirm-button"
+        mat-button
+        color="primary"
+        (click)="onConfirmReservation(reservation); toReservationsList()"
+        *ngIf="reservation | canConfirmReservation"
+      >
+        {{ translations.CONFIRM_RESERVATION | translate }}
       </button>
-      <button class="actions__edit-button"
-              mat-button
-              (click)="onEditReservation(reservation); toReservationsList()">{{translations.CHANGE_TIME | translate}}</button>
-      <button class="actions__cancel-button"
-              mat-button
-              color="warn"
-              (click)="onCancelReservation(reservation); toReservationsList()"
-              *ngIf="reservation | canCancelReservation" >{{translations.CANCEL_RESERVATION | translate}}
+      <button
+        class="actions__edit-button"
+        mat-button
+        (click)="onEditReservation(reservation); toReservationsList()"
+      >
+        {{ translations.CHANGE_TIME | translate }}
+      </button>
+      <button
+        class="actions__cancel-button"
+        mat-button
+        color="warn"
+        (click)="onCancelReservation(reservation); toReservationsList()"
+        *ngIf="reservation | canCancelReservation"
+      >
+        {{ translations.CANCEL_RESERVATION | translate }}
       </button>
     </div>
   </sps-panel>

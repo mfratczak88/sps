@@ -1,27 +1,29 @@
-<sps-heading size="s" mat-dialog-title>{{translations.CAPACITY | translate}}</sps-heading>
+<sps-heading size="s" mat-dialog-title>{{
+  translations.CAPACITY | translate
+}}</sps-heading>
 <mat-dialog-content class="dialog">
-  <sps-text size="m">{{translations.CHANGE_CAPACITY | translate}}</sps-text>
-  <div class="dialog__form" >
+  <sps-text size="m">{{ translations.CHANGE_CAPACITY | translate }}</sps-text>
+  <div class="dialog__form">
     <mat-form-field class="dialog__form--input" appearance="fill">
-      <mat-label>{{translations.CAPACITY | translate}}</mat-label>
-      <input matInput [formControl]="capacity">
+      <mat-label>{{ translations.CAPACITY | translate }}</mat-label>
+      <input matInput [formControl]="capacity" />
       <sps-form-error [control]="capacity"></sps-form-error>
     </mat-form-field>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button
-          (click)="dialogRef.close()"
-          class="cancel-button">
-    {{translations.CANCEL | translate}}
+  <button mat-button (click)="dialogRef.close()" class="cancel-button">
+    {{ translations.CANCEL | translate }}
   </button>
 
-  <button mat-button
-          color="primary"
-          class="action-button"
-          mat-raised-button
-          [disabled]="capacity.invalid || capacityNotChanged()"
-          (click)="onChange()">
-    {{translations.CHANGE | translate}}
+  <button
+    mat-button
+    color="primary"
+    class="action-button"
+    mat-raised-button
+    [disabled]="capacity.invalid || capacityNotChanged()"
+    (click)="onChange()"
+  >
+    {{ translations.CHANGE | translate }}
   </button>
 </mat-dialog-actions>

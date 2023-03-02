@@ -1,21 +1,23 @@
-<h2 mat-dialog-title>{{translations.ADD_VEHICLE_DIALOG_TITLE | translate}}</h2>
+<h2 mat-dialog-title>
+  {{ translations.ADD_VEHICLE_DIALOG_TITLE | translate }}
+</h2>
 <mat-dialog-content>
   <mat-form-field appearance="fill">
-    <mat-label>{{translations.LICENSE_PLATE | translate}}</mat-label>
-    <input matInput [formControl]="input">
+    <mat-label>{{ translations.LICENSE_PLATE | translate }}</mat-label>
+    <input matInput [formControl]="input" />
     <sps-form-error [control]="input"></sps-form-error>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button
-          (click)="dialogRef.close()">
-    {{translations.CANCEL | translate}}
+  <button mat-button (click)="dialogRef.close()">
+    {{ translations.CANCEL | translate }}
   </button>
   <button
     color="primary"
     mat-raised-button
     [disabled]="input.invalid"
-    (click)="onAdd()">
-    {{translations.ADD | translate}}
+    (click)="onAdd()"
+  >
+    {{ translations.ADD | translate }}
   </button>
 </mat-dialog-actions>

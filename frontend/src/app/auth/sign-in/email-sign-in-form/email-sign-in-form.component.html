@@ -1,28 +1,37 @@
 <div class="form" [formGroup]="form">
   <div class="form__fields">
     <mat-form-field appearance="outline" class="form__fields--email">
-      <mat-label>{{translations.ENTER_YOUR_EMAIL | translate}}</mat-label>
+      <mat-label>{{ translations.ENTER_YOUR_EMAIL | translate }}</mat-label>
       <mat-icon matSuffix>email</mat-icon>
-      <input matInput required formControlName="email">
+      <input matInput required formControlName="email" />
       <sps-form-error [control]="form.controls['email']"></sps-form-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="form__fields--password">
-      <mat-label>{{translations.ENTER_YOUR_PASSWORD | translate }}</mat-label>
+      <mat-label>{{ translations.ENTER_YOUR_PASSWORD | translate }}</mat-label>
       <mat-icon matSuffix>password</mat-icon>
-      <input matInput type="password" required formControlName="password">
+      <input matInput type="password" required formControlName="password" />
       <sps-form-error [control]="form.controls['password']"></sps-form-error>
     </mat-form-field>
   </div>
-  <button [disabled]="!form.valid" (click)="onSubmit()" class="form__button" mat-raised-button
-          color="primary">{{translations.SIGN_IN | translate}}</button>
+  <button
+    [disabled]="!form.valid"
+    (click)="onSubmit()"
+    class="form__button"
+    mat-raised-button
+    color="primary"
+  >
+    {{ translations.SIGN_IN | translate }}
+  </button>
   <div class="form__footer">
     <sps-link
       class="form__footer--dont-have-account"
       (clicked)="noAccount.emit()"
-    >{{translations.DONT_HAVE_AN_ACCOUNT | translate}}</sps-link>
+      >{{ translations.DONT_HAVE_AN_ACCOUNT | translate }}</sps-link
+    >
     <sps-link
       class="form__footer--forgot-password"
       (clicked)="forgotPassword.emit()"
-    >{{translations.FORGOT_PASSWORD | translate}}</sps-link>
+      >{{ translations.FORGOT_PASSWORD | translate }}</sps-link
+    >
   </div>
 </div>

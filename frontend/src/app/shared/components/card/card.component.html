@@ -1,13 +1,19 @@
 <div [class.hoverable]="clickable" [class.grow]="growHeight">
-  <mat-card class="card" (click)="clickable && clicked.emit()" [class.grow]="growHeight">
+  <mat-card
+    class="card"
+    (click)="clickable && clicked.emit()"
+    [class.grow]="growHeight"
+  >
     <div class="card__header">
       <div class="card__header--title">
-        <mat-card-title>{{title | translate}}</mat-card-title>
+        <mat-card-title>{{ title | translate }}</mat-card-title>
         <ng-content select="[chip]"></ng-content>
       </div>
-      <mat-card-subtitle>{{subTitle | translate}}</mat-card-subtitle>
+      <mat-card-subtitle>{{ subTitle | translate }}</mat-card-subtitle>
     </div>
-    <sps-loading-spinner *ngIf="loading$ && (loading$ | async) else content"></sps-loading-spinner>
+    <sps-loading-spinner
+      *ngIf="loading$ && (loading$ | async); else content"
+    ></sps-loading-spinner>
     <ng-template #content>
       <mat-card-content>
         <ng-content select="[content]"></ng-content>
@@ -18,4 +24,3 @@
     </ng-template>
   </mat-card>
 </div>
-

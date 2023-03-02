@@ -1,11 +1,18 @@
 <div class="breadcrumbs">
-  <div class="breadcrumb__breadcrumbs" *ngFor="let breadcrumb of breadCrumbs; let last = last" [ngClass]="{faded: !last}">
+  <div
+    class="breadcrumb__breadcrumbs"
+    *ngFor="let breadcrumb of breadCrumbs; let last = last"
+    [ngClass]="{ faded: !last }"
+  >
     <a
       class="breadcrumb__breadcrumbs--link"
       [routerLink]="breadcrumb.path"
-      queryParamsHandling="preserve">
-      {{breadcrumb.label | translate}}
+      queryParamsHandling="preserve"
+    >
+      {{ breadcrumb.label | translate }}
     </a>
-    <mat-icon *ngIf="!last" class="breadcrumb__breadcrumbs--icon">keyboard_arrow_right</mat-icon>
+    <mat-icon *ngIf="!last" class="breadcrumb__breadcrumbs--icon"
+      >keyboard_arrow_right</mat-icon
+    >
   </div>
 </div>
