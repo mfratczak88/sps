@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
+import { AdminKeys, MiscKeys, TableKeys } from '../../../core/translation-keys';
 import { Column } from '../table/table.component';
 
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AddressPipe } from '../../../core/pipe/address/address.pipe';
-import { HoursPipe } from '../../../core/pipe/time/hours.pipe';
-import { DaysPipe } from '../../../core/pipe/date/days.pipe';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { AddressPipe } from '../../../core/pipe/address/address.pipe';
+import { DaysPipe } from '../../../core/pipe/date/days.pipe';
+import { HoursPipe } from '../../../core/pipe/time/hours.pipe';
 import { SyncTableComponent } from '../sync-table/sync-table.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { SyncTableComponent } from '../sync-table/sync-table.component';
   styleUrls: ['./parking-lots-table.component.scss'],
 })
 export class ParkingLotsTableComponent extends SyncTableComponent {
-  readonly parkingLotTranslations = { ...AdminKeys, ...MiscKeys };
+  readonly parkingLotTranslations = { ...AdminKeys, ...MiscKeys, ...TableKeys };
 
   @Input()
   parkingLots$: Observable<Partial<ParkingLot>[]> = of([]);
@@ -35,9 +35,11 @@ export class ParkingLotsTableComponent extends SyncTableComponent {
       translation: this.parkingLotTranslations.COLUMN_ADDRESS,
     },
     { name: 'capacity', translation: this.parkingLotTranslations.CAPACITY },
-    { name: 'hours', translation: this.parkingLotTranslations.HOURS },
-    { name: 'days', translation: this.parkingLotTranslations.DAYS },
     { name: 'validFrom', translation: this.parkingLotTranslations.VALID_FROM },
+    {
+      name: 'timeOfOperation',
+      translation: this.parkingLotTranslations.TIME_OF_OPERATION,
+    },
   ];
 
   constructor(
@@ -53,9 +55,10 @@ export class ParkingLotsTableComponent extends SyncTableComponent {
       map(parkingLots =>
         parkingLots.map(lot => ({
           ...lot,
-          hours: this.hoursPipe.transform(lot),
           address: this.addressPipe.transform(lot),
-          days: this.daysPipe.transform(lot),
+          timeOfOperation: `${this.daysPipe.transform(
+            lot,
+          )}, ${this.hoursPipe.transform(lot)}`,
         })),
       ),
     );
@@ -64,6 +67,5 @@ export class ParkingLotsTableComponent extends SyncTableComponent {
 export type ParkingLotTableColumnName =
   | 'address'
   | 'capacity'
-  | 'hours'
-  | 'days'
-  | 'validFrom';
+  | 'validFrom'
+  | 'timeOfOperation';

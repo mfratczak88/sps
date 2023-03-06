@@ -7,7 +7,7 @@
 }
 .panel__card {
   display: block;
-  max-width: 350px;
   flex: 1;
-  height: 10rem;
+  min-width: 250px;
+  min-height: 10rem;
 }
