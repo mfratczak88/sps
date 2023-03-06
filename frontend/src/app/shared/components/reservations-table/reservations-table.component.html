@@ -31,7 +31,15 @@
           }}</mat-header-cell>
         </ng-template>
         <mat-cell mat-cell class="table__cell" *matCellDef="let element">
-          {{ element[column.name] | translate }}
+          <ng-container *ngIf="column.name === 'status'; else plainContent">
+            <sps-reservation-status-chip
+              [status]="element[column.name]"
+              [withText]="false"
+            ></sps-reservation-status-chip>
+          </ng-container>
+          <ng-template #plainContent>
+            {{ element[column.name] | translate }}
+          </ng-template>
         </mat-cell>
       </ng-container>
       <mat-header-row

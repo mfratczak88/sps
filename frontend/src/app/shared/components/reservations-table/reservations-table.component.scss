@@ -4,3 +4,17 @@ mat-row:hover {
   cursor: pointer;
   background: rgba(vars.$color-primary, 0.05);
 }
+@media (max-width: 500px) {
+  mat-cell,
+  mat-header-cell {
+    font-size: 10px;
+  }
+  mat-cell:first-of-type,
+  mat-header-cell:first-of-type {
+    padding: 0;
+  }
+  mat-cell:last-of-type,
+  mat-header-cell:last-of-type {
+    padding: 0;
+  }
+}

@@ -1,6 +1,17 @@
-<span class="chip" [ngClass]="statusCssClass[reservation.status]">
-  <mat-icon>{{ statusIcon[reservation.status] }}</mat-icon>
-  <span class="chip__text">
-    {{ translation() | translate }}
+<ng-container *ngIf="withText; else noText">
+  <span class="chip" [ngClass]="statusCssClass[status]">
+    <mat-icon>{{ statusIcon[status] }}</mat-icon>
+    <span class="chip__text">
+      {{ translationKey() | translate }}
+    </span>
   </span>
-</span>
+</ng-container>
+
+<ng-template #noText>
+  <span
+    [ngClass]="statusCssClass[status]"
+    matTooltip="{{ translationKey() | translate }}"
+  >
+    <mat-icon>{{ statusIcon[status] }}</mat-icon>
+  </span>
+</ng-template>

@@ -3,21 +3,20 @@ import { Observable, of } from 'rxjs';
 import {
   Paging,
   Reservation,
-  ReservationStatusTranslationKey,
   SortBy,
   Sorting,
   SortOrder,
 } from '../../../core/model/reservation.model';
 
-import { Column } from '../table/table.component';
-import { TableKeys } from '../../../core/translation-keys';
-import { map } from 'rxjs/operators';
-import { AddressPipe } from '../../../core/pipe/address/address.pipe';
-import { SpsReservationTimePipe } from '../../../core/pipe/time/reservation-time';
 import { Sort } from '@angular/material/sort';
-import { Id } from '../../../core/model/common.model';
-import { DatePipe } from '../../../core/pipe/date/date.pipe';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { map } from 'rxjs/operators';
+import { Id } from '../../../core/model/common.model';
+import { AddressPipe } from '../../../core/pipe/address/address.pipe';
+import { DatePipe } from '../../../core/pipe/date/date.pipe';
+import { SpsReservationTimePipe } from '../../../core/pipe/time/reservation-time';
+import { TableKeys } from '../../../core/translation-keys';
+import { Column } from '../table/table.component';
 
 @UntilDestroy()
 @Component({
@@ -121,7 +120,7 @@ export class ReservationsTableComponent {
   }
 
   private derivedData(reservation: Reservation) {
-    const { date, status } = reservation;
+    const { date } = reservation;
 
     const time = this.timePipe.transform(reservation);
     const parkingLotAddress = this.addressPipe.transform(reservation);
@@ -129,7 +128,6 @@ export class ReservationsTableComponent {
     return {
       time,
       date: this.datePipe.transform(date),
-      status: ReservationStatusTranslationKey[status],
       parkingLotAddress,
     };
   }

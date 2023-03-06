@@ -8,7 +8,6 @@ $background-opacity: 0.1;
 
 @mixin chip-color($color) {
   color: rgba($color, $text-opacity);
-  background: rgba($color, $background-opacity);
 }
 
 .color-green {

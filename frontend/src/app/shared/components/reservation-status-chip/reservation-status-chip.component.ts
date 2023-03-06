@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import {
-  Reservation,
   ReservationStatus,
   ReservationStatusTranslationKey,
 } from '../../../core/model/reservation.model';
@@ -12,10 +11,13 @@ import {
 })
 export class ReservationStatusChipComponent {
   @Input()
-  reservation: Reservation;
+  status: ReservationStatus;
 
-  translation() {
-    return ReservationStatusTranslationKey[this.reservation.status];
+  @Input()
+  withText = true;
+
+  translationKey() {
+    return ReservationStatusTranslationKey[this.status];
   }
 
   readonly statusCssClass = {
@@ -27,6 +29,6 @@ export class ReservationStatusChipComponent {
   readonly statusIcon = {
     [ReservationStatus.CONFIRMED]: 'check_circle',
     [ReservationStatus.CANCELLED]: 'cancel',
-    [ReservationStatus.DRAFT]: 'edit',
+    [ReservationStatus.DRAFT]: 'pending',
   };
 }

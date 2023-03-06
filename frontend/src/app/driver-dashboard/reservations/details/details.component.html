@@ -45,7 +45,7 @@
       <p class="section__header">{{ translations.STATUS | translate }}</p>
       <sps-reservation-status-chip
         class="section__attribute"
-        [reservation]="reservation"
+        [status]="reservation.status"
       ></sps-reservation-status-chip>
     </div>
     <sps-parking-tickets
