@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { MiscKeys } from '../../../core/translation-keys';
+import { MiscKeys } from 'src/app/core/translation-keys';
 
 @Component({
   selector: 'sps-table',
@@ -10,6 +12,24 @@ import { MiscKeys } from '../../../core/translation-keys';
 })
 export class TableComponent implements OnInit {
   readonly translations = MiscKeys;
+
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.sort = sort;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    this.paginator = paginator;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild('searchField')
+  set inputSearchField(elementElementRef: ElementRef<HTMLInputElement>) {
+    const searchField = elementElementRef?.nativeElement;
+    searchField?.addEventListener('keyup', () => {
+      this.dataSource.filter = searchField.value.trim().toLowerCase();
+    });
+  }
 
   @Input()
   data: Observable<any>;
@@ -28,6 +48,10 @@ export class TableComponent implements OnInit {
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
+  private paginator: MatPaginator;
+
+  private sort: MatSort;
+
   ngOnInit(): void {
     this.data?.subscribe(data => {
       this.dataSource.data = data;
@@ -35,9 +59,13 @@ export class TableComponent implements OnInit {
   }
 
   get columnNames() {
-    const buttons = this.buttons ? [...this.buttons.map(b => b.name)] : [];
     const columns = this.columns ? [...this.columns.map(c => c.name)] : [];
-    return [...columns, ...buttons];
+    return [...columns, 'buttons'];
+  }
+
+  private setDataSourceAttributes(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }
 

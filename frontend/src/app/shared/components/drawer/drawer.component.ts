@@ -1,6 +1,6 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs';
 
 @Component({
