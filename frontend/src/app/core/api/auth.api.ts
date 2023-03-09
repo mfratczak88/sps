@@ -27,7 +27,7 @@ export class AuthApi extends BaseApi {
           withCredentials: true, // unless it's set here, cookies will not be set in the user agent
         },
       )
-      .pipe(map(loginRes => ({ ...loginRes })));
+      .pipe(map((loginRes) => ({ ...loginRes })));
   }
 
   loginWithGoogle(idToken: string, email: string): Observable<AuthUser> {
@@ -42,7 +42,7 @@ export class AuthApi extends BaseApi {
           withCredentials: true,
         },
       )
-      .pipe(map(loginRes => ({ ...loginRes })));
+      .pipe(map((loginRes) => ({ ...loginRes })));
   }
 
   register(command: RegisterUserPayload) {
@@ -67,7 +67,7 @@ export class AuthApi extends BaseApi {
       .get<AuthUser>(environment.apiUrl + '/auth/refresh', {
         withCredentials: true,
       })
-      .pipe(map(loginRes => ({ ...loginRes })));
+      .pipe(map((loginRes) => ({ ...loginRes })));
   }
 
   logout() {

@@ -22,23 +22,25 @@ export class ParkingLotsTableComponent extends TableComponent {
   @Input()
   set parkingLots$(lots$: Observable<Partial<ParkingLot>[]>) {
     this.data = lots$?.pipe(
-      map(parkingLots =>
-        parkingLots.map(lot => ({
-          ...lot,
-          address: this.addressPipe.transform(lot),
-          timeOfOperation: `${this.daysPipe.transform(
-            lot,
-          )}, ${this.hoursPipe.transform(lot)}`,
-        })),
-      ),
+      map((parkingLots) => this.convertToOutputTable(parkingLots)),
     );
   }
 
   @Input()
   set displayColumns(columns: ParkingLotTableColumnName[]) {
-    this.columns = this.columns.filter(col =>
+    this.columns = this.columns.filter((col) =>
       columns.includes(col.name as ParkingLotTableColumnName),
     );
+  }
+
+  convertToOutputTable(parkingLots: Partial<ParkingLot>[]) {
+    return parkingLots.map((lot) => ({
+      ...lot,
+      address: this.addressPipe.transform(lot),
+      timeOfOperation: `${this.daysPipe.transform(
+        lot,
+      )}, ${this.hoursPipe.transform(lot)}`,
+    }));
   }
 
   constructor(

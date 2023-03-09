@@ -53,13 +53,13 @@ export class TableComponent implements OnInit {
   private sort: MatSort;
 
   ngOnInit(): void {
-    this.data?.subscribe(data => {
+    this.data?.subscribe((data) => {
       this.dataSource.data = data;
     });
   }
 
   get columnNames() {
-    const columns = this.columns ? [...this.columns.map(c => c.name)] : [];
+    const columns = this.columns ? [...this.columns.map((c) => c.name)] : [];
     return [...columns, 'buttons'];
   }
 

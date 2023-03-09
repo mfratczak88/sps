@@ -70,7 +70,7 @@ describe('ConfirmAccountComponent', () => {
   it('Fail -- If error has URL_NO_LONGER_VALID message code it redirects to resend link', () => {
     // given
     setRouterParams(store, { activationGuid: '1' });
-    dispatchSpy.and.callFake(action =>
+    dispatchSpy.and.callFake((action) =>
       action instanceof AuthActions.ConfirmRegistration
         ? throwError(() => ({
             error: {

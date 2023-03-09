@@ -1,21 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DriversListComponent } from './list.component';
-import { SharedModule } from '../../../shared/shared.module';
-import { translateTestModule } from '../../../../test.utils';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { mockDriver } from '../../../../../test/driver.utils';
-import { buttonCells } from '../../../../../test/test.util';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxsModule, Store } from '@ngxs/store';
-import { DriversState } from '../../../core/store/drivers/drivers.state';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsModule, Store } from '@ngxs/store';
+import { mockDriver } from '../../../../../test/driver.utils';
 import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
+import { buttonHarnesses } from '../../../../../test/test.util';
+import { translateTestModule } from '../../../../test.utils';
 import { AdminActions } from '../../../core/store/actions/admin.actions';
-import { HttpClientModule } from '@angular/common/http';
+import { DriversState } from '../../../core/store/drivers/drivers.state';
+import { SharedModule } from '../../../shared/shared.module';
+import { DriversListComponent } from './list.component';
 
 describe('Drivers list component', () => {
   let fixture: ComponentFixture<DriversListComponent>;
@@ -56,8 +55,7 @@ describe('Drivers list component', () => {
   });
   it('Navigates to details page on drivers table details button click', async () => {
     fixture.detectChanges();
-    const [detailsTableCell] = await buttonCells(loader, 'details');
-    const detailsButton = await detailsTableCell.getHarness(MatButtonHarness);
+    const [detailsButton] = await buttonHarnesses(loader, 0);
     await detailsButton.click();
     expect(dispatchSpy).toHaveBeenCalledWith(
       new AdminActions.NavigateToDriverDetails(mockDriver.id),

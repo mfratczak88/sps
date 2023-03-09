@@ -30,8 +30,8 @@ export class ReservationsTableComponent {
     reservations
       .pipe(
         untilDestroyed(this),
-        map(reservations =>
-          reservations.map(reservation => {
+        map((reservations) =>
+          reservations.map((reservation) => {
             return {
               ...reservation,
               ...this.derivedData(reservation),
@@ -39,12 +39,12 @@ export class ReservationsTableComponent {
           }),
         ),
       )
-      .subscribe(data => (this.data = data));
+      .subscribe((data) => (this.data = data));
   }
 
   @Input()
   set displayColumns(columns: ReservationColumnName[]) {
-    this.tableColumns = this.tableColumns.filter(col =>
+    this.tableColumns = this.tableColumns.filter((col) =>
       columns.includes(col.name as ReservationColumnName),
     );
     this.displayedColumns = columns;

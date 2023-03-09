@@ -51,8 +51,8 @@ export class UsersListComponent implements OnInit {
     dialogRef
       .afterClosed()
       .pipe(
-        filter(newRole => !!newRole),
-        concatMap(newRole =>
+        filter((newRole) => !!newRole),
+        concatMap((newRole) =>
           this.store.dispatch(
             new AdminActions.ChangeUserRole(id, newRole as Role),
           ),

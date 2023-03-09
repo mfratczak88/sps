@@ -20,7 +20,7 @@ export class DrawerComponent {
   constructor(private readonly breakpointObserver: BreakpointObserver) {
     this.drawerOpenedFirst$ = this.breakpointObserver
       .observe(['(min-width:500px)'])
-      .pipe(map(x => x.matches));
+      .pipe(map((x) => x.matches));
   }
 
   toggle() {

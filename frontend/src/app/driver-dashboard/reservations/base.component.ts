@@ -62,10 +62,10 @@ export abstract class ReservationBaseComponent extends HasDialogComponent {
     dialogRef
       .afterClosed()
       .pipe(
-        filter(d => !!d),
+        filter((d) => !!d),
         first(),
       )
-      .subscribe(dialogOutput => {
+      .subscribe((dialogOutput) => {
         const { date, hours } = dialogOutput as DialogOutput;
         this.store.dispatch(
           new DriverActions.ChangeTimeOfReservation(id, hours, date),

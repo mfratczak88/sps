@@ -37,20 +37,22 @@ export const DASHBOARD_ROUTE = {
     },
     {
       path: AdminPaths.USERS,
-      loadChildren: () => import('./users/module').then(m => m.UsersModule),
+      loadChildren: () => import('./users/module').then((m) => m.UsersModule),
     },
     {
       path: AdminPaths.PARKING,
-      loadChildren: () => import('./parking/module').then(m => m.ParkingModule),
+      loadChildren: () =>
+        import('./parking/module').then((m) => m.ParkingModule),
     },
     {
       path: AdminPaths.RESERVATIONS,
       loadChildren: () =>
-        import('./reservations/module').then(m => m.ReservationsModule),
+        import('./reservations/module').then((m) => m.ReservationsModule),
     },
     {
       path: AdminPaths.DRIVERS,
-      loadChildren: () => import('./drivers/module').then(m => m.DriversModule),
+      loadChildren: () =>
+        import('./drivers/module').then((m) => m.DriversModule),
     },
   ],
 };

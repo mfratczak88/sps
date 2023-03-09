@@ -62,7 +62,7 @@ export class WeekdaysFormComponent
   }
 
   registerOnChange(fn: (weekdays: number[]) => void): void {
-    this.valueChanges$ = this.form.valueChanges.subscribe(values => {
+    this.valueChanges$ = this.form.valueChanges.subscribe((values) => {
       const weekdays: number[] = [];
       values.weekdays?.forEach((selected, i) => {
         if (selected) weekdays.push(i);
@@ -82,14 +82,14 @@ export class WeekdaysFormComponent
   }
 
   validate(): LocalizedValidationError | null {
-    const allUnchecked = this.weekDaysControls.every(c => !c.value);
+    const allUnchecked = this.weekDaysControls.every((c) => !c.value);
     return allUnchecked ? LocalizedErrors.noCheckboxSelected() : null;
   }
 
   writeValue(weekdays: number[]): void {
     if (!this.disabled) {
       weekdays &&
-        weekdays.forEach(day => {
+        weekdays.forEach((day) => {
           day < 7 && this.weekDaysControls[day].setValue(true);
         });
     }

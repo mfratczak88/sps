@@ -33,7 +33,7 @@ export class DaysPipe implements PipeTransform {
 
   allDaysSeparatedByComa(days: OperationTimeDays[]) {
     return days
-      .map(d => this.translationService.instant(DayToShortTranslation[d]))
+      .map((d) => this.translationService.instant(DayToShortTranslation[d]))
       .join(', ');
   }
 }

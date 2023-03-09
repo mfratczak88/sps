@@ -23,13 +23,13 @@ export class BaseApi {
         withCredentials: true,
       })
       .pipe(
-        tap(token => localStorage.setItem('_csrf', token.csrfToken)),
+        tap((token) => localStorage.setItem('_csrf', token.csrfToken)),
         concatMap(() => request),
       );
   }
 
   shareResponse<T>(id: string): MonoTypeOperatorFunction<T> {
-    return source => {
+    return (source) => {
       if (!this.pendingReqs.has(id)) {
         this.pendingReqs.set(id, source.pipe(shareReplay(1)));
       }

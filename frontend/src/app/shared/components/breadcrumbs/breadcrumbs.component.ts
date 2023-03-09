@@ -14,7 +14,7 @@ export class BreadcrumbsComponent {
   breadCrumbs: BreadCrumb[] = [];
 
   constructor(readonly store: Store) {
-    this.store.select(routerBreadcrumbs).subscribe(breadCrumb => {
+    this.store.select(routerBreadcrumbs).subscribe((breadCrumb) => {
       this.breadCrumbs = [];
       let next = breadCrumb;
       while (next) {

@@ -8,7 +8,6 @@ import { DriverDetailsComponent } from './details.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HttpClientModule } from '@angular/common/http';
-import { MatButtonHarness } from '@angular/material/button/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
@@ -17,7 +16,7 @@ import { NEVER, of } from 'rxjs';
 import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
 import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
 import { setDriver } from '../../../../../test/store.util';
-import { buttonCells } from '../../../../../test/test.util';
+import { buttonHarnesses } from '../../../../../test/test.util';
 import { AdminActions } from '../../../core/store/actions/admin.actions';
 import { DriversState } from '../../../core/store/drivers/drivers.state';
 import { ParkingLotsState } from '../../../core/store/parking-lot/parking-lot.state';
@@ -93,7 +92,7 @@ describe('Driver details component', () => {
 
     const [email, name] = fixture.debugElement
       .queryAll(By.css('.details-panel__section--item'))
-      .map(div => div.children[1].nativeElement as HTMLSpanElement);
+      .map((div) => div.children[1].nativeElement as HTMLSpanElement);
 
     expect(email.innerText).toEqual(driver.email);
     expect(name.innerText).toEqual(driver.name);
@@ -104,8 +103,10 @@ describe('Driver details component', () => {
       By.css('sps-parking-lots-table'),
     ).componentInstance as ParkingLotsTableComponent;
 
-    parkingLotsTable.parkingLots$.subscribe(lots =>
-      expect(lots).toEqual([...parkingLots]),
+    parkingLotsTable.data.subscribe((lots) =>
+      expect(lots).toEqual(
+        parkingLotsTable.convertToOutputTable([...parkingLots]),
+      ),
     );
   });
   it('Assign parking lot - opens up dialog on button click providing unassigned lots', () => {
@@ -168,10 +169,8 @@ describe('Driver details component', () => {
   });
 
   it('Calls remove parking lot on clicking button in assigned lots table', async () => {
-    const [removeAssignmentButtonCell] = await buttonCells(loader, 'remove');
-    const button = await removeAssignmentButtonCell.getHarness(
-      MatButtonHarness,
-    );
+    const [button] = await buttonHarnesses(loader, 0);
+
     await button.click();
     expect(dispatchSpy).toHaveBeenCalledWith(
       new AdminActions.RemoveParkingLotAssignment(

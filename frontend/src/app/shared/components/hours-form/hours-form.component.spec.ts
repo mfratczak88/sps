@@ -74,11 +74,11 @@ describe('HoursFormComponent', () => {
     const [hourFromSelect] = await selectHarnesses();
     await hourFromSelect.open();
     const hourFromOptions = await Promise.all(
-      (await hourFromSelect.getOptions()).map(option => option.getText()),
+      (await hourFromSelect.getOptions()).map((option) => option.getText()),
     );
     const expectedOptions = [...new Array(23 - 5).keys()]
-      .map(idx => idx + 5)
-      .map(hour => hourPipe.transform(hour) as string);
+      .map((idx) => idx + 5)
+      .map((hour) => hourPipe.transform(hour) as string);
 
     expect(hourFromOptions).toEqual(expectedOptions);
   });
@@ -88,11 +88,11 @@ describe('HoursFormComponent', () => {
     const hourToSelect = (await selectHarnesses())[1];
     await hourToSelect.open();
     const hourToOptions = await Promise.all(
-      (await hourToSelect.getOptions()).map(option => option.getText()),
+      (await hourToSelect.getOptions()).map((option) => option.getText()),
     );
     const expectedOptions = [...new Array(23 - 5).keys()]
-      .map(idx => idx + 5 + 1)
-      .map(hour => hourPipe.transform(hour) as string);
+      .map((idx) => idx + 5 + 1)
+      .map((hour) => hourPipe.transform(hour) as string);
 
     expect(hourToOptions).toEqual(expectedOptions);
   });

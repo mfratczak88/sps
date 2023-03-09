@@ -29,7 +29,7 @@ export class TimeLeftComponent implements OnInit {
             : DateTime.fromJSDate(this.deadLine);
         return deadLineDateTime.diffNow(['hours', 'minutes', 'seconds']);
       }),
-      takeWhile(duration => duration.as('seconds') > 0),
+      takeWhile((duration) => duration.as('seconds') > 0),
       finalize(() => this.timeIsUp.next()),
     );
   }

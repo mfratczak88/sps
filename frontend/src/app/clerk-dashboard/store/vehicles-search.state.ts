@@ -30,7 +30,7 @@ export class VehicleSearchState {
   loadLicensePlates({ patchState }: StateContext<VehiclesSearchStateModel>) {
     patchState({ loading: true });
     return this.vehicleApi.findAll().pipe(
-      tap(vehicles =>
+      tap((vehicles) =>
         patchState({
           licensePlates: vehicles.map(({ licensePlate }) => licensePlate),
           loading: false,
@@ -46,7 +46,7 @@ export class VehicleSearchState {
   ) {
     const { licensePlates } = getState();
     return patchState({
-      searchResults: licensePlates.filter(plate =>
+      searchResults: licensePlates.filter((plate) =>
         plate.includes(licensePlate),
       ),
     });

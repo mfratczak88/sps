@@ -26,17 +26,17 @@ export const DASHBOARD_ROUTE: Route = {
     {
       path: DriverPaths.RESERVATIONS,
       loadChildren: () =>
-        import('./reservations/module').then(m => m.ReservationsModule),
+        import('./reservations/module').then((m) => m.ReservationsModule),
     },
     {
       path: DriverPaths.VEHICLES,
       loadChildren: () =>
-        import('./vehicles/module').then(m => m.VehiclesModule),
+        import('./vehicles/module').then((m) => m.VehiclesModule),
     },
     {
       path: DriverPaths.PARKING_LOTS,
       loadChildren: () =>
-        import('./parking-lots/module').then(m => m.ParkingLotsModule),
+        import('./parking-lots/module').then((m) => m.ParkingLotsModule),
     },
   ],
 };

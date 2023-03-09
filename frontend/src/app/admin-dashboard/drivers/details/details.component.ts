@@ -56,9 +56,9 @@ export class DriverDetailsComponent implements OnInit {
     });
     dialogRef
       .afterClosed()
-      .pipe(filter(lotId => !!lotId))
+      .pipe(filter((lotId) => !!lotId))
       .pipe(
-        concatMap(lotId =>
+        concatMap((lotId) =>
           this.store.dispatch(
             new AdminActions.AssignParkingLot(driverId, lotId),
           ),

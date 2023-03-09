@@ -23,7 +23,7 @@ export abstract class HasDialogComponent {
       .afterClosed()
       .pipe(
         first(),
-        filter(result => !!result?.confirmed),
+        filter((result) => !!result?.confirmed),
       )
       .subscribe(cb);
   }
