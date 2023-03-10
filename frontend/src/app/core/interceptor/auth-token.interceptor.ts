@@ -48,7 +48,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.refreshingInProgress = false;
           return next.handle(req);
         }),
-        catchError(err => {
+        catchError((err) => {
           this.refreshingInProgress = false;
           return throwError(err);
         }),

@@ -2,7 +2,7 @@
   <sps-loading-spinner *ngIf="loading$ | async; else content">
   </sps-loading-spinner>
   <ng-template #content>
-    <mat-table
+    <table
       mat-table
       [dataSource]="data"
       class="table"
@@ -17,37 +17,38 @@
         *ngFor="let column of tableColumns"
       >
         <ng-container *ngIf="column.sortable; else nonSortable">
-          <mat-header-cell
-            mat-header-cell
-            mat-sort-header
-            disableClear
-            *matHeaderCellDef
-            >{{ column.translation | translate }}</mat-header-cell
-          >
+          <th mat-header-cell mat-sort-header disableClear *matHeaderCellDef>
+            {{ column.translation | translate }}
+          </th>
         </ng-container>
         <ng-template #nonSortable>
-          <mat-header-cell mat-header-cell *matHeaderCellDef>{{
-            column.translation | translate
-          }}</mat-header-cell>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ column.translation | translate }}
+          </th>
         </ng-template>
-        <mat-cell mat-cell class="table__cell" *matCellDef="let element">
-          {{ element[column.name] | translate }}
-        </mat-cell>
+        <td mat-cell class="table__cell" *matCellDef="let element">
+          <ng-container *ngIf="column.name === 'status'; else plainContent">
+            <sps-reservation-status-chip
+              [status]="element[column.name]"
+              [withText]="false"
+            ></sps-reservation-status-chip>
+          </ng-container>
+          <ng-template #plainContent>
+            {{ element[column.name] | translate }}
+          </ng-template>
+        </td>
       </ng-container>
-      <mat-header-row
-        mat-header-row
-        *matHeaderRowDef="displayedColumns"
-      ></mat-header-row>
-      <mat-row
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
         class="table__row"
         (click)="reservationClicked.emit(row.id)"
         mat-row
         *matRowDef="let row; columns: displayedColumns"
-      ></mat-row>
+      ></tr>
       <tr *matNoDataRow>
         <td colspan="4">No data</td>
       </tr>
-    </mat-table>
+    </table>
 
     <sps-paginator
       *ngIf="paging$"

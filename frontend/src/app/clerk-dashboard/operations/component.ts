@@ -39,7 +39,7 @@ export class OperationsComponent extends HasDialogComponent implements OnInit {
   ngOnInit(): void {
     this.inputFormElement.valueChanges
       .pipe(untilDestroyed(this), debounceTime(400), distinctUntilChanged())
-      .subscribe(licensePlate =>
+      .subscribe((licensePlate) =>
         licensePlate
           ? this.store.dispatch(
               new ClerkActions.SearchLicensePlates(licensePlate),

@@ -25,7 +25,7 @@ export const DASHBOARD_ROUTE: Route = {
     {
       path: ClerkPaths.OPERATIONS,
       loadChildren: () =>
-        import('./operations/module').then(m => m.OperationsModule),
+        import('./operations/module').then((m) => m.OperationsModule),
     },
   ],
 };

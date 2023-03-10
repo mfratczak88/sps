@@ -154,3 +154,24 @@ $font-weight-normal: 400;
   background-color: rgba($color-primary, 0.2);
   color: rgba($color-primary, 0.8);
 }
+
+/* Table */
+@mixin table {
+  .mat-cell:first-of-type, .mat-header-cell:first-of-type, .mat-footer-cell:first-of-type {
+    padding-left: 0 !important;
+  }
+  .mat-cell:last-of-type, .mat-header-cell:last-of-type, .mat-footer-cell:last-of-type {
+    padding-right: 0 !important;
+  }
+  
+  .mat-column-buttons {
+    text-align: right;
+  }
+  table {
+    width: 100%;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: min(2.8vw, 0.9rem);
+    text-align: left;
+  }
+}

@@ -36,8 +36,8 @@ export class VehiclesComponent {
     dialogRef
       .afterClosed()
       .pipe(
-        filter(licensePlate => !!licensePlate),
-        concatMap(licensePlate => {
+        filter((licensePlate) => !!licensePlate),
+        concatMap((licensePlate) => {
           return this.store.dispatch(
             new DriverActions.AddVehicle(licensePlate),
           );

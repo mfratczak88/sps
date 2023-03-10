@@ -54,7 +54,7 @@ export class AuthState {
       loading: true,
     });
     return this.api.login(email, password).pipe(
-      tap(user => {
+      tap((user) => {
         setState({
           ...user,
           loading: false,
@@ -82,7 +82,7 @@ export class AuthState {
   refreshToken({ patchState }: StateContext<AuthStateModel>) {
     patchState({ loading: true });
     return this.api.refreshToken().pipe(
-      tap(result => {
+      tap((result) => {
         patchState({ ...result, loading: false });
         AuthState.userToLocalStorage(result);
       }),
@@ -98,7 +98,7 @@ export class AuthState {
       concatMap(({ idToken, email }) =>
         this.api.loginWithGoogle(idToken, email),
       ),
-      tap(user => {
+      tap((user) => {
         patchState({ ...user, loading: false });
         AuthState.userToLocalStorage(user);
       }),

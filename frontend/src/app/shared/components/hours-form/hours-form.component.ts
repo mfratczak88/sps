@@ -76,7 +76,7 @@ export class HoursFormComponent
   }
 
   registerOnChange(fn: OnChange): void {
-    this.valueChangesSub$ = this.form.valueChanges.subscribe(values => {
+    this.valueChangesSub$ = this.form.valueChanges.subscribe((values) => {
       fn(values);
       this.onTouched();
     });

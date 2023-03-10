@@ -1,55 +1,56 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from './material.module';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { LinkComponent } from './components/link/link.component';
-import { HeadingComponent } from './components/heading/heading.component';
-import { TextComponent } from './components/text/text.component';
-import { ToastService } from '../core/service/toast.service';
-import { MaterialToastService } from './service/material.toast.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormErrorComponent } from './components/form-error/form-error.component';
-import { PageHeaderComponent } from './components/page-header/page-header.component';
-import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
-import { DrawerComponent } from './components/drawer/drawer.component';
-import { RouterModule } from '@angular/router';
-import { CardComponent } from './components/card/card.component';
-import { TableComponent } from './components/table/table.component';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { PaginatorIntlService } from './service/paginator.intl.service';
-import { PanelComponent } from './components/panel/panel.component';
-import { ParkingLotsTableComponent } from './components/parking-lots-table/parking-lots-table.component';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AddressPipe } from '../core/pipe/address/address.pipe';
-import { HoursPipe } from '../core/pipe/time/hours.pipe';
 import { DaysPipe } from '../core/pipe/date/days.pipe';
 import { HourPipe } from '../core/pipe/time/hour.pipe';
-import { HoursFormComponent } from './components/hours-form/hours-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.component';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-import { NumberChipComponent } from './components/number-chip/number-chip.component';
-import { ParkingLotExpansionPanelComponent } from './components/parking-lot-expansion-panel/parking-lot-expansion-panel.component';
-import { ChipComponent } from './components/chip/chip.component';
-import { TimeLeftComponent } from './components/time-left/time-left.component';
-import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
-import { ReservationsTableComponent } from './components/reservations-table/reservations-table.component';
+import { HoursPipe } from '../core/pipe/time/hours.pipe';
 import { SpsReservationTimePipe } from '../core/pipe/time/reservation-time';
+import { ToastService } from '../core/service/toast.service';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { CardComponent } from './components/card/card.component';
+import { ChipComponent } from './components/chip/chip.component';
+import { ConfirmActionDialogComponent } from './components/confirm-action-dialog/confirm-action-dialog.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
+import { FormErrorComponent } from './components/form-error/form-error.component';
+import { HeadingComponent } from './components/heading/heading.component';
+import { HoursFormComponent } from './components/hours-form/hours-form.component';
+import { LinkComponent } from './components/link/link.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { NumberChipComponent } from './components/number-chip/number-chip.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { PanelComponent } from './components/panel/panel.component';
+import { ParkingLotExpansionPanelComponent } from './components/parking-lot-expansion-panel/parking-lot-expansion-panel.component';
+import { ParkingLotsTableComponent } from './components/parking-lots-table/parking-lots-table.component';
+import { ReservationsTableComponent } from './components/reservations-table/reservations-table.component';
+import { TableComponent } from './components/table/table.component';
+import { TextComponent } from './components/text/text.component';
+import { TimeLeftComponent } from './components/time-left/time-left.component';
+import { WeekdaysFormComponent } from './components/weekdays-form/weekdays-form.component';
+import { MaterialModule } from './material.module';
+import { MaterialToastService } from './service/material.toast.service';
+import { PaginatorIntlService } from './service/paginator.intl.service';
 
-import { SyncTableComponent } from './components/sync-table/sync-table.component';
-import { ReservationStatusChipComponent } from './components/reservation-status-chip/reservation-status-chip.component';
-import { DatePipe } from '../core/pipe/date/date.pipe';
-import { CanCancelReservationPipe } from '../core/pipe/can/can-cancel-reservation.pipe';
-import { CanEditReservationPipe } from '../core/pipe/can/can-edit-reservation.pipe';
-import { CanConfirmReservationPipe } from '../core/pipe/can/can-confirm-reservation.pipe';
-import { ReservationExpansionPanelComponent } from './components/reservation-expansion-panel/reservation-expansion-panel.component';
-import { AbstractDialog } from '../core/abstract.dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { PaginatorComponent } from './components/paginator/paginator.component';
-import { ParkingTicketComponent } from './components/parking-ticket/parking-ticket.component';
-import { TimePipe } from '../core/pipe/time/time.pipe';
+import { AbstractDialog } from '../core/abstract.dialog';
+import { CanCancelReservationPipe } from '../core/pipe/can/can-cancel-reservation.pipe';
+import { CanConfirmReservationPipe } from '../core/pipe/can/can-confirm-reservation.pipe';
+import { CanEditReservationPipe } from '../core/pipe/can/can-edit-reservation.pipe';
 import { CanIssueParkingTicketPipe } from '../core/pipe/can/can-issue-parking-ticket.pipe';
 import { CanReturnParkingTicketPipe } from '../core/pipe/can/can-return-parking-ticket.pipe';
+import { DatePipe } from '../core/pipe/date/date.pipe';
+import { TimePipe } from '../core/pipe/time/time.pipe';
+import { DriversTableComponent } from './components/drivers-table/drivers-table.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
+import { ParkingTicketComponent } from './components/parking-ticket/parking-ticket.component';
 import { ParkingTicketsComponent } from './components/parking-tickets/parking-tickets.component';
+import { ReservationExpansionPanelComponent } from './components/reservation-expansion-panel/reservation-expansion-panel.component';
+import { ReservationStatusChipComponent } from './components/reservation-status-chip/reservation-status-chip.component';
+import { UsersTableComponent } from './components/users-table/users-table.component';
 
 const components = [
   NavbarComponent,
@@ -77,7 +78,6 @@ const components = [
   TimeLeftComponent,
   ConfirmActionDialogComponent,
   ReservationsTableComponent,
-  SyncTableComponent,
   ReservationStatusChipComponent,
   ReservationExpansionPanelComponent,
   SpsReservationTimePipe,
@@ -91,6 +91,8 @@ const components = [
   PaginatorComponent,
   ParkingTicketComponent,
   ParkingTicketsComponent,
+  UsersTableComponent,
+  DriversTableComponent,
 ];
 @NgModule({
   declarations: components,

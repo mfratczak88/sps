@@ -41,7 +41,7 @@ export class DetailsComponent implements OnInit {
     dialogRef
       .afterClosed()
       .pipe(
-        filter(val => !!val),
+        filter((val) => !!val),
         first(),
         concatMap(({ hourFrom, hourTo }) =>
           this.store.dispatch(
@@ -59,8 +59,8 @@ export class DetailsComponent implements OnInit {
     dialogRef
       .afterClosed()
       .pipe(
-        filter(val => !!val),
-        concatMap(capacity =>
+        filter((val) => !!val),
+        concatMap((capacity) =>
           this.store.dispatch(
             new AdminActions.ChangeCapacity(capacity, lot.id),
           ),

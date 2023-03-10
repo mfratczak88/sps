@@ -2,7 +2,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,7 +10,7 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { EMPTY, of } from 'rxjs';
 import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
 import { setUsers } from '../../../../../test/store.util';
-import { buttonCells } from '../../../../../test/test.util';
+import { buttonHarnesses } from '../../../../../test/test.util';
 import { mockUsers } from '../../../../../test/users.util';
 import { translateTestModule } from '../../../../test.utils';
 import { Role } from '../../../core/model/auth.model';
@@ -32,12 +31,7 @@ describe('Users list component', () => {
   const users = mockUsers;
   let store: Store;
   let dispatchSpy: DispatchSpy;
-  const editButtons = async () =>
-    Promise.all(
-      (await buttonCells(loader, 'edit')).map(cellHarness =>
-        cellHarness.getHarness(MatButtonHarness),
-      ),
-    );
+  const editButtons = async () => buttonHarnesses(loader, 0);
 
   beforeEach(async () => {
     dialogRefSpy = jasmine.createSpyObj('DialogRef', ['afterClosed']);

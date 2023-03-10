@@ -1,6 +1,13 @@
 @use "../../../../variables" as vars;
 
+@include vars.table();
+
 mat-row:hover {
   cursor: pointer;
   background: rgba(vars.$color-primary, 0.05);
+}
+
+.mat-cell,
+.mat-header-cell {
+  padding: 0 2px;
 }

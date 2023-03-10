@@ -262,7 +262,7 @@ export class ReservationsState {
       loading: true,
     });
     return this.api.getReservation(id).pipe(
-      tap(reservation => {
+      tap((reservation) => {
         patchState({
           entities: { ...entities, [id]: reservation },
           selectedId: id,
@@ -286,7 +286,7 @@ export class ReservationsState {
         ...sorting,
       })
       .pipe(
-        tap(reservations => {
+        tap((reservations) => {
           const { patchState, getState } = ctx;
           const { entities: existing } = getState();
           const { data, page, pageSize, count } = reservations;

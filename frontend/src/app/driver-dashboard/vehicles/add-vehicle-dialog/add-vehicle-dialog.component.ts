@@ -24,7 +24,7 @@ export class AddVehicleDialogComponent implements Validator {
     readonly dialogRef: MatDialogRef<AddVehicleDialogComponent>,
     @Inject(MAT_DIALOG_DATA) readonly driver: Driver,
   ) {
-    this.existingLicensePlates = driver.vehicles.map(v => v.licensePlate);
+    this.existingLicensePlates = driver.vehicles.map((v) => v.licensePlate);
     this.input = new FormControl<string | null>(null, [
       LocalizedValidators.required,
       () => this.validate(),

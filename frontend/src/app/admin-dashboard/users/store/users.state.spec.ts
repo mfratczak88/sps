@@ -38,7 +38,7 @@ describe('Users state', () => {
       usersState.getAllUsers(contextMock);
 
       expect(contextMock.patchState).toHaveBeenCalledWith({
-        roles: Object.values(Role).map(role => ({ role, translation: 't' })),
+        roles: Object.values(Role).map((role) => ({ role, translation: 't' })),
       });
     });
     it('calls api and sets state', async () => {
@@ -61,7 +61,7 @@ describe('Users state', () => {
         {
           loading: false,
           entities: mapToObjectWithIds(
-            mockUsers.map(user => ({
+            mockUsers.map((user) => ({
               ...user,
               roleTranslation: RoleToTranslationKey[user.role],
             })),

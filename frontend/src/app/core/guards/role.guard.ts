@@ -20,7 +20,7 @@ export abstract class RoleGuard implements CanActivate {
     | UrlTree {
     return this.store
       .select(loading)
-      .pipe(filter(loading => !loading))
+      .pipe(filter((loading) => !loading))
       .pipe(
         map(() => {
           const role = this.store.selectSnapshot(userRole);
