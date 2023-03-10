@@ -5,7 +5,7 @@ import {
   Reservation,
   SortBy,
   Sorting,
-  SortOrder,
+  SortOrder
 } from '../../../core/model/reservation.model';
 
 import { Sort } from '@angular/material/sort';
@@ -97,13 +97,13 @@ export class ReservationsTableComponent {
       sortable: true,
     },
     {
+      name: 'parkingLotAddress',
+      translation: this.reservationsTranslations.PARKING_LOT_ADDRESS,
+    },
+    {
       name: 'status',
       translation: this.reservationsTranslations.RESERVATION_STATUS,
       sortable: true,
-    },
-    {
-      name: 'parkingLotAddress',
-      translation: this.reservationsTranslations.PARKING_LOT_ADDRESS,
     },
   ];
 
@@ -134,7 +134,6 @@ export class ReservationsTableComponent {
 }
 
 export type ReservationColumnName =
-  | 'createdAt'
   | 'licensePlate'
   | 'time'
   | 'date'
