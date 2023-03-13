@@ -1,16 +1,13 @@
 version: "3.3"
 services:
-  postgres:
-    image: postgres:latest
+  cockroach:
+    image: cockroachdb/cockroach:latest
     restart: always
-    expose:
-      - "5432"
     ports:
-      - "5431:5432"
+      - "26258:26257"
     environment:
-      POSTGRES_PASSWORD: root
-      POSTGRES_USER: root
-      POSTGRES_DB: test
+      COCKROACH_USER: root
+      COCKROACH_DATABASE: test
+    command: start-single-node --insecure      
     volumes:
-      - "./db/data:/var/lib/postgresql/data"
-      - "./db/init:/docker-entrypoint-initdb.d"
+      - "./db/data:/cockroach/cockroach-data"

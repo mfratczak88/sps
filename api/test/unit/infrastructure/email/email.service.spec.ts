@@ -1,16 +1,16 @@
-import { EmailService } from '../../../../src/infrastructure/email/email.service';
 import { createMock } from '@golevelup/ts-jest';
 import Mailgun from 'mailgun.js';
 import Client from 'mailgun.js/client';
+import { EmailService } from '../../../../src/infrastructure/email/email.service';
 
+import MessagesClient from 'mailgun.js/messages';
 import { Environment } from '../../../../src/configuration.module';
+import { AccountRegistrationConfirmationForm } from '../../../../src/infrastructure/email/templates/account-registration-confirmation.form';
+import { Role } from '../../../../src/infrastructure/security/authorization/role';
 import {
   RegistrationMethod,
-  User,
+  User
 } from '../../../../src/infrastructure/security/user/user';
-import { AccountRegistrationConfirmationForm } from '../../../../src/infrastructure/email/templates/account-registration-confirmation.form';
-import MessagesClient from 'mailgun.js/messages';
-import { Role } from '../../../../src/infrastructure/security/authorization/role';
 import clearAllMocks = jest.clearAllMocks;
 
 describe('Email service', () => {
@@ -21,7 +21,6 @@ describe('Email service', () => {
   const envMock: Partial<Environment> = {
     MAILGUN_USER: 'foo@gmail.com',
     MAILGUN_API_KEY: 'some-key',
-    MAILGUN_RELAY_URL: '',
     MAILGUN_EMAIL_DOMAIN: 'some-domain.org',
     ACCOUNT_EMAIL: 'account@some-domain.com',
   };

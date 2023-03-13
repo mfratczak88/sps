@@ -15,8 +15,8 @@
     "start": "nest start",
     "start:dev": "doppler run -- nest start --watch",
     "start:debug": "doppler run -- nest start --debug --watch",
-    "start:prod": "doppler run -- node dist/main.js",
-    "start:migrate:prod": "doppler run -- yarn prisma migrate deploy && yarn start:prod",
+    "start:prod": "node dist/main.js",
+    "start:migrate:prod": "yarn prisma migrate deploy && yarn start:prod",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -24,7 +24,7 @@
     "test:docker:down": "docker-compose -f test/docker-compose.yml down",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json --runInBand"
+    "test:e2e": "jest --config ./test/jest-e2e.json --runInBand --forceExit"
   },
   "dependencies": {
     "@golevelup/ts-jest": "^0.3.3",

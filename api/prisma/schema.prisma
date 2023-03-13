@@ -1,10 +1,10 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["interactiveTransactions"]
+  provider   = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DB_URL")
 }
 
