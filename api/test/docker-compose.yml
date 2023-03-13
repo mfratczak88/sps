@@ -1,5 +1,4 @@
-version: "3.5"
-name: test
+version: "3.3"
 services:
   cockroach:
     image: cockroachdb/cockroach:latest
