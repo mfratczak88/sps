@@ -1,12 +1,18 @@
-import { Route } from '@flaregun-net/proxyflare-for-pages/build/types';
-import proxyflare from '@flaregun-net/proxyflare-for-pages';
 import { PagesFunction } from '@cloudflare/workers-types';
-const apiRoute: Route = {
-  from: { pattern: 'sps.mfr88-apps.com/api/*' },
-  to: { url: 'api.sps.mfr88-apps.com' },
-};
+import proxyflare from '@flaregun-net/proxyflare-for-pages';
 
-const routes = [apiRoute];
+const toUrl = 'api.sps.mfr88-apps.com';
+
+const routes = [
+  {
+    from: { pattern: 'sps.mfr88-apps.com/api/*' },
+    to: { url: toUrl },
+  },
+  {
+    from: { pattern: '*.sps-c7k.pages.dev/api/*' },
+    to: { url: toUrl },
+  },
+];
 
 export const onRequest: PagesFunction[] = [
   (context) =>
