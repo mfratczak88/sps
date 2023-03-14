@@ -1,12 +1,12 @@
-import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { DomainException } from '../../../../src/domain/domain.exception';
-import { IdGenerator } from '../../../../src/domain/id';
 import { ParkingLotAvailability } from '../../../../src/domain/parking-lot-availability';
-import { ReservationStatus } from '../../../../src/domain/reservation/reservation-status';
-import { ReservationFactory } from '../../../../src/domain/reservation/reservation.factory';
-import { MessageCode } from '../../../../src/message';
+import { createMock, DeepMocked } from '@golevelup/ts-jest';
+import { IdGenerator } from '../../../../src/domain/id';
 import { PrismaIdGenerator } from '../../../../src/persistence/prisma/prisma.id.generator';
+import { ReservationFactory } from '../../../../src/domain/reservation/reservation.factory';
 import { randomId } from '../../../misc.util';
+import { DomainException } from '../../../../src/domain/domain.exception';
+import { MessageCode } from '../../../../src/message';
+import { ReservationStatus } from '../../../../src/domain/reservation/reservation-status';
 
 describe('Reservation factory', () => {
   let availabilityMock: DeepMocked<ParkingLotAvailability>;

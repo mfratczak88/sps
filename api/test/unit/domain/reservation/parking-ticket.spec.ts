@@ -1,8 +1,8 @@
-import { DateTime } from 'luxon';
-import { DomainException } from '../../../../src/domain/domain.exception';
 import { ParkingTicket } from '../../../../src/domain/reservation/parking-ticket';
 import { MomentInTime } from '../../../../src/domain/time/moment';
+import { DomainException } from '../../../../src/domain/domain.exception';
 import { MessageCode } from '../../../../src/message';
+import { DateTime } from 'luxon';
 
 describe('Parking ticket', () => {
   it('Returning more than one time throws an exception', () => {

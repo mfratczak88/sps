@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
-import { RRule } from 'rrule';
 import { v4 as uuid } from 'uuid';
+import * as bcrypt from 'bcrypt';
 import { Role } from '../src/infrastructure/security/authorization/role';
 import { RegistrationMethod } from '../src/infrastructure/security/user/user';
+import { RRule } from 'rrule';
 /* Prisma Client */
 const prisma = new PrismaClient({
   log: ['info', 'warn', 'error'],
@@ -128,7 +128,6 @@ const main = async () => {
   await clearDb();
   await createUsers();
   await createParkingLots();
-  process.exit(0);
 };
 
 main().catch(console.error);
