@@ -1,31 +1,31 @@
 import { Global, Module, Provider, Scope } from '@nestjs/common';
 import { EmailService } from './email/email.service';
 
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import * as Tokens from 'csrf';
-import * as FormData from 'form-data';
-import { OAuth2Client } from 'google-auth-library';
 import Mailgun from 'mailgun.js';
+import * as FormData from 'form-data';
+import { LangService } from './web/lang.service';
 import { LanguageService } from '../application/language.service';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigurationModule, Environment } from '../configuration.module';
+import { AuthController } from './web/controller/auth.controller';
 import { AuthenticationService } from './security/authentication/authentication.service';
+import { UserService } from './security/user/user.service';
+import { CookieService } from './security/cookie.service';
 import {
   JwtRefreshTokenStrategy,
   JwtStrategy,
 } from './security/authorization/jwt.strategy';
-import { CookieService } from './security/cookie.service';
 import { TokenService } from './security/token.service';
-import { UserService } from './security/user/user.service';
-import { AuthController } from './web/controller/auth.controller';
-import { LangService } from './web/lang.service';
+import * as Tokens from 'csrf';
+import { OAuth2Client } from 'google-auth-library';
 
 import { ApplicationModule } from '../application/application.module';
-import { ReservationAuthorizationService } from './security/authorization/reservation.authorization.service';
-import { DriverController } from './web/controller/driver.controller';
-import { ParkingLotController } from './web/controller/parking-lot.controller';
-import { ReservationController } from './web/controller/reservation.controller';
 import { UsersController } from './web/controller/users.controller';
+import { ParkingLotController } from './web/controller/parking-lot.controller';
+import { DriverController } from './web/controller/driver.controller';
+import { ReservationController } from './web/controller/reservation.controller';
+import { ReservationAuthorizationService } from './security/authorization/reservation.authorization.service';
 import { VehiclesController } from './web/controller/vehicles.controller';
 
 const providers: Provider[] = [

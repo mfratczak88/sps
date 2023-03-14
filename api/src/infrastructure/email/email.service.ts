@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 
 import Mailgun from 'mailgun.js';
 import Client from 'mailgun.js/client';
-import { MessagesSendResult } from 'mailgun.js/interfaces/Messages';
-import { Environment } from '../../configuration.module';
 import { BaseException, ExceptionCode } from '../../error';
 import { MessageCode, MessageSourceArea } from '../../message';
+import { Environment } from '../../configuration.module';
 import { User } from '../security/user/user';
 import { AccountRegistrationConfirmationForm } from './templates/account-registration-confirmation.form';
+import { MessagesSendResult } from 'mailgun.js/interfaces/Messages';
 
 @Injectable()
 export class EmailService {
@@ -19,6 +19,7 @@ export class EmailService {
     this.mgClient = mg.client({
       username: this.environment.MAILGUN_USER,
       key: this.environment.MAILGUN_API_KEY,
+      url: this.environment.MAILGUN_RELAY_URL,
     });
   }
 

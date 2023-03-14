@@ -14,5 +14,5 @@ if (process.env.DOPPLER_LOAD) {
 }
 // Alter the DB URL to not swipe local dev DB
 // All data is purged during testing
-process.env.DB_URL = 'postgresql://root@localhost:26258/test';
+process.env.DB_URL = 'postgresql://root:root@localhost:5431/test';
 jest.setTimeout(10000);
