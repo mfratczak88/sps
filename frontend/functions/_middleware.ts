@@ -9,7 +9,7 @@ const routes = [
     to: { url: toUrl },
   },
   {
-    from: { pattern: '*.sps-c7k.pages.dev/api/*' },
+    from: { pattern: 'chore-cf-setup.sps-c7k.pages.dev/api/*' },
     to: { url: toUrl },
   },
 ];
