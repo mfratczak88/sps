@@ -9,7 +9,7 @@
     "test": "ng test --watch=false",
     "test:cov": "ng test --no-watch --code-coverage",
     "lint": "ng lint",
-    "deploy:netlify":"ng build --configuration=production && cp _redirects dist/sps/redirects"
+    "deploy:netlify":"ng build --configuration=production && cp _redirects dist/sps/_redirects"
   },
   "private": true,
   "dependencies": {
