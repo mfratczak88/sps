@@ -1,1 +1,2 @@
 /api/* https://sps-api.fly.dev/:splat 200
+/* /index.html 200
