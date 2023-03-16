@@ -21,7 +21,6 @@ describe('Email service', () => {
   const envMock: Partial<Environment> = {
     MAILGUN_USER: 'foo@gmail.com',
     MAILGUN_API_KEY: 'some-key',
-    MAILGUN_RELAY_URL: '',
     MAILGUN_EMAIL_DOMAIN: 'some-domain.org',
     ACCOUNT_EMAIL: 'account@some-domain.com',
   };
