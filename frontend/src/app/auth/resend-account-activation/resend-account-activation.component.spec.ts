@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResendAccountActivationComponent } from './resend-account-activation.component';
 import { translateTestModule } from '../../../test.utils';
+import { ResendAccountActivationComponent } from './resend-account-activation.component';
 
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule, Store } from '@ngxs/store';
 import { of } from 'rxjs';
-import { AuthState } from '../../core/store/auth/auth.state';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { RouterTestingModule } from '@angular/router/testing';
 import { DispatchSpy, newDispatchSpy } from '../../../../test/spy.util';
 import { setRouterQueryParams } from '../../../../test/store.util';
-import { AuthActions } from '../../core/store/actions/auth.actions';
-import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../../shared/shared.module';
 import { CoreModule } from '../../core/core.module';
+import { AuthActions } from '../../core/store/actions/auth.actions';
+import { AuthState } from '../../core/store/auth/auth.state';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('ResendAccountActivationComponent', () => {
   let component: ResendAccountActivationComponent;

@@ -2,20 +2,31 @@
   <button mat-icon-button aria-label="Menu" (click)="hamburgerPressed.emit()">
     <mat-icon>menu</mat-icon>
   </button>
-  <img class="toolbar__logo" src="assets/logo.svg" alt="">
+  <img class="toolbar__logo" src="assets/logo.svg" alt="" />
   <span class="toolbar__title"></span>
-  <ng-container *ngIf="(isLoggedIn$ | async)">
+  <ng-container *ngIf="isLoggedIn$ | async">
     <ng-container *ngIf="user$ | async as user">
-      <span class="toolbar__hello-message" *ngIf="user.name">{{translations.HEY_USER | translate}}, {{user.name}}</span>
+      <span class="toolbar__hello-message" *ngIf="user.name"
+        >{{ translations.HEY_USER | translate }}, {{ user.name }}</span
+      >
     </ng-container>
     <div>
       <button mat-button [matMenuTriggerFor]="langMenu">
         <mat-icon>translate</mat-icon>
       </button>
       <mat-menu #langMenu>
-        <button class="toolbar__languages" mat-menu-item *ngFor="let language of (languages$ | async)" (click)="onChangeLanguage(language.code)">
-          <img class="toolbar__languages--flag" [src]="'assets/' + language.icon + '.svg'" alt="Language flag">
-          <span class="toolbar__languages--text">{{language.text}}</span>
+        <button
+          class="toolbar__languages"
+          mat-menu-item
+          *ngFor="let language of languages$ | async"
+          (click)="onChangeLanguage(language.code)"
+        >
+          <img
+            class="toolbar__languages--flag"
+            [src]="'assets/' + language.icon + '.svg'"
+            alt="Language flag"
+          />
+          <span class="toolbar__languages--text">{{ language.text }}</span>
         </button>
       </mat-menu>
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Hamburger">
@@ -24,7 +35,7 @@
       <mat-menu #menu>
         <button mat-menu-item (click)="onSignOut()">
           <mat-icon>logout</mat-icon>
-          <span>{{translations.SIGN_OUT | translate}}</span>
+          <span>{{ translations.SIGN_OUT | translate }}</span>
         </button>
       </mat-menu>
     </div>

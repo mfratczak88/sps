@@ -1,24 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmAccountComponent } from './confirm-account.component';
-import { MessageCode } from '../../core/model/error.model';
-import { NEVER, Observable, of, throwError } from 'rxjs';
-import { NgxsModule, Store } from '@ngxs/store';
-import { AuthState } from '../../core/store/auth/auth.state';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { AuthActions } from '../../core/store/actions/auth.actions';
-import Spy = jasmine.Spy;
-import { setRouterParams } from '../../../../test/store.util';
-import { CoreModule } from '../../core/core.module';
-import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../../shared/shared.module';
-import { translateTestModule } from '../../../test.utils';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsModule, Store } from '@ngxs/store';
+import { NEVER, Observable, of, throwError } from 'rxjs';
+import { setRouterParams } from '../../../../test/store.util';
+import { translateTestModule } from '../../../test.utils';
+import { CoreModule } from '../../core/core.module';
+import { MessageCode } from '../../core/model/error.model';
+import { AuthActions } from '../../core/store/actions/auth.actions';
+import { AuthState } from '../../core/store/auth/auth.state';
+import { SharedModule } from '../../shared/shared.module';
+import { ConfirmAccountComponent } from './confirm-account.component';
+import Spy = jasmine.Spy;
 
 describe('ConfirmAccountComponent', () => {
   let component: ConfirmAccountComponent;
   let fixture: ComponentFixture<ConfirmAccountComponent>;
   let store: Store;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // Just a spy
   let dispatchSpy: Spy<(actionOrActions: any) => Observable<any>>;
 
   beforeEach(async () => {
@@ -69,7 +70,7 @@ describe('ConfirmAccountComponent', () => {
   it('Fail -- If error has URL_NO_LONGER_VALID message code it redirects to resend link', () => {
     // given
     setRouterParams(store, { activationGuid: '1' });
-    dispatchSpy.and.callFake(action =>
+    dispatchSpy.and.callFake((action) =>
       action instanceof AuthActions.ConfirmRegistration
         ? throwError(() => ({
             error: {

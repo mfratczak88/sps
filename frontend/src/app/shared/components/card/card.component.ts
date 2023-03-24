@@ -19,6 +19,9 @@ export class CardComponent {
   @Input()
   loading$: Observable<boolean>;
 
+  @Input()
+  growHeight = false;
+
   @Output()
   clicked = new EventEmitter<void>();
 }

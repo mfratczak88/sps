@@ -24,7 +24,7 @@ export const drivers = allEntities<DriversStateModelEntity, DriversStateModel>([
 export const driversWithParkingLotCount = createSelector(
   [DriversState],
   ({ entities }: DriversStateModel) =>
-    Object.values(entities).map(entity => ({
+    Object.values(entities).map((entity) => ({
       ...entity,
       parkingLotCount: entity.parkingLotIds.length,
     })),
@@ -45,7 +45,7 @@ export const assignedParkingLots = createSelector(
     if (!selectedId) return [];
 
     const driver = entities[selectedId];
-    return driver.parkingLotIds.map(id => allParkingLots[id]);
+    return driver.parkingLotIds.map((id) => allParkingLots[id]);
   },
 );
 
@@ -59,7 +59,7 @@ export const unAssignedParkingLots = createSelector(
 
     const driver = entities[selectedId];
     return Object.keys(allParkingLots)
-      .filter(id => !driver.parkingLotIds.includes(id))
-      .map(id => allParkingLots[id]);
+      .filter((id) => !driver.parkingLotIds.includes(id))
+      .map((id) => allParkingLots[id]);
   },
 );

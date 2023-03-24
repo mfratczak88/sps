@@ -1,19 +1,28 @@
 <div class="parking-lots">
-  <sps-loading-spinner class="parking-lots__spinner" *ngIf="loading$ | async; else table">
+  <sps-loading-spinner
+    class="parking-lots__spinner"
+    *ngIf="loading$ | async; else table"
+  >
   </sps-loading-spinner>
   <ng-template #table>
-    <sps-panel title="{{translations.PARKING_LOTS_TABLE_HEADER | translate}}">
-      <button btn mat-raised-button color="primary" (click)="toCreateParkingLot()">
+    <sps-panel title="{{ translations.PARKING_LOTS_TABLE_HEADER | translate }}">
+      <button
+        btn
+        mat-raised-button
+        color="primary"
+        (click)="toCreateParkingLot()"
+      >
         <mat-icon>add</mat-icon>
-        {{translations.ADD | translate}}
+        {{ translations.ADD | translate }}
       </button>
-      <sps-parking-lots-table class="parking-lots__table"
-                 [loading$]="loading$"
-                 [buttons]="tableButtons"
-                 [displayColumns]="['address', 'capacity', 'hours', 'days']"
-                 [parkingLots$]="parkingLots$">
+      <sps-parking-lots-table
+        class="parking-lots__table"
+        [loading$]="loading$"
+        [buttons]="tableButtons"
+        [displayColumns]="['address', 'capacity', 'timeOfOperation']"
+        [parkingLots$]="parkingLots$"
+      >
       </sps-parking-lots-table>
     </sps-panel>
-
   </ng-template>
 </div>

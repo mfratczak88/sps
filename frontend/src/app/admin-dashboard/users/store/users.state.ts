@@ -45,7 +45,7 @@ export class UsersState {
     const { roles } = getState();
     if (!roles.length) {
       patchState({
-        roles: Object.values(Role).map(role => ({
+        roles: Object.values(Role).map((role) => ({
           role,
           translation: this.translationService.instant(
             RoleToTranslationKey[role],
@@ -57,13 +57,13 @@ export class UsersState {
       loading: true,
     });
     return this.api.getAll().pipe(
-      map(users =>
-        users.map(user => ({
+      map((users) =>
+        users.map((user) => ({
           ...user,
           roleTranslation: RoleToTranslationKey[user.role],
         })),
       ),
-      tap(users =>
+      tap((users) =>
         patchState({
           loading: false,
           entities: mapToObjectWithIds(users),

@@ -1,11 +1,11 @@
-import { AuthApi } from './auth.api';
-import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
-import { RegisterUserPayload, Role, AuthUser } from '../model/auth.model';
+import { AuthUser, RegisterUserPayload, Role } from '../model/auth.model';
+import { AuthApi } from './auth.api';
 
 describe('Auth api spec', () => {
   let api: AuthApi;
@@ -31,7 +31,7 @@ describe('Auth api spec', () => {
       authExpiresIn: '900',
       role: Role.DRIVER,
     };
-    api.login(email, password).subscribe(data => {
+    api.login(email, password).subscribe((data) => {
       expect(data).toEqual(userResponse);
     });
 
@@ -56,7 +56,7 @@ describe('Auth api spec', () => {
     };
     api
       .loginWithGoogle(idToken, email)
-      .subscribe(res => expect(res).toEqual(user));
+      .subscribe((res) => expect(res).toEqual(user));
 
     const req = httpTestingController.expectOne(
       baseUrl + '/auth/loginWithGoogle',
@@ -78,7 +78,7 @@ describe('Auth api spec', () => {
       password: 'dsad9321dszxcx1!!',
     };
 
-    api.register(payload).subscribe(res => expect(res).toBe(null));
+    api.register(payload).subscribe();
 
     const req = httpTestingController.expectOne(baseUrl + '/auth/register');
 
@@ -86,14 +86,14 @@ describe('Auth api spec', () => {
     expect(req.request.withCredentials).toBe(false);
     expect(req.request.body).toEqual(payload);
 
-    req.flush(null);
+    req.flush({});
 
     httpTestingController.verify();
   });
 
   it('Sends confirmation guid to the api', () => {
     const guid = '4423412';
-    api.confirmRegistration(guid).subscribe(res => expect(res).toEqual('ok'));
+    api.confirmRegistration(guid).subscribe((res) => expect(res).toEqual('ok'));
     const req = httpTestingController.expectOne(
       baseUrl + '/auth/confirmRegistration',
     );
@@ -116,7 +116,7 @@ describe('Auth api spec', () => {
       authExpiresIn: '900',
       role: Role.DRIVER,
     };
-    api.refreshToken().subscribe(res => expect(res).toEqual(user));
+    api.refreshToken().subscribe((res) => expect(res).toEqual(user));
 
     const req = httpTestingController.expectOne(baseUrl + '/auth/refresh');
 
@@ -129,7 +129,7 @@ describe('Auth api spec', () => {
   });
 
   it('Sends logout req with credentials', () => {
-    api.logout().subscribe(res => expect(res).toBeFalsy());
+    api.logout().subscribe((res) => expect(res).toBeFalsy());
 
     const req = httpTestingController.expectOne(baseUrl + '/auth/logout');
 
@@ -146,7 +146,7 @@ describe('Auth api spec', () => {
     const previousGuid = '4';
     api
       .resendActivationLink(previousGuid)
-      .subscribe(res => expect(res).toBeFalsy());
+      .subscribe((res) => expect(res).toBeFalsy());
 
     const req = httpTestingController.expectOne(
       baseUrl + '/auth/resendRegistrationConfirmation',

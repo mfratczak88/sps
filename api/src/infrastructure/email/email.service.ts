@@ -19,7 +19,6 @@ export class EmailService {
     this.mgClient = mg.client({
       username: this.environment.MAILGUN_USER,
       key: this.environment.MAILGUN_API_KEY,
-      url: this.environment.MAILGUN_RELAY_URL,
     });
   }
 

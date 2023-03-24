@@ -1,31 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DriverDetailsComponent } from './details.component';
-import { SharedModule } from '../../../shared/shared.module';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { translateTestModule } from '../../../../test.utils';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SharedModule } from '../../../shared/shared.module';
+import { DriverDetailsComponent } from './details.component';
 
-import { lastValueFrom, NEVER, Observable, of } from 'rxjs';
-import { By } from '@angular/platform-browser';
-import { ParkingLotsTableComponent } from '../../../shared/components/parking-lots-table/parking-lots-table.component';
-import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatButtonHarness } from '@angular/material/button/testing';
-import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
-import { buttonCells } from '../../../../../test/test.util';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { HttpClientModule } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule, Store } from '@ngxs/store';
+import { NEVER, of } from 'rxjs';
+import { mockDriver, mockParkingLots } from '../../../../../test/driver.utils';
+import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
+import { setDriver } from '../../../../../test/store.util';
+import { buttonHarnesses } from '../../../../../test/test.util';
+import { AdminActions } from '../../../core/store/actions/admin.actions';
 import { DriversState } from '../../../core/store/drivers/drivers.state';
 import { ParkingLotsState } from '../../../core/store/parking-lot/parking-lot.state';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
 import { mapToObjectWithIds } from '../../../core/util';
-import { setDriver } from '../../../../../test/store.util';
-import { AdminActions } from '../../../core/store/actions/admin.actions';
+import { ParkingLotsTableComponent } from '../../../shared/components/parking-lots-table/parking-lots-table.component';
+import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
 import SpyObj = jasmine.SpyObj;
-import { HttpClientModule } from '@angular/common/http';
 
 describe('Driver details component', () => {
   let fixture: ComponentFixture<DriverDetailsComponent>;
@@ -94,7 +92,7 @@ describe('Driver details component', () => {
 
     const [email, name] = fixture.debugElement
       .queryAll(By.css('.details-panel__section--item'))
-      .map(div => div.children[1].nativeElement as HTMLSpanElement);
+      .map((div) => div.children[1].nativeElement as HTMLSpanElement);
 
     expect(email.innerText).toEqual(driver.email);
     expect(name.innerText).toEqual(driver.name);
@@ -105,8 +103,10 @@ describe('Driver details component', () => {
       By.css('sps-parking-lots-table'),
     ).componentInstance as ParkingLotsTableComponent;
 
-    parkingLotsTable.parkingLots$.subscribe(lots =>
-      expect(lots).toEqual([...parkingLots]),
+    parkingLotsTable.data.subscribe((lots) =>
+      expect(lots).toEqual(
+        parkingLotsTable.convertToOutputTable([...parkingLots]),
+      ),
     );
   });
   it('Assign parking lot - opens up dialog on button click providing unassigned lots', () => {
@@ -169,10 +169,8 @@ describe('Driver details component', () => {
   });
 
   it('Calls remove parking lot on clicking button in assigned lots table', async () => {
-    const [removeAssignmentButtonCell] = await buttonCells(loader, 'remove');
-    const button = await removeAssignmentButtonCell.getHarness(
-      MatButtonHarness,
-    );
+    const [button] = await buttonHarnesses(loader, 0);
+
     await button.click();
     expect(dispatchSpy).toHaveBeenCalledWith(
       new AdminActions.RemoveParkingLotAssignment(

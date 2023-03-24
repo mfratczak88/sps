@@ -1,20 +1,15 @@
-import {
-  MatCellHarness,
-  MatTableHarness,
-} from '@angular/material/table/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { MatMenuHarness } from '@angular/material/menu/testing';
 
-export const buttonCells = async (
+export const buttonHarnesses = async (
   loader: HarnessLoader,
-  columnName: string,
-): Promise<MatCellHarness[]> => {
-  const table = await loader.getHarness(MatTableHarness);
-  const cells = await Promise.all(
-    (await table.getRows()).map(row =>
-      row.getCells({
-        columnName,
-      }),
-    ),
+  buttonIndex: number,
+) => {
+  const menuHarnesses = await loader.getAllHarnesses(MatMenuHarness);
+  return await Promise.all(
+    menuHarnesses.map(async menuHarness => {
+      await menuHarness.open();
+      return (await menuHarness.getItems())[buttonIndex];
+    }),
   );
-  return cells.flatMap(c => [...c]);
 };

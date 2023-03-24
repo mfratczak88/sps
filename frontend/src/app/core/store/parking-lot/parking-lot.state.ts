@@ -37,7 +37,7 @@ export class ParkingLotsState {
   getParkingLots({ patchState }: StateContext<ParkingLotStateModel>) {
     patchState({ loading: true });
     return this.api.getAll().pipe(
-      tap(parkingLots =>
+      tap((parkingLots) =>
         patchState({
           entities: mapToObjectWithIds(parkingLots),
           loading: false,

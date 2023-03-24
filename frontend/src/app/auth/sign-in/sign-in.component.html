@@ -1,28 +1,34 @@
 <div class="sign-in">
-  <sps-heading size="l" [centered]="true">{{translations.SIGN_IN_TITLE | translate}}</sps-heading>
+  <sps-heading size="l" [centered]="true">{{
+    translations.SIGN_IN_TITLE | translate
+  }}</sps-heading>
   <div class="sign-in__form">
-    <ng-container *ngIf="(emailFragment$ | async); else signInType">
-      <sps-email-sign-in-form class="sign-in__form--component"
-                              (submitted)="onEmailSignIn($event)"
-                              (back)="onBack()"
-                              (noAccount)="toSignUp()">
+    <ng-container *ngIf="emailFragment$ | async; else signInType">
+      <sps-email-sign-in-form
+        class="sign-in__form--component"
+        (submitted)="onEmailSignIn($event)"
+        (back)="onBack()"
+        (noAccount)="toSignUp()"
+      >
       </sps-email-sign-in-form>
     </ng-container>
   </div>
 </div>
 <ng-template #signInType>
-  <button class="sign-in__form--email-button"
-          mat-raised-button
-          color="primary"
-          (click)="onShowEmailForm()">
-    {{translations.SIGN_IN_WITH_EMAIL | translate}}
+  <button
+    class="sign-in__form--email-button"
+    mat-raised-button
+    color="primary"
+    (click)="onShowEmailForm()"
+  >
+    {{ translations.SIGN_IN_WITH_EMAIL | translate }}
   </button>
-  <button class="sign-in__form--google-button"
-          mat-button
-          color="primary"
-          (click)="onGoogleSignIn()">
-    {{translations.SIGN_IN_WITH_GOOGLE | translate}}
+  <button
+    class="sign-in__form--google-button"
+    mat-button
+    color="primary"
+    (click)="onGoogleSignIn()"
+  >
+    {{ translations.SIGN_IN_WITH_GOOGLE | translate }}
   </button>
 </ng-template>
-
-

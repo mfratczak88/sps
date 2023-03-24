@@ -6,12 +6,6 @@
   align-self: flex-start;
 }
 
-
-.table__cell {
-  font-size: 0.8rem;
-  text-align: left;
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -22,10 +16,8 @@
   margin: 0 auto;
 }
 
-.pagination, .table {
+.pagination {
   width: 100%;
 }
 
-mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
-  padding-left: 0 !important;
-}
+@include vars.table();

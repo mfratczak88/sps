@@ -215,7 +215,10 @@
     "TIME": "Czas parkowania",
     "RESERVATION_DATE": "Data",
     "RESERVATION_STATUS": "Status",
-    "PARKING_LOT_ADDRESS": "Parking"
+    "PARKING_LOT_ADDRESS": "Parking",
+    "CAPACITY":"Pojemność",
+    "TIME_OF_OPERATION":"Godziny"
+  
   },
   "RESERVATION_STATUS": {
     "DRAFT": "Draft",

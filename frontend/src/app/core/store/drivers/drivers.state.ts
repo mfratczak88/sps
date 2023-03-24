@@ -60,7 +60,7 @@ export class DriversState {
         ],
       })
       .pipe(
-        tap(driver => {
+        tap((driver) => {
           const { timeHorizon, ...driverData } = driver;
           const { pendingAction, ongoing, dueNext } = timeHorizon ?? {};
           patchState({
@@ -91,7 +91,7 @@ export class DriversState {
     const { entities } = getState();
     patchState({ loading: true });
     return this.api.getById(id).pipe(
-      tap(driver => {
+      tap((driver) => {
         patchState({
           selectedId: id,
           loading: false,
@@ -136,7 +136,7 @@ export class DriversState {
   getAllDrivers({ patchState }: StateContext<DriversStateModel>) {
     patchState({ loading: true });
     return this.api.getAll().pipe(
-      tap(drivers => {
+      tap((drivers) => {
         patchState({
           entities: mapToObjectWithIds(drivers),
           loading: false,

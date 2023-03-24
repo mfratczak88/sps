@@ -1,21 +1,20 @@
 <mat-accordion>
-  <mat-expansion-panel (opened)="opened = true"
-                       (closed)="opened = false">
+  <mat-expansion-panel (opened)="opened = true" (closed)="opened = false">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{parkingLot | address}}
+        {{ parkingLot | address }}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="lot-property">
       <mat-icon>schedule</mat-icon>
       <sps-text>
-        {{parkingLot | hours}}
+        {{ parkingLot | hours }}
       </sps-text>
     </div>
     <div class="lot-property">
       <mat-icon>event</mat-icon>
       <sps-text>
-        {{parkingLot | days}}
+        {{ parkingLot | days }}
       </sps-text>
     </div>
     <mat-action-row>

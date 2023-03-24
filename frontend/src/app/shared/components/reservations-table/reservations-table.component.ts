@@ -3,21 +3,20 @@ import { Observable, of } from 'rxjs';
 import {
   Paging,
   Reservation,
-  ReservationStatusTranslationKey,
   SortBy,
   Sorting,
   SortOrder,
 } from '../../../core/model/reservation.model';
 
-import { Column } from '../table/table.component';
-import { TableKeys } from '../../../core/translation-keys';
-import { map } from 'rxjs/operators';
-import { AddressPipe } from '../../../core/pipe/address/address.pipe';
-import { SpsReservationTimePipe } from '../../../core/pipe/time/reservation-time';
 import { Sort } from '@angular/material/sort';
-import { Id } from '../../../core/model/common.model';
-import { DatePipe } from '../../../core/pipe/date/date.pipe';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { map } from 'rxjs/operators';
+import { Id } from '../../../core/model/common.model';
+import { AddressPipe } from '../../../core/pipe/address/address.pipe';
+import { DatePipe } from '../../../core/pipe/date/date.pipe';
+import { SpsReservationTimePipe } from '../../../core/pipe/time/reservation-time';
+import { TableKeys } from '../../../core/translation-keys';
+import { Column } from '../table/table.component';
 
 @UntilDestroy()
 @Component({
@@ -31,8 +30,8 @@ export class ReservationsTableComponent {
     reservations
       .pipe(
         untilDestroyed(this),
-        map(reservations =>
-          reservations.map(reservation => {
+        map((reservations) =>
+          reservations.map((reservation) => {
             return {
               ...reservation,
               ...this.derivedData(reservation),
@@ -40,12 +39,12 @@ export class ReservationsTableComponent {
           }),
         ),
       )
-      .subscribe(data => (this.data = data));
+      .subscribe((data) => (this.data = data));
   }
 
   @Input()
   set displayColumns(columns: ReservationColumnName[]) {
-    this.tableColumns = this.tableColumns.filter(col =>
+    this.tableColumns = this.tableColumns.filter((col) =>
       columns.includes(col.name as ReservationColumnName),
     );
     this.displayedColumns = columns;
@@ -98,13 +97,13 @@ export class ReservationsTableComponent {
       sortable: true,
     },
     {
+      name: 'parkingLotAddress',
+      translation: this.reservationsTranslations.PARKING_LOT_ADDRESS,
+    },
+    {
       name: 'status',
       translation: this.reservationsTranslations.RESERVATION_STATUS,
       sortable: true,
-    },
-    {
-      name: 'parkingLotAddress',
-      translation: this.reservationsTranslations.PARKING_LOT_ADDRESS,
     },
   ];
 
@@ -121,7 +120,7 @@ export class ReservationsTableComponent {
   }
 
   private derivedData(reservation: Reservation) {
-    const { date, status } = reservation;
+    const { date } = reservation;
 
     const time = this.timePipe.transform(reservation);
     const parkingLotAddress = this.addressPipe.transform(reservation);
@@ -129,14 +128,12 @@ export class ReservationsTableComponent {
     return {
       time,
       date: this.datePipe.transform(date),
-      status: ReservationStatusTranslationKey[status],
       parkingLotAddress,
     };
   }
 }
 
 export type ReservationColumnName =
-  | 'createdAt'
   | 'licensePlate'
   | 'time'
   | 'date'

@@ -11,9 +11,9 @@ import {
   NG_VALUE_ACCESSOR,
   Validator,
 } from '@angular/forms';
-import { LocalizedErrors, LocalizedValidationError } from '../../validator';
 import { Subscription } from 'rxjs';
 import { DayToTranslation } from '../../../core/model/common.model';
+import { LocalizedErrors, LocalizedValidationError } from '../../validator';
 
 @Component({
   selector: 'sps-weekdays-form',
@@ -61,8 +61,8 @@ export class WeekdaysFormComponent
     this.valueChanges$.unsubscribe();
   }
 
-  registerOnChange(fn: any): void {
-    this.valueChanges$ = this.form.valueChanges.subscribe(values => {
+  registerOnChange(fn: (weekdays: number[]) => void): void {
+    this.valueChanges$ = this.form.valueChanges.subscribe((values) => {
       const weekdays: number[] = [];
       values.weekdays?.forEach((selected, i) => {
         if (selected) weekdays.push(i);
@@ -72,7 +72,7 @@ export class WeekdaysFormComponent
     });
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouch = fn;
   }
 
@@ -82,14 +82,14 @@ export class WeekdaysFormComponent
   }
 
   validate(): LocalizedValidationError | null {
-    const allUnchecked = this.weekDaysControls.every(c => !c.value);
+    const allUnchecked = this.weekDaysControls.every((c) => !c.value);
     return allUnchecked ? LocalizedErrors.noCheckboxSelected() : null;
   }
 
   writeValue(weekdays: number[]): void {
     if (!this.disabled) {
       weekdays &&
-        weekdays.forEach(day => {
+        weekdays.forEach((day) => {
           day < 7 && this.weekDaysControls[day].setValue(true);
         });
     }

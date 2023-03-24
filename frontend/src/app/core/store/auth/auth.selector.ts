@@ -8,7 +8,7 @@ export const userRole = createSelector([AuthState], ({ role }) => role as Role);
 export const userId = createSelector([AuthState], ({ id }) => id);
 export const isLoggedIn = createSelector(
   [AuthState],
-  state => !!state && !equal(state, defaults),
+  (state) => !!state && !equal(state, defaults),
 );
-export const user = createSelector([AuthState], user => user);
+export const user = createSelector([AuthState], (user) => user);
 export const loading = loadingSelector([AuthState]);

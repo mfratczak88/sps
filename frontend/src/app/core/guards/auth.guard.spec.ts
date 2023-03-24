@@ -1,24 +1,24 @@
 import SpyObj = jasmine.SpyObj;
-import { AuthGuard } from './auth.guard';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { TestBed } from '@angular/core/testing';
 import {
   ActivatedRouteSnapshot,
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
 import { NgxsModule, Store } from '@ngxs/store';
-import { AuthState, defaults } from '../store/auth/auth.state';
-import { AuthPaths, TopLevelPaths } from '../../routes';
-import { AuthActions } from '../store/actions/auth.actions';
-import { QueryParamKeys } from '../model/router.model';
-import { TestBed } from '@angular/core/testing';
+import { Observable, of } from 'rxjs';
 import {
   newAuthApiSpy,
   newSocialAuthServiceSpy,
 } from '../../../../test/spy.util';
-import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { AuthApi } from '../api/auth.api';
 import { authStateWithDriver } from '../../../../test/store.util';
+import { AuthPaths, TopLevelPaths } from '../../routes';
+import { AuthApi } from '../api/auth.api';
+import { QueryParamKeys } from '../model/router.model';
+import { AuthActions } from '../store/actions/auth.actions';
+import { AuthState, defaults } from '../store/auth/auth.state';
+import { AuthGuard } from './auth.guard';
 
 describe('Auth guard', () => {
   let routerSpy: SpyObj<Router>;
@@ -92,7 +92,7 @@ describe('Auth guard', () => {
     (authGuard.canActivate(
       route as ActivatedRouteSnapshot,
       state as RouterStateSnapshot,
-    ) as Observable<any>).subscribe(() => {
+    ) as Observable<boolean>).subscribe(() => {
       expect(routerSpy.parseUrl).toHaveBeenCalledWith(
         `/${TopLevelPaths.AUTH}/${AuthPaths.SIGN_IN}?${QueryParamKeys.RETURN_URL}=${state.url}`,
       );
@@ -101,7 +101,7 @@ describe('Auth guard', () => {
   it('returns parsedUrl based on role if auth can be restored', () => {
     setStoreWithInitialData();
     spyOn(store, 'dispatch').and.callFake(() => of(setStoreWithDriverData()));
-    (<Observable<any>>(
+    (<Observable<boolean>>(
       authGuard.canActivate(
         route as ActivatedRouteSnapshot,
         { url: '/' } as RouterStateSnapshot,

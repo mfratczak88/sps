@@ -7,14 +7,15 @@ import {
   NG_VALUE_ACCESSOR,
   Validator,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { OnChange, OnTouched } from 'src/app/core/model/forms.model';
+import { Hours } from '../../../core/model/reservation.model';
 import { AdminKeys } from '../../../core/translation-keys';
 import {
   LocalizedErrors,
   LocalizedValidationError,
   LocalizedValidators,
 } from '../../validator';
-import { Subscription } from 'rxjs';
-import { Hours } from '../../../core/model/reservation.model';
 
 @Component({
   selector: 'sps-hours-form',
@@ -74,14 +75,14 @@ export class HoursFormComponent
     this.valueChangesSub$ && this.valueChangesSub$.unsubscribe();
   }
 
-  registerOnChange(fn: any): void {
-    this.valueChangesSub$ = this.form.valueChanges.subscribe(values => {
+  registerOnChange(fn: OnChange): void {
+    this.valueChangesSub$ = this.form.valueChanges.subscribe((values) => {
       fn(values);
       this.onTouched();
     });
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: OnTouched): void {
     this.onTouched = fn;
   }
 

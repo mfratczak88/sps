@@ -1,41 +1,37 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UsersListComponent } from './list.component';
-import { SharedModule } from '../../../shared/shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { translateTestModule } from '../../../../test.utils';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { mockUsers } from '../../../../../test/users.util';
-import { buttonCells } from '../../../../../test/test.util';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { EMPTY, of } from 'rxjs';
-import { MatButtonHarness } from '@angular/material/button/testing';
-import { EditRoleDialogComponent } from '../edit-role-dialog/edit-role-dialog.component';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NgxsModule, Store } from '@ngxs/store';
-import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
-import { UsersState } from '../store/users.state';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsModule, Store } from '@ngxs/store';
+import { EMPTY, of } from 'rxjs';
+import { DispatchSpy, newDispatchSpy } from '../../../../../test/spy.util';
 import { setUsers } from '../../../../../test/store.util';
+import { buttonHarnesses } from '../../../../../test/test.util';
+import { mockUsers } from '../../../../../test/users.util';
+import { translateTestModule } from '../../../../test.utils';
 import { Role } from '../../../core/model/auth.model';
 import { AdminActions } from '../../../core/store/actions/admin.actions';
-import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../../shared/shared.module';
+import { EditRoleDialogComponent } from '../edit-role-dialog/edit-role-dialog.component';
+import { UsersState } from '../store/users.state';
+import { UsersListComponent } from './list.component';
 import SpyObj = jasmine.SpyObj;
 
 describe('Users list component', () => {
   let fixture: ComponentFixture<UsersListComponent>;
   let loader: HarnessLoader;
   let dialogSpy: SpyObj<MatDialog>;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // Just a spy
   let dialogRefSpy: SpyObj<MatDialogRef<any>>;
   const users = mockUsers;
   let store: Store;
   let dispatchSpy: DispatchSpy;
-  const editButtons = async () =>
-    Promise.all(
-      (await buttonCells(loader, 'edit')).map(cellHarness =>
-        cellHarness.getHarness(MatButtonHarness),
-      ),
-    );
+  const editButtons = async () => buttonHarnesses(loader, 0);
 
   beforeEach(async () => {
     dialogRefSpy = jasmine.createSpyObj('DialogRef', ['afterClosed']);

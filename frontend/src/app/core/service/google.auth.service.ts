@@ -1,3 +1,5 @@
+/* eslint-disable */
+// Taken from lib and bended to allow legacy google button
 import {
   BaseLoginProvider,
   LoginProvider,

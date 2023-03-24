@@ -4,6 +4,8 @@ import { defaultState, StateModel } from './state.model';
 
 export const logoutPlugin = (
   state: StateModel,
+  // Any as type in NgXS
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   action: any,
   next: NgxsNextPluginFn,
 ) => {

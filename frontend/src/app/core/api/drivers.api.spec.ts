@@ -25,7 +25,7 @@ describe('Drivers api spec', () => {
   });
   it('Get all calls api with base url', async () => {
     const driversDto: AdminView[] = [mockDriver];
-    api.getAll().subscribe(d => expect(d).toEqual(driversDto));
+    api.getAll().subscribe((d) => expect(d).toEqual(driversDto));
     const req = httpTestingController.expectOne(api.BASE_URL);
     expect(req.request.method).toEqual('GET');
     req.flush(driversDto);

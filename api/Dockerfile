@@ -1,8 +1,7 @@
-FROM node:lts-alpine AS api
-
-# Doppler for env handling
-RUN apk add --no-cache bind-tools gnupg git tini
-RUN (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh
+FROM node:lts-alpine3.17 AS api
+# Prisma compat
+RUN apk update \
+  && apk add openssl1.1-compat
 
 WORKDIR /api
 COPY ./package.json ./
@@ -14,6 +13,4 @@ RUN yarn prisma generate
 RUN yarn run build
 EXPOSE 3000
 
-ENTRYPOINT ["tini", "--"]
-
-CMD ["doppler", "run", "--", "yarn", "start:migrate:prod"]
+CMD ["yarn", "start:migrate:prod"]

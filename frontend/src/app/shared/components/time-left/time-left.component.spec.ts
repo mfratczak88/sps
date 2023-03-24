@@ -8,9 +8,8 @@ describe('TimeLeftComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TimeLeftComponent ]
-    })
-    .compileComponents();
+      declarations: [TimeLeftComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TimeLeftComponent);
     component = fixture.componentInstance;

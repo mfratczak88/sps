@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
-import { concatMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
-import { filter, first } from 'rxjs';
-import { Button } from '../../../shared/components/table/table.component';
-import { ParkingLot } from '../../../core/model/parking-lot.model';
 import { Store } from '@ngxs/store';
+import { filter, first } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
+import { ParkingLot } from 'src/app/core/model/parking-lot.model';
 import { AdminActions } from '../../../core/store/actions/admin.actions';
-import { driverId } from '../../../core/store/routing/routing.selector';
 import {
   assignedParkingLots,
   currentDriver,
   loading,
   unAssignedParkingLots,
 } from '../../../core/store/drivers/drivers.selectors';
+import { driverId } from '../../../core/store/routing/routing.selector';
+import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
+import { Button } from '../../../shared/components/table/table.component';
+import { AssignParkingLotDialogComponent } from '../assign-parking-lot-dialog/assign-parking-lot-dialog.component';
 
 @Component({
   selector: 'sps-driver-details',
@@ -56,9 +56,9 @@ export class DriverDetailsComponent implements OnInit {
     });
     dialogRef
       .afterClosed()
-      .pipe(filter(lotId => !!lotId))
+      .pipe(filter((lotId) => !!lotId))
       .pipe(
-        concatMap(lotId =>
+        concatMap((lotId) =>
           this.store.dispatch(
             new AdminActions.AssignParkingLot(driverId, lotId),
           ),

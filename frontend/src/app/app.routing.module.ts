@@ -13,26 +13,27 @@ const routes: Routes = [
   },
   {
     path: TopLevelPaths.AUTH,
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: TopLevelPaths.ADMIN_DASHBOARD,
     loadChildren: () =>
-      import('./admin-dashboard/module').then(m => m.AdminDashboardModule),
+      import('./admin-dashboard/module').then((m) => m.AdminDashboardModule),
   },
   {
     path: TopLevelPaths.CLERK_DASHBOARD,
     loadChildren: () =>
-      import('./clerk-dashboard/module').then(m => m.ClerkDashboardModule),
+      import('./clerk-dashboard/module').then((m) => m.ClerkDashboardModule),
   },
   {
     path: TopLevelPaths.DRIVER_DASHBOARD,
     loadChildren: () =>
-      import('./driver-dashboard/module').then(m => m.DriverDashboardModule),
+      import('./driver-dashboard/module').then((m) => m.DriverDashboardModule),
   },
   {
     path: TopLevelPaths.ERROR,
-    loadChildren: () => import('./error/error.module').then(m => m.ErrorModule),
+    loadChildren: () =>
+      import('./error/error.module').then((m) => m.ErrorModule),
   },
 
   {

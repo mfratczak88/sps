@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
 import { FormControl } from '@angular/forms';
-import { LocalizedValidators } from '../../../shared/validator';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ParkingLot } from '../../../core/model/parking-lot.model';
+import { AdminKeys, MiscKeys } from '../../../core/translation-keys';
+import { LocalizedValidators } from '../../../shared/validator';
 
 @Component({
   selector: 'sps-change-capacity-dialog',
@@ -24,5 +24,9 @@ export class ChangeCapacityDialogComponent {
 
   onChange() {
     this.dialogRef.close(Number(this.capacity.value));
+  }
+
+  capacityNotChanged() {
+    return +(this.capacity.value || 0) === this.data.capacity;
   }
 }

@@ -1,6 +1,6 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs';
 
 @Component({
@@ -20,7 +20,7 @@ export class DrawerComponent {
   constructor(private readonly breakpointObserver: BreakpointObserver) {
     this.drawerOpenedFirst$ = this.breakpointObserver
       .observe(['(min-width:500px)'])
-      .pipe(map(x => x.matches));
+      .pipe(map((x) => x.matches));
   }
 
   toggle() {

@@ -1,26 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmailSignInFormComponent } from './email-sign-in-form.component';
-import { translateTestModule } from '../../../../test.utils';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../../shared/shared.module';
-import { TranslateService } from '@ngx-translate/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { By } from '@angular/platform-browser';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateService } from '@ngx-translate/core';
+import { translateTestModule } from '../../../../test.utils';
 import { LinkComponent } from '../../../shared/components/link/link.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { EmailSignInFormComponent } from './email-sign-in-form.component';
 
-import {
-  AuthTranslationKeys,
-  FormErrorKeys,
-} from '../../../core/translation-keys';
 import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from '../../../core/model/auth.model';
+import {
+  AuthTranslationKeys,
+  FormErrorKeys,
+} from '../../../core/translation-keys';
 
 describe('EmailSignInFormComponent', () => {
   let fixture: ComponentFixture<EmailSignInFormComponent>;
@@ -119,14 +119,14 @@ describe('EmailSignInFormComponent', () => {
     let emitted = false;
     fixture.componentInstance.noAccount.subscribe(() => (emitted = true));
     const { componentInstance } = noAccountLink();
-    (componentInstance as LinkComponent).click.emit();
+    (componentInstance as LinkComponent).clicked.emit();
     expect(emitted).toEqual(true);
   });
   it('emits on forgot password link click', () => {
     let emitted = false;
     fixture.componentInstance.forgotPassword.subscribe(() => (emitted = true));
     const { componentInstance } = forgotPasswordLink();
-    (componentInstance as LinkComponent).click.emit();
+    (componentInstance as LinkComponent).clicked.emit();
     expect(emitted).toEqual(true);
   });
   it('shows error if email address is invalid', async () => {
