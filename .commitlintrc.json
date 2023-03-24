@@ -19,7 +19,7 @@
           "style",
           "test",
           "build",
-          "deploy"
+          "cd"
         ]
       ],
       "scope-enum": [
