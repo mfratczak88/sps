@@ -20,9 +20,9 @@ describe('Jwt strategy', () => {
     const cookieService = createMock<CookieService>();
     const moduleRefMock = createMock<ModuleRef>();
 
-    // @ts-ignore
+    // @ts-ignore: spec file
     ContextIdFactory.getByRequest = jest.fn(() => contextId);
-    moduleRefMock.resolve.mockImplementation(async (context, cls) => {
+    moduleRefMock.resolve.mockImplementation(async (context) => {
       return context === contextId && authService;
     });
     refreshTokenStrategy = new JwtRefreshTokenStrategy(
