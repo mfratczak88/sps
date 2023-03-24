@@ -2,6 +2,11 @@ name: CD
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - ".github/**"
+      - "api/**"
+      - "frontend/**"
+
 jobs:
   deploy:
     name: Deploy api
