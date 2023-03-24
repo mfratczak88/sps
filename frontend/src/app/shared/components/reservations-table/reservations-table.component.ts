@@ -5,7 +5,7 @@ import {
   Reservation,
   SortBy,
   Sorting,
-  SortOrder
+  SortOrder,
 } from '../../../core/model/reservation.model';
 
 import { Sort } from '@angular/material/sort';
