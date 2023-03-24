@@ -1,13 +1,6 @@
 import { Global, Injectable, Module } from '@nestjs/common';
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsPositive,
-  IsString,
-  validateSync,
-} from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsString, validateSync } from 'class-validator';
 
 @Injectable()
 export class Environment {
@@ -74,17 +67,11 @@ export class Environment {
   readonly MAILGUN_EMAIL_DOMAIN: string;
 
   @IsString()
-  readonly MAILGUN_RELAY_URL: string;
-
-  @IsString()
   @IsNotEmpty()
   readonly MAILGUN_USER: string;
 
   @IsString()
   readonly PUBLIC_DOMAIN: string;
-
-  @IsString()
-  readonly PUBLIC_IP: string;
 
   @IsNumber()
   readonly ACTIVATE_ACCOUNT_LINK_EXPIRATION_IN_HOURS: number;
