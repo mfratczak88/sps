@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/mfratczak88/sps/compare/v1.0.0...v1.0.1) (2023-03-28)
+
+
+### Bug Fixes
+
+* **frontend:** google client id ([#59](https://github.com/mfratczak88/sps/issues/59)) ([414c4de](https://github.com/mfratczak88/sps/commit/414c4defdb679db0aefae5fb2b00c2d9dcc80021))
+
 ## 1.0.0 (2023-03-24)
 
 
