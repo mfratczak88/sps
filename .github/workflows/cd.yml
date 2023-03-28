@@ -31,7 +31,7 @@ jobs:
           node-version: 16
       - name: Get Yarn cache
         id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       - name: Cache node modules
         uses: actions/cache@v3
         with:
@@ -46,7 +46,7 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: './dist/sps'
+          publish-dir: './frontend/dist/sps'
           production-deploy: true
           deploy-message: ${{ github.ref_name }}
         env:
