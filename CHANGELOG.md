@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/mfratczak88/sps/compare/v1.0.1...v1.0.2) (2023-03-28)
+
+
+### Bug Fixes
+
+* **cd:** publish dir for netlify ([#62](https://github.com/mfratczak88/sps/issues/62)) ([31f9af1](https://github.com/mfratczak88/sps/commit/31f9af15797e43894e6f366888c6544c5a9a9c0d))
+
 ## [1.0.1](https://github.com/mfratczak88/sps/compare/v1.0.0...v1.0.1) (2023-03-28)
 
 
